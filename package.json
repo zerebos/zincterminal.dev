@@ -1,6 +1,5 @@
 {
   "name": "zincterminal.dev",
-  "module": "index.ts",
   "dependencies": {
     "@astrojs/svelte": "^9.1.0",
     "astro": "^7.4.1",
@@ -22,7 +21,7 @@
     "build": "astro build",
     "preview": "astro preview",
     "deploy": "bun run build && wrangler deploy",
-    "check": "bunx --bun astro check",
+    "typecheck": "bunx --bun astro check",
     "lint": "eslint . --ext .ts,.svelte",
     "wrangler:dev": "bun run build && wrangler dev",
     "wrangler:types": "wrangler types"
