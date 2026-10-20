@@ -1,23 +1,31 @@
 {
   "name": "zincterminal.dev",
   "module": "index.ts",
-  "type": "module",
+  "dependencies": {
+    "@astrojs/svelte": "^9.1.0",
+    "astro": "^7.4.1",
+    "svelte": "^5.57.2"
+  },
+  "devDependencies": {
+    "@astrojs/check": "^0.9.11",
+    "@types/bun": "latest",
+    "@zerebos/eslint-config": "^1.0.3",
+    "@zerebos/eslint-config-svelte": "^1.1.1",
+    "@zerebos/eslint-config-typescript": "^1.1.1",
+    "eslint": "^10.13.0",
+    "typescript": "^6.0.3",
+    "wrangler": "^4.151.3"
+  },
   "private": true,
   "scripts": {
     "dev": "astro dev",
     "build": "astro build",
     "preview": "astro preview",
-    "typecheck": "bun check"
+    "deploy": "bun run build && wrangler deploy",
+    "check": "bunx --bun astro check",
+    "lint": "eslint . --ext .ts,.svelte",
+    "wrangler:dev": "bun run build && wrangler dev",
+    "wrangler:types": "wrangler types"
   },
-  "devDependencies": {
-    "@types/bun": "latest"
-  },
-  "peerDependencies": {
-    "typescript": "^6.0.3"
-  },
-  "dependencies": {
-    "@astrojs/svelte": "^9.1.0",
-    "astro": "^7.4.1",
-    "svelte": "^5.57.2"
-  }
+  "type": "module"
 }
