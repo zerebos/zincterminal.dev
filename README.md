@@ -1,21 +1,8 @@
 # zincterminal.dev
 
-To install dependencies:
+The website for [Zinc](https://zincterminal.dev), a native Windows terminal built on libghostty.
 
-```bash
-bun install
-```
+It has two pages:
 
-To run:
-
-```bash
-bun run index.ts
-```
-
-To type check:
-
-```bash
-bun check
-```
-
-This project was created using `bun init` in bun v1.4.3. [Bun](https://bun.com) is a fast all-in-one JavaScript runtime.
+- `/`: the Zinc landing page.
+- `/lit-cell`: the page for Lit Cell, Zinc's default colour scheme (dark and light).
