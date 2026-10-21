@@ -1,5 +1,7 @@
 ---
 import Lockup from "./Lockup.astro";
+import MobileMenu from "./MobileMenu.svelte";
+import ScrollHairline from "./ScrollHairline.svelte";
 import ThemeSwitch from "./ThemeSwitch.svelte";
 import type {NavLink} from "../../data/site";
 
@@ -26,8 +28,10 @@ const {links, hairline = "scroll", mobile = "menu"} = Astro.props;
         <div class="tools">
             <ThemeSwitch client:load />
             <slot name="actions" />
+            {mobile === "menu" && <MobileMenu client:load links={links} />}
         </div>
     </div>
+    {hairline === "scroll" && <ScrollHairline client:load />}
 </header>
 
 <style>
@@ -42,7 +46,8 @@ const {links, hairline = "scroll", mobile = "menu"} = Astro.props;
         transition: border-color 0.2s ease;
     }
 
-    .sitenav.lined {
+    .sitenav.lined,
+    .sitenav.scrolled {
         border-bottom-color: var(--line);
     }
 
