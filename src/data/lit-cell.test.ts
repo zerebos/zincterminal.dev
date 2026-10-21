@@ -1,129 +1,109 @@
-// Checks the lit-cell tokens against the design handoff's reference pages: every --term-* and --k-* value,
-// every contrast ratio and "fill" marker on the palette, and every derived colour's mix.
-// design/ isn't tracked, so the whole file skips when the references aren't there.
+// Checks that src/data/lit-cell.ts reads the lit-cell design tokens correctly and that the tokens hold together.
+// It needs nothing outside the repo and its packages.
 
 import {describe, expect, test} from "bun:test";
-import {existsSync} from "node:fs";
-import {color, contrast, litCell, litCellCss, roles, tokenVar, type VariantId} from "./lit-cell";
+import {color, contrast, groups, litCell, litCellCss, roles, tokenVar, type VariantId} from "./lit-cell";
 
-
-const landingPath = "design/reference/landing.dc.html";
-const litCellPath = "design/reference/lit-cell.dc.html";
-const haveReferences = existsSync(landingPath) && existsSync(litCellPath);
 
 const variants: VariantId[] = ["dark", "light"];
-const declarations = (block: string) => new Map([...block.matchAll(/(--[\w-]+):\s*([^;]+)/g)].map(m => [m[1]!, m[2]!.trim().toUpperCase()]));
+
+const channels = (hex: string) => [1, 3, 5].map(i => parseInt(hex.slice(i, i + 2), 16));
+const toHex = (rgb: number[]) => `#${rgb.map(v => v.toString(16).padStart(2, "0")).join("")}`.toUpperCase();
+
+/** Python's round(): halves go to the even neighbour. */
+function roundHalfEven(x: number) {
+    const floor = Math.floor(x);
+    if (x - floor !== 0.5) return Math.round(x);
+    return floor % 2 === 0 ? floor : floor + 1;
+}
+
+/** lit-cell's mix() from tools/build.py: `amount` of `from` mixed into `into`, in sRGB, rounded per channel. */
+function mix(from: string, into: string, amount: number) {
+    const a = channels(from);
+    const b = channels(into);
+    return toHex(a.map((x, i) => roundHalfEven(b[i]! + ((x - b[i]!) * amount))));
+}
 
 /** The declarations of one rule in a stylesheet, found by its exact selector. */
 function rule(css: string, selector: string) {
     const start = css.indexOf(`${selector}{`);
     if (start < 0) throw new Error(`no rule for ${selector}`);
-    return declarations(css.slice(start + selector.length + 1, css.indexOf("}", start)));
+    const block = css.slice(start + selector.length + 1, css.indexOf("}", start));
+    return new Map([...block.matchAll(/(--[\w-]+):([^;]+)/g)].map(m => [m[1]!, m[2]!]));
 }
 
-/** The reference's short --k-* names, mapped to token paths. */
-const kNames: Record<string, string> = {
-    "--k-bg": "base.background",
-    "--k-fg": "base.foreground",
-    "--k-cur": "base.cursor",
-    "--k-curtx": "base.cursor-text",
-    "--k-sel": "base.selection",
-    "--k-seltx": "base.selection-text",
-    "--k-surface": "ui.surface",
-    "--k-raised": "ui.surface-raised",
-    "--k-line": "ui.line",
-    "--k-sub": "ui.subtext",
-    "--k-sm": "tint.search-match",
-    "--k-sa": "tint.search-active",
-    "--k-dal": "tint.diff-added-line",
-    "--k-dat": "tint.diff-added-text",
-    "--k-drl": "tint.diff-removed-line",
-    "--k-drt": "tint.diff-removed-text"
-};
-const kPath = (variant: VariantId, name: string) => {
-    const slot = name.match(/^--k-c(\d+)$/)?.[1];
-    if (slot === undefined) return kNames[name];
-    return litCell[variant].colors.ansi.find(c => c.slot === Number(slot))?.path;
-};
 
-const landing = haveReferences ? await Bun.file(landingPath).text() : "";
-const reference = haveReferences ? await Bun.file(litCellPath).text() : "";
-const ours = litCellCss();
+describe("contrast", () => {
+    test("follows WCAG 2", () => {
+        expect(contrast("#000000", "#FFFFFF")).toBeCloseTo(21, 5);
+        expect(contrast("#FFFFFF", "#FFFFFF")).toBeCloseTo(1, 5);
+        expect(contrast("#777777", "#FFFFFF")).toBeCloseTo(4.48, 2);
+        expect(contrast("#FFFFFF", "#777777")).toBeCloseTo(contrast("#777777", "#FFFFFF"), 10);
+    });
+});
 
-describe.skipIf(!haveReferences)("lit-cell tokens match the reference pages", () => {
+describe.each(variants)("the %s variant", variant => {
+    const v = litCell[variant];
 
-    test("every --term-* value on both pages", () => {
-        for (const html of [landing, reference]) {
-            for (const variant of variants) {
-                const theirs = rule(html, `[data-theme="${variant}"]`);
-                const mine = rule(ours, variant === "dark" ? ":root,[data-theme=\"dark\"]" : "[data-theme=\"light\"]");
-                const termVars = [...theirs].filter(([name]) => name.startsWith("--term-"));
-                expect(termVars.length).toBeGreaterThan(0);
-                for (const [name, value] of termVars) expect({name, value: mine.get(name)}).toEqual({name, value});
-            }
+    test("has every group, and ANSI slots 0 to 15 once each", () => {
+        for (const group of groups) expect(v.colors[group].length).toBeGreaterThan(0);
+        expect(v.colors.ansi.map(c => c.slot).sort((a, b) => a! - b!)).toEqual([...Array(16).keys()]);
+    });
+
+    test("gives every text colour a ratio, and nothing else one", () => {
+        for (const c of v.byPath.values()) {
+            if (c.use === "text") expect({path: c.path, hasRatio: (c.ratio ?? 0) > 1}).toEqual({path: c.path, hasRatio: true});
+            else expect({path: c.path, ratio: c.ratio}).toEqual({path: c.path, ratio: undefined});
         }
     });
 
-    test("every --k-* value on the Lit Cell page", () => {
-        for (const variant of variants) {
-            const theirs = rule(reference, `.lc-${variant}`);
-            const mine = rule(ours, `.lc-${variant}`);
-            // 6 base, 16 ANSI, 4 ui and 6 tint colours.
-            expect(theirs.size).toBe(32);
-            for (const [name, value] of theirs) {
-                const path = kPath(variant, name);
-                expect({name, path}).toEqual({name, path: expect.any(String) as string});
-                expect({name, value: mine.get(tokenVar(path!))}).toEqual({name, value});
-            }
-        }
+    test("measures selection text against the selection", () => {
+        expect(color(variant, "base.selection-text").ratioOn).toBe("base.selection");
     });
 
-    test("palette ratios and fills, to one decimal place", () => {
-        // The reference script lists ANSI ratios as ratio: [...] and base colours as base: [[name, hex, ratio], ...],
-        // dark first, then light.
-        const ansiRatios = [...reference.matchAll(/ratio: \[([^\]]+)\]/g)].map(m => [...m[1]!.matchAll(/'([^']+)'/g)].map(r => r[1]!));
-        const baseRows = [...reference.matchAll(/base: \[(\[.+\])\],\n/g)].map(m => [...m[1]!.matchAll(/\['([^']+)', '([^']+)', '([^']*)'\]/g)].map(r => [r[1]!, r[3]!] as const));
-        expect(ansiRatios.length).toBe(2);
-        expect(baseRows.length).toBe(2);
-
-        variants.forEach((variant, i) => {
-            for (const c of litCell[variant].colors.ansi) {
-                const theirs = ansiRatios[i]![c.slot!]!;
-                const mine = c.use === "fill" ? "fill" : c.ratio!.toFixed(1);
-                expect({path: c.path, ratio: mine}).toEqual({path: c.path, ratio: theirs});
-            }
-            for (const [name, theirs] of baseRows[i]!) {
-                const c = color(variant, `base.${name.replace(" ", "-")}`);
-                const mine = c.ratio === undefined ? "" : c.ratio.toFixed(1);
-                expect({path: c.path, ratio: mine}).toEqual({path: c.path, ratio: theirs.replace(/:1.*$/, "")});
-            }
-        });
-    });
-
-    test("derived colours: value and mix", () => {
-        // The reference's derived table rows: [role, "colour, N%", dark hex, light hex].
-        const rows = [...reference.matchAll(/\['([\w-]+)', '([\w ]+), (\d+)%', '(#\w+)', '(#\w+)'\]/g)];
-        expect(rows.length).toBe(12);
-        for (const [, name, mixColor, percent, dark, light] of rows) {
-            const group = ["surface", "surface-raised", "line", "subtext"].includes(name!) ? "ui" : "tint";
-            for (const [variant, hex] of [["dark", dark], ["light", light]] as const) {
-                const c = color(variant, `${group}.${name!}`);
-                expect({path: c.path, hex: c.hex}).toEqual({path: c.path, hex: hex!.toUpperCase()});
-                expect({path: c.path, amount: Math.round(c.mix!.amount * 100), from: c.mix!.color})
-                    .toEqual({path: c.path, amount: Number(percent), from: expect.stringMatching(new RegExp(`\\.${mixColor!.replace(" ", "-")}$`)) as string});
-            }
+    test("matches every derived colour to its mix recipe", () => {
+        const derived = [...v.colors.ui, ...v.colors.tint];
+        expect(derived.length).toBeGreaterThan(0);
+        for (const c of derived) {
+            expect({path: c.path, hasMix: c.mix !== undefined}).toEqual({path: c.path, hasMix: true});
+            const {color: from, into, amount} = c.mix!;
+            expect({path: c.path, hex: mix(color(variant, from).hex, color(variant, into).hex, amount)}).toEqual({path: c.path, hex: c.hex});
         }
     });
 });
 
-describe("lit-cell module", () => {
-    test("contrast follows WCAG 2", () => {
-        expect(contrast("#000000", "#FFFFFF")).toBeCloseTo(21, 5);
-        expect(contrast("#FFFFFF", "#FFFFFF")).toBeCloseTo(1, 5);
-    });
-
-    test("every role points at a colour both variants have", () => {
+describe("roles", () => {
+    test("each point at a colour both variants have", () => {
         expect(roles.length).toBeGreaterThan(0);
         for (const r of roles) for (const variant of variants) expect(() => color(variant, r.ref)).not.toThrow();
+    });
+});
+
+describe("litCellCss", () => {
+    const css = litCellCss();
+
+    test("sets all 22 --term-* variables for each site theme", () => {
+        for (const [variant, selector] of [["dark", ":root,[data-theme=\"dark\"]"], ["light", "[data-theme=\"light\"]"]] as const) {
+            const term = rule(css, selector);
+            expect(term.size).toBe(22);
+            expect(term.get("--term-bg")).toBe(litCell[variant].background);
+            expect(term.get("--term-selection-bg")).toBe(color(variant, "base.selection").hex);
+            expect(term.get("--term-bright-white")).toBe(color(variant, "ansi.bright-white").hex);
+        }
+    });
+
+    test("sets every colour on each scheme class", () => {
+        for (const variant of variants) {
+            const scheme = rule(css, `.lc-${variant}`);
+            const all = [...litCell[variant].byPath.values()];
+            expect(scheme.size).toBe(all.length);
+            for (const c of all) expect({path: c.path, hex: scheme.get(tokenVar(c.path))}).toEqual({path: c.path, hex: c.hex});
+        }
+    });
+
+    test("points every role variable at a scheme variable", () => {
+        const roleVars = rule(css, ".lc-dark,.lc-light");
+        expect(roleVars.size).toBe(roles.length);
+        for (const r of roles) expect(roleVars.get(`--lc-role-${r.path.replace(".", "-")}`)).toBe(`var(${tokenVar(r.ref)})`);
     });
 });
