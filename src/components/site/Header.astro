@@ -1,5 +1,6 @@
 ---
 import Lockup from "./Lockup.astro";
+import ThemeSwitch from "./ThemeSwitch.svelte";
 import type {NavLink} from "../../data/site";
 
 interface Props {
@@ -22,7 +23,10 @@ const {links, hairline = "scroll", mobile = "menu"} = Astro.props;
                 <a class:list={{opt: link.optional}} href={link.href} aria-current={link.current ? "page" : undefined}>{link.label}</a>
             ))}
         </nav>
-        <slot name="actions" />
+        <div class="tools">
+            <ThemeSwitch client:load />
+            <slot name="actions" />
+        </div>
     </div>
 </header>
 
@@ -76,9 +80,20 @@ const {links, hairline = "scroll", mobile = "menu"} = Astro.props;
         background: var(--accent-subtle);
     }
 
+    .tools {
+        display: flex;
+        align-items: center;
+        gap: 8px;
+    }
+
     @media (max-width: 640px) {
         .sitenav-row {
             gap: 12px;
+        }
+
+        /* The links are gone, so the tools take their place at the right */
+        .topnav.mobile-menu + .tools {
+            margin-left: auto;
         }
 
         .topnav.mobile-menu,
