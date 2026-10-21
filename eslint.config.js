@@ -25,6 +25,6 @@ export default defineConfig(
         }
     },
     {
-        ignores: ["node_modules/", "dist/", "public/", ".astro/", ".wrangler/"]
+        ignores: ["node_modules/", "dist/", "public/", ".astro/", ".wrangler/", ".scratch/"]
     }
 );

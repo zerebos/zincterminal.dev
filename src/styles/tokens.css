@@ -1,0 +1,209 @@
+/*
+ * Zinc site design tokens.
+ *
+ * Converted once from the brand tokens.json, and kept in sync by hand from now on.
+ * The term-* colours aren't here, they come from the lit-cell package's W3C design tokens (see LitCellVars.astro).
+ */
+
+:root {
+    /* Type families */
+    --font-sans: "Segoe UI Variable Text", "Segoe UI Variable", "Segoe UI", system-ui, sans-serif;
+    --font-display: "Segoe UI Variable Display", "Segoe UI Variable", "Segoe UI", system-ui, sans-serif;
+    --font-mono: "Geist Mono", ui-monospace, "Cascadia Mono", Consolas, monospace;
+    --font-cascadia: "Cascadia Mono", Consolas, ui-monospace, monospace;
+
+    /* Spacing */
+    /* Between sidebar items; between a scheme tile's colour chips. */
+    --space-0-5: 2px;
+    /* Between settings cards; between a setting's name and its reset arrow. */
+    --space-1: 4px;
+    /* Sidebar and command-palette inner padding; between the palette's box and list. */
+    --space-1-5: 6px;
+    /* Between buttons in a row; icon to text in the title row and command center; notice stack spacing. */
+    --space-2: 8px;
+    /* Settings-card vertical padding; switch to its On/Off label; undo-bar contents; notice margin. */
+    --space-3: 12px;
+    /* Settings-card horizontal padding; layout-card padding on the welcome page. */
+    --space-4: 16px;
+    /* Between a card's text and its control; between welcome-page rows. */
+    --space-5: 24px;
+    /* Settings page side padding (cards up to 1000px wide); welcome-page side padding; start-page column gap. */
+    --space-6: 40px;
+    /* New-workspace page side padding; website section gaps. */
+    --space-7: 48px;
+    /* Website page sections. */
+    --space-8: 64px;
+
+    /* Radius */
+    /* Terminal cells, box drawing, Powerline segments, code inside a block. */
+    --radius-none: 0;
+    /* A scheme tile's 16 colour chips. */
+    --radius-chip: 2px;
+    /* Count pills (14px tall). */
+    --radius-count: 3px;
+    /* Buttons and inputs (WinUI ControlCornerRadius), sidebar items, scheme tiles, inline code. */
+    --radius-sm: 4px;
+    /* Settings cards and the command center. */
+    --radius-card: 6px;
+    /* Overlays (command palette, undo bar, flyouts: WinUI OverlayCornerRadius), the welcome preview, website cards, code blocks, windows. */
+    --radius-md: 8px;
+    /* Lit cells and the attention dot: corner radius 12% of the pitch (or of the dot's size). Compute as calc(pitch * 0.12) when the shape is inset from its pitch. */
+    --radius-cell: 12%;
+
+    /* Lit-cell geometry, as fractions of the grid pitch, and the app's lit-cell marks */
+    /* Lit cell side: 86% of the pitch (gap 14%). */
+    --cell-size: 86%;
+    /* Unlit dot radius: 20% of the pitch. */
+    --dot-radius: 20%;
+    /* Glow square: 1.5× the pitch, radius 50% of the pitch. */
+    --glow-size: 150%;
+    /* Attention dot after a title or in a tab's close-button slot (8 epx; BRAND.md said 6, too easy to miss). */
+    --attention-dot: 8px;
+    /* Attention dot on an icon's corner (the sidebar rail): 9 epx with a 1.5px ring in the background colour. */
+    --attention-dot-corner: 9px;
+    /* The command center's still lit cell while a command runs (radius 0.84px). */
+    --running-cell: 7px;
+    /* Count pill height and minimum width; 4px side padding. */
+    --count-height: 14px;
+
+    /* Shadows. Two steps only. Shadows are neutral; never green, never a glow. */
+    /* Flat: cards and code blocks sit on a `line` hairline. */
+    --elevation-0: none;
+
+    /* Brand palette (the same in both themes) */
+    /* Phosphor green, the signature colour. The mark and accents on dark grounds. Never on light grounds as text (use `accent`). */
+    --phosphor: #3DF2A0;
+    /* Top stop of the lit gradient. Rich lit cells only (gradient `lit-top` → `lit-bottom` spanning the whole mark's height). */
+    --lit-top: #C6FFD0;
+    /* Bottom stop of the lit gradient. Rich lit cells only. */
+    --lit-bottom: #2FE07A;
+    /* Screen: the dark ground, and ink for the mark on light (one-colour reproduction only). */
+    --screen: #0F1311;
+    /* Paper: the light ground, and the wordmark colour on dark. */
+    --paper: #EDEFEA;
+    /* The flat mark and the lockup's mark on light grounds; equals `accent` in the light theme. */
+    --phosphor-deep: #0B7A4B;
+    /* Caution only. Never in the mark, never for failures. */
+    --amber: #FFB000;
+    /* Optional glow behind lit cells only: #3DF2A0 at ~6%, a rounded square 1.5× the pitch, radius 50% of the pitch. Dark grounds only; no glow on anything that is not a lit cell. */
+    --glow: #3DF2A00F;
+    /* App-icon tile screen: radial gradient stop 0 (centre cx 0.35, cy 0.28, radius 0.95). */
+    --tile-screen-0: #113623;
+    /* App-icon tile screen: radial gradient stop at 0.55. */
+    --tile-screen-55: #07180F;
+    /* App-icon tile screen: radial gradient stop 1 (the edges). */
+    --tile-screen-100: #020805;
+    /* App-icon tile edge: 3px stroke inset 1.5px, vertical gradient from this colour at 35% (top) to 6% (bottom). */
+    --tile-edge: #BDF5D3;
+}
+
+:root,
+[data-theme="dark"] {
+    /* Page ground for the website, README art and docs: Screen in dark, Paper in light. `ink` and `ink-muted` read on it. Inside the app the ground is Mica (`mica`). */
+    --ground: #0F1311;
+    /* Cards, code-block headers, menus. Dark: Lit Cell black (slot 0); light: Lit Cell Light bright white (slot 15). Derived from the schemes for the website; not named in BRAND.md. In the app use `card-fill`. */
+    --surface-raised: #1C2420;
+    /* Approximate Windows Mica, the surface every UI-token contrast ratio in BRAND.md is measured against. Use for app-chrome mock-ups (title bar, tab strip). */
+    --mica: #202020;
+    /* Hairlines and control borders. Lit Cell bright black at 40% (dark) / Lit Cell Light bright black at 30% (light). Derived for the website; decorative only. In the app use `card-stroke` / `control-stroke`. */
+    --line: #75867966;
+    /* Primary text on `ground`, `surface-raised` and `mica` (16.2:1 on ground in both themes). */
+    --ink: #EDEFEA;
+    /* Secondary text and captions on `ground` and `surface-raised` (dark 10.7:1 / 9.1:1; light 4.6:1 / 5.4:1). Lit Cell white (7) / Lit Cell Light bright black (8). Derived for the website; in the app use `text-secondary`. */
+    --ink-muted: #B9C7BE;
+    /* Unlit dot of the screen texture: radius 20% of the pitch, in every grid cell not taken by a lit cell. Dark is the BRAND.md value (#3DF2A0 at 10%); light applies the same 10% to the light accent (extrapolated). */
+    --dot-unlit: #3DF2A01A;
+    /* Accent FILL: primary buttons, switches, selection pills, focus, progress. Dark 11.2:1, light 4.9:1 against Mica. The app sets WinUI's SystemAccentColor ramp to these (Brand.ApplyAccent), replacing Windows' accent. For accent TEXT and links use `accent-text`. */
+    --accent: #3DF2A0;
+    /* Accent text and links (WinUI's AccentTextFillColorPrimary: SystemAccentColorLight3 on dark = Lit Cell bright green, Dark2 on light = Lit Cell Light green). 15.0:1 / 6.9:1 against Mica. */
+    --accent-text: #86FFC6;
+    /* Hover and selected backgrounds: accent at 16% (dark) / 12% (light). Put `ink` text on it, not `accent`. */
+    --accent-subtle: #3DF2A029;
+    /* Attention dot when work finished out of view or a program sent a notification; the command center's running cell. User-settable: `[notify] finished-color`. */
+    --attention: #3DF2A0;
+    /* Needs-you states: the bell, a program waiting. Dark 8.9:1, light 4.9:1 against Mica. User-settable: `[notify] bell-color`. */
+    --caution: #FFB000;
+    /* Failed-command marks and a failed progress ring. Red, never amber. Dark 5.9:1, light 5.7:1 against Mica. User-settable: `[notify] failed-color`. */
+    --error: #FF6B6B;
+    /* Text and icons on a filled `accent`, and the number in a count pill of any state colour (dark 12.9:1 on accent; light 5.4:1). */
+    --on-accent: #0F1311;
+    /* Keyboard focus: 2px solid outline, 2px offset. Alias of `accent`. */
+    --focus-ring: var(--accent);
+    /* App text (TextFillColorPrimary) on `mica`, `card-fill`, `control-fill`. */
+    --text-primary: #FFFFFF;
+    /* Setting descriptions, notes, the reset arrow's stroke (TextFillColorSecondary). On Mica: dark 10.6:1, light 5.6:1. */
+    --text-secondary: #FFFFFFC5;
+    /* Config keys under a setting, hints (TextFillColorTertiary). WinUI's own value: dark 5.4:1, light 3.4:1 on Mica, so it is for supplementary text that repeats something said elsewhere, never the only label. */
+    --text-tertiary: #FFFFFF87;
+    /* Settings cards, scheme tiles' frames (CardBackgroundFillColorDefault). */
+    --card-fill: #FFFFFF0D;
+    /* Settings-card and scheme-tile borders (CardStrokeColorDefault). */
+    --card-stroke: #0000001A;
+    /* Standard buttons, the command center (ControlFillColorDefault). */
+    --control-fill: #FFFFFF0F;
+    /* Standard button and command-center borders (ControlStrokeColorDefault). */
+    --control-stroke: #FFFFFF12;
+    /* Dividers, e.g. above the new-workspace page's footer (DividerStrokeColorDefault). */
+    --divider: #FFFFFF15;
+    /* Borders of the command palette and the undo bar (SurfaceStrokeColorFlyout). */
+    --flyout-stroke: #00000033;
+    /* The undo bar's solid backing (SolidBackgroundFillColorTertiary). */
+    --solid-tertiary: #282828;
+    /* Selected and hovered sidebar items and palette rows (SubtleFillColorSecondary); the accent pill marks which one. */
+    --subtle-selected: #FFFFFF0F;
+    /* Command palette backing: the tint of WinUI's AcrylicInAppFillColorDefault, used solid where acrylic isn't available. */
+    --palette-fill: #2C2C2C;
+    /* Informational notice (InfoBar) background, e.g. a downloaded update (CardBackgroundFillColorSecondary). */
+    --notice-info-bg: #FFFFFF08;
+    /* Warning notice background, e.g. a config.toml problem (SystemFillColorCautionBackground). WinUI's, not the brand's amber. */
+    --notice-warning-bg: #433519;
+    /* Warning notice icon (SystemFillColorCaution). */
+    --notice-warning-icon: #FCE100;
+    /* Error notice background, e.g. a survived crash (SystemFillColorCriticalBackground). */
+    --notice-error-bg: #442726;
+    /* Inline error text under a setting (SystemFillColorCritical: "red that reads on light and dark"). */
+    --critical-text: #FF99A4;
+
+    /* Menus, tooltips, the copy-confirm state. */
+    --elevation-1: 0 1px 2px #00000066;
+    /* Terminal windows and screenshot frames. */
+    --elevation-2: 0 8px 24px #00000080, 0 0 0 1px #75867933;
+}
+
+[data-theme="light"] {
+    --ground: #EDEFEA;
+    --surface-raised: #FFFFFF;
+    --mica: #F3F3F3;
+    --line: #5F6E664D;
+    --ink: #0F1311;
+    --ink-muted: #5F6E66;
+    --dot-unlit: #0B7A4B1A;
+    --accent: #0B7A4B;
+    --accent-text: #09663F;
+    --accent-subtle: #0B7A4B1F;
+    --attention: #0B7A4B;
+    --caution: #9A5B00;
+    --error: #B42A28;
+    --on-accent: #FFFFFF;
+    --focus-ring: var(--accent);
+    --text-primary: #000000E4;
+    --text-secondary: #0000009E;
+    --text-tertiary: #00000072;
+    --card-fill: #FFFFFFB3;
+    --card-stroke: #0000000F;
+    --control-fill: #FFFFFFB3;
+    --control-stroke: #0000000F;
+    --divider: #0000000F;
+    --flyout-stroke: #0000000F;
+    --solid-tertiary: #F9F9F9;
+    --subtle-selected: #00000009;
+    --palette-fill: #FCFCFC;
+    --notice-info-bg: #F6F6F6;
+    --notice-warning-bg: #FFF4CE;
+    --notice-warning-icon: #9D5D00;
+    --notice-error-bg: #FDE7E9;
+    --critical-text: #C42B1C;
+
+    --elevation-1: 0 1px 2px #0F131114;
+    --elevation-2: 0 8px 24px #0F13111F, 0 0 0 1px #5F6E6633;
+}
