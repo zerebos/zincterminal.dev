@@ -43,7 +43,7 @@ const missing = [
                 <Button href={links.discord} primary large>Request access</Button>
                 <Button href={links.zincRepo} large>View source on GitHub</Button>
             </div>
-            <p class="cap">Zinc is in private alpha and free. Request access through Zinc's Discord server; once you have it, the installer sets Zinc up for your account only and keeps it up to date. Current build: {release.version} · {release.requirements}</p>
+            <p class="cap">Zinc is in private alpha and free. Request access through Zinc's Discord server; once you have it, the installer sets Zinc up for your account only and keeps it up to date. Current build: <span class="version">{release.version}</span> · {release.requirements}</p>
             <InstallCommand command="winget" comment="# coming soon" />
             <CodeBlock name="zn --help" lines={help} copy="zn --help" copyLabel="Copy command" copyDuration={1600} />
             <p class="cap note">Inside a Zinc terminal, <code class="zn-inline">zn</code> acts on that terminal and its pane, workspace and window. Outside, it acts on the window you used last.</p>
@@ -86,6 +86,11 @@ const missing = [
         margin: 0;
         font: 400 13px/20px var(--font-sans);
         color: var(--ink-muted);
+    }
+
+    /* Don't break the version at its hyphen */
+    .version {
+        white-space: nowrap;
     }
 
     .cap.note {

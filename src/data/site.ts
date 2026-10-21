@@ -1,3 +1,6 @@
+import type {Release} from "../lib/zinc/types";
+import zincRelease from "./generated/zinc-release.json";
+
 // Undecided ones are "#" so they show as visible placeholders
 
 export const links = {
@@ -19,8 +22,14 @@ export const links = {
     thirdPartyNotices: "#"
 } as const;
 
+// The newest build in Zinc's changelog, from `bun run sync:zinc`
+const latest: Release = zincRelease;
+
 export const release = {
-    version: "0.1.0-dev",
+    version: latest.version,
+
+    /** `YYYY-MM-DD` */
+    date: latest.date,
     requirements: "Windows 10 version 2004 or later, or Windows 11"
 } as const;
 
