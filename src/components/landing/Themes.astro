@@ -1,0 +1,51 @@
+---
+// Make it yours... Lit Cell and Lit Cell Light first, then the tuned setups
+import Shot from "../mock/Shot.astro";
+import Term from "../mock/Term.astro";
+import TitleBar from "../mock/TitleBar.astro";
+import Window from "../mock/Window.astro";
+import Section from "../site/Section.astro";
+import SectionIntro from "../site/SectionIntro.astro";
+import {litCellSample} from "../../data/mocks/gallery";
+
+// Each tile pins its window to a site theme, so it keeps its scheme whatever theme the page is in
+const litCellTiles = [
+    {name: "Lit Cell", theme: "dark", caption: "Cascadia Mono NF 11 pt · the default dark scheme"},
+    {name: "Lit Cell Light", theme: "light", caption: "Cascadia Mono NF 11 pt · the default light scheme"}
+] as const;
+---
+<Section id="themes" labelledby="yours-title">
+    <SectionIntro eyebrow="Make it yours" title="Tuned setups" titleId="yours-title">
+        Zinc ships with two schemes of its own, <a class="textlink" href="/lit-cell">Lit Cell and Lit Cell Light</a>, and reads the rest from Ghostty's theme format.
+    </SectionIntro>
+
+    <div class="gal">
+        {litCellTiles.map(tile => (
+            <Shot name={tile.name} caption={tile.caption}>
+                <Window label={`Zinc in the ${tile.name} scheme`} theme={tile.theme}>
+                    <TitleBar tabs={[{name: "pwsh", selected: true}]} />
+                    <Term lines={litCellSample} class="cascadia" />
+                </Window>
+            </Shot>
+        ))}
+    </div>
+</Section>
+
+<style>
+    .gal {
+        display: grid;
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+        gap: 24px;
+        margin-top: 48px;
+    }
+
+    .gal :global(.cascadia) {
+        font-family: var(--font-cascadia);
+    }
+
+    @media (max-width: 900px) {
+        .gal {
+            grid-template-columns: 1fr;
+        }
+    }
+</style>

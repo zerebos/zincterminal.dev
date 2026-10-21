@@ -1,0 +1,59 @@
+---
+// A gallery screenshot on the dotted stage, with its name and caption underneath
+import Mock from "./Mock.astro";
+
+interface Props {
+    name: string;
+    caption: string;
+    label?: string;
+    class?: string;
+}
+
+const {name, caption, label = "Placeholder screenshot", class: className} = Astro.props;
+---
+<Mock tag="figure" label={label} class:list={["zn-shot", className]}>
+    <div class="zn-shot-stage zn-dots">
+        <slot />
+    </div>
+    <figcaption><b>{name}</b> · {caption}</figcaption>
+</Mock>
+
+<style>
+    :global(.zn-shot) {
+        margin: 0;
+        display: flex;
+        flex-direction: column;
+        gap: var(--space-3);
+    }
+
+    .zn-shot-stage {
+        --pitch: 12px;
+        padding: var(--space-7) var(--space-6);
+        border-radius: var(--radius-md);
+        border: 1px solid var(--line);
+    }
+
+    /* The screen texture, an unlit dot in every cell of the grid */
+    .zn-dots {
+        background-image: radial-gradient(circle at center, var(--dot-unlit) calc(var(--pitch) * 0.2), transparent calc(var(--pitch) * 0.2 + 0.5px));
+        background-size: var(--pitch) var(--pitch);
+    }
+
+    .zn-shot-stage > :global(*) {
+        box-shadow: var(--elevation-2);
+        border-radius: var(--radius-md);
+        overflow: hidden;
+        display: block;
+        max-width: 100%;
+    }
+
+    figcaption {
+        font: 400 12px/16px var(--font-sans);
+        color: var(--ink-muted);
+    }
+
+    figcaption b {
+        color: var(--ink);
+        font-weight: 600;
+    }
+</style>
