@@ -1,14 +1,14 @@
 ---
+import NoticeRow from "../components/reading/NoticeRow.astro";
 import ReadingLayout from "../layouts/ReadingLayout.astro";
 import type {TocEntry} from "../components/reading/toc";
 import notices from "../data/generated/zinc-notices.json";
-import {release} from "../data/site";
+import {links, release} from "../data/site";
+import {websiteNotices} from "../data/website-notices";
 
-// Placeholder rows until the notices are generated from the zinc repo
-const website = ["Geist Mono", "Svelte", "Astro"];
 const toc: TocEntry[] = [
     {label: "In Zinc", href: "#in-zinc", detail: String(notices.length)},
-    {label: "On this website", href: "#on-this-site", detail: String(website.length)}
+    {label: "On this website", href: "#on-this-site", detail: String(websiteNotices.length)}
 ];
 ---
 
@@ -20,17 +20,28 @@ const toc: TocEntry[] = [
     toc={toc}
 >
     <p slot="intro" class="lead">Zinc is built on open-source software. Here's what ships with it, what each part does and the license it's under.</p>
-    <section>
-        <h2 id="in-zinc">In Zinc</h2>
-        <p>For <code>{release.version}</code>.</p>
-        <ul>
-            {notices.map(notice => <li>{notice.name} · {notice.license}</li>)}
-        </ul>
-    </section>
-    <section>
-        <h2 id="on-this-site">On this website</h2>
-        <ul>
-            {website.map(name => <li>{name}</li>)}
-        </ul>
-    </section>
+    <p>The same texts come with Zinc, in the <code>Licenses</code> folder next to <code>zinc.exe</code>, and <span class="ui">Settings<span class="sep">›</span>About</span> lists them. <a href="/lit-cell">Lit Cell</a>, Zinc's color scheme, is MIT licensed in <a href={links.litCellRepo}>its own repository</a>.</p>
+    <h2 id="in-zinc">In Zinc<a class="anchor" href="#in-zinc" aria-label="Link to In Zinc"></a></h2>
+    <p class="for">For <code>{release.version}</code>. Select a row for its license text.</p>
+    <div class="lics">
+        {notices.map(notice => <NoticeRow notice={notice} />)}
+    </div>
+    <h2 id="on-this-site">On this website<a class="anchor" href="#on-this-site" aria-label="Link to On this website"></a></h2>
+    <div class="lics">
+        {websiteNotices.map(notice => <NoticeRow notice={notice} />)}
+    </div>
 </ReadingLayout>
+
+<style>
+    .for {
+        margin-top: 12px;
+        font-size: 14px;
+        line-height: 20px;
+        color: var(--ink-muted);
+    }
+
+    .lics {
+        margin: 20px 0 0;
+        border-top: 1px solid var(--line);
+    }
+</style>

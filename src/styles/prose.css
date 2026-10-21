@@ -4,7 +4,7 @@
  * Markdown doesn't wrap a list item's content.
  */
 
-.prose-body > :first-child {
+.prose-body > h2:first-child {
     margin-top: 48px;
 }
 
