@@ -11,6 +11,7 @@ import Toc from "../components/reading/Toc.astro";
 import type {TocEntry} from "../components/reading/toc";
 import {links, type FooterColumn, type NavLink} from "../data/site";
 import "../styles/reading.css";
+import "../styles/prose.css";
 
 interface Props {
     title: string;
@@ -86,14 +87,18 @@ const footer: FooterColumn[] = [
         <article class="prose">
             <p class="kicker"><LitCell pitch={12} />{kicker}</p>
             <h1>{heading}</h1>
-            <slot name="intro" />
+            <div class="intro">
+                <slot name="intro" />
+            </div>
             <details class="toc-m">
                 <summary>{tocSummary}</summary>
                 <nav aria-label={tocLabel}>
                     <Toc entries={toc} />
                 </nav>
             </details>
-            <slot />
+            <div class="prose-body">
+                <slot />
+            </div>
             {Astro.slots.has("endnote") && <div class="endnote"><slot name="endnote" /></div>}
         </article>
     </main>
