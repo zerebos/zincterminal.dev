@@ -1,0 +1,138 @@
+---
+// Try the alpha... how to get it and what `zn` does, beside what Zinc doesn't do yet
+import Button from "../site/Button.astro";
+import CodeBlock, {type CodeLine} from "../site/CodeBlock.astro";
+import InstallCommand from "../site/InstallCommand.astro";
+import Section from "../site/Section.astro";
+import SectionIntro from "../site/SectionIntro.astro";
+import {links, release} from "../../data/site";
+import "../../styles/zn/code.css";
+
+// One `zn <thing> <verb>` line, with the verbs split by magenta pipes
+const thing = (name: string, verbs: string[]): CodeLine => [
+    ["k", "zn"],
+    ` ${name.padEnd(12)}`,
+    ...verbs.flatMap((verb, i) => (i === 0 ? [verb] : [" ", ["p", "|"] as ["p", string], ` ${verb}`]))
+];
+
+const help: CodeLine[] = [
+    [["c", "# zn controls the running Zinc from a script or a shell"]],
+    [["k", "zn"], " ", ["s", "<thing>"], " ", ["s", "<verb>"], " [options] [-- command]"],
+    [],
+    thing("window", ["list", "new", "focus", "close"]),
+    thing("workspace", ["list", "new", "focus", "close", "rename", "color", "icon", "move"]),
+    thing("pane", ["list", "split", "focus", "close"]),
+    thing("terminal", ["list", "new", "send", "read", "title", "focus", "move", "close"]),
+    [],
+    [["k", "zn"], " list         ", ["c", "# everything open"]],
+    [["k", "zn"], " action       ", ["c", "# runs any action by its name, as a key would"]],
+    [["k", "zn"], " version      ", ["c", "# zn's version and the running Zinc's"]]
+];
+
+const missing = [
+    ["Sixel images", "Not supported; kitty graphics show their current frame"],
+    ["Importing settings from other terminals", "No migration yet"],
+    ["Very large colorful output from Git Bash and MSYS2", "Slow in any Windows terminal; native programs and WSL are fine"]
+];
+---
+<Section id="install" labelledby="install-title">
+    <div class="layout">
+        <div class="get">
+            <div><SectionIntro eyebrow="Private alpha" title="Try the alpha" titleId="install-title" /></div>
+            <div class="buttons">
+                <Button href={links.discord} primary large>Request access</Button>
+                <Button href={links.zincRepo} large>View source on GitHub</Button>
+            </div>
+            <p class="cap">Zinc is in private alpha and free. Request access through Zinc's Discord server; once you have it, the installer sets Zinc up for your account only and keeps it up to date. Current build: {release.version} · {release.requirements}</p>
+            <InstallCommand command="winget" comment="# coming soon" />
+            <CodeBlock name="zn --help" lines={help} copy="zn --help" copyLabel="Copy command" copyDuration={1600} />
+            <p class="cap note">Inside a Zinc terminal, <code class="zn-inline">zn</code> acts on that terminal and its pane, workspace and window. Outside, it acts on the window you used last.</p>
+        </div>
+        <div class="missing">
+            <h3>Not there yet</h3>
+            <p class="intro">What Zinc doesn't do today, so you know before you install.</p>
+            <ul class="miss">
+                {missing.map(([what, status]) => <li><span>{what}</span><span>{status}</span></li>)}
+            </ul>
+            <p class="roadmap"><a class="textlink" href={links.zincRoadmap}>See the roadmap on GitHub</a></p>
+        </div>
+    </div>
+</Section>
+
+<style>
+    .layout {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 64px;
+        align-items: flex-start;
+    }
+
+    .get {
+        flex: 1.3 1 480px;
+        min-width: 0;
+        display: flex;
+        flex-direction: column;
+        gap: 20px;
+    }
+
+    .buttons {
+        display: flex;
+        flex-wrap: wrap;
+        align-items: center;
+        gap: 12px;
+    }
+
+    .cap {
+        margin: 0;
+        font: 400 13px/20px var(--font-sans);
+        color: var(--ink-muted);
+    }
+
+    .cap.note {
+        margin-top: -8px;
+    }
+
+    .missing {
+        flex: 1 1 340px;
+        min-width: 0;
+    }
+
+    h3 {
+        margin: 0;
+        font: 600 20px/28px var(--font-display);
+    }
+
+    .intro {
+        margin: 8px 0 0;
+        font: 400 14px/20px var(--font-sans);
+        color: var(--ink-muted);
+    }
+
+    .miss {
+        list-style: none;
+        margin: 16px 0 0;
+        padding: 0;
+        display: flex;
+        flex-direction: column;
+        border-top: 1px solid var(--line);
+    }
+
+    .miss li {
+        display: flex;
+        justify-content: space-between;
+        gap: 16px;
+        padding: 14px 0;
+        border-bottom: 1px solid var(--line);
+        font: 400 14px/20px var(--font-sans);
+    }
+
+    .miss li span:last-child {
+        color: var(--ink-muted);
+        text-align: right;
+    }
+
+    .roadmap {
+        margin: 16px 0 0;
+        font: 400 14px/20px var(--font-sans);
+    }
+</style>

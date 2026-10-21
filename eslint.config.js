@@ -22,6 +22,9 @@ export default defineConfig(
     {
         rules: {
             "quote-props": ["error", "consistent-as-needed", {keywords: false}],
+
+            // Classes styled in the shared stylesheets under src/styles, not in the component
+            "svelte/no-unused-class-name": ["error", {allowedClassNames: ["/^zn-/", "sr-only", "textlink"]}],
         }
     },
     {

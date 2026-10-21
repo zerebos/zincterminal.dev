@@ -20,6 +20,11 @@ export const links = {
     thirdPartyNotices: "#"
 } as const;
 
+export const release = {
+    version: "0.1.0-dev",
+    requirements: "Windows 10 version 2004 or later, or Windows 11"
+} as const;
+
 export interface NavLink {
     label: string;
     href: string;

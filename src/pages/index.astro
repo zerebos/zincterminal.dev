@@ -9,6 +9,7 @@ import PrecisionTune from "../components/landing/PrecisionTune.astro";
 import Libghostty from "../components/landing/Libghostty.astro";
 import NativeWindows from "../components/landing/NativeWindows.astro";
 import Themes from "../components/landing/Themes.astro";
+import TryAlpha from "../components/landing/TryAlpha.astro";
 import Workflow from "../components/landing/Workflow.astro";
 import {links, type FooterColumn, type NavLink} from "../data/site";
 
@@ -63,18 +64,7 @@ const footer: FooterColumn[] = [
         <NativeWindows />
         <Themes />
         <Libghostty />
-        <section id="install" class="sec skeleton" aria-label="Try the alpha"></section>
+        <TryAlpha />
     </main>
     <Footer columns={footer} />
 </Base>
-
-<style>
-    /* Temporary so each empty section has height and its top hairline shows where an anchor lands */
-    .sec {
-        border-top: 1px solid var(--line);
-    }
-
-    .skeleton {
-        min-height: 60vh;
-    }
-</style>

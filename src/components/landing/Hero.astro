@@ -6,7 +6,7 @@ import CardsArea from "../mock/CardsArea.astro";
 import Mock from "../mock/Mock.astro";
 import TitleBar from "../mock/TitleBar.astro";
 import Window from "../mock/Window.astro";
-import {links} from "../../data/site";
+import {links, release} from "../../data/site";
 import {heroDevServer, heroFocused, heroGitLog, heroLabel, heroWorkspaces} from "../../data/mocks/hero";
 ---
 <section class="wrap hero" aria-labelledby="hero-title">
@@ -16,7 +16,7 @@ import {heroDevServer, heroFocused, heroGitLog, heroLabel, heroWorkspaces} from 
         <p class="lead">Box lines, blocks and Powerline shapes meet without seams in any font. Every setting says what it does and applies the moment you change it.</p>
         <div class="cta">
             <Button id="hero-download" href={links.discord} primary large>Request access</Button>
-            <span class="meta">Private alpha · 0.1.0-dev · free<br>Access is through Zinc's Discord server</span>
+            <span class="meta">Private alpha · {release.version} · free<br>Access is through Zinc's Discord server</span>
         </div>
         <InstallCommand class="install" command="winget" comment="# coming soon" />
     </div>

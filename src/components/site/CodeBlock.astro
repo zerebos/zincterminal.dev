@@ -1,0 +1,29 @@
+---
+// A code block with a name and an optional copy button. Lines are data so no whitespace leaks into the `<pre>`.
+import CopyButton from "./CopyButton.svelte";
+import "../../styles/zn/code.css";
+
+/** A line of code... plain text, or text in one of the bundle's syntax classes */
+export type CodeLine = Array<string | [cls: "c" | "k" | "s" | "n" | "p", text: string]>;
+
+interface Props {
+    name: string;
+    lines: CodeLine[];
+
+    /** The text the copy button copies, left out for no button */
+    copy?: string;
+    copyLabel?: string;
+
+    /** How long "Copied" shows, in ms */
+    copyDuration?: number;
+}
+
+const {name, lines, copy, copyLabel = "Copy", copyDuration} = Astro.props;
+---
+<div class="zn-code">
+    <div class="zn-code-head">
+        <span class="zn-code-name">{name}</span>
+        {copy && <CopyButton client:visible text={copy} label={copyLabel} duration={copyDuration} />}
+    </div>
+    <pre>{lines.map(line => <span class="cl">{line.length === 0 ? " " : line.map(part => (typeof part === "string" ? part : <span class={part[0]}>{part[1]}</span>))}</span>)}</pre>
+</div>
