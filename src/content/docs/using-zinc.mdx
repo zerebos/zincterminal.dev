@@ -133,12 +133,98 @@ To follow Windows' light and dark mode, give a pair:
 theme = "light:Lit Cell Light,dark:Lit Cell"
 ```
 
-{/* Placeholders, so the footer's links land, until 2.3 writes these sections */}
-
 ## Shell integration
 
-To be written later.
+Shells can mark where each prompt, command and output starts, and how each command ended. Zinc uses the marks to:
+
+- Jump between prompts with <kbd>Ctrl+Shift+↑</kbd> and <kbd>Ctrl+Shift+↓</kbd>.
+- Copy or select a command's output, from the command palette or the right-click menu.
+- Show a red bar beside a failed command, and a mark on the scrollbar at each prompt.
+- Mark a tab when a long command finishes out of view: green when it succeeded, red when it failed.
+- Ask before closing a tab while a command is still running in it.
+- Reopen tabs in the folder they were in.
+
+### Which shells
+
+Most shells need nothing from you. Your startup files run as usual, and Zinc's script runs after them without changing anything you see.
+
+| Shell | Set up | Exit codes |
+|---|---|---|
+| PowerShell 7 and Windows PowerShell | Automatic | <Yes /> |
+| bash, in WSL, Git Bash and MSYS2 | Automatic | <Yes /> |
+| zsh | Automatic | <Yes /> |
+| elvish, OSH | Automatic | <Yes /> |
+| cmd | Automatic | <Partly>With Clink</Partly> |
+| fish, nushell | Built into the shell | <Yes /> |
+
+<Note title="Your prompt already sends marks?">
+Then Zinc leaves them to it, whether that's powerlevel10k's own integration or one you wrote, and adds only what's missing.
+</Note>
+
+### Turning it off
+
+To start shells exactly as they'd start anywhere else, turn it off for every profile, or for one:
+
+```toml title="config.toml"
+[terminal]
+shell-integration = "off"
+```
+
+If your startup files hand over to something else, such as tmux or `exec` into another shell, the marks don't follow. The scripts in the `ShellIntegration` folder next to `zinc.exe` show what to send from there.
+
+### Not reached yet {#not-yet}
+
+- bash in WSL, when your startup files replace `PROMPT_COMMAND` instead of adding to it. Git Bash is fine.
+- elvish inside WSL, YSH and xonsh.
+- Exit codes in cmd without Clink.
 
 ## The zn CLI {#zn}
 
-To be written later.
+`zn` opens, arranges and closes windows, workspaces, panes and terminals in the running Zinc. It can also type into a terminal and read what it shows, so scripts can set up your work for you.
+
+### Turn it on {#turn-on}
+
+Remote control is off until you turn it on, in `Settings > Terminal > Command line` or in your config:
+
+```toml title="config.toml"
+[cli]
+remote-control = true
+```
+
+Inside Zinc, `zn` is already on your `PATH`. To use it from other terminals too, turn on **Use zn in other terminals**.
+
+### Examples
+
+```sh title="Any shell"
+zn list                                     # everything open, with ids
+zn pane split right -- htop                 # a pane beside this one, running htop
+zn terminal new --pane 4 --profile wsl:Fedora
+zn workspace new --name api --cwd .         # a workspace in this folder
+zn terminal send --terminal 5 ":w\r"        # types into terminal 5 (\r is Enter)
+zn terminal read --terminal 7 --lines 20    # the last 20 lines of terminal 7
+zn workspace color teal                     # this workspace's color
+zn action "zoom-in"                         # any action, by its name
+```
+
+### Commands
+
+Commands are `zn <thing> <verb>`.
+
+| Thing | Verbs |
+|---|---|
+| `window` | list, new, focus, close |
+| `workspace` | list, new, focus, close, rename, color, icon, move |
+| `pane` | list, split, focus, close |
+| `terminal` | list, new, send, read, title, focus, move, close |
+
+Run inside Zinc, a command acts on the terminal it runs in, and on that terminal's pane, workspace and window. `--terminal`, `--pane`, `--workspace` and `--window` aim elsewhere, using ids from `zn list`. Add `--json` for output scripts can read, and run `zn <thing> --help` for the rest.
+
+### Exit codes
+
+| Code | Meaning |
+|---|---|
+| `0` | Done |
+| `1` | Refused or failed |
+| `2` | Wrong usage |
+| `3` | Zinc isn't running |
+| `4` | Remote control is off |
