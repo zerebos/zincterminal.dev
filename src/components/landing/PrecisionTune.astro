@@ -1,0 +1,53 @@
+---
+// Precision, in how you tune it... four points beside the Settings window
+import Mock from "../mock/Mock.astro";
+import SettingsMock from "../mock/SettingsMock.astro";
+import Points from "../site/Points.astro";
+import Section from "../site/Section.astro";
+import SectionIntro from "../site/SectionIntro.astro";
+
+const points = [
+    {title: "Explained in plain words", text: "The config key sits underneath, for when you'd rather edit the file."},
+    {title: "Saved to config.toml and applied", text: "No Save button. Undo puts the file back as it was when Settings opened."},
+    {title: "Inheritance you can see", text: "A profile shows where a value comes from until it has its own."},
+    {title: "A way back on every change", text: "The reset arrow appears only when a setting differs, and says where it goes back to."}
+];
+---
+<Section labelledby="tune-title">
+    <div class="layout">
+        <div class="copy">
+            <SectionIntro eyebrow="Precision, in how you tune it" title="Every setting says what it does" titleId="tune-title">
+                Plain words for each one, a live preview as you go, applied the moment you change it, one click from undo.
+            </SectionIntro>
+            <Points items={points} />
+            <p class="more">Hundreds of settings, each one explained like these.</p>
+        </div>
+        <Mock class="tune-mock">
+            <SettingsMock />
+        </Mock>
+    </div>
+</Section>
+
+<style>
+    .layout {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 56px;
+        align-items: center;
+    }
+
+    .copy {
+        flex: 1 1 340px;
+        min-width: 0;
+    }
+
+    .more {
+        margin: 32px 0 0;
+        font: 400 14px/20px var(--font-sans);
+        color: var(--ink-muted);
+    }
+
+    .layout :global(.tune-mock) {
+        flex: 1.6 1 600px;
+    }
+</style>

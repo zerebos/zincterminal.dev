@@ -1,0 +1,82 @@
+.zn-sidebar {
+    width: 220px;
+    box-sizing: border-box;
+    padding: 6px;
+    display: flex;
+    flex-direction: column;
+    gap: 2px;
+    background: var(--mica);
+}
+
+.zn-sidebar.zn-rail {
+    width: 52px;
+}
+
+.zn-ws {
+    display: grid;
+    grid-template-columns: 16px 1fr 16px;
+    column-gap: 10px;
+    align-items: center;
+    height: 36px;
+    padding: 0 8px 0 12px;
+    border-radius: var(--radius-sm);
+    position: relative;
+    font: 400 14px/20px var(--font-sans);
+}
+
+.zn-rail .zn-ws {
+    grid-template-columns: 16px;
+    justify-content: center;
+    padding: 0;
+}
+
+/* a class keeps the ARIA valid in a mock-up */
+.zn-ws.selected {
+    background: var(--subtle-selected);
+}
+
+.zn-ws.selected::before {
+    content: "";
+    position: absolute;
+    left: 0;
+    top: 10px;
+    width: 3px;
+    height: 16px;
+    border-radius: 1.5px;
+    background: var(--accent);
+}
+
+.zn-ws-icon {
+    width: 16px;
+    height: 16px;
+    position: relative;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: var(--text-primary);
+}
+
+.zn-ws-icon svg {
+    width: 15px;
+    height: 15px;
+}
+
+.zn-ws-title {
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+.zn-ws-slot {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.zn-ws-new {
+    color: var(--text-secondary);
+}
+
+.zn-sidebar .zn-ws-new {
+    margin-top: auto;
+}

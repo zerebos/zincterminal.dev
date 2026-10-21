@@ -119,3 +119,23 @@
     background: var(--seg);
     clip-path: polygon(0 0, 100% 50%, 0 100%);
 }
+
+/* A palette swatch two cells wide, and the eighth-block ramp ▁ to █ */
+.zn-term .sw16 {
+    display: inline-block;
+    width: 2ch;
+    height: var(--cell-h);
+    vertical-align: top;
+}
+
+.zn-term .ramp {
+    display: inline-flex;
+    align-items: flex-end;
+    height: var(--cell-h);
+    vertical-align: top;
+}
+
+.zn-term .ramp span {
+    width: 1ch;
+    background: currentColor;
+}

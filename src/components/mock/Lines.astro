@@ -10,6 +10,7 @@ interface Props {
 
 const {lines} = Astro.props;
 const armClasses = (arms: string) => [...arms].map(arm => `b${arm}`);
+const eighths = [1, 2, 3, 4, 5, 6, 7, 8].map(n => `${n * 12.5}%`);
 ---
 {lines.map(line => (
     <span class="ln">{line.length === 0 ? " " : line.map(segment => {
@@ -17,8 +18,10 @@ const armClasses = (arms: string) => [...arms].map(arm => `b${arm}`);
         if (segment.kind === "styled") return <span class={segment.style}>{segment.text}</span>;
         if (segment.kind === "quad") return <span class="q" style={segment.color ? `color: ${termVar(segment.color)}` : undefined} />;
         if (segment.kind === "box") {
-            return <span class:list={["zn-bx", segment.full ? "full" : armClasses(segment.arms)]} style={segment.width > 1 ? `width: ${segment.width}ch` : undefined} />;
+            return <span class:list={["zn-bx", segment.full ? "full" : armClasses(segment.arms), segment.style]} style={segment.width > 1 ? `width: ${segment.width}ch` : undefined} />;
         }
+        if (segment.kind === "swatch") return <span class="sw16" style={`background: ${termVar(segment.color)}`} />;
+        if (segment.kind === "ramp") return <span class:list={["ramp", segment.style]}>{eighths.map(height => <span style={`height: ${height}`} />)}</span>;
         return segment.segments.map(([text, color], i) => {
             const next = segment.segments[i + 1];
             return <><span class="zn-pl" style={`--seg: ${termVar(color)}`}>{text}</span><span class="zn-pl-sep" style={`--seg: ${termVar(color)}${next ? `; --next: ${termVar(next[1])}` : ""}`} /></>;

@@ -5,6 +5,7 @@ import Footer from "../components/site/Footer.astro";
 import Header from "../components/site/Header.astro";
 import Hero from "../components/landing/Hero.astro";
 import PrecisionDraws from "../components/landing/PrecisionDraws.astro";
+import PrecisionTune from "../components/landing/PrecisionTune.astro";
 import {links, type FooterColumn, type NavLink} from "../data/site";
 
 const nav: NavLink[] = [
@@ -53,6 +54,7 @@ const footer: FooterColumn[] = [
     <main>
         <Hero />
         <PrecisionDraws />
+        <PrecisionTune />
         <section id="workflow" class="sec skeleton" aria-label="Workflow"></section>
         <section id="windows" class="sec skeleton" aria-label="Native Windows"></section>
         <section id="themes" class="sec skeleton" aria-label="Make it yours"></section>

@@ -1,0 +1,94 @@
+.zn-app {
+    background: var(--mica);
+    color: var(--text-primary);
+    font: 400 14px/20px var(--font-sans);
+}
+
+.zn-setting-text {
+    display: flex;
+    flex-direction: column;
+    gap: 1px;
+    min-width: 0;
+}
+
+.zn-setting-name {
+    display: flex;
+    align-items: center;
+    gap: 4px;
+}
+
+.zn-setting-desc {
+    font: 400 12px/16px var(--font-sans);
+    color: var(--text-secondary);
+}
+
+.zn-setting-desc a {
+    color: var(--accent-text);
+    text-decoration: none;
+}
+
+.zn-setting-key {
+    font: 400 11px/16px var(--font-cascadia);
+    color: var(--text-tertiary);
+}
+
+.zn-reset {
+    width: 24px;
+    height: 24px;
+    margin: -4px 0;
+    padding: 5px;
+    border: 0;
+    border-radius: var(--radius-sm);
+    background: transparent;
+    color: var(--text-secondary);
+    cursor: pointer;
+    box-sizing: border-box;
+}
+
+.zn-reset:hover {
+    background: var(--subtle-selected);
+}
+
+.zn-reset svg {
+    width: 14px;
+    height: 14px;
+    display: block;
+}
+
+.zn-select {
+    width: 280px;
+    height: 32px;
+    box-sizing: border-box;
+    padding: 0 11px;
+    border-radius: var(--radius-sm);
+    border: 1px solid var(--control-stroke);
+    background: var(--control-fill);
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    font: 400 14px/20px var(--font-sans);
+}
+
+.zn-select svg {
+    width: 12px;
+    height: 12px;
+    color: var(--text-secondary);
+}
+
+.zn-undo {
+    display: inline-flex;
+    align-items: center;
+    gap: 12px;
+    padding: 8px 8px 8px 16px;
+    border-radius: var(--radius-md);
+    border: 1px solid var(--flyout-stroke);
+    background: var(--solid-tertiary);
+    box-shadow: var(--elevation-2);
+}
+
+.zn-undo svg {
+    width: 14px;
+    height: 14px;
+    color: var(--accent-text);
+    flex: none;
+}

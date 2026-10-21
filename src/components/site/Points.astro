@@ -1,0 +1,44 @@
+---
+// A list of points, each marked with a lit cell
+import LitCell from "./LitCell.astro";
+
+interface Props {
+    items: Array<{title: string, text: string;}>;
+    class?: string;
+}
+
+const {items, class: className} = Astro.props;
+---
+<ul class:list={["points", className]}>
+    {items.map(item => (
+        <li><LitCell pitch={12} style="margin-top: 4px" /><span><b>{item.title}</b><span class="text">{item.text}</span></span></li>
+    ))}
+</ul>
+
+<style>
+    .points {
+        list-style: none;
+        margin: 32px 0 0;
+        padding: 0;
+        display: flex;
+        flex-direction: column;
+        gap: 20px;
+    }
+
+    li {
+        display: grid;
+        grid-template-columns: 12px 1fr;
+        column-gap: 14px;
+    }
+
+    b {
+        display: block;
+        font: 600 14px/20px var(--font-sans);
+        color: var(--ink);
+    }
+
+    .text {
+        font: 400 14px/20px var(--font-sans);
+        color: var(--ink-muted);
+    }
+</style>
