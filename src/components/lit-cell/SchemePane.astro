@@ -102,4 +102,80 @@ const lines = sample.map(line => (isSampleLine(line) ? line : {spans: line, no: 
         background: var(--lc-base-cursor);
         color: var(--lc-base-cursor-text);
     }
+
+    /* Editor roles, from lit-cell's roles.tokens.json */
+    .no {
+        display: inline-block;
+        width: 3ch;
+        text-align: right;
+        margin-right: 2ch;
+        color: var(--lc-role-interface-line-number);
+    }
+
+    .l.cur {
+        background: var(--lc-role-interface-current-line);
+    }
+
+    .l.cur .no {
+        color: var(--lc-role-interface-line-number-active);
+    }
+
+    .sa {
+        background: var(--lc-role-interface-search-active);
+    }
+
+    /* Diffs keep their + and - markers, so colour is never the only signal */
+    .file-header {
+        color: var(--lc-role-diff-file-header);
+        font-weight: 600;
+    }
+
+    .extended-header {
+        color: var(--lc-role-diff-extended-header);
+    }
+
+    .hunk-header {
+        color: var(--lc-role-diff-hunk-header);
+    }
+
+    .l.add {
+        background: var(--lc-role-diff-added-line);
+    }
+
+    .l.del {
+        background: var(--lc-role-diff-removed-line);
+    }
+
+    .wadd {
+        background: var(--lc-role-diff-added-text);
+    }
+
+    .wdel {
+        background: var(--lc-role-diff-removed-text);
+    }
+
+    /* Each severity has its own underline shape as well as its colour */
+    .ew {
+        text-decoration: underline wavy var(--lc-role-diagnostics-error);
+        text-decoration-thickness: 1.5px;
+        text-underline-offset: 4px;
+    }
+
+    .wd {
+        text-decoration: underline dashed var(--lc-role-diagnostics-warning);
+        text-decoration-thickness: 1.5px;
+        text-underline-offset: 4px;
+    }
+
+    .id {
+        text-decoration: underline dotted var(--lc-role-diagnostics-info);
+        text-decoration-thickness: 2px;
+        text-underline-offset: 4px;
+    }
+
+    .hd {
+        text-decoration: underline dotted var(--lc-role-diagnostics-hint);
+        text-decoration-thickness: 2px;
+        text-underline-offset: 4px;
+    }
 </style>

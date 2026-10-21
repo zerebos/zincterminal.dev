@@ -1,0 +1,185 @@
+---
+// In use... code, diffs and diagnostics in both variants, with a switch for one or both
+import SchemePane from "./SchemePane.astro";
+import ViewSwitch from "./ViewSwitch.svelte";
+import type {Sample} from "./scheme";
+import Section from "../site/Section.astro";
+import SectionIntro from "../site/SectionIntro.astro";
+import {litCell} from "../../data/lit-cell";
+import {codeSample, diagnosticsSample, diffSample} from "../../data/lit-cell-samples";
+
+interface Row {
+    title: string;
+    text: string;
+    roles: Array<[role: string, use: string]>;
+    detail: string;
+    sample: Sample;
+    label: (name: string) => string;
+}
+
+const rows: Row[] = [
+    {
+        title: "Code",
+        text: "Colours are categories in code, so amber marks constants here, not warnings.",
+        roles: [
+            ["keywords", "magenta"],
+            ["strings", "green, escapes bright yellow"],
+            ["functions", "blue, decorators bright blue"],
+            ["types", "cyan, properties bright cyan"],
+            ["comments", "bright black"],
+            ["current line", "surface-raised, active match search-active"]
+        ],
+        detail: "cell.py",
+        sample: codeSample,
+        label: name => `Python source in ${name}`
+    },
+    {
+        title: "Diffs",
+        text: "Added lines are green and removed lines red, each on its own tint. The + and - markers always stay, and the changed words get a stronger tint.",
+        roles: [
+            ["file headers", "foreground, bold"],
+            ["hunk headers", "cyan"],
+            ["diff-added-line", "green, 12%"],
+            ["diff-added-text", "green, 25%"],
+            ["diff-removed-line", "red, 12%"],
+            ["diff-removed-text", "red, 25%"]
+        ],
+        detail: "git diff",
+        sample: diffSample,
+        label: name => `A git diff in ${name}, with plus and minus markers`
+    },
+    {
+        title: "Diagnostics",
+        text: "Severity shows in the underline's shape as well as its colour, and in the word in front of it.",
+        roles: [
+            ["error", "red, wavy"],
+            ["warning", "amber, dashed"],
+            ["info", "blue, dotted"],
+            ["hint", "cyan, dotted"]
+        ],
+        detail: "check src/glow.py",
+        sample: diagnosticsSample,
+        label: name => `Type checker output in ${name}: an error, a warning, an info note and a hint, each with its own underline shape`
+    }
+];
+
+const variants = [litCell.dark, litCell.light];
+---
+<Section id="in-use" labelledby="use-title" padding={104}>
+    <div class="head">
+        <div class="intro">
+            <SectionIntro eyebrow="In use" title="Colour carries meaning, never alone" titleId="use-title" titleWidth="24ch" leadWidth="62ch">
+                Most text stays in the foreground colour. Red, amber and green mean one thing each, and every one of them comes with a marker, a symbol or an underline shape, so nothing depends on telling red from green.
+            </SectionIntro>
+        </div>
+        <ViewSwitch client:visible target="in-use-rows" />
+    </div>
+
+    <div class="rows" id="in-use-rows" data-view="both">
+        {rows.map(row => (
+            <div class="srow">
+                <div>
+                    <h3>{row.title}</h3>
+                    <p>{row.text}</p>
+                    <ul class="roles">
+                        {row.roles.map(([role, use]) => <li><code>{role}</code> {use}</li>)}
+                    </ul>
+                </div>
+                <div class="pair">
+                    {variants.map(v => <SchemePane variant={v.id} name={v.name} detail={row.detail} sample={row.sample} label={row.label(v.name)} />)}
+                </div>
+            </div>
+        ))}
+    </div>
+</Section>
+
+<style>
+    .head {
+        display: flex;
+        flex-wrap: wrap;
+        align-items: flex-end;
+        justify-content: space-between;
+        gap: 24px;
+    }
+
+    .intro {
+        min-width: 0;
+    }
+
+    .rows {
+        margin-top: 48px;
+    }
+
+    .srow {
+        display: grid;
+        grid-template-columns: 260px minmax(0, 1fr);
+        gap: 40px;
+        align-items: start;
+        padding: 32px 0;
+        border-top: 1px solid var(--line);
+    }
+
+    .srow:first-child {
+        border-top: 0;
+        padding-top: 0;
+    }
+
+    h3 {
+        margin: 0;
+        font: 600 20px/28px var(--font-display);
+    }
+
+    .srow p {
+        margin: 8px 0 0;
+        color: var(--ink-muted);
+    }
+
+    .roles {
+        list-style: none;
+        margin: 16px 0 0;
+        padding: 0;
+        display: flex;
+        flex-direction: column;
+        gap: 6px;
+        font: 400 13px/18px var(--font-sans);
+        color: var(--ink-muted);
+    }
+
+    .roles li {
+        display: flex;
+        gap: 8px;
+        align-items: baseline;
+    }
+
+    .roles code {
+        font: 400 12px/18px var(--font-mono);
+        color: var(--ink);
+    }
+
+    /* The view switch sets `data-view`... one variant on its own, or both side by side */
+    .pair {
+        display: grid;
+        grid-template-columns: minmax(0, 1fr);
+        gap: 16px;
+    }
+
+    .rows[data-view="both"] .pair {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
+
+    .rows[data-view="dark"] .pair :global(.lc-light),
+    .rows[data-view="light"] .pair :global(.lc-dark) {
+        display: none;
+    }
+
+    @media (max-width: 900px) {
+        .srow {
+            grid-template-columns: minmax(0, 1fr);
+            gap: 16px;
+        }
+
+        .rows[data-view="both"] .pair {
+            grid-template-columns: minmax(0, 1fr);
+        }
+    }
+</style>

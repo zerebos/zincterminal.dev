@@ -3,6 +3,7 @@ import Base from "../layouts/Base.astro";
 import Footer from "../components/site/Footer.astro";
 import Header from "../components/site/Header.astro";
 import HeroPair from "../components/lit-cell/HeroPair.astro";
+import InUse from "../components/lit-cell/InUse.astro";
 import LitCellHero from "../components/lit-cell/LitCellHero.astro";
 import PaletteSection from "../components/lit-cell/PaletteSection.astro";
 import ZincNod from "../components/lit-cell/ZincNod.astro";
@@ -56,6 +57,7 @@ const footer: FooterColumn[] = [
             <HeroPair />
         </LitCellHero>
         <PaletteSection />
+        <InUse />
         <ZincNod />
     </main>
     <Footer columns={footer}>
