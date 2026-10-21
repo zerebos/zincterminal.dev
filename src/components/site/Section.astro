@@ -6,13 +6,19 @@ interface Props {
     /** The id of the heading that names the section */
     labelledby?: string;
 
+    /** Names the section when it has no heading */
+    label?: string;
+
+    /** Space above and below in px, 112 by default. Phones get 72 unless it's 0. */
+    padding?: number;
+
     /** Classes for the page column, for sections that lay out their own columns */
     class?: string;
 }
 
-const {id, labelledby, class: className} = Astro.props;
+const {id, labelledby, label, padding = 112, class: className} = Astro.props;
 ---
-<section class="sec" id={id} aria-labelledby={labelledby}>
+<section class:list={["sec", {flush: padding === 0}]} id={id} aria-labelledby={labelledby} aria-label={label} style={`--sec-pad: ${padding}px`}>
     <div class:list={["wrap", className]}>
         <slot />
     </div>
@@ -20,12 +26,12 @@ const {id, labelledby, class: className} = Astro.props;
 
 <style>
     .sec {
-        padding: 112px 0;
+        padding: var(--sec-pad) 0;
         border-top: 1px solid var(--line);
     }
 
     @media (max-width: 640px) {
-        .sec {
+        .sec:not(.flush) {
             padding: 72px 0;
         }
     }

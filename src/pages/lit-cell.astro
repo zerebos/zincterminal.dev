@@ -1,0 +1,59 @@
+---
+import Base from "../layouts/Base.astro";
+import Footer from "../components/site/Footer.astro";
+import Header from "../components/site/Header.astro";
+import LitCellHero from "../components/lit-cell/LitCellHero.astro";
+import ZincNod from "../components/lit-cell/ZincNod.astro";
+import {links, type FooterColumn, type NavLink} from "../data/site";
+
+const nav: NavLink[] = [
+    {label: "Zinc", href: "/", optional: true},
+    {label: "Lit Cell", href: "/lit-cell", current: true},
+    {label: "Install", href: "#install"},
+    {label: "Spec", href: links.litCellSpec, optional: true},
+    {label: "GitHub", href: links.litCellRepo, optional: true}
+];
+
+const footer: FooterColumn[] = [
+    {
+        title: "Product",
+        links: [
+            {label: "Features", href: "/#precision"},
+            {label: "Themes", href: "/#themes"},
+            {label: "Lit Cell", href: "/lit-cell"},
+            {label: "Changelog", href: links.changelog}
+        ]
+    },
+    {
+        title: "Lit Cell",
+        links: [
+            {label: "Install", href: "#install"},
+            {label: "Spec", href: links.litCellSpec},
+            {label: "Source on GitHub", href: links.litCellRepo},
+            {label: "iTerm2-Color-Schemes", href: links.iterm2Schemes}
+        ]
+    },
+    {
+        title: "Project",
+        links: [
+            {label: "Source on GitHub", href: links.zincRepo},
+            {label: "Releases", href: links.zincReleases},
+            {label: "Report an issue", href: links.zincIssues},
+            {label: "About", href: links.about}
+        ]
+    }
+];
+---
+<Base
+    title="Lit Cell, a colour scheme for any terminal"
+    description="A phosphor screen, not a neon sign. A dark, quiet ground with a faint green cast, a mint phosphor green, warm amber and soft pastels you can read all day."
+>
+    <Header links={nav} hairline="always" mobile="collapse" />
+    <main>
+        <LitCellHero />
+        <ZincNod />
+    </main>
+    <Footer columns={footer}>
+        <Fragment slot="legal">© 2026 Zerebos · Lit Cell is MIT licensed</Fragment>
+    </Footer>
+</Base>

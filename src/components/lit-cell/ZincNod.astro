@@ -1,0 +1,43 @@
+---
+// A single band linking Lit Cell back to Zinc
+import Section from "../site/Section.astro";
+---
+<Section label="Lit Cell in Zinc" padding={0}>
+    <div class="nod">
+        <img src="/brand/app-icon-48.png" alt="" width="48" height="48">
+        <p>Lit Cell is the default scheme in <span class="zinc">Zinc</span>, a precise, native terminal for Windows. The name comes from Zinc's mark, which is made of lit terminal cells.</p>
+        <a class="textlink" href="/">Meet Zinc</a>
+    </div>
+</Section>
+
+<style>
+    .nod {
+        display: flex;
+        align-items: center;
+        gap: 24px;
+        flex-wrap: wrap;
+        padding: 40px 0;
+    }
+
+    img {
+        flex: none;
+    }
+
+    p {
+        margin: 0;
+        flex: 1 1 420px;
+        font: 400 16px/24px var(--font-sans);
+        color: var(--ink-muted);
+    }
+
+    .zinc {
+        color: var(--ink);
+    }
+
+    .textlink {
+        font: 400 14px/20px var(--font-sans);
+        display: inline-flex;
+        align-items: center;
+        min-height: 44px;
+    }
+</style>
