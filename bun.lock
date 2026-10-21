@@ -7,6 +7,7 @@
       "dependencies": {
         "@astrojs/svelte": "^9.1.0",
         "astro": "^7.4.1",
+        "lit-cell": "github:zerebos/lit-cell",
         "svelte": "^5.57.2",
       },
       "devDependencies": {
@@ -685,6 +686,8 @@
     "lightningcss-win32-x64-msvc": ["lightningcss-win32-x64-msvc@1.33.0", "", { "os": "win32", "cpu": "x64" }, "sha512-OlEICDx/Xl0FqSp4bry8zFnCvGpig3Gl4gCquvYwHuqJKEC1+n9NgDniFvqHGmMv1ZkqDJrDqKKSykTDX+ehuA=="],
 
     "lilconfig": ["lilconfig@2.1.0", "", {}, "sha512-utWOt/GHzuUxnLKxB6dk81RoOeoNeHgbrXiuGk4yyF5qlRz+iIVWu56E2fqGHFrXz0QNUhLB/8nKqvRH66JKGQ=="],
+
+    "lit-cell": ["lit-cell@github:zerebos/lit-cell#eb6eb8e", {}, "zerebos-lit-cell-eb6eb8e", "sha512-4hyUu4TGIScm5h6LGlvIp/dGp3N3SkUmIpJSiTWJ+tqdiDLOk+YPQR15v3aQ2I05isAnMKU/oDYh3EuLRHauaQ=="],
 
     "locate-character": ["locate-character@3.0.0", "", {}, "sha512-SW13ws7BjaeJ6p7Q6CO2nchbYEc3X3J6WrmTTDto7yMPqVSZTUyY5Tjbid+Ab8gLnATtygYtiDIJGQRRn2ZOiA=="],
 

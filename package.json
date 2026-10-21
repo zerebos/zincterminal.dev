@@ -3,6 +3,7 @@
   "dependencies": {
     "@astrojs/svelte": "^9.1.0",
     "astro": "^7.4.1",
+    "lit-cell": "github:zerebos/lit-cell",
     "svelte": "^5.57.2"
   },
   "devDependencies": {
