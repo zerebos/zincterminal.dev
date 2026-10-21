@@ -1,0 +1,12 @@
+---
+// Install... a terminal picker and a variant switch, with each terminal's steps
+import InstallPicker from "./InstallPicker.svelte";
+import Section from "../site/Section.astro";
+import SectionIntro from "../site/SectionIntro.astro";
+---
+<Section id="install" labelledby="inst-title" padding={104}>
+    <SectionIntro eyebrow="Install" title="Get it into your terminal" titleId="inst-title" titleWidth="24ch" leadWidth="62ch">
+        Pick your terminal. Every folder in the repo holds both lit-cell and lit-cell-light.
+    </SectionIntro>
+    <InstallPicker client:visible />
+</Section>
