@@ -41,7 +41,7 @@ const missing = [
             <div><SectionIntro eyebrow="Private alpha" title="Try the alpha" titleId="install-title" /></div>
             <div class="buttons">
                 <Button href={links.discord} primary large>Request access</Button>
-                <Button href={links.zincRepo} large>View source on GitHub</Button>
+                {links.zincRepo && <Button href={links.zincRepo} large>View source on GitHub</Button>}
             </div>
             <p class="cap">Zinc is in private alpha and free. Request access through Zinc's Discord server; once you have it, the installer sets Zinc up for your account only and keeps it up to date. Current build: <span class="version">{release.version}</span> · {release.requirements}</p>
             <InstallCommand command="winget" comment="# coming soon" />
@@ -54,7 +54,7 @@ const missing = [
             <ul class="miss">
                 {missing.map(([what, status]) => <li><span>{what}</span><span>{status}</span></li>)}
             </ul>
-            <p class="roadmap"><a class="textlink" href={links.zincRoadmap}>See the roadmap on GitHub</a></p>
+            {links.zincRoadmap && <p class="roadmap"><a class="textlink" href={links.zincRoadmap}>See the roadmap on GitHub</a></p>}
         </div>
     </div>
 </Section>

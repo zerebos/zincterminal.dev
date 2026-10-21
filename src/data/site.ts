@@ -1,7 +1,8 @@
 import type {Release} from "../lib/zinc/types";
 import zincRelease from "./generated/zinc-release.json";
 
-// Undecided ones are "#" so they show as visible placeholders
+// Undecided ones are "#" so they show as visible placeholders. Zinc's GitHub links are null, and left
+// out wherever they appear, until the Zinc repo is public.
 
 export const links = {
     discord: "https://discord.gg/Fq7WMRDPWu",
@@ -11,16 +12,22 @@ export const links = {
     iterm2Schemes: "https://github.com/mbadolato/iTerm2-Color-Schemes",
     libghostty: "https://github.com/ghostty-org/ghostty",
 
+    docs: "/docs",
+    changelog: "/changelog",
+    thirdPartyNotices: "/notices",
+
     // Undecided until after the alpha
-    zincRepo: "#",
-    zincReleases: "#",
-    zincIssues: "#",
-    zincRoadmap: "#",
-    docs: "#",
-    changelog: "#",
     license: "#",
-    thirdPartyNotices: "#"
-} as const;
+
+    // Hidden until the Zinc repo is public
+    zincRepo: null as string | null,
+    zincReleases: null as string | null,
+    zincIssues: null as string | null,
+    zincRoadmap: null as string | null
+};
+
+/** Where to report an issue... the Zinc repo's issues once it's public, Discord until then */
+export const reportIssue = links.zincIssues ?? links.discord;
 
 // The newest build in Zinc's changelog, from `bun run sync:zinc`
 const latest: Release = zincRelease;
@@ -46,3 +53,40 @@ export interface FooterColumn {
     title: string;
     links: NavLink[];
 }
+
+/** Leaves out links that are hidden for now */
+export const shown = <T extends {href: string | null}>(items: T[]) => items.filter((item): item is T & {href: string} => item.href !== null);
+
+/** The footer's columns, shared by every page. The Lit Cell page swaps the middle one for its own. */
+export const footerProduct: FooterColumn = {
+    title: "Product",
+    links: [
+        {label: "Features", href: "/#precision"},
+        {label: "Themes", href: "/#themes"},
+        {label: "Lit Cell", href: "/lit-cell"},
+        {label: "Changelog", href: links.changelog},
+        {label: "Request access", href: links.discord}
+    ]
+};
+
+export const footerDocs: FooterColumn = {
+    title: "Docs",
+    links: [
+        {label: "Getting started", href: `${links.docs}#getting-started`},
+        {label: "Configuration", href: `${links.docs}#configuration`},
+        {label: "Shell integration", href: `${links.docs}#shell-integration`},
+        {label: "The zn CLI", href: `${links.docs}#zn`}
+    ]
+};
+
+export const footerProject: FooterColumn = {
+    title: "Project",
+    links: shown([
+        {label: "Source on GitHub", href: links.zincRepo},
+        {label: "Releases", href: links.zincReleases},
+        {label: "Report an issue", href: reportIssue},
+        {label: "Third-party notices", href: links.thirdPartyNotices}
+    ])
+};
+
+export const footer: FooterColumn[] = [footerProduct, footerDocs, footerProject];

@@ -9,7 +9,7 @@ import LitCellHero from "../components/lit-cell/LitCellHero.astro";
 import PaletteSection from "../components/lit-cell/PaletteSection.astro";
 import PortIt from "../components/lit-cell/PortIt.astro";
 import ZincNod from "../components/lit-cell/ZincNod.astro";
-import {links, type FooterColumn, type NavLink} from "../data/site";
+import {footerProduct, footerProject, links, type FooterColumn, type NavLink} from "../data/site";
 
 const nav: NavLink[] = [
     {label: "Zinc", href: "/", optional: true},
@@ -20,15 +20,7 @@ const nav: NavLink[] = [
 ];
 
 const footer: FooterColumn[] = [
-    {
-        title: "Product",
-        links: [
-            {label: "Features", href: "/#precision"},
-            {label: "Themes", href: "/#themes"},
-            {label: "Lit Cell", href: "/lit-cell"},
-            {label: "Changelog", href: links.changelog}
-        ]
-    },
+    footerProduct,
     {
         title: "Lit Cell",
         links: [
@@ -38,14 +30,7 @@ const footer: FooterColumn[] = [
             {label: "iTerm2-Color-Schemes", href: links.iterm2Schemes}
         ]
     },
-    {
-        title: "Project",
-        links: [
-            {label: "Source on GitHub", href: links.zincRepo},
-            {label: "Releases", href: links.zincReleases},
-            {label: "Report an issue", href: links.zincIssues}
-        ]
-    }
+    footerProject
 ];
 ---
 <Base

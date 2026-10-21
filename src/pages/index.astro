@@ -11,45 +11,15 @@ import NativeWindows from "../components/landing/NativeWindows.astro";
 import Themes from "../components/landing/Themes.astro";
 import TryAlpha from "../components/landing/TryAlpha.astro";
 import Workflow from "../components/landing/Workflow.astro";
-import {links, type FooterColumn, type NavLink} from "../data/site";
+import {footer, links, shown, type NavLink} from "../data/site";
 
-const nav: NavLink[] = [
+const nav: NavLink[] = shown([
     {label: "Precision", href: "#precision"},
     {label: "Workflow", href: "#workflow"},
     {label: "Themes", href: "#themes"},
     {label: "Docs", href: links.docs},
     {label: "GitHub", href: links.zincRepo}
-];
-
-const footer: FooterColumn[] = [
-    {
-        title: "Product",
-        links: [
-            {label: "Features", href: "#precision"},
-            {label: "Themes", href: "#themes"},
-            {label: "Lit Cell", href: "/lit-cell"},
-            {label: "Changelog", href: links.changelog},
-            {label: "Request access", href: links.discord}
-        ]
-    },
-    {
-        title: "Docs",
-        links: [
-            {label: "Getting started", href: links.docs},
-            {label: "Configuration", href: links.docs},
-            {label: "Shell integration", href: links.docs},
-            {label: "The zn CLI", href: links.docs}
-        ]
-    },
-    {
-        title: "Project",
-        links: [
-            {label: "Source on GitHub", href: links.zincRepo},
-            {label: "Releases", href: links.zincReleases},
-            {label: "Report an issue", href: links.zincIssues}
-        ]
-    }
-];
+]);
 ---
 <Base
     title="Zinc, a precise, native terminal for Windows"
