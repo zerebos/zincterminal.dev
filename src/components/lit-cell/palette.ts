@@ -61,3 +61,26 @@ export function panels(): Panel[] {
         };
     });
 }
+
+export interface DerivedRow {
+    role: string;
+
+    /** How it's made, such as "foreground, 4%" */
+    mix: string;
+    dark: string;
+    light: string;
+}
+
+/** The derived colours for the Port it table, in token order... surfaces, then tints */
+export function derivedRows(): DerivedRow[] {
+    const derived = [...litCell.dark.colors.ui, ...litCell.dark.colors.tint];
+    return derived.map(c => {
+        const from = c.mix ? spaced(c.mix.color.split(".")[1] ?? c.mix.color) : "";
+        return {
+            role: c.key,
+            mix: c.mix ? `${from}, ${Math.round(c.mix.amount * 100)}%` : "",
+            dark: c.hex,
+            light: litCell.light.byPath.get(c.path)?.hex ?? ""
+        };
+    });
+}

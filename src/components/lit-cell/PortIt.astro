@@ -1,0 +1,84 @@
+---
+// Port it... the spec's principles beside the derived-colours table
+import DerivedTable from "./DerivedTable.svelte";
+import {derivedRows} from "./palette";
+import Button from "../site/Button.astro";
+import Points from "../site/Points.astro";
+import Section from "../site/Section.astro";
+import SectionIntro from "../site/SectionIntro.astro";
+import {links} from "../../data/site";
+
+const principles = [
+    {title: "A phosphor screen, not a neon sign", text: "A dark, quiet ground. Most text stays in the foreground colour."},
+    {title: "Green is the signature", text: "The cursor, the active thing and success. Where attention belongs, not everywhere."},
+    {title: "Status colours mean one thing", text: "Red is errors, amber is warnings, green is success. Never decoration."},
+    {title: "No new hues", text: "Need another shade? Mix palette colours by a set amount, never pick one by eye."}
+];
+---
+<Section id="port" labelledby="port-title" padding={104}>
+    <div class="layout">
+        <div class="spec">
+            <SectionIntro eyebrow="Port it" title="Bring Lit Cell to your editor" titleId="port-title" titleWidth="24ch" leadWidth="62ch">
+                The spec says what each colour is for, so ports agree on meaning, not just hex values. It covers syntax, diagnostics, diffs, interface roles and how to derive anything a terminal palette leaves out.
+            </SectionIntro>
+            <Points items={principles} class="princ" />
+            <div class="buttons">
+                <Button href={links.litCellSpec} primary>Read SPEC.md</Button>
+                <Button href={links.litCellIssues}>List your port</Button>
+            </div>
+            <p class="ports">Ports in other repositories are welcome. Open an issue with a link and it will be listed in the main README.</p>
+        </div>
+        <div class="derived">
+            <h3>Derived colours</h3>
+            <p>Surfaces mix foreground into background. Tints mix a palette colour into background.</p>
+            <DerivedTable client:visible rows={derivedRows()} />
+        </div>
+    </div>
+</Section>
+
+<style>
+    .layout {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 56px;
+        align-items: flex-start;
+    }
+
+    .spec {
+        flex: 1 1 380px;
+        min-width: 0;
+    }
+
+    .spec :global(.princ) {
+        margin-top: 24px;
+        gap: 16px;
+    }
+
+    .buttons {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 12px;
+        margin-top: 32px;
+    }
+
+    .ports {
+        margin: 16px 0 0;
+        font: 400 13px/20px var(--font-sans);
+        color: var(--ink-muted);
+    }
+
+    .derived {
+        flex: 1.2 1 440px;
+        min-width: 0;
+    }
+
+    h3 {
+        margin: 0 0 4px;
+        font: 600 16px/24px var(--font-display);
+    }
+
+    .derived p {
+        margin: 0 0 12px;
+        color: var(--ink-muted);
+    }
+</style>
