@@ -22,7 +22,7 @@ const stateClass = (state: AttentionState) => ({"zn-dot-caution": state === "cau
 ---
 <div class="zn-sidebar" style={style}>
     {workspaces.map(ws => (
-        <div class:list={["zn-ws", {selected: ws.selected}]}>
+        <div class:list={["zn-ws", {selected: ws.selected, colored: ws.colored}]}>
             <span class="zn-ws-icon"><svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.1" aria-hidden="true" set:html={icons[ws.icon]} /></span>
             <span class="zn-ws-title">{ws.name}</span>
             <span class="zn-ws-slot">

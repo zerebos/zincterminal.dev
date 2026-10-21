@@ -1,12 +1,15 @@
 ---
 // Make it yours... Lit Cell and Lit Cell Light first, then the tuned setups
 import Shot from "../mock/Shot.astro";
+import Tabs from "../mock/Tabs.astro";
 import Term from "../mock/Term.astro";
 import TitleBar from "../mock/TitleBar.astro";
+import TitleRow from "../mock/TitleRow.astro";
 import Window from "../mock/Window.astro";
+import WorkspaceSidebar from "../mock/WorkspaceSidebar.astro";
 import Section from "../site/Section.astro";
 import SectionIntro from "../site/SectionIntro.astro";
-import {litCellSample} from "../../data/mocks/gallery";
+import {litCellSample, nightfall, nightfallWorkspaces, overnightSlumber, peppermint, peppermintWorkspaces, pyrokaiLight} from "../../data/mocks/gallery";
 
 // Each tile pins its window to a site theme, so it keeps its scheme whatever theme the page is in
 const litCellTiles = [
@@ -29,6 +32,42 @@ const litCellTiles = [
             </Shot>
         ))}
     </div>
+
+    <div class="gal4">
+        <Shot name="Nightfall" caption="Consolas 12 pt · workspaces in the sidebar, extra padding, block cursor" label="Placeholder mock-up">
+            <Window label="Zinc in the Nightfall scheme, with workspaces in the sidebar" class="scheme-nightfall">
+                <TitleRow />
+                <div class="split">
+                    <WorkspaceSidebar workspaces={nightfallWorkspaces} style="width: 132px" />
+                    <Term lines={nightfall} class="fill consolas" style="padding: 16px" />
+                </div>
+            </Window>
+        </Shot>
+        <Shot name="Overnight Slumber" caption="JetBrains Mono NF 11 pt · tabs, bar cursor" label="Placeholder mock-up">
+            <Window label="Zinc in the Overnight Slumber scheme, with tabs along the top" class="scheme-overnight">
+                <TitleBar tabs={[{name: "pwsh", selected: true, slot: "close"}, {name: "nvim"}]} />
+                <Term lines={overnightSlumber} class="jetbrains" style="padding: 6px" />
+            </Window>
+        </Shot>
+        <Shot name="Peppermint" caption="Lucida Console 13 pt · workspaces in the sidebar with tabs inside, outlined block cursor" label="Placeholder mock-up">
+            <Window label="Zinc in the Peppermint scheme, with workspaces in the sidebar and tabs inside each workspace" class="scheme-peppermint">
+                <TitleRow />
+                <div class="split">
+                    <WorkspaceSidebar workspaces={peppermintWorkspaces} style="width: 132px" />
+                    <div class="column">
+                        <Tabs tabs={[{name: "cmd", selected: true, slot: "close"}, {name: "build"}]} minWidth={88} style="flex: none" />
+                        <Term lines={peppermint} class="fill lucida" style="padding: 6px" />
+                    </div>
+                </div>
+            </Window>
+        </Shot>
+        <Shot name="Pyrokai Light" caption="Departure Mono 12 pt · no tabs, underline cursor" label="Placeholder mock-up">
+            <Window label="Zinc in the Pyrokai Light scheme, with no tabs" theme="light" class="scheme-pyrokai">
+                <TitleBar add={false} style="height: 32px" />
+                <Term lines={pyrokaiLight} class="departure" style="padding: 6px; font-size: 11px" />
+            </Window>
+        </Shot>
+    </div>
 </Section>
 
 <style>
@@ -43,8 +82,142 @@ const litCellTiles = [
         font-family: var(--font-cascadia);
     }
 
+    /* Four tiles of equal height, two by two */
+    .gal4 {
+        display: grid;
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+        gap: 24px;
+        margin-top: 24px;
+    }
+
+    .gal4 :global(.zn-shot-stage) {
+        padding: 32px 28px;
+        flex: 1 1 auto;
+        display: flex;
+        flex-direction: column;
+    }
+
+    .gal4 :global(.zn-shot-stage > .zn-window) {
+        flex: 1 1 auto;
+        display: flex;
+        flex-direction: column;
+    }
+
+    .gal4 :global(.zn-window > :last-child) {
+        flex: 1 1 auto;
+    }
+
+    .gal4 :global(.zn-term) {
+        --cell-h: 18px;
+        font-size: 13px;
+        line-height: 18px;
+        min-height: 110px;
+    }
+
+    .split {
+        display: flex;
+        background: var(--mica);
+    }
+
+    .column {
+        flex: 1 1 0;
+        min-width: 0;
+        display: flex;
+        flex-direction: column;
+    }
+
+    .gal4 :global(.fill) {
+        flex: 1 1 0;
+        min-width: 0;
+    }
+
+    .gal4 :global(.consolas) {
+        font-family: Consolas, var(--font-cascadia);
+    }
+
+    .gal4 :global(.jetbrains) {
+        font-family: "JetBrains Mono", var(--font-cascadia);
+    }
+
+    .gal4 :global(.lucida) {
+        font-family: "Lucida Console", var(--font-cascadia);
+    }
+
+    .gal4 :global(.departure) {
+        font-family: "Departure Mono", var(--font-cascadia);
+    }
+
+    /*
+     * Temporary... the tuned setups' own schemes, and Nightfall's teal "infra" workspace.
+     * Delete these with the mock-ups when the screenshots arrive. They're hex because they aren't Zinc's colours.
+     */
+    .gal4 :global(.scheme-nightfall) {
+        --term-bg: #1a140e;
+        --term-fg: #f6e8d0;
+        --term-red: #e87555;
+        --term-green: #83b96f;
+        --term-yellow: #e8ad3f;
+        --term-blue: #5f9ed8;
+        --term-magenta: #bd6fae;
+        --term-cyan: #4dbeb1;
+        --term-bright-black: #5b4a3a;
+        --term-cursor: #d4a85c;
+        --term-cursor-text: #1a140e;
+    }
+
+    .gal4 :global(.scheme-nightfall .zn-ws.colored),
+    .gal4 :global(.scheme-nightfall .zn-ws.colored .zn-ws-icon) {
+        background: #1F6F66;
+        color: #FFFFFF;
+    }
+
+    .gal4 :global(.scheme-overnight) {
+        --term-bg: #0e1729;
+        --term-fg: #ced2d6;
+        --term-red: #ffa7c4;
+        --term-green: #85cc95;
+        --term-yellow: #ffcb8b;
+        --term-blue: #8dabe1;
+        --term-magenta: #c792eb;
+        --term-cyan: #78ccf0;
+        --term-bright-black: #575656;
+        --term-cursor: #ffa7c4;
+    }
+
+    .gal4 :global(.scheme-peppermint) {
+        --term-bg: #000000;
+        --term-fg: #c8c8c8;
+        --term-red: #e74669;
+        --term-green: #89d287;
+        --term-yellow: #dab853;
+        --term-blue: #449fd0;
+        --term-magenta: #da62dc;
+        --term-cyan: #65aaaf;
+        --term-bright-black: #535353;
+        --term-cursor: #bbbbbb;
+    }
+
+    .gal4 :global(.scheme-pyrokai) {
+        --term-bg: #faf6f5;
+        --term-fg: #242120;
+        --term-red: #b84963;
+        --term-green: #568413;
+        --term-yellow: #8e7100;
+        --term-blue: #0979c4;
+        --term-magenta: #b44a74;
+        --term-cyan: #008490;
+        --term-bright-black: #807c7a;
+        --term-cursor: #b65318;
+    }
+
     @media (max-width: 900px) {
         .gal {
+            grid-template-columns: 1fr;
+        }
+    }
+
+    @media (max-width: 640px) {
+        .gal4 {
             grid-template-columns: 1fr;
         }
     }

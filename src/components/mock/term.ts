@@ -16,8 +16,9 @@ export interface Quadrant {kind: "quad", color?: TermColor;}
 export interface Swatch {kind: "swatch", color: TermColor;}
 export interface Ramp {kind: "ramp", style?: TermStyle;}
 export interface Gutter {kind: "gutter", mark?: "command" | "failed";}
+export interface CursorShape {kind: "cursor", shape: "bar" | "outline" | "underline";}
 
-export type Segment = string | Styled | Powerline | Box | Quadrant | Swatch | Ramp | Gutter;
+export type Segment = string | Styled | Powerline | Box | Quadrant | Swatch | Ramp | Gutter | CursorShape;
 export type Line = Segment[];
 
 /** Text in one of the term styles */
@@ -53,6 +54,9 @@ export const gut = (mark?: "command" | "failed"): Gutter => ({kind: "gutter", ma
 /** The block cursor, one cell */
 export const cursor = s("cur", " ");
 
+/** The other cursor shapes... a bar, an outlined block or an underline */
+export const cursorShape = (shape: CursorShape["shape"]): CursorShape => ({kind: "cursor", shape});
+
 export const termVar = (color: TermColor) => `var(--term-${color})`;
 
 export type AttentionState = "attention" | "caution" | "error";
@@ -65,6 +69,9 @@ export interface Workspace {
     /** One tab wants you, or a count when two or more do */
     dot?: {state: AttentionState, pulse?: boolean;};
     count?: {value: number, state: AttentionState;};
+
+    /** Has a workspace colour, which the page sets with `.zn-ws.colored` */
+    colored?: boolean;
 }
 
 export interface Tab {

@@ -1,8 +1,8 @@
 ---
 // The title bar with the app icon, tabs along the top and the caption buttons
 import Caption from "./Caption.astro";
+import Tabs from "./Tabs.astro";
 import type {Tab} from "./term";
-import "../../styles/zn/dot.css";
 import "../../styles/zn/window.css";
 
 interface Props {
@@ -17,58 +17,11 @@ const {tabs = [], add = true, style} = Astro.props;
 ---
 <div class="zn-titlebar" style={style}>
     <div class="zn-titlebar-icon"><img src="/brand/app-icon-16.png" alt=""></div>
-    {tabs.length > 0 || add
-        ? (
-            <div class="zn-tabs">
-                {tabs.map(tab => (
-                    <div class:list={["zn-tab", {selected: tab.selected, workspace: tab.selected && tab.workspace}]}>
-                        <span class="zn-tab-name">{tab.name}</span>
-                        <span class="zn-tab-slot">
-                            {tab.slot === "close" && (
-                                <svg viewBox="0 0 10 10" fill="none" stroke="currentColor" stroke-width="1.1" aria-hidden="true"><path d="M1 1l8 8M9 1 1 9" /></svg>
-                            )}
-                            {typeof tab.slot === "object" && (
-                                <span class:list={["zn-dot", {"zn-dot-caution": tab.slot.dot === "caution", "zn-dot-error": tab.slot.dot === "error", "zn-dot-pulse": tab.slot.pulse}]} />
-                            )}
-                        </span>
-                    </div>
-                ))}
-                {add && (
-                    <span class="tab-add">
-                        <svg viewBox="0 0 16 16" aria-hidden="true"><path d="M8 3.5v9M3.5 8h9" /></svg>
-                    </span>
-                )}
-            </div>
-        )
-        : <div class="spacer" />}
+    {tabs.length > 0 || add ? <Tabs tabs={tabs} add={add} /> : <div class="spacer" />}
     <Caption />
 </div>
 
 <style>
-    .zn-tab.workspace {
-        background: var(--solid-tertiary);
-        color: var(--text-primary);
-    }
-
-    .tab-add {
-        height: 34px;
-        width: 32px;
-        display: inline-flex;
-        align-items: center;
-        justify-content: center;
-        color: var(--text-secondary);
-        flex: none;
-    }
-
-    .tab-add svg {
-        width: 12px;
-        height: 12px;
-        fill: none;
-        stroke: currentColor;
-        stroke-width: 1.4;
-        stroke-linecap: round;
-    }
-
     .spacer {
         flex: 1;
     }

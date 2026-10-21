@@ -162,3 +162,28 @@
 .zn-term .mk.bad {
     background: var(--error);
 }
+
+/* Not in the bundle. The cursor shapes besides the block, each one cell wide. */
+.zn-term .cur-bar,
+.zn-term .cur-outline,
+.zn-term .cur-underline {
+    display: inline-block;
+    height: var(--cell-h);
+    vertical-align: top;
+    box-sizing: border-box;
+}
+
+.zn-term .cur-bar {
+    width: 2px;
+    background: var(--term-cursor);
+}
+
+.zn-term .cur-outline {
+    width: 1ch;
+    box-shadow: inset 0 0 0 1px var(--term-cursor);
+}
+
+.zn-term .cur-underline {
+    width: 1ch;
+    border-bottom: 2px solid var(--term-cursor);
+}
