@@ -1,0 +1,30 @@
+---
+// Both versions of the lockup are in the page and CSS shows the one for the current theme so swapping needs no js
+interface Props {
+    /** Height in px. The figma board already includes the clear space. */
+    height: number;
+}
+
+const {height} = Astro.props;
+---
+<img class="lockup lockup-dark" src="/brand/lockup-dark.svg" alt="zinc" height={height} style={`height: ${height}px`}>
+<img class="lockup lockup-light" src="/brand/lockup-light.svg" alt="zinc" height={height} style={`height: ${height}px`}>
+
+<style>
+    .lockup {
+        width: auto;
+        display: block;
+    }
+
+    .lockup-light {
+        display: none;
+    }
+
+    :global([data-theme="light"]) .lockup-dark {
+        display: none;
+    }
+
+    :global([data-theme="light"]) .lockup-light {
+        display: block;
+    }
+</style>

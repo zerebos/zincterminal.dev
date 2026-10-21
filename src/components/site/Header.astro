@@ -1,0 +1,89 @@
+---
+import Lockup from "./Lockup.astro";
+import type {NavLink} from "../../data/site";
+
+interface Props {
+    links: NavLink[];
+    /** "scroll" shows the hairline once the page scrolls, "always" keeps it on */
+    hairline?: "scroll" | "always";
+    /** On phones, "menu" hides the links for the menu button and "collapse" hides only the optional ones */
+    mobile?: "menu" | "collapse";
+}
+
+const {links, hairline = "scroll", mobile = "menu"} = Astro.props;
+---
+<header class:list={["sitenav", {lined: hairline === "always"}]}>
+    <div class="wrap sitenav-row">
+        <a class="home" href="/" aria-label="Zinc home">
+            <Lockup height={34} />
+        </a>
+        <nav class:list={["topnav", `mobile-${mobile}`]} aria-label="Main">
+            {links.map(link => (
+                <a class:list={{opt: link.optional}} href={link.href} aria-current={link.current ? "page" : undefined}>{link.label}</a>
+            ))}
+        </nav>
+        <slot name="actions" />
+    </div>
+</header>
+
+<style>
+    .sitenav {
+        position: sticky;
+        top: 0;
+        z-index: 50;
+        background: color-mix(in srgb, var(--ground) 82%, transparent);
+        -webkit-backdrop-filter: blur(16px) saturate(140%);
+        backdrop-filter: blur(16px) saturate(140%);
+        border-bottom: 1px solid transparent;
+        transition: border-color 0.2s ease;
+    }
+
+    .sitenav.lined {
+        border-bottom-color: var(--line);
+    }
+
+    .sitenav-row {
+        display: flex;
+        align-items: center;
+        gap: 24px;
+        height: 56px;
+    }
+
+    .home {
+        display: flex;
+        align-items: center;
+        flex: none;
+    }
+
+    .topnav {
+        margin-left: auto;
+        display: flex;
+        align-items: center;
+        gap: 4px;
+    }
+
+    .topnav a {
+        font: 400 14px/20px var(--font-sans);
+        color: var(--ink-muted);
+        text-decoration: none;
+        padding: 6px 12px;
+        border-radius: 4px;
+    }
+
+    .topnav a:hover,
+    .topnav a[aria-current="page"] {
+        color: var(--ink);
+        background: var(--accent-subtle);
+    }
+
+    @media (max-width: 640px) {
+        .sitenav-row {
+            gap: 12px;
+        }
+
+        .topnav.mobile-menu,
+        .topnav.mobile-collapse a.opt {
+            display: none;
+        }
+    }
+</style>

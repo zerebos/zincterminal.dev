@@ -1,0 +1,68 @@
+---
+// The site footer... a full-width hairline, then the lockup and descriptor, three link columns and the base row.
+import Lockup from "./Lockup.astro";
+import {links as site, type FooterColumn} from "../../data/site";
+import "../../styles/zn/footer.css";
+
+interface Props {
+    columns: FooterColumn[];
+}
+
+const {columns} = Astro.props;
+---
+<div class="footer-rule">
+    <footer class="zn-footer site-footer">
+        <div class="zn-footer-brand">
+            <Lockup height={28} />
+            <p>Zinc, a precise, native terminal for Windows.</p>
+        </div>
+        {columns.map(column => (
+            <div>
+                <h2>{column.title}</h2>
+                <ul>
+                    {column.links.map(link => <li><a href={link.href}>{link.label}</a></li>)}
+                </ul>
+            </div>
+        ))}
+        <div class="zn-footer-base">
+            <span>
+                <slot name="legal">© 2026 Zerebos · <a href={site.license}>[License or terms]</a></slot>
+            </span>
+            <span>Built on libghostty, the same core that powers Ghostty. · <a href={site.thirdPartyNotices}>Third-party notices</a></span>
+        </div>
+    </footer>
+</div>
+
+<style>
+    .footer-rule {
+        border-top: 1px solid var(--line);
+    }
+
+    /* The page column, set here so it doesn't depend on stylesheet order against .zn-footer */
+    .site-footer {
+        max-width: 1240px;
+        margin: 0 auto;
+        box-sizing: border-box;
+        border-top: 0;
+        padding: 64px 40px 24px;
+    }
+
+    .zn-footer-base {
+        flex-wrap: wrap;
+        row-gap: 8px;
+    }
+
+    @media (max-width: 900px) {
+        .site-footer {
+            grid-template-columns: 1fr 1fr;
+        }
+    }
+
+    @media (max-width: 640px) {
+        .site-footer {
+            grid-template-columns: 1fr;
+            padding-left: 16px;
+            padding-right: 16px;
+        }
+    }
+</style>

@@ -1,5 +1,68 @@
 ---
 import Base from "../layouts/Base.astro";
+import Footer from "../components/site/Footer.astro";
+import Header from "../components/site/Header.astro";
+import {links, type FooterColumn, type NavLink} from "../data/site";
+
+const nav: NavLink[] = [
+    {label: "Precision", href: "#precision"},
+    {label: "Workflow", href: "#workflow"},
+    {label: "Themes", href: "#themes"},
+    {label: "Docs", href: links.docs},
+    {label: "GitHub", href: links.zincRepo}
+];
+
+const footer: FooterColumn[] = [
+    {
+        title: "Product",
+        links: [
+            {label: "Features", href: "#precision"},
+            {label: "Themes", href: "#themes"},
+            {label: "Lit Cell", href: "/lit-cell"},
+            {label: "Changelog", href: links.changelog},
+            {label: "Request access", href: links.discord}
+        ]
+    },
+    {
+        title: "Docs",
+        links: [
+            {label: "Getting started", href: links.docs},
+            {label: "Configuration", href: links.docs},
+            {label: "Shell integration", href: links.docs},
+            {label: "The zn CLI", href: links.docs}
+        ]
+    },
+    {
+        title: "Project",
+        links: [
+            {label: "Source on GitHub", href: links.zincRepo},
+            {label: "Releases", href: links.zincReleases},
+            {label: "Report an issue", href: links.zincIssues},
+            {label: "About", href: links.about}
+        ]
+    }
+];
 ---
 <Base title="Zinc, a precise, native terminal for Windows">
+    <Header links={nav} />
+    <main>
+        <section class="wrap skeleton" aria-label="Hero"></section>
+        <section id="precision" class="sec skeleton" aria-label="Precision"></section>
+        <section id="workflow" class="sec skeleton" aria-label="Workflow"></section>
+        <section id="windows" class="sec skeleton" aria-label="Native Windows"></section>
+        <section id="themes" class="sec skeleton" aria-label="Make it yours"></section>
+        <section id="install" class="sec skeleton" aria-label="Try the alpha"></section>
+    </main>
+    <Footer columns={footer} />
 </Base>
+
+<style>
+    /* Temporary so each empty section has height and its top hairline shows where an anchor lands */
+    .sec {
+        border-top: 1px solid var(--line);
+    }
+
+    .skeleton {
+        min-height: 60vh;
+    }
+</style>
