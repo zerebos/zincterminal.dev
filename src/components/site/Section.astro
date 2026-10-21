@@ -1,0 +1,32 @@
+---
+// A page section with the site's rhythm... a hairline on top, 112px above and below (72px on phones), and the page column inside
+interface Props {
+    id?: string;
+
+    /** The id of the heading that names the section */
+    labelledby?: string;
+
+    /** Classes for the page column, for sections that lay out their own columns */
+    class?: string;
+}
+
+const {id, labelledby, class: className} = Astro.props;
+---
+<section class="sec" id={id} aria-labelledby={labelledby}>
+    <div class:list={["wrap", className]}>
+        <slot />
+    </div>
+</section>
+
+<style>
+    .sec {
+        padding: 112px 0;
+        border-top: 1px solid var(--line);
+    }
+
+    @media (max-width: 640px) {
+        .sec {
+            padding: 72px 0;
+        }
+    }
+</style>

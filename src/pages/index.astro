@@ -4,6 +4,7 @@ import CompactCta from "../components/site/CompactCta.svelte";
 import Footer from "../components/site/Footer.astro";
 import Header from "../components/site/Header.astro";
 import Hero from "../components/landing/Hero.astro";
+import PrecisionDraws from "../components/landing/PrecisionDraws.astro";
 import {links, type FooterColumn, type NavLink} from "../data/site";
 
 const nav: NavLink[] = [
@@ -51,7 +52,7 @@ const footer: FooterColumn[] = [
     </Header>
     <main>
         <Hero />
-        <section id="precision" class="sec skeleton" aria-label="Precision"></section>
+        <PrecisionDraws />
         <section id="workflow" class="sec skeleton" aria-label="Workflow"></section>
         <section id="windows" class="sec skeleton" aria-label="Native Windows"></section>
         <section id="themes" class="sec skeleton" aria-label="Make it yours"></section>

@@ -12,8 +12,9 @@ export interface Styled {kind: "styled", style: TermStyle, text: string;}
 export interface Powerline {kind: "powerline", segments: Array<[text: string, color: TermColor]>;}
 /** Arms are any of l, r, u and d. Width is in cells. */
 export interface Box {kind: "box", arms: string, width: number, full: boolean;}
+export interface Quadrant {kind: "quad", color?: TermColor;}
 
-export type Segment = string | Styled | Powerline | Box;
+export type Segment = string | Styled | Powerline | Box | Quadrant;
 export type Line = Segment[];
 
 /** Text in one of the term styles */
@@ -27,6 +28,9 @@ export const bx = (arms: string, width = 1): Box => ({kind: "box", arms, width, 
 
 /** A full block */
 export const block = (): Box => ({kind: "box", arms: "", width: 1, full: true});
+
+/** The ▚ quadrant, two blocks that share one corner */
+export const quad = (color?: TermColor): Quadrant => ({kind: "quad", color});
 
 /** The block cursor, one cell */
 export const cursor = s("cur", " ");

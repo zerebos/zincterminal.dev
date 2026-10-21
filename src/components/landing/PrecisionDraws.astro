@@ -1,0 +1,189 @@
+---
+// Precision, in what it draws... the same glyphs drawn from the font and drawn by Zinc, magnified on a cell grid
+import Lines from "../mock/Lines.astro";
+import Mock from "../mock/Mock.astro";
+import Section from "../site/Section.astro";
+import SectionIntro from "../site/SectionIntro.astro";
+import {block, bx, pl, quad, type Line} from "../mock/term";
+
+const glyphs: Line[] = [
+    [bx("rd"), bx("lr", 3), bx("lrd"), bx("lr", 3), bx("ld")],
+    [bx("ud"), " ", block(), " ", bx("ud"), " ", quad("green"), " ", bx("ud")],
+    [bx("ur"), bx("lr", 3), bx("lru"), bx("lr", 3), bx("lu")]
+];
+
+const prompt: Line[] = [[pl(["~\\src\\zinc", "blue"], ["main", "green"], ["+2", "yellow"])]];
+---
+<Section id="precision" labelledby="draws-title">
+    <SectionIntro eyebrow="Precision, in what it draws" title="Box drawing meets without seams in any font" titleId="draws-title">
+        Zinc draws box lines, blocks and Powerline shapes itself, cell by cell, instead of trusting the font to line up. Raise the line height and they still join.
+    </SectionIntro>
+
+    <div class="pair">
+        <Mock tag="figure" label={false} class="zoom-figure">
+            <div class="panel centered" role="img" aria-label="Box drawing glyphs from a font, magnified, with gaps between rows">
+                <div class="zoom gappy"><Lines lines={glyphs} /></div>
+            </div>
+            <figcaption class="cap"><b>Drawn from the font.</b> With 20% more line height, each glyph stops short of its cell and the rows come apart.</figcaption>
+        </Mock>
+        <Mock tag="figure" label={false} class="zoom-figure">
+            <div class="panel centered" role="img" aria-label="The same glyphs drawn by Zinc, magnified, meeting edge to edge">
+                <div class="zoom drawn"><Lines lines={glyphs} /></div>
+            </div>
+            <figcaption class="cap"><b>Drawn by Zinc.</b> Every line reaches the edge of its cell, so it meets its neighbour exactly, and quadrants like ▚ share exactly one corner. <code>font.builtin-glyphs</code></figcaption>
+        </Mock>
+    </div>
+
+    <div class="panel strip" role="img" aria-label="A Powerline prompt, magnified, with segments meeting without seams">
+        <div class="zoom-pl"><Lines lines={prompt} /></div>
+        <p class="cap"><b>Powerline, no patched font needed.</b> Separators are drawn as cell geometry, so segments sit flush at any size.</p>
+    </div>
+</Section>
+
+<style>
+    .pair {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 24px;
+        margin-top: 48px;
+    }
+
+    .pair :global(.zoom-figure) {
+        flex: 1 1 420px;
+        margin: 0;
+        display: flex;
+        flex-direction: column;
+        gap: 12px;
+    }
+
+    .panel {
+        background: var(--term-bg);
+        border: 1px solid var(--line);
+        border-radius: 8px;
+        padding: 32px;
+        display: flex;
+        flex-direction: column;
+        gap: 20px;
+        align-items: flex-start;
+        min-width: 0;
+        overflow: hidden;
+    }
+
+    .panel.centered {
+        align-items: center;
+        justify-content: center;
+    }
+
+    .panel.strip {
+        margin-top: 24px;
+        flex-direction: row;
+        flex-wrap: wrap;
+        align-items: center;
+        justify-content: space-between;
+        gap: 24px;
+    }
+
+    .cap {
+        font: 400 12px/16px var(--font-sans);
+        color: var(--ink-muted);
+        margin: 0;
+    }
+
+    .cap b {
+        color: var(--ink);
+        font-weight: 600;
+    }
+
+    .cap code {
+        font-family: var(--font-cascadia);
+    }
+
+    .strip .cap {
+        max-width: 36ch;
+    }
+
+    /* The magnified cell grid. Each cell is 1ch by one line, outlined in the line colour. */
+    .zoom {
+        --cell-h: 72px;
+        font: 400 56px/72px var(--font-cascadia);
+        white-space: pre;
+        color: var(--term-fg);
+        display: inline-block;
+        background-color: var(--term-bg);
+        background-image:
+            linear-gradient(to right, var(--line) 1px, transparent 1px),
+            linear-gradient(to bottom, var(--line) 1px, transparent 1px);
+        background-size: 1ch var(--cell-h);
+    }
+
+    .zoom.drawn {
+        font-family: var(--font-mono);
+    }
+
+    .zoom :global(.ln) {
+        display: block;
+        height: var(--cell-h);
+    }
+
+    .zoom :global(.zn-bx) {
+        --t: 6px;
+    }
+
+    /* The ▚ quadrant, two blocks that share exactly one corner */
+    .zoom :global(.q) {
+        display: inline-block;
+        width: 1ch;
+        height: var(--cell-h);
+        vertical-align: top;
+        background:
+            linear-gradient(currentColor, currentColor) 0 0 / 50% 50% no-repeat,
+            linear-gradient(currentColor, currentColor) 100% 100% / 50% 50% no-repeat;
+    }
+
+    /* From the font, each glyph stops `--gap` short of the top and bottom of its cell */
+    .zoom.gappy {
+        --gap: 6px;
+        font-family: var(--font-mono);
+    }
+
+    .gappy :global(.zn-bx) {
+        background:
+            linear-gradient(var(--l), var(--l)) left center / calc(50% + var(--t) / 2) var(--t) no-repeat,
+            linear-gradient(var(--r), var(--r)) right center / calc(50% + var(--t) / 2) var(--t) no-repeat,
+            linear-gradient(var(--u), var(--u)) center top var(--gap) / var(--t) calc(50% + var(--t) / 2 - var(--gap)) no-repeat,
+            linear-gradient(var(--d), var(--d)) center bottom var(--gap) / var(--t) calc(50% + var(--t) / 2 - var(--gap)) no-repeat;
+    }
+
+    .gappy :global(.zn-bx.full) {
+        background: linear-gradient(currentColor, currentColor) center / 100% calc(100% - 2 * var(--gap)) no-repeat;
+    }
+
+    .gappy :global(.q) {
+        background:
+            linear-gradient(currentColor, currentColor) left 0 top var(--gap) / 50% calc(50% - var(--gap)) no-repeat,
+            linear-gradient(currentColor, currentColor) right 0 bottom var(--gap) / 50% calc(50% - var(--gap)) no-repeat;
+    }
+
+    .zoom-pl {
+        --cell-h: 48px;
+        font: 500 32px/48px var(--font-mono);
+        white-space: pre;
+        color: var(--term-fg);
+    }
+
+    @media (max-width: 640px) {
+        .zoom {
+            --cell-h: 48px;
+            font-size: 36px;
+            line-height: 48px;
+        }
+
+        .zoom :global(.zn-bx) {
+            --t: 4px;
+        }
+
+        .zoom.gappy {
+            --gap: 4px;
+        }
+    }
+</style>

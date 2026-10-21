@@ -1,0 +1,13 @@
+---
+import type {HTMLAttributes} from "astro/types";
+import "../../styles/zn/cell.css";
+
+interface Props extends HTMLAttributes<"span"> {
+    /** Grid pitch in px, the cell itself is 86% of it */
+    pitch?: number;
+    dim?: boolean;
+}
+
+const {pitch = 24, dim = false, style, ...rest} = Astro.props;
+---
+<span class:list={["zn-cell", {"zn-dim": dim}]} style={`--pitch: ${pitch}px;${typeof style === "string" ? ` ${style}` : ""}`} aria-hidden="true" {...rest}></span>

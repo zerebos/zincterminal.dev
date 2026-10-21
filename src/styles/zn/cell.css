@@ -1,0 +1,24 @@
+.zn-cell {
+    --pitch: 24px;
+    width: var(--pitch);
+    height: var(--pitch);
+    position: relative;
+    display: inline-block;
+    flex: none;
+}
+
+.zn-cell::before {
+    content: "";
+    position: absolute;
+    left: 7%;
+    top: 7%;
+    width: 86%;
+    height: 86%;
+    border-radius: calc(var(--pitch) * 0.12);
+    background: var(--cell-color, var(--accent));
+    opacity: var(--cell-opacity, 1);
+}
+
+.zn-cell.zn-dim::before {
+    opacity: 0.5;
+}

@@ -1,8 +1,7 @@
 ---
-// Renders terminal lines from data
-// Everything sits in one expression so no whitespace leaks into the `white-space: pre` output
-import {termVar, type Line} from "./term";
-import "../../styles/zn/term.css";
+// A terminal's content area. Lines sits right against the tags so no whitespace leaks into the `white-space: pre` output.
+import Lines from "./Lines.astro";
+import type {Line} from "./term";
 
 interface Props {
     lines: Line[];
@@ -11,18 +10,5 @@ interface Props {
 }
 
 const {lines, class: className, style} = Astro.props;
-const armClasses = (arms: string) => [...arms].map(arm => `b${arm}`);
 ---
-<div class:list={["zn-term", className]} style={style}>{lines.map(line => (
-    <span class="ln">{line.length === 0 ? " " : line.map(segment => {
-        if (typeof segment === "string") return segment;
-        if (segment.kind === "styled") return <span class={segment.style}>{segment.text}</span>;
-        if (segment.kind === "box") {
-            return <span class:list={["zn-bx", segment.full ? "full" : armClasses(segment.arms)]} style={segment.width > 1 ? `width: ${segment.width}ch` : undefined} />;
-        }
-        return segment.segments.map(([text, color], i) => {
-            const next = segment.segments[i + 1];
-            return <><span class="zn-pl" style={`--seg: ${termVar(color)}`}>{text}</span><span class="zn-pl-sep" style={`--seg: ${termVar(color)}${next ? `; --next: ${termVar(next[1])}` : ""}`} /></>;
-        });
-    })}</span>
-))}</div>
+<div class:list={["zn-term", className]} style={style}><Lines lines={lines} /></div>

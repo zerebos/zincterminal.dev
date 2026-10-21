@@ -1,16 +1,18 @@
 ---
 // Holds a mock-up and its dashed placeholder label, which stays until a real screenshot replaces the mock-up
 interface Props {
-    label?: string;
+    /** `false` leaves the label off */
+    label?: string | false;
+    tag?: "div" | "figure";
     class?: string;
 }
 
-const {label = "Placeholder mock-up", class: className} = Astro.props;
+const {label = "Placeholder mock-up", tag: Tag = "div", class: className} = Astro.props;
 ---
-<div class:list={["mock", className]}>
-    <span class="ph">{label}</span>
+<Tag class:list={["mock", className]}>
+    {label && <span class="ph">{label}</span>}
     <slot />
-</div>
+</Tag>
 
 <style>
     .mock {
