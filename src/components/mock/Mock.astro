@@ -1,0 +1,33 @@
+---
+// Holds a mock-up and its dashed placeholder label, which stays until a real screenshot replaces the mock-up
+interface Props {
+    label?: string;
+    class?: string;
+}
+
+const {label = "Placeholder mock-up", class: className} = Astro.props;
+---
+<div class:list={["mock", className]}>
+    <span class="ph">{label}</span>
+    <slot />
+</div>
+
+<style>
+    .mock {
+        position: relative;
+        min-width: 0;
+    }
+
+    .ph {
+        position: absolute;
+        z-index: 2;
+        top: -12px;
+        right: 16px;
+        font: 500 11px/16px var(--font-mono);
+        color: var(--ink-muted);
+        background: var(--ground);
+        border: 1px dashed var(--line);
+        border-radius: 4px;
+        padding: 2px 8px;
+    }
+</style>

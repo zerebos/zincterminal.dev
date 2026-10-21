@@ -1,0 +1,121 @@
+.zn-term {
+    --cell-h: 18px;
+    background: var(--term-bg);
+    color: var(--term-fg);
+    font: 400 14px/var(--cell-h) var(--font-mono);
+    padding: var(--space-3) var(--space-4) var(--space-4);
+    white-space: pre;
+    overflow: hidden;
+}
+
+.zn-term .ln {
+    height: var(--cell-h);
+    display: block;
+}
+
+.zn-term .dim {
+    color: var(--term-bright-black);
+}
+
+.zn-term .ok {
+    color: var(--term-green);
+}
+
+.zn-term .warn {
+    color: var(--term-yellow);
+}
+
+.zn-term .bad {
+    color: var(--term-red);
+}
+
+.zn-term .info {
+    color: var(--term-blue);
+}
+
+.zn-term .acc {
+    color: var(--term-cyan);
+}
+
+.zn-term .mag {
+    color: var(--term-magenta);
+}
+
+.zn-term .sel {
+    background: var(--term-selection-bg);
+    color: var(--term-selection-fg);
+}
+
+.zn-term .cur {
+    background: var(--term-cursor);
+    color: var(--term-cursor-text);
+}
+
+/* Box drawing as cell geometry, so each glyph fills its cell edge to edge */
+.zn-bx {
+    display: inline-block;
+    width: 1ch;
+    height: var(--cell-h);
+    vertical-align: top;
+    --t: 1px;
+    --l: transparent;
+    --r: transparent;
+    --u: transparent;
+    --d: transparent;
+    background:
+        linear-gradient(var(--l), var(--l)) left center / calc(50% + var(--t) / 2) var(--t) no-repeat,
+        linear-gradient(var(--r), var(--r)) right center / calc(50% + var(--t) / 2) var(--t) no-repeat,
+        linear-gradient(var(--u), var(--u)) center top / var(--t) calc(50% + var(--t) / 2) no-repeat,
+        linear-gradient(var(--d), var(--d)) center bottom / var(--t) calc(50% + var(--t) / 2) no-repeat;
+}
+
+.zn-bx.bl {
+    --l: currentColor;
+}
+
+.zn-bx.br {
+    --r: currentColor;
+}
+
+.zn-bx.bu {
+    --u: currentColor;
+}
+
+.zn-bx.bd {
+    --d: currentColor;
+}
+
+.zn-bx.heavy {
+    --t: 2px;
+}
+
+.zn-bx.full {
+    background: currentColor;
+}
+
+/* Powerline segments and separators as cell geometry, no patched font needed */
+.zn-pl {
+    display: inline-block;
+    height: var(--cell-h);
+    vertical-align: top;
+    background: var(--seg);
+    color: var(--seg-fg, var(--term-bg));
+    padding: 0 1ch;
+}
+
+.zn-pl-sep {
+    display: inline-block;
+    width: 1ch;
+    height: var(--cell-h);
+    vertical-align: top;
+    background: var(--next, transparent);
+    position: relative;
+}
+
+.zn-pl-sep::before {
+    content: "";
+    position: absolute;
+    inset: 0;
+    background: var(--seg);
+    clip-path: polygon(0 0, 100% 50%, 0 100%);
+}

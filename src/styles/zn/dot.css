@@ -1,0 +1,38 @@
+/* Attention dots are lit cells, never circles */
+.zn-dot {
+    width: var(--attention-dot);
+    height: var(--attention-dot);
+    border-radius: calc(var(--attention-dot) * 0.12);
+    background: var(--attention);
+    display: inline-block;
+    flex: none;
+}
+
+.zn-dot-caution {
+    background: var(--caution);
+}
+
+.zn-dot-error {
+    background: var(--error);
+}
+
+.zn-dot-pulse {
+    animation: zn-pulse 1.6s ease-in-out infinite;
+}
+
+@keyframes zn-pulse {
+    0%,
+    100% {
+        opacity: 1;
+    }
+
+    50% {
+        opacity: 0.35;
+    }
+}
+
+@media (prefers-reduced-motion: reduce) {
+    .zn-dot-pulse {
+        animation: none;
+    }
+}
