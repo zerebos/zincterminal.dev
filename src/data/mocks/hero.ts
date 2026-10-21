@@ -32,3 +32,19 @@ export const heroFocused: Line[] = [
     [],
     [prompt, " ", cursor]
 ];
+
+export const heroGitLog: Line[] = [
+    [s("ok", "❯"), " git log --oneline -4"],
+    [s("warn", "4e1c9a2"), " Draw ▚ cells"],
+    [s("warn", "b07d311"), " Heavy arms"],
+    [s("warn", "9a2f5c8"), " Odd widths"],
+    [s("warn", "71e04bd"), " Reset arrows"],
+    [s("ok", "❯"), " "]
+];
+
+export const heroDevServer: Line[] = [
+    ["  ", s("ok", "VITE v6.2.0"), "  ready"],
+    [],
+    ["  ", s("ok", "➜"), "  Local: ", s("info", "localhost:5173")],
+    ["  ", s("dim", "➜  press h for help")]
+];

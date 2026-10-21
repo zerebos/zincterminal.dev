@@ -1,0 +1,21 @@
+---
+// The solid backing that panes sit on in the Cards layout
+interface Props {
+    class?: string;
+    style?: string;
+}
+
+const {class: className, style} = Astro.props;
+---
+<div class:list={["cards-area", className]} style={style}>
+    <slot />
+</div>
+
+<style>
+    .cards-area {
+        display: flex;
+        gap: 6px;
+        padding: 2px 6px 6px;
+        background: var(--solid-tertiary);
+    }
+</style>
