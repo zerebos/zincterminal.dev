@@ -56,11 +56,84 @@ The first time Zinc starts, a welcome page asks how you like to work and saves y
 
 Every action and its keys are in `Settings > Keyboard`, where you can change them.
 
-{/* Placeholders, so the footer's links land, until 2.2 and 2.3 write these sections */}
-
 ## Configuration
 
-To be written later.
+Change settings in the Settings window or in `config.toml`. They're the same settings: a change in one shows in the other and applies straight away, in every open window.
+
+### The Settings window {#settings-window}
+
+Open it with <kbd>Ctrl+,</kbd>, from the command palette or from the tray icon. Each change is saved as you make it, and each setting shows its key in the file.
+
+- **Find a setting** (<kbd>Ctrl+F</kbd>) searches settings, keys and profiles, so "font size ubuntu" finds the font size in your Ubuntu profile.
+- **The reset arrow** beside a changed setting puts it back to its default.
+- **Undo changes**, at the bottom, puts the file back as it was when you opened the window.
+
+### The config file {#config-file}
+
+Your settings live in `%APPDATA%\Zinc\config.toml`. It's [TOML](https://toml.io): settings grouped into sections, with `#` comments. Changes apply when you save.
+
+```toml title="config.toml"
+default-profile = "wsl:Fedora"
+
+[font]
+family = "JetBrainsMono NF"
+size = 11                    # points
+
+[colors]
+theme = "Dracula"            # a bundled scheme, or one of yours
+background = "#181818"       # single colors override the scheme
+
+[window]
+workspace-tabs = "left"
+
+[profile."wsl:Fedora"]
+name = "Fedora"
+command = 'wsl.exe -d Fedora --cd ~'
+colors.theme = "0x96f"
+```
+
+<Note title="A mistake doesn't stop the rest">
+Zinc shows a bar with the file and line of anything it can't read, and applies everything else. Single-quoted strings are literal, so Windows paths need no escaping: `'C:\msys64\ucrt64.ico'`.
+</Note>
+
+### Profiles
+
+A profile is a shell with its own name, folder, font and colors. Zinc finds the shells on your PC each time it reads your settings, and lists them after your own.
+
+| Found | Profile id |
+|---|---|
+| WSL distros | `wsl:<distro>` |
+| PowerShell 7, Windows PowerShell, cmd | `pwsh`, `powershell`, `cmd` |
+| Git for Windows | `git-bash` |
+| MSYS2 (UCRT64) | `msys2:ucrt64` |
+| Visual Studio developer shells | `vs:<instance>:pwsh`, `vs:<instance>:cmd` |
+| Hosts in `~/.ssh/config` | `ssh:<host>` |
+
+A `[profile]` section with a found profile's id changes it. `[discover]` turns a source off.
+
+```toml title="config.toml"
+[discover]
+ssh = false                  # also wsl, powershell, cmd, git-bash, msys2, visual-studio
+
+[profile."wsl:Ubuntu"]
+colors.theme = "Ubuntu"
+
+[profile."msys2:ucrt64"]
+hidden = true
+```
+
+### Color schemes
+
+[Lit Cell and Lit Cell Light](/lit-cell) come with Zinc, along with about 650 schemes from iTerm2-Color-Schemes. Browse them in `Settings > Appearance > Color scheme`, where each one shows in its own colors. Your own go in `%APPDATA%\Zinc\themes\`, one file per scheme in Ghostty's theme format.
+
+To follow Windows' light and dark mode, give a pair:
+
+```toml title="config.toml"
+[colors]
+theme = "light:Lit Cell Light,dark:Lit Cell"
+```
+
+{/* Placeholders, so the footer's links land, until 2.3 writes these sections */}
 
 ## Shell integration
 
