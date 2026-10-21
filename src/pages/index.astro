@@ -2,6 +2,7 @@
 import Base from "../layouts/Base.astro";
 import Footer from "../components/site/Footer.astro";
 import Header from "../components/site/Header.astro";
+import Hero from "../components/landing/Hero.astro";
 import {links, type FooterColumn, type NavLink} from "../data/site";
 
 const nav: NavLink[] = [
@@ -46,7 +47,7 @@ const footer: FooterColumn[] = [
 <Base title="Zinc, a precise, native terminal for Windows">
     <Header links={nav} />
     <main>
-        <section class="wrap skeleton" aria-label="Hero"></section>
+        <Hero />
         <section id="precision" class="sec skeleton" aria-label="Precision"></section>
         <section id="workflow" class="sec skeleton" aria-label="Workflow"></section>
         <section id="windows" class="sec skeleton" aria-label="Native Windows"></section>

@@ -1,0 +1,21 @@
+---
+import "../../styles/zn/install.css";
+
+interface Props {
+    command: string;
+    /** Shown after the command in bright black, like a shell comment */
+    comment?: string;
+    class?: string;
+}
+
+const {command, comment, class: className} = Astro.props;
+---
+<div class:list={["zn-install", className]}>
+    <code><span class="zn-prompt">&gt;</span>{command}{comment && <>{"  "}<span class="comment">{comment}</span></>}</code>
+</div>
+
+<style>
+    .comment {
+        color: var(--term-bright-black);
+    }
+</style>

@@ -1,0 +1,49 @@
+.zn-btn {
+    font: 400 14px/20px var(--font-sans);
+    height: 32px;
+    padding: 5px 11px 6px;
+    border-radius: var(--radius-sm);
+    border: 1px solid var(--control-stroke);
+    background: var(--control-fill);
+    color: var(--text-primary);
+    cursor: pointer;
+    display: inline-flex;
+    align-items: center;
+    gap: var(--space-2);
+    white-space: nowrap;
+    text-decoration: none;
+    box-sizing: border-box;
+    position: relative;
+}
+
+/* Grows the hit area to 44px tall without changing how the button looks */
+.zn-btn::before {
+    content: "";
+    position: absolute;
+    inset: -6px 0;
+}
+
+.zn-btn:hover {
+    background: var(--subtle-selected);
+}
+
+.zn-btn-primary {
+    background: var(--accent);
+    border-color: var(--accent);
+    color: var(--on-accent);
+}
+
+.zn-btn-primary:hover {
+    background: var(--accent);
+    box-shadow: inset 0 0 0 1px var(--on-accent);
+}
+
+.zn-btn-lg {
+    height: 40px;
+    padding: 0 var(--space-4);
+    font-size: 16px;
+}
+
+.zn-btn-lg::before {
+    inset: -2px 0;
+}
