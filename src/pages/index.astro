@@ -6,6 +6,8 @@ import Header from "../components/site/Header.astro";
 import Hero from "../components/landing/Hero.astro";
 import PrecisionDraws from "../components/landing/PrecisionDraws.astro";
 import PrecisionTune from "../components/landing/PrecisionTune.astro";
+import Libghostty from "../components/landing/Libghostty.astro";
+import NativeWindows from "../components/landing/NativeWindows.astro";
 import Workflow from "../components/landing/Workflow.astro";
 import {links, type FooterColumn, type NavLink} from "../data/site";
 
@@ -57,8 +59,9 @@ const footer: FooterColumn[] = [
         <PrecisionDraws />
         <PrecisionTune />
         <Workflow />
-        <section id="windows" class="sec skeleton" aria-label="Native Windows"></section>
+        <NativeWindows />
         <section id="themes" class="sec skeleton" aria-label="Make it yours"></section>
+        <Libghostty />
         <section id="install" class="sec skeleton" aria-label="Try the alpha"></section>
     </main>
     <Footer columns={footer} />

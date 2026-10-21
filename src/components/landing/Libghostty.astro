@@ -1,0 +1,49 @@
+---
+// Built on libghostty... the credit band
+import Section from "../site/Section.astro";
+import {links} from "../../data/site";
+---
+<Section labelledby="core-title">
+    <div class="band">
+        <img src="/brand/app-icon-48.png" alt="" width="48" height="48">
+        <div class="text">
+            <h2 id="core-title">Built on libghostty</h2>
+            <p>Zinc: what makes ghosts glow in the dark. Its terminal core is libghostty, the same core that powers Ghostty. The window around it, and everything you click, is Zinc's own, written for Windows. Thanks to the Ghostty project and its contributors.</p>
+        </div>
+        <a class="textlink" href={links.libghostty}>About libghostty</a>
+    </div>
+</Section>
+
+<style>
+    .band {
+        display: flex;
+        flex-wrap: wrap;
+        align-items: center;
+        gap: 32px;
+    }
+
+    img {
+        flex: none;
+    }
+
+    .text {
+        flex: 1 1 480px;
+        min-width: 0;
+    }
+
+    h2 {
+        margin: 0;
+        font: 600 20px/28px var(--font-display);
+    }
+
+    p {
+        margin: 8px 0 0;
+        font: 400 16px/24px var(--font-sans);
+        color: var(--ink-muted);
+        max-width: 70ch;
+    }
+
+    .textlink {
+        font: 400 14px/20px var(--font-sans);
+    }
+</style>

@@ -51,6 +51,12 @@ a {
     color: inherit;
 }
 
+/* A link in running text or on its own, in the accent text colour */
+.textlink {
+    color: var(--accent-text);
+    text-underline-offset: 3px;
+}
+
 /* Every interactive element gets the same ring: 2px solid focus-ring, 2px offset. */
 :focus-visible {
     outline: 2px solid var(--focus-ring);

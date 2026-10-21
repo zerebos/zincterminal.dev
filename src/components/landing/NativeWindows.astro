@@ -1,0 +1,75 @@
+---
+// Native Windows... four cards for Mica, the tray, the quick terminal and shell discovery
+import Section from "../site/Section.astro";
+import SectionIntro from "../site/SectionIntro.astro";
+import "../../styles/zn/card.css";
+
+const features = [
+    {
+        title: "Mica",
+        body: "On Windows 11, the window takes on your wallpaper's tint, as Windows' own apps do.",
+        icon: "<rect x=\"2.5\" y=\"3.5\" width=\"15\" height=\"13\" rx=\"2\"/><path d=\"M2.5 7.5h15\"/>"
+    },
+    {
+        title: "Tray",
+        body: "Zinc keeps running in the notification area, so the quick terminal is always ready. Click to bring your windows back; right-click for settings, a new window or quit.",
+        icon: "<rect x=\"2.5\" y=\"3.5\" width=\"15\" height=\"13\" rx=\"2\"/><path d=\"M2.5 13.5h15M11.5 15h1M14 15h1\"/>"
+    },
+    {
+        title: "Quick terminal",
+        body: "A terminal on a global hotkey. It scales and fades in at the middle of the screen, or comes in from any edge you choose.",
+        icon: "<rect x=\"2.5\" y=\"4.5\" width=\"15\" height=\"11\" rx=\"1.5\"/><path d=\"m6 8.5 2 1.5-2 1.5M10 12h3.5\"/>"
+    },
+    {
+        title: "Shell discovery",
+        body: "PowerShell, Command Prompt, WSL, Git Bash, MSYS2, Visual Studio developer shells and SSH show up as profiles on their own.",
+        icon: "<circle cx=\"9\" cy=\"9\" r=\"5.5\"/><path d=\"m13 13 4.5 4.5M6.5 9h5\"/>"
+    }
+];
+---
+<Section id="windows" labelledby="native-title">
+    <SectionIntro eyebrow="Native Windows" title="Made for Windows, not ported to it" titleId="native-title" titleWidth="18ch">
+        A WinUI 3 app that looks and behaves like the rest of your desktop.
+    </SectionIntro>
+    <div class="feat">
+        {features.map(feature => (
+            <article class="zn-card">
+                <svg viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.2" aria-hidden="true" set:html={feature.icon} />
+                <h3 class="zn-card-title">{feature.title}</h3>
+                <p class="zn-card-body">{feature.body}</p>
+            </article>
+        ))}
+    </div>
+</Section>
+
+<style>
+    .feat {
+        display: grid;
+        grid-template-columns: repeat(4, minmax(0, 1fr));
+        gap: 16px;
+        margin-top: 48px;
+    }
+
+    .feat svg {
+        width: 20px;
+        height: 20px;
+        color: var(--accent-text);
+    }
+
+    .feat .zn-card-title {
+        font-size: 16px;
+        line-height: 24px;
+    }
+
+    @media (max-width: 900px) {
+        .feat {
+            grid-template-columns: repeat(2, minmax(0, 1fr));
+        }
+    }
+
+    @media (max-width: 640px) {
+        .feat {
+            grid-template-columns: 1fr;
+        }
+    }
+</style>
