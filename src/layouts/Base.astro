@@ -1,0 +1,51 @@
+---
+// The document shell every page uses... head, theme detection, tokens and base styles
+import LitCellVars from "../components/site/LitCellVars.astro";
+import "../styles/tokens.css";
+import "../styles/global.css";
+
+interface Props {
+    title: string;
+    description?: string;
+}
+
+const {title, description = "Zinc, a precise, native terminal for Windows."} = Astro.props;
+const canonical = new URL(Astro.url.pathname, Astro.site);
+---
+<!doctype html>
+<html lang="en">
+    <head>
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        {/*
+            Sets data-theme before first paint, so the page never flashes the wrong theme.
+            The visitor's choice is in localStorage as zinc-theme: "dark", "light", or missing for System.
+            System follows prefers-color-scheme and falls back to dark. The theme switch updates it afterwards.
+        */}
+        <script is:inline>
+            (() => {
+                let choice = "system";
+                try {
+                    const stored = localStorage.getItem("zinc-theme");
+                    if (stored === "dark" || stored === "light") choice = stored;
+                }
+                catch {
+                    // Storage can be blocked, when it is fallback to system preference
+                }
+                const system = matchMedia("(prefers-color-scheme: light)").matches ? "light" : "dark";
+                document.documentElement.dataset.theme = choice === "system" ? system : choice;
+            })();
+        </script>
+        <title>{title}</title>
+        <meta name="description" content={description}>
+        <link rel="canonical" href={canonical}>
+        <link rel="icon" type="image/png" sizes="16x16" href="/brand/app-icon-16.png">
+        <link rel="icon" type="image/png" sizes="32x32" href="/brand/app-icon-32.png">
+        <link rel="icon" type="image/png" sizes="48x48" href="/brand/app-icon-48.png">
+        <link rel="apple-touch-icon" href="/brand/app-icon-256.png">
+        <LitCellVars />
+    </head>
+    <body>
+        <slot />
+    </body>
+</html>
