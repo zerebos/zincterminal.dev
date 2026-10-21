@@ -1,5 +1,5 @@
 // Lit Cell, from the W3C design tokens in the lit-cell package (github:zerebos/lit-cell, pinned in bun.lock).
-// Everything the site knows about the Lit Cell colours comes from here. The site's --term-* variables,
+// Everything the site knows about the Lit Cell colors comes from here. The site's --term-* variables,
 // the .lc-dark and .lc-light scheme classes, the palette's values and contrast ratios, and the roles.
 
 import darkFile from "lit-cell/tokens/lit-cell.tokens.json";
@@ -33,11 +33,11 @@ export interface LitCellColor {
     use?: Extension["use"];
     /** ANSI slot, 0 to 15. */
     slot?: number;
-    /** How a derived colour is made: a palette colour mixed into another by an amount. */
+    /** How a derived color is made: a palette color mixed into another by an amount. */
     mix?: Mix;
-    /** WCAG contrast ratio, for text colours only: against the background, or against the colour it sits on. */
+    /** WCAG contrast ratio, for text colors only: against the background, or against the color it sits on. */
     ratio?: number;
-    /** Path of the colour the ratio is measured against. */
+    /** Path of the color the ratio is measured against. */
     ratioOn?: string;
 }
 
@@ -52,7 +52,7 @@ export interface LitCellVariant {
 export interface LitCellRole {
     /** Role path, such as "diff.hunk-header". */
     path: string;
-    /** Path of the colour it uses, such as "ansi.cyan". */
+    /** Path of the color it uses, such as "ansi.cyan". */
     ref: string;
     description: string;
     style?: Extension["style"];
@@ -62,14 +62,14 @@ export interface LitCellRole {
 const isToken = (v: unknown): v is RawToken => typeof v === "object" && v !== null && "$value" in v;
 const refPath = (ref: string) => ref.replace(/^\{(.+)\}$/, "$1");
 
-/** WCAG 2 relative luminance of a #RRGGBB colour. */
+/** WCAG 2 relative luminance of a #RRGGBB color. */
 function luminance(hex: string) {
     const channels = [1, 3, 5].map(i => parseInt(hex.slice(i, i + 2), 16) / 255);
     const [r, g, b] = channels.map(c => (c <= 0.04045 ? c / 12.92 : ((c + 0.055) / 1.055) ** 2.4)) as [number, number, number];
     return (0.2126 * r) + (0.7152 * g) + (0.0722 * b);
 }
 
-/** WCAG 2 contrast ratio between two #RRGGBB colours. */
+/** WCAG 2 contrast ratio between two #RRGGBB colors. */
 export function contrast(a: string, b: string) {
     const [hi, lo] = [luminance(a), luminance(b)].sort((x, y) => y - x) as [number, number];
     return (hi + 0.05) / (lo + 0.05);
@@ -136,7 +136,7 @@ export const litCell: Record<VariantId, LitCellVariant> = {
 
 export const roles = readRoles(rolesFile);
 
-/** A colour by token path, such as color("light", "ansi.white"). Throws for an unknown path. */
+/** A color by token path, such as color("light", "ansi.white"). Throws for an unknown path. */
 export function color(variant: VariantId, path: string) {
     const found = litCell[variant].byPath.get(path);
     if (!found) throw new Error(`lit-cell ${variant}: no token at ${path}`);
@@ -158,7 +158,7 @@ export const tokenVar = (path: string) => `--lc-${path.replace(".", "-")}`;
 export const roleVar = (path: string) => `--lc-role-${path.replace(".", "-")}`;
 
 /**
- * The site's terminal colours, by the names the design handoff uses. Lit Cell fills them in the
+ * The site's terminal colors, by the names the design handoff uses. Lit Cell fills them in the
  * dark site theme and Lit Cell Light in the light one.
  */
 const termNames: Record<string, string> = {

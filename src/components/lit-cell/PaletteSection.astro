@@ -1,16 +1,16 @@
 ---
-// The palette... base colours and ANSI 0 to 15 for both variants, each with its hex and contrast ratio
+// The palette... base colors and ANSI 0 to 15 for both variants, each with its hex and contrast ratio
 import Palette from "./Palette.svelte";
 import {panels} from "./palette";
 import Section from "../site/Section.astro";
 import SectionIntro from "../site/SectionIntro.astro";
 ---
 <Section id="palette" labelledby="pal-title" padding={104}>
-    <SectionIntro eyebrow="The palette" title="Sixteen colours, each with one job" titleId="pal-title" titleWidth="16ch" leadWidth="62ch">
-        Every text colour meets WCAG AA, 4.5:1 or better, against its background. The ratio sits under each colour; the few marked fill are for backgrounds only. Click a value to copy it.
+    <SectionIntro eyebrow="The palette" title="Sixteen colors, each with one job" titleId="pal-title" titleWidth="16ch" leadWidth="62ch">
+        Every text color meets WCAG AA, 4.5:1 or better, against its background. The ratio sits under each color; the few marked fill are for backgrounds only. Click a value to copy it.
     </SectionIntro>
     <Palette client:visible panels={panels()} />
-    <p class="note">Selection text is measured against the selection colour, not the background. In Lit Cell Light, white and bright white are never used for text.</p>
+    <p class="note">Selection text is measured against the selection color, not the background. In Lit Cell Light, white and bright white are never used for text.</p>
 </Section>
 
 <style>

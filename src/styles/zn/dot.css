@@ -37,7 +37,7 @@
     }
 }
 
-/* Two or more tabs want you, so a count replaces the dot, coloured by the most urgent state */
+/* Two or more tabs want you, so a count replaces the dot, colored by the most urgent state */
 .zn-count {
     font: 600 10px/14px var(--font-sans);
     min-width: var(--count-height);

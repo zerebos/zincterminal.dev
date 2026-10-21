@@ -29,7 +29,7 @@
     ] as const;
 </script>
 
-<div class="dgrid" role="table" aria-label="Derived colours">
+<div class="dgrid" role="table" aria-label="Derived colors">
     <div class="drow dhead" role="row">
         <span role="columnheader">Role</span>
         <span role="columnheader">Mix</span>

@@ -1,5 +1,5 @@
 ---
-// A terminal sample in Lit Cell or Lit Cell Light. It always uses the scheme's exact colours, whatever the site theme.
+// A terminal sample in Lit Cell or Lit Cell Light. It always uses the scheme's exact colors, whatever the site theme.
 import {isSampleLine, type Sample} from "./scheme";
 import type {VariantId} from "../../data/lit-cell";
 
@@ -124,7 +124,7 @@ const lines = sample.map(line => (isSampleLine(line) ? line : {spans: line, no: 
         background: var(--lc-role-interface-search-active);
     }
 
-    /* Diffs keep their + and - markers, so colour is never the only signal */
+    /* Diffs keep their + and - markers, so color is never the only signal */
     .file-header {
         color: var(--lc-role-diff-file-header);
         font-weight: 600;
@@ -154,7 +154,7 @@ const lines = sample.map(line => (isSampleLine(line) ? line : {spans: line, no: 
         background: var(--lc-role-diff-removed-text);
     }
 
-    /* Each severity has its own underline shape as well as its colour */
+    /* Each severity has its own underline shape as well as its color */
     .ew {
         text-decoration: underline wavy var(--lc-role-diagnostics-error);
         text-decoration-thickness: 1.5px;

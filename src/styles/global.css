@@ -1,4 +1,4 @@
-/* Site-wide base styles. Colours, type and spacing come from tokens.css and the Lit Cell variables. */
+/* Site-wide base styles. Colors, type and spacing come from tokens.css and the Lit Cell variables. */
 
 @font-face {
     font-family: "Geist Mono";
@@ -51,7 +51,7 @@ a {
     color: inherit;
 }
 
-/* A link in running text or on its own, in the accent text colour */
+/* A link in running text or on its own, in the accent text color */
 .textlink {
     color: var(--accent-text);
     text-underline-offset: 3px;

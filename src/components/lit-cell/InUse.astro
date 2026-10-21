@@ -20,7 +20,7 @@ interface Row {
 const rows: Row[] = [
     {
         title: "Code",
-        text: "Colours are categories in code, so amber marks constants here, not warnings.",
+        text: "Colors are categories in code, so amber marks constants here, not warnings.",
         roles: [
             ["keywords", "magenta"],
             ["strings", "green, escapes bright yellow"],
@@ -50,7 +50,7 @@ const rows: Row[] = [
     },
     {
         title: "Diagnostics",
-        text: "Severity shows in the underline's shape as well as its colour, and in the word in front of it.",
+        text: "Severity shows in the underline's shape as well as its color, and in the word in front of it.",
         roles: [
             ["error", "red, wavy"],
             ["warning", "amber, dashed"],
@@ -68,8 +68,8 @@ const variants = [litCell.dark, litCell.light];
 <Section id="in-use" labelledby="use-title" padding={104}>
     <div class="head">
         <div class="intro">
-            <SectionIntro eyebrow="In use" title="Colour carries meaning, never alone" titleId="use-title" titleWidth="24ch" leadWidth="62ch">
-                Most text stays in the foreground colour. Red, amber and green mean one thing each, and every one of them comes with a marker, a symbol or an underline shape, so nothing depends on telling red from green.
+            <SectionIntro eyebrow="In use" title="Color carries meaning, never alone" titleId="use-title" titleWidth="24ch" leadWidth="62ch">
+                Most text stays in the foreground color. Red, amber and green mean one thing each, and every one of them comes with a marker, a symbol or an underline shape, so nothing depends on telling red from green.
             </SectionIntro>
         </div>
         <ViewSwitch client:visible target="in-use-rows" />

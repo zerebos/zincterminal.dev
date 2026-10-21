@@ -2,7 +2,7 @@
 import {litCell, type LitCellColor, type VariantId} from "../../data/lit-cell";
 
 export interface Swatch {
-    /** Shown under the swatch, with the ANSI slot in front for palette colours */
+    /** Shown under the swatch, with the ANSI slot in front for palette colors */
     label: string;
 
     /** Used in the copy button's accessible name */
@@ -12,7 +12,7 @@ export interface Swatch {
     /** "13.6:1", "9.3:1 on selection", "fill", or empty when it has no ratio */
     ratio: string;
 
-    /** Shows the "Aa" sample in the colour */
+    /** Shows the "Aa" sample in the color */
     sample: boolean;
 }
 
@@ -24,7 +24,7 @@ export interface Panel {
 }
 
 const notes: Record<VariantId, string> = {
-    dark: "Every colour but black is text-safe",
+    dark: "Every color but black is text-safe",
     light: "White and bright white are fills only"
 };
 
@@ -71,7 +71,7 @@ export interface DerivedRow {
     light: string;
 }
 
-/** The derived colours for the Port it table, in token order... surfaces, then tints */
+/** The derived colors for the Port it table, in token order... surfaces, then tints */
 export function derivedRows(): DerivedRow[] {
     const derived = [...litCell.dark.colors.ui, ...litCell.dark.colors.tint];
     return derived.map(c => {

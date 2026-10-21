@@ -77,7 +77,7 @@ export const terminals: Terminal[] = [
     {
         id: "vscode",
         name: "VS Code",
-        steps: n => [{text: `Merge vscode/${n}.json into your user settings.json. It colours the integrated terminal.`}],
+        steps: n => [{text: `Merge vscode/${n}.json into your user settings.json. It colors the integrated terminal.`}],
         link: folder("vscode")
     },
     {

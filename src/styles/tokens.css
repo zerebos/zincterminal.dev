@@ -2,7 +2,7 @@
  * Zinc site design tokens.
  *
  * Converted once from the brand tokens.json, and kept in sync by hand from now on.
- * The term-* colours aren't here, they come from the lit-cell package's W3C design tokens (see LitCellVars.astro).
+ * The term-* colors aren't here, they come from the lit-cell package's W3C design tokens (see LitCellVars.astro).
  */
 
 :root {
@@ -13,7 +13,7 @@
     --font-cascadia: "Cascadia Mono", Consolas, ui-monospace, monospace;
 
     /* Spacing */
-    /* Between sidebar items; between a scheme tile's colour chips. */
+    /* Between sidebar items; between a scheme tile's color chips. */
     --space-0-5: 2px;
     /* Between settings cards; between a setting's name and its reset arrow. */
     --space-1: 4px;
@@ -37,7 +37,7 @@
     /* Radius */
     /* Terminal cells, box drawing, Powerline segments, code inside a block. */
     --radius-none: 0;
-    /* A scheme tile's 16 colour chips. */
+    /* A scheme tile's 16 color chips. */
     --radius-chip: 2px;
     /* Count pills (14px tall). */
     --radius-count: 3px;
@@ -59,7 +59,7 @@
     --glow-size: 150%;
     /* Attention dot after a title or in a tab's close-button slot (8 epx; BRAND.md said 6, too easy to miss). */
     --attention-dot: 8px;
-    /* Attention dot on an icon's corner (the sidebar rail): 9 epx with a 1.5px ring in the background colour. */
+    /* Attention dot on an icon's corner (the sidebar rail): 9 epx with a 1.5px ring in the background color. */
     --attention-dot-corner: 9px;
     /* The command center's still lit cell while a command runs (radius 0.84px). */
     --running-cell: 7px;
@@ -71,15 +71,15 @@
     --elevation-0: none;
 
     /* Brand palette (the same in both themes) */
-    /* Phosphor green, the signature colour. The mark and accents on dark grounds. Never on light grounds as text (use `accent`). */
+    /* Phosphor green, the signature color. The mark and accents on dark grounds. Never on light grounds as text (use `accent`). */
     --phosphor: #3DF2A0;
     /* Top stop of the lit gradient. Rich lit cells only (gradient `lit-top` → `lit-bottom` spanning the whole mark's height). */
     --lit-top: #C6FFD0;
     /* Bottom stop of the lit gradient. Rich lit cells only. */
     --lit-bottom: #2FE07A;
-    /* Screen: the dark ground, and ink for the mark on light (one-colour reproduction only). */
+    /* Screen: the dark ground, and ink for the mark on light (one-color reproduction only). */
     --screen: #0F1311;
-    /* Paper: the light ground, and the wordmark colour on dark. */
+    /* Paper: the light ground, and the wordmark color on dark. */
     --paper: #EDEFEA;
     /* The flat mark and the lockup's mark on light grounds; equals `accent` in the light theme. */
     --phosphor-deep: #0B7A4B;
@@ -93,7 +93,7 @@
     --tile-screen-55: #07180F;
     /* App-icon tile screen: radial gradient stop 1 (the edges). */
     --tile-screen-100: #020805;
-    /* App-icon tile edge: 3px stroke inset 1.5px, vertical gradient from this colour at 35% (top) to 6% (bottom). */
+    /* App-icon tile edge: 3px stroke inset 1.5px, vertical gradient from this color at 35% (top) to 6% (bottom). */
     --tile-edge: #BDF5D3;
 }
 
@@ -125,7 +125,7 @@
     --caution: #FFB000;
     /* Failed-command marks and a failed progress ring. Red, never amber. Dark 5.9:1, light 5.7:1 against Mica. User-settable: `[notify] failed-color`. */
     --error: #FF6B6B;
-    /* Text and icons on a filled `accent`, and the number in a count pill of any state colour (dark 12.9:1 on accent; light 5.4:1). */
+    /* Text and icons on a filled `accent`, and the number in a count pill of any state color (dark 12.9:1 on accent; light 5.4:1). */
     --on-accent: #0F1311;
     /* Keyboard focus: 2px solid outline, 2px offset. Alias of `accent`. */
     --focus-ring: var(--accent);

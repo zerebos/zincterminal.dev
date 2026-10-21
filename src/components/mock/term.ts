@@ -27,7 +27,7 @@ export const s = (style: TermStyle, text: string): Styled => ({kind: "styled", s
 /** A Powerline prompt, each segment flowing into the next */
 export const pl = (...segments: Array<[text: string, color: TermColor]>): Powerline => ({kind: "powerline", segments});
 
-/** A box-drawing cell with arms toward l(eft), r(ight), u(p) and d(own), optionally stretched across cells and coloured */
+/** A box-drawing cell with arms toward l(eft), r(ight), u(p) and d(own), optionally stretched across cells and colored */
 export const bx = (arms: string, width = 1, style?: TermStyle): Box => ({kind: "box", arms, width, full: false, style});
 
 /** A full block */
@@ -36,10 +36,10 @@ export const block = (): Box => ({kind: "box", arms: "", width: 1, full: true});
 /** The ▚ quadrant, two blocks that share one corner */
 export const quad = (color?: TermColor): Quadrant => ({kind: "quad", color});
 
-/** Two cells filled with one palette colour */
+/** Two cells filled with one palette color */
 export const swatch = (color: TermColor): Swatch => ({kind: "swatch", color});
 
-/** The 16 palette colours as swatches, black to bright white */
+/** The 16 palette colors as swatches, black to bright white */
 export const palette: TermColor[] = [
     "black", "red", "green", "yellow", "blue", "magenta", "cyan", "white",
     "bright-black", "bright-red", "bright-green", "bright-yellow", "bright-blue", "bright-magenta", "bright-cyan", "bright-white"
@@ -70,7 +70,7 @@ export interface Workspace {
     dot?: {state: AttentionState, pulse?: boolean;};
     count?: {value: number, state: AttentionState;};
 
-    /** Has a workspace colour, which the page sets with `.zn-ws.colored` */
+    /** Has a workspace color, which the page sets with `.zn-ws.colored` */
     colored?: boolean;
 }
 

@@ -50,7 +50,7 @@ describe.each(variants)("the %s variant", variant => {
         expect(v.colors.ansi.map(c => c.slot).sort((a, b) => a! - b!)).toEqual([...Array(16).keys()]);
     });
 
-    test("gives every text colour a ratio, and nothing else one", () => {
+    test("gives every text color a ratio, and nothing else one", () => {
         for (const c of v.byPath.values()) {
             if (c.use === "text") expect({path: c.path, hasRatio: (c.ratio ?? 0) > 1}).toEqual({path: c.path, hasRatio: true});
             else expect({path: c.path, ratio: c.ratio}).toEqual({path: c.path, ratio: undefined});
@@ -61,7 +61,7 @@ describe.each(variants)("the %s variant", variant => {
         expect(color(variant, "base.selection-text").ratioOn).toBe("base.selection");
     });
 
-    test("matches every derived colour to its mix recipe", () => {
+    test("matches every derived color to its mix recipe", () => {
         const derived = [...v.colors.ui, ...v.colors.tint];
         expect(derived.length).toBeGreaterThan(0);
         for (const c of derived) {
@@ -73,7 +73,7 @@ describe.each(variants)("the %s variant", variant => {
 });
 
 describe("roles", () => {
-    test("each point at a colour both variants have", () => {
+    test("each point at a color both variants have", () => {
         expect(roles.length).toBeGreaterThan(0);
         for (const r of roles) for (const variant of variants) expect(() => color(variant, r.ref)).not.toThrow();
     });
@@ -92,7 +92,7 @@ describe("litCellCss", () => {
         }
     });
 
-    test("sets every colour on each scheme class", () => {
+    test("sets every color on each scheme class", () => {
         for (const variant of variants) {
             const scheme = rule(css, `.lc-${variant}`);
             const all = [...litCell[variant].byPath.values()];
