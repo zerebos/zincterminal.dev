@@ -11,13 +11,16 @@ interface Props {
 
     /** Overrides the H2's 22ch measure */
     titleWidth?: string;
+
+    /** Overrides the lead's 60ch measure */
+    leadWidth?: string;
 }
 
-const {eyebrow, title, titleId, titleWidth} = Astro.props;
+const {eyebrow, title, titleId, titleWidth, leadWidth} = Astro.props;
 ---
 <p class="eyebrow"><LitCell pitch={12} />{eyebrow}</p>
 <h2 id={titleId} class="h2" style={titleWidth ? `max-width: ${titleWidth}` : undefined}>{title}</h2>
-{Astro.slots.has("default") && <p class="lead"><slot /></p>}
+{Astro.slots.has("default") && <p class="lead" style={leadWidth ? `max-width: ${leadWidth}` : undefined}><slot /></p>}
 
 <style>
     .eyebrow {
