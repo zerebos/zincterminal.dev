@@ -14,6 +14,11 @@
     align-items: start;
 }
 
+/* Anchored sections land a little below the sticky header */
+.doc [id] {
+    scroll-margin-top: 80px;
+}
+
 .doc-side {
     position: sticky;
     top: 88px;

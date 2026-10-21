@@ -6,6 +6,7 @@ import Button from "../components/site/Button.astro";
 import Footer from "../components/site/Footer.astro";
 import Header from "../components/site/Header.astro";
 import LitCell from "../components/site/LitCell.astro";
+import SectionSpy from "../components/reading/SectionSpy.svelte";
 import Toc from "../components/reading/Toc.astro";
 import type {TocEntry} from "../components/reading/toc";
 import {links, type FooterColumn, type NavLink} from "../data/site";
@@ -96,6 +97,7 @@ const footer: FooterColumn[] = [
             {Astro.slots.has("endnote") && <div class="endnote"><slot name="endnote" /></div>}
         </article>
     </main>
+    <SectionSpy client:load ids={toc.map(entry => entry.href.slice(1))} />
     <Footer columns={footer} />
 </Base>
 
