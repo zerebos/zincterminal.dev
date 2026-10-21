@@ -28,6 +28,11 @@ export default defineConfig(
         }
     },
     {
+        // Command-line scripts report to the console
+        files: ["scripts/**"],
+        rules: {"no-console": "off"},
+    },
+    {
         ignores: ["node_modules/", "dist/", "public/", ".astro/", ".wrangler/", ".scratch/"]
     }
 );
