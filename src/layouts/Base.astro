@@ -39,6 +39,14 @@ const canonical = new URL(Astro.url.pathname, Astro.site);
         <title>{title}</title>
         <meta name="description" content={description}>
         <link rel="canonical" href={canonical}>
+        <meta property="og:type" content="website">
+        <meta property="og:site_name" content="Zinc">
+        <meta property="og:title" content={title}>
+        <meta property="og:description" content={description}>
+        <meta property="og:url" content={canonical}>
+        {/* The app icon stands in until there's a designed share image */}
+        <meta property="og:image" content={new URL("/brand/app-icon-256.png", Astro.site)}>
+        <meta name="twitter:card" content="summary">
         <link rel="icon" type="image/png" sizes="16x16" href="/brand/app-icon-16.png">
         <link rel="icon" type="image/png" sizes="32x32" href="/brand/app-icon-32.png">
         <link rel="icon" type="image/png" sizes="48x48" href="/brand/app-icon-48.png">

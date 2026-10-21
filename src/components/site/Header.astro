@@ -62,6 +62,7 @@ const {links, hairline = "scroll", mobile = "menu"} = Astro.props;
         display: flex;
         align-items: center;
         flex: none;
+        min-height: 44px;
     }
 
     .topnav {
@@ -77,6 +78,14 @@ const {links, hairline = "scroll", mobile = "menu"} = Astro.props;
         text-decoration: none;
         padding: 6px 12px;
         border-radius: 4px;
+        position: relative;
+    }
+
+    /* Grows the hit area to 44px tall without changing how the link looks */
+    .topnav a::before {
+        content: "";
+        position: absolute;
+        inset: -6px 0;
     }
 
     .topnav a:hover,
