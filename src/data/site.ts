@@ -15,7 +15,6 @@ export const links = {
     zincRoadmap: "#",
     docs: "#",
     changelog: "#",
-    about: "#",
     license: "#",
     thirdPartyNotices: "#"
 } as const;
