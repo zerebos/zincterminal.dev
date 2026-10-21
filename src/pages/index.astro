@@ -1,5 +1,6 @@
 ---
 import Base from "../layouts/Base.astro";
+import CompactCta from "../components/site/CompactCta.svelte";
 import Footer from "../components/site/Footer.astro";
 import Header from "../components/site/Header.astro";
 import Hero from "../components/landing/Hero.astro";
@@ -45,7 +46,9 @@ const footer: FooterColumn[] = [
 ];
 ---
 <Base title="Zinc, a precise, native terminal for Windows">
-    <Header links={nav} />
+    <Header links={nav}>
+        <CompactCta slot="actions" client:load />
+    </Header>
     <main>
         <Hero />
         <section id="precision" class="sec skeleton" aria-label="Precision"></section>
