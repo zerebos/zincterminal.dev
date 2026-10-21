@@ -687,7 +687,7 @@
 
     "lilconfig": ["lilconfig@2.1.0", "", {}, "sha512-utWOt/GHzuUxnLKxB6dk81RoOeoNeHgbrXiuGk4yyF5qlRz+iIVWu56E2fqGHFrXz0QNUhLB/8nKqvRH66JKGQ=="],
 
-    "lit-cell": ["lit-cell@github:zerebos/lit-cell#eb6eb8e", {}, "zerebos-lit-cell-eb6eb8e", "sha512-4hyUu4TGIScm5h6LGlvIp/dGp3N3SkUmIpJSiTWJ+tqdiDLOk+YPQR15v3aQ2I05isAnMKU/oDYh3EuLRHauaQ=="],
+    "lit-cell": ["lit-cell@github:zerebos/lit-cell#ea9b9b3", {}, "zerebos-lit-cell-ea9b9b3", "sha512-fj/KLakHOseOW1i+roX4FVTSF4+pUzVJ+XxfoN5lkXw9JtdF9F5GCxZw8yO0UnSTPBElcpSB9Hgg47uIMuBS1g=="],
 
     "locate-character": ["locate-character@3.0.0", "", {}, "sha512-SW13ws7BjaeJ6p7Q6CO2nchbYEc3X3J6WrmTTDto7yMPqVSZTUyY5Tjbid+Ab8gLnATtygYtiDIJGQRRn2ZOiA=="],
 
