@@ -1,0 +1,105 @@
+---
+// A terminal sample in Lit Cell or Lit Cell Light. It always uses the scheme's exact colours, whatever the site theme.
+import {isSampleLine, type Sample} from "./scheme";
+import type {VariantId} from "../../data/lit-cell";
+
+interface Props {
+    variant: VariantId;
+    name: string;
+
+    /** What the header shows at the right, such as the background's hex or a file name */
+    detail: string;
+    sample: Sample;
+
+    /** Describes the sample, which is one image to assistive tech */
+    label: string;
+}
+
+const {variant, name, detail, sample, label} = Astro.props;
+const lines = sample.map(line => (isSampleLine(line) ? line : {spans: line, no: undefined, kind: undefined}));
+---
+<figure class:list={["lcpane", `lc-${variant}`]}>
+    <figcaption class="lchd"><span><b>{name}</b></span><code>{detail}</code></figcaption>
+    <div class="lcterm" role="img" aria-label={label}>{lines.map(line => (
+        <span class:list={["l", line.kind]}>{line.no !== undefined && <span class="no">{line.no}</span>}{line.spans.length === 0 ? " " : line.spans.map(span => (typeof span === "string" ? span : <span class={span[0]}>{span[1]}</span>))}</span>
+    ))}</div>
+</figure>
+
+<style>
+    .lcpane {
+        margin: 0;
+        background: var(--lc-base-background);
+        color: var(--lc-base-foreground);
+        border: 1px solid var(--lc-ui-line);
+        border-radius: 8px;
+        overflow: hidden;
+        min-width: 0;
+        display: flex;
+        flex-direction: column;
+    }
+
+    .lchd {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        gap: 12px;
+        padding: 8px 14px;
+        background: var(--lc-ui-surface);
+        border-bottom: 1px solid var(--lc-ui-line);
+        font: 400 12px/16px var(--font-sans);
+        color: var(--lc-ui-subtext);
+    }
+
+    .lchd b {
+        font-weight: 600;
+        color: var(--lc-base-foreground);
+    }
+
+    .lchd code {
+        font-family: var(--font-mono);
+    }
+
+    .lcterm {
+        font: 400 13px/20px var(--font-mono);
+        padding: 14px 16px 16px;
+        overflow-x: auto;
+        flex: 1 1 auto;
+    }
+
+    .l {
+        display: block;
+        min-height: 20px;
+        white-space: pre;
+    }
+
+    /* The palette's roles, by the reference's short class names */
+    .r { color: var(--lc-ansi-red); }
+    .g { color: var(--lc-ansi-green); }
+    .y { color: var(--lc-ansi-yellow); }
+    .b { color: var(--lc-ansi-blue); }
+    .m { color: var(--lc-ansi-magenta); }
+    .cy { color: var(--lc-ansi-cyan); }
+    .bk { color: var(--lc-ansi-bright-black); }
+    .br { color: var(--lc-ansi-bright-red); }
+    .bg { color: var(--lc-ansi-bright-green); }
+    .by { color: var(--lc-ansi-bright-yellow); }
+    .bb { color: var(--lc-ansi-bright-blue); }
+    .bm { color: var(--lc-ansi-bright-magenta); }
+    .bc { color: var(--lc-ansi-bright-cyan); }
+    .sub { color: var(--lc-ui-subtext); }
+    .fg { color: var(--lc-base-foreground); }
+
+    .bold {
+        font-weight: 600;
+    }
+
+    .selx {
+        background: var(--lc-base-selection);
+        color: var(--lc-base-selection-text);
+    }
+
+    .cursor {
+        background: var(--lc-base-cursor);
+        color: var(--lc-base-cursor-text);
+    }
+</style>

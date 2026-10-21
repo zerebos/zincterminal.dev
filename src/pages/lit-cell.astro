@@ -2,6 +2,7 @@
 import Base from "../layouts/Base.astro";
 import Footer from "../components/site/Footer.astro";
 import Header from "../components/site/Header.astro";
+import HeroPair from "../components/lit-cell/HeroPair.astro";
 import LitCellHero from "../components/lit-cell/LitCellHero.astro";
 import ZincNod from "../components/lit-cell/ZincNod.astro";
 import {links, type FooterColumn, type NavLink} from "../data/site";
@@ -50,7 +51,9 @@ const footer: FooterColumn[] = [
 >
     <Header links={nav} hairline="always" mobile="collapse" />
     <main>
-        <LitCellHero />
+        <LitCellHero>
+            <HeroPair />
+        </LitCellHero>
         <ZincNod />
     </main>
     <Footer columns={footer}>

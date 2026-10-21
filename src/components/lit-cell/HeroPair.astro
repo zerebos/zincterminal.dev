@@ -1,0 +1,34 @@
+---
+// Both variants side by side under the Lit Cell hero
+import SchemePane from "./SchemePane.astro";
+import {litCell} from "../../data/lit-cell";
+import {heroSample} from "../../data/lit-cell-samples";
+
+const variants = [litCell.dark, litCell.light];
+---
+<div class="hero-pair">
+    {variants.map(v => (
+        <SchemePane
+            variant={v.id}
+            name={v.name}
+            detail={v.background}
+            sample={heroSample}
+            label={`Terminal output in ${v.name}: a directory listing, a build with a warning and an error, and git status`}
+        />
+    ))}
+</div>
+
+<style>
+    .hero-pair {
+        display: grid;
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+        gap: 20px;
+        margin-top: 56px;
+    }
+
+    @media (max-width: 900px) {
+        .hero-pair {
+            grid-template-columns: minmax(0, 1fr);
+        }
+    }
+</style>
