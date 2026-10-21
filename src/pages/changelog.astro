@@ -1,0 +1,43 @@
+---
+import Button from "../components/site/Button.astro";
+import ReadingLayout from "../layouts/ReadingLayout.astro";
+import type {TocEntry} from "../components/reading/toc";
+import changelog from "../data/generated/zinc-changelog.json";
+import {formatDate, formatDay} from "../lib/date";
+import {links} from "../data/site";
+
+// Placeholder entries until the changelog is generated from zinc itself
+const builds = changelog.map(entry => ({...entry, id: `v${entry.version.replace(/\W+/g, "-")}`}));
+const toc: TocEntry[] = builds.map(build => ({
+    label: build.version.replace(/^.*-(?=dev\.)/, ""),
+    href: `#${build.id}`,
+    mono: true,
+    detail: formatDay(build.date)
+}));
+---
+
+<ReadingLayout
+    title="What's new in Zinc"
+    description="What changed in each build testers got, newest first."
+    current="changelog"
+    kicker="Changelog"
+    heading="What's new"
+    toc={toc}
+    tocLabel="Builds"
+    tocSummary="Jump to a build"
+>
+    <Fragment slot="intro">
+        <p class="lead">What changed in each build testers got, newest first. Builds are numbered <code>0.1.0-dev.N</code>, where N counts the commits behind them.</p>
+        <p class="meta"><span>Not testing yet? <a href={links.discord}>Request access in the Discord</a>.</span></p>
+    </Fragment>
+    {builds.map(build => (
+        <section>
+            <h2 id={build.id}>{build.version}</h2>
+            <p>{formatDate(build.date)}. Placeholder entry, generated from the changelog in a later chunk.</p>
+        </section>
+    ))}
+    <Fragment slot="endnote">
+        <p><b>Found a bug in a build?</b> Report it in the Discord, with the version from Settings › About.</p>
+        <Button href={links.discord}>Report an issue</Button>
+    </Fragment>
+</ReadingLayout>

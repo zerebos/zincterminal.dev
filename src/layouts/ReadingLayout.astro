@@ -1,0 +1,108 @@
+---
+// The layout for docs, changelog and notices... a sticky contents sidebar beside a 720px text column
+// Below 900px the sidebar becomes a collapsible card under the intro
+import Base from "./Base.astro";
+import Button from "../components/site/Button.astro";
+import Footer from "../components/site/Footer.astro";
+import Header from "../components/site/Header.astro";
+import LitCell from "../components/site/LitCell.astro";
+import Toc from "../components/reading/Toc.astro";
+import type {TocEntry} from "../components/reading/toc";
+import {links, type FooterColumn, type NavLink} from "../data/site";
+import "../styles/reading.css";
+
+interface Props {
+    title: string;
+    description: string;
+
+    /** The nav link to mark as the current page */
+    current?: "docs" | "changelog";
+    kicker: string;
+    heading: string;
+    toc: TocEntry[];
+
+    /** Names the contents in the sidebar and to screen readers */
+    tocLabel?: string;
+
+    /** The mobile card's summary, `tocLabel` by default */
+    tocSummary?: string;
+}
+
+const {title, description, current, kicker, heading, toc, tocLabel = "On this page", tocSummary = tocLabel} = Astro.props;
+
+// TODO: find a good way to de-dup these
+const nav: NavLink[] = [
+    {label: "Zinc", href: "/", optional: true},
+    {label: "Docs", href: "/docs", current: current === "docs"},
+    {label: "Changelog", href: "/changelog", current: current === "changelog"},
+    {label: "Lit Cell", href: "/lit-cell", optional: true}
+];
+
+// TODO: find a good way to de-dup these
+const footer: FooterColumn[] = [
+    {
+        title: "Product",
+        links: [
+            {label: "Features", href: "/#precision"},
+            {label: "Themes", href: "/#themes"},
+            {label: "Lit Cell", href: "/lit-cell"},
+            {label: "Changelog", href: "/changelog"},
+            {label: "Request access", href: links.discord}
+        ]
+    },
+    {
+        title: "Docs",
+        links: [
+            {label: "Getting started", href: "/docs#getting-started"},
+            {label: "Configuration", href: "/docs#configuration"},
+            {label: "Shell integration", href: "/docs#shell-integration"},
+            {label: "The zn CLI", href: "/docs#zn"}
+        ]
+    },
+    {
+        title: "Project",
+        links: [
+            {label: "Report an issue", href: links.discord},
+            {label: "Third-party notices", href: "/notices"}
+        ]
+    }
+];
+---
+
+<Base title={title} description={description}>
+    <Header links={nav} hairline="always" mobile="collapse">
+        <div slot="actions" class="navcta">
+            <Button href={links.discord} primary>Request access</Button>
+        </div>
+    </Header>
+    <main class="doc">
+        <div class="doc-side">
+            <p class="side-label" aria-hidden="true">{tocLabel}</p>
+            <nav aria-label={tocLabel}>
+                <Toc entries={toc} />
+            </nav>
+        </div>
+        <article class="prose">
+            <p class="kicker"><LitCell pitch={12} />{kicker}</p>
+            <h1>{heading}</h1>
+            <slot name="intro" />
+            <details class="toc-m">
+                <summary>{tocSummary}</summary>
+                <nav aria-label={tocLabel}>
+                    <Toc entries={toc} />
+                </nav>
+            </details>
+            <slot />
+            {Astro.slots.has("endnote") && <div class="endnote"><slot name="endnote" /></div>}
+        </article>
+    </main>
+    <Footer columns={footer} />
+</Base>
+
+<style>
+    @media (max-width: 640px) {
+        .navcta {
+            display: none;
+        }
+    }
+</style>

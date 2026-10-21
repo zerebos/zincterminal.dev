@@ -1,0 +1,36 @@
+---
+import ReadingLayout from "../layouts/ReadingLayout.astro";
+import type {TocEntry} from "../components/reading/toc";
+import notices from "../data/generated/zinc-notices.json";
+import {release} from "../data/site";
+
+// Placeholder rows until the notices are generated from the zinc repo
+const website = ["Geist Mono", "Svelte", "Astro"];
+const toc: TocEntry[] = [
+    {label: "In Zinc", href: "#in-zinc", detail: String(notices.length)},
+    {label: "On this website", href: "#on-this-site", detail: String(website.length)}
+];
+---
+
+<ReadingLayout
+    title="Zinc's third-party notices"
+    description="The open-source software that ships with Zinc, what each part does and the license it's under."
+    kicker="Legal"
+    heading="Third-party notices"
+    toc={toc}
+>
+    <p slot="intro" class="lead">Zinc is built on open-source software. Here's what ships with it, what each part does and the license it's under.</p>
+    <section>
+        <h2 id="in-zinc">In Zinc</h2>
+        <p>For <code>{release.version}</code>.</p>
+        <ul>
+            {notices.map(notice => <li>{notice.name} · {notice.license}</li>)}
+        </ul>
+    </section>
+    <section>
+        <h2 id="on-this-site">On this website</h2>
+        <ul>
+            {website.map(name => <li>{name}</li>)}
+        </ul>
+    </section>
+</ReadingLayout>
