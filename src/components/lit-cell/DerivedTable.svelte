@@ -42,10 +42,11 @@
             {#each variants as v (v.id)}
                 {@const hex = row[v.id]}
                 {@const key = `${v.id}-${row.role}`}
-                <span class="dchip" role="cell">
-                    <i style:background={hex}></i>
-                    <button class="dhex" type="button" aria-label={`Copy ${row.role} for ${v.name}, ${hex}`} onclick={() => copy(key, hex)}>
-                        {copied === key ? "Copied" : hex}
+                <span role="cell">
+                    <!-- The chip and the hex copy together, because the color is where people click -->
+                    <button class="dchip" type="button" aria-label={`Copy ${row.role} for ${v.name}, ${hex}`} onclick={() => copy(key, hex)}>
+                        <i style:background={hex}></i>
+                        <span class="dhex">{copied === key ? "Copied" : hex}</span>
                     </button>
                 </span>
             {/each}
@@ -83,10 +84,22 @@
         overflow-wrap: anywhere;
     }
 
+    /* The chip and hex as one target */
     .dchip {
         display: inline-flex;
         align-items: center;
         gap: 8px;
+        min-height: 24px;
+        padding: 2px 6px 2px 2px;
+        margin-left: -2px;
+        border: 0;
+        border-radius: 4px;
+        background: transparent;
+        cursor: pointer;
+    }
+
+    .dchip:hover {
+        background: var(--accent-subtle);
     }
 
     .dchip i {
@@ -100,16 +113,6 @@
     .dhex {
         font: 400 12px/16px var(--font-mono);
         color: var(--ink);
-        background: transparent;
-        border: 0;
-        padding: 2px 4px;
-        border-radius: 3px;
-        cursor: pointer;
-        min-height: 24px;
-    }
-
-    .dhex:hover {
-        background: var(--accent-subtle);
     }
 
     @media (max-width: 640px) {

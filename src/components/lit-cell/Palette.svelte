@@ -35,10 +35,11 @@
                         {#each group.swatches as sw (sw.label)}
                             {@const key = `${panel.id}-${sw.label}`}
                             <div class="swt">
-                                <div class="swc" style:background={sw.hex}></div>
-                                <div class="swn" title={sw.label}>{sw.label}</div>
-                                <button class="hexbtn" type="button" aria-label={`Copy ${sw.name} ${sw.hex}`} onclick={() => copy(key, sw.hex)}>
-                                    {copied === key ? "Copied" : sw.hex}
+                                <!-- The whole swatch copies, because the color is where people click -->
+                                <button class="swbtn" type="button" aria-label={`Copy ${sw.name} ${sw.hex}`} onclick={() => copy(key, sw.hex)}>
+                                    <span class="swc" style:background={sw.hex}></span>
+                                    <span class="swn" title={sw.label}>{sw.label}</span>
+                                    <span class="hex">{copied === key ? "Copied" : sw.hex}</span>
                                 </button>
                                 <div class="swr">
                                     {#if sw.sample}<span class="aa" style:color={sw.hex}>Aa</span>{/if}
@@ -112,7 +113,28 @@
         min-width: 0;
     }
 
+    /* The color block, name and hex as one target. The negative margin keeps the block lined up with the grid. */
+    .swbtn {
+        display: flex;
+        flex-direction: column;
+        gap: 4px;
+        min-width: 0;
+        margin: -4px;
+        padding: 4px;
+        border: 0;
+        border-radius: 6px;
+        background: transparent;
+        color: inherit;
+        text-align: left;
+        cursor: pointer;
+    }
+
+    .swbtn:hover {
+        background: var(--lc-ui-surface-raised);
+    }
+
     .swc {
+        display: block;
         height: 40px;
         border-radius: 4px;
         box-shadow: inset 0 0 0 1px var(--lc-ui-line);
@@ -126,21 +148,9 @@
         white-space: nowrap;
     }
 
-    .hexbtn {
+    .hex {
         font: 400 12px/16px var(--font-mono);
         color: var(--lc-base-foreground);
-        background: transparent;
-        border: 0;
-        padding: 2px 4px;
-        margin: 0 -4px;
-        border-radius: 3px;
-        cursor: pointer;
-        text-align: left;
-        min-height: 24px;
-    }
-
-    .hexbtn:hover {
-        background: var(--lc-ui-surface-raised);
     }
 
     .swr {
