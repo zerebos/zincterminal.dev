@@ -1,7 +1,7 @@
 import {describe, expect, test} from "bun:test";
 import {satteriHeadingIdsPlugin} from "@astrojs/markdown-satteri";
 import {markdownToHtml} from "satteri";
-import {fenceTitle} from "./code-meta";
+import {fenceOption} from "./code-meta";
 import {headingAnchors, settingsPath, settingsPaths, tableBoxes} from "./plugins";
 
 
@@ -58,13 +58,16 @@ describe("the plugins", () => {
     });
 });
 
-describe("fenceTitle", () => {
+describe("fenceOption", () => {
     test.each([
-        ["title=\"config.toml\"", "config.toml"],
-        ["{1,3} title=\"a b.ps1\"", "a b.ps1"],
-        ["", undefined],
-        ["subtitle=\"x\"", undefined],
-    ])("reads %j", (meta, title) => {
-        expect(fenceTitle(meta)).toBe(title);
+        ["title=\"config.toml\"", "title", "config.toml"],
+        ["{1,3} title=\"a b.ps1\"", "title", "a b.ps1"],
+        ["title=\"Any shell\" copy=\"the zn examples\"", "copy", "the zn examples"],
+        ["title=\"Any shell\" copy=\"the zn examples\"", "title", "Any shell"],
+        ["", "title", undefined],
+        ["subtitle=\"x\"", "title", undefined],
+        ["title=\"x\"", "copy", undefined],
+    ])("reads %j for %s", (meta, name, value) => {
+        expect(fenceOption(meta, name)).toBe(value);
     });
 });

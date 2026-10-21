@@ -1,19 +1,22 @@
 // A Shiki transformer that keeps what the code block component needs... the fence's `title="…"`
-// and the raw code for its copy button
+// and `copy="…"`, and the raw code for its copy button
 
 interface Context {
     source: string;
     options: {meta?: {__raw?: string}};
 }
 
-/** The `title="…"` from a fence's meta, as in ` ```toml title="config.toml" ` */
-export const fenceTitle = (meta = "") => /(?:^|\s)title="([^"]*)"/.exec(meta)?.[1];
+/** A `name="…"` option from a fence's meta, as in ` ```toml title="config.toml" ` */
+export const fenceOption = (meta: string | undefined, name: string) => new RegExp(`(?:^|\\s)${name}="([^"]*)"`).exec(meta ?? "")?.[1];
 
 export const codeMeta = {
     name: "code-meta",
     pre(this: Context, node: {properties: Record<string, unknown>}) {
-        const title = fenceTitle(this.options.meta?.__raw);
+        const meta = this.options.meta?.__raw;
+        const title = fenceOption(meta, "title");
+        const copy = fenceOption(meta, "copy");
         if (title) node.properties.dataTitle = title;
+        if (copy) node.properties.dataCopy = copy;
         node.properties.dataCode = this.source;
     }
 };

@@ -1,24 +1,26 @@
 ---
 // A fenced code block in MDX, in the `zn-code` frame... its name from the fence's title or language,
 // and a copy button. The `data-*` props come from the code-meta Shiki transformer.
+// The button is named "Copy" plus the fence's `copy="…"`, or its title, so a screen reader can tell blocks apart.
 import CopyButton from "../site/CopyButton.svelte";
 import "../../styles/zn/code.css";
 
 interface Props {
     "data-title"?: string;
+    "data-copy"?: string;
     "data-code"?: string;
     "data-language"?: string;
     [attribute: string]: unknown;
 }
 
-const {"data-title": title, "data-code": code, "data-language": language, ...rest} = Astro.props;
+const {"data-title": title, "data-copy": copyName, "data-code": code, "data-language": language, ...rest} = Astro.props;
 const name = title ?? language ?? "Code";
 ---
 
 <div class="zn-code">
     <div class="zn-code-head">
         <span class="zn-code-name">{name}</span>
-        {code && <CopyButton client:visible text={code} name={`Copy ${name}`} />}
+        {code && <CopyButton client:visible text={code} name={`Copy ${copyName ?? name}`} />}
     </div>
     <pre {...rest}><slot /></pre>
 </div>
