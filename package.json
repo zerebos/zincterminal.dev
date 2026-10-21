@@ -1,9 +1,12 @@
 {
   "name": "zincterminal.dev",
   "dependencies": {
+    "@astrojs/markdown-satteri": "0.4.5",
+    "@astrojs/mdx": "^8.1.1",
     "@astrojs/svelte": "^9.1.0",
     "astro": "^7.4.1",
     "lit-cell": "github:zerebos/lit-cell",
+    "satteri": "0.10.5",
     "svelte": "^5.57.2"
   },
   "devDependencies": {

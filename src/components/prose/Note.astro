@@ -1,0 +1,14 @@
+---
+// A note in the docs, marked with an accent square
+interface Props {
+    title?: string;
+}
+
+// Curled like the body text, which Astro's smart punctuation curls
+const title = Astro.props.title?.replaceAll("'", "’");
+---
+
+<div class="callout">
+    {title && <b>{title}</b>}
+    <slot />
+</div>

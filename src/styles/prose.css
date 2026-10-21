@@ -36,6 +36,11 @@
     text-decoration: none;
 }
 
+/* Drawn here so the `#` stays out of the heading's text, which the contents list uses */
+.prose-body .anchor::before {
+    content: "#";
+}
+
 .prose-body :is(h2, h3):hover .anchor,
 .prose-body .anchor:focus-visible {
     opacity: 1;
@@ -146,26 +151,41 @@
     box-shadow: inset 0 0 0 1px var(--ink-muted);
 }
 
-/* Numbered steps, each number in a small box */
 .prose-body ol {
     display: flex;
     flex-direction: column;
+    gap: 10px;
+    margin: 16px 0 0;
+    padding-left: 24px;
+}
+
+.prose-body ol > li {
+    padding-left: 4px;
+    font: 400 16px/26px var(--font-sans);
+}
+
+.prose-body ol > li::marker {
+    color: var(--ink-muted);
+    font-variant-numeric: tabular-nums;
+}
+
+/* Steps, from `<Steps>`... each number in a small box */
+.prose-body .steps > ol {
     gap: 16px;
-    margin: 20px 0 0;
+    margin-top: 20px;
     padding: 0;
     list-style: none;
     counter-reset: step;
 }
 
-.prose-body ol > li {
+.prose-body .steps > ol > li {
     position: relative;
     min-height: 26px;
     padding-left: 42px;
     counter-increment: step;
-    font: 400 16px/26px var(--font-sans);
 }
 
-.prose-body ol > li::before {
+.prose-body .steps > ol > li::before {
     content: counter(step);
     position: absolute;
     top: 0;
@@ -227,9 +247,14 @@
     margin-top: 8px;
 }
 
-.prose-body .callout b {
+/* The title, not bold words in the body */
+.prose-body .callout > b {
     display: block;
     font-weight: 600;
+}
+
+.prose-body .zn-code {
+    margin: 20px 0 0;
 }
 
 /* Tables scroll inside their box on narrow screens */

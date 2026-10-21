@@ -1,0 +1,18 @@
+---
+// Renders an MDX file's `Content` with the components the docs use, so the Markdown uses them without imports
+import type {MDXInstance} from "astro";
+import Note from "./Note.astro";
+import Partly from "./Partly.astro";
+import Pre from "./Pre.astro";
+import Steps from "./Steps.astro";
+import Warning from "./Warning.astro";
+import Yes from "./Yes.astro";
+
+interface Props {
+    content: MDXInstance<Record<string, unknown>>["Content"];
+}
+
+const {content: Content} = Astro.props;
+---
+
+<Content components={{pre: Pre, Note, Warning, Steps, Yes, Partly}} />
