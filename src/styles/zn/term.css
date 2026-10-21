@@ -139,3 +139,26 @@
     width: 1ch;
     background: currentColor;
 }
+
+/* The shell-integration gutter, with a mark at each command and a red one where it failed. */
+.zn-term .gut {
+    display: inline-block;
+    width: 2ch;
+    height: var(--cell-h);
+    vertical-align: top;
+    position: relative;
+}
+
+.zn-term .mk {
+    position: absolute;
+    left: 2px;
+    top: 5px;
+    width: 8px;
+    height: 8px;
+    border-radius: 1px;
+    background: var(--term-bright-black);
+}
+
+.zn-term .mk.bad {
+    background: var(--error);
+}

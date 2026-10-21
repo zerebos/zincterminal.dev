@@ -1,0 +1,47 @@
+---
+// The workspace sidebar, with each workspace's attention dot or count pill
+import type {AttentionState, Workspace} from "./term";
+import "../../styles/zn/dot.css";
+import "../../styles/zn/sidebar.css";
+
+interface Props {
+    workspaces: Workspace[];
+
+    /** Ends the list with "New workspace" */
+    add?: boolean;
+    style?: string;
+}
+
+const {workspaces, add = false, style} = Astro.props;
+
+const icons = {
+    tabs: "<rect x=\"1.5\" y=\"2.5\" width=\"13\" height=\"11\" rx=\"1.5\"/><path d=\"M1.5 5.5h13\"/>",
+    folder: "<path d=\"M1.5 4.5v8a1 1 0 0 0 1 1h11a1 1 0 0 0 1-1v-6.5a1 1 0 0 0-1-1H8L6.5 3.5h-4a1 1 0 0 0-1 1z\"/>"
+};
+const stateClass = (state: AttentionState) => ({"zn-dot-caution": state === "caution", "zn-dot-error": state === "error"});
+---
+<div class="zn-sidebar" style={style}>
+    {workspaces.map(ws => (
+        <div class:list={["zn-ws", {selected: ws.selected}]}>
+            <span class="zn-ws-icon"><svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.1" aria-hidden="true" set:html={icons[ws.icon]} /></span>
+            <span class="zn-ws-title">{ws.name}</span>
+            <span class="zn-ws-slot">
+                {ws.dot && <span class:list={["zn-dot", stateClass(ws.dot.state), {"zn-dot-pulse": ws.dot.pulse}]} />}
+                {ws.count && <span class:list={["zn-count", stateClass(ws.count.state)]}>{ws.count.value}</span>}
+            </span>
+        </div>
+    ))}
+    {add && (
+        <div class="zn-ws zn-ws-new">
+            <span class="zn-ws-icon"><svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.1" aria-hidden="true"><path d="M8 2.5v11M2.5 8h11" /></svg></span>
+            <span class="zn-ws-title">New workspace</span>
+            <span class="zn-ws-slot"><svg viewBox="0 0 16 16" width="12" height="12" fill="none" stroke="currentColor" stroke-width="1.3" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m4 6 4 4 4-4" /></svg></span>
+        </div>
+    )}
+</div>
+
+<style>
+    .zn-sidebar {
+        flex: none;
+    }
+</style>

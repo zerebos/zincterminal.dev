@@ -2,6 +2,7 @@
 // A pane in the Cards layout, with either its own tabs or a plain title over a terminal
 import Term from "./Term.astro";
 import type {Line} from "./term";
+import "../../styles/zn/dot.css";
 
 interface CardTab {
     name: string;
@@ -9,6 +10,9 @@ interface CardTab {
     /** The folder, shown muted after the name */
     cwd?: string;
     selected?: boolean;
+
+    /** A finished command out of view, shown as a pulsing attention dot */
+    dot?: boolean;
 }
 
 interface Props {
@@ -37,6 +41,7 @@ const {lines, tabs, title, actions = [], focused = false, dim = false, style, te
                 <svg class="card-pi" viewBox="0 0 16 16" aria-hidden="true"><path d="M3 4l4 4-4 4M8.5 12H13" /></svg>
                 {tab.name}
                 {tab.cwd && <span class="cq">{tab.cwd}</span>}
+                {tab.dot && <span class="zn-dot zn-dot-pulse" />}
                 {tab.selected && (
                     <span class="card-x"><svg viewBox="0 0 16 16" aria-hidden="true"><path d="M5 5l6 6M11 5l-6 6" /></svg></span>
                 )}

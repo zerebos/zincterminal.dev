@@ -1,0 +1,116 @@
+---
+// Workflow... the sidebar and Cards mock-up beside three points and the attention wording
+import Card from "../mock/Card.astro";
+import CardsArea from "../mock/CardsArea.astro";
+import Mock from "../mock/Mock.astro";
+import TitleRow from "../mock/TitleRow.astro";
+import Window from "../mock/Window.astro";
+import WorkspaceSidebar from "../mock/WorkspaceSidebar.astro";
+import Points from "../site/Points.astro";
+import Section from "../site/Section.astro";
+import SectionIntro from "../site/SectionIntro.astro";
+import {workflowBuild, workflowLabel, workflowLog, workflowWorkspaces} from "../../data/mocks/workflow";
+import "../../styles/zn/dot.css";
+
+const points = [
+    {title: "Workspaces, tabs and splits", text: "Group a project's tabs into a workspace, split them as you like, and find them where you left them next time."},
+    {title: "Shell integration, set up for you", text: "Zinc marks each command in the gutter, so a failure stands out before you read a line. Works with PowerShell, bash, zsh, fish, nushell, elvish and osh, and with cmd (fullest through Clink)."},
+    {title: "Attention, in words", text: "A dot on the tab or workspace, and a notification that says what happened."}
+];
+
+const termPadding = "padding: 8px 12px 10px 6px";
+---
+<Section id="workflow" labelledby="flow-title">
+    <SectionIntro eyebrow="Workflow" title="A terminal that knows what your commands are doing" titleId="flow-title" titleWidth="23ch">
+        Workspaces reopen where you left them. Shell integration sets itself up. When a command finishes, fails or needs you out of view, Zinc says which, and where.
+    </SectionIntro>
+
+    <div class="layout">
+        <Mock class="flow-mock">
+            <Window label={workflowLabel}>
+                <TitleRow center="build  ·  ~\src\zinc" />
+                <div class="body">
+                    <WorkspaceSidebar workspaces={workflowWorkspaces} add />
+                    <CardsArea class="flow-cards">
+                        <Card
+                            focused
+                            style="flex: 1.6 1 0"
+                            tabs={[{name: "build", selected: true}, {name: "server", dot: true}, {name: "notes"}]}
+                            actions={["split", "more"]}
+                            lines={workflowBuild}
+                            termStyle={termPadding}
+                        />
+                        <Card dim style="flex: 1 1 0" title={{name: "pwsh", cwd: "~\\src\\zinc"}} lines={workflowLog} termStyle={termPadding} />
+                    </CardsArea>
+                </div>
+            </Window>
+        </Mock>
+
+        <div class="side">
+            <Points items={points} class="flush" />
+            <ul class="attn" aria-label="Attention examples">
+                <li><span class="zn-dot" />Build finished in workspace 3</li>
+                <li><span class="zn-dot zn-dot-caution" />ssh needs you in "prod"</li>
+                <li><span class="zn-dot zn-dot-error" />Tests failed (exit 8) in workspace 2</li>
+            </ul>
+            <p class="cap">The same words appear in Windows notifications.</p>
+        </div>
+    </div>
+</Section>
+
+<style>
+    .layout {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 48px;
+        margin-top: 48px;
+        align-items: flex-start;
+    }
+
+    .layout :global(.flow-mock) {
+        flex: 2 1 640px;
+    }
+
+    .body {
+        display: flex;
+        background: var(--mica);
+    }
+
+    .body :global(.flow-cards) {
+        flex: 1 1 auto;
+        min-width: 0;
+        min-height: 300px;
+    }
+
+    .side {
+        flex: 1 1 300px;
+        min-width: 0;
+    }
+
+    .side :global(.flush) {
+        margin-top: 0;
+    }
+
+    .attn {
+        display: flex;
+        flex-direction: column;
+        gap: 10px;
+        margin: 28px 0 0;
+        padding: 0;
+        list-style: none;
+    }
+
+    .attn li {
+        display: flex;
+        align-items: center;
+        gap: 12px;
+        font: 400 14px/20px var(--font-sans);
+        color: var(--ink);
+    }
+
+    .cap {
+        margin: 12px 0 0;
+        font: 400 12px/16px var(--font-sans);
+        color: var(--ink-muted);
+    }
+</style>

@@ -15,8 +15,9 @@ export interface Box {kind: "box", arms: string, width: number, full: boolean, s
 export interface Quadrant {kind: "quad", color?: TermColor;}
 export interface Swatch {kind: "swatch", color: TermColor;}
 export interface Ramp {kind: "ramp", style?: TermStyle;}
+export interface Gutter {kind: "gutter", mark?: "command" | "failed";}
 
-export type Segment = string | Styled | Powerline | Box | Quadrant | Swatch | Ramp;
+export type Segment = string | Styled | Powerline | Box | Quadrant | Swatch | Ramp | Gutter;
 export type Line = Segment[];
 
 /** Text in one of the term styles */
@@ -46,10 +47,25 @@ export const palette: TermColor[] = [
 /** The eight eighth-blocks, ▁ to █, rising across eight cells */
 export const ramp = (style?: TermStyle): Ramp => ({kind: "ramp", style});
 
+/** The shell-integration gutter at the start of a line, with a mark where a command starts */
+export const gut = (mark?: "command" | "failed"): Gutter => ({kind: "gutter", mark});
+
 /** The block cursor, one cell */
 export const cursor = s("cur", " ");
 
 export const termVar = (color: TermColor) => `var(--term-${color})`;
+
+export type AttentionState = "attention" | "caution" | "error";
+
+export interface Workspace {
+    name: string;
+    icon: "tabs" | "folder";
+    selected?: boolean;
+
+    /** One tab wants you, or a count when two or more do */
+    dot?: {state: AttentionState, pulse?: boolean;};
+    count?: {value: number, state: AttentionState;};
+}
 
 export interface Tab {
     name: string;
