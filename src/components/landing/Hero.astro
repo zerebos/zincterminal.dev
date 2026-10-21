@@ -1,7 +1,12 @@
 ---
 import Button from "../site/Button.astro";
 import InstallCommand from "../site/InstallCommand.astro";
+import Mock from "../mock/Mock.astro";
+import Term from "../mock/Term.astro";
+import TitleBar from "../mock/TitleBar.astro";
+import Window from "../mock/Window.astro";
 import {links} from "../../data/site";
+import {heroFocused, heroLabel, heroWorkspaces} from "../../data/mocks/hero";
 ---
 <section class="wrap hero" aria-labelledby="hero-title">
     <div class="copy">
@@ -14,6 +19,12 @@ import {links} from "../../data/site";
         </div>
         <InstallCommand class="install" command="winget" comment="# coming soon" />
     </div>
+    <Mock class="hero-mock">
+        <Window label={heroLabel}>
+            <TitleBar tabs={heroWorkspaces} />
+            <Term lines={heroFocused} />
+        </Window>
+    </Mock>
 </section>
 
 <style>
@@ -63,6 +74,10 @@ import {links} from "../../data/site";
     .meta {
         font: 400 12px/16px var(--font-sans);
         color: var(--ink-muted);
+    }
+
+    .hero :global(.hero-mock) {
+        flex: 1.6 1 600px;
     }
 
     .copy :global(.install) {

@@ -38,6 +38,13 @@
         transition: opacity 0.16s ease, transform 0.16s ease, visibility 0.16s;
     }
 
+    /* On phones the hidden button leaves the row, so the theme switch stays next to the menu button */
+    @media (max-width: 640px) {
+        .off {
+            position: absolute;
+        }
+    }
+
     .off {
         opacity: 0;
         transform: translateY(-4px);
