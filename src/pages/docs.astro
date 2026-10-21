@@ -1,15 +1,19 @@
 ---
+import {getEntry, render} from "astro:content";
 import Button from "../components/site/Button.astro";
+import MdxContent from "../components/prose/MdxContent.astro";
 import ReadingLayout from "../layouts/ReadingLayout.astro";
 import type {TocEntry} from "../components/reading/toc";
 import {formatDate} from "../lib/date";
 import {links, release} from "../data/site";
-import {Content, getHeadings} from "../data/prose-fixture.mdx";
-import MdxContent from "../components/prose/MdxContent.astro";
 
-// A fixture that uses every reading element, until the docs content is added
+const docs = await getEntry("docs", "using-zinc");
+if (!docs) throw new Error("src/content/docs/using-zinc.mdx is missing");
+const {Content, headings} = await render(docs);
+
+// H2s with their H3s nested under them
 const toc: TocEntry[] = [];
-for (const heading of getHeadings()) {
+for (const heading of headings) {
     const link = {label: heading.text, href: `#${heading.slug}`};
     const parent = toc.at(-1);
     if (heading.depth === 2) toc.push(link);
@@ -18,15 +22,15 @@ for (const heading of getHeadings()) {
 ---
 
 <ReadingLayout
-    title="Using Zinc"
-    description="How to install Zinc, set it up the way you work and script it."
+    title={docs.data.title}
+    description={docs.data.description}
     current="docs"
     kicker="Docs"
-    heading="Using Zinc"
+    heading={docs.data.title}
     toc={toc}
 >
     <Fragment slot="intro">
-        <p class="lead">How to install Zinc, set it up the way you work and script it. Written for the private alpha, so details can change between builds.</p>
+        <p class="lead">{docs.data.lead}</p>
         <p class="meta"><span>For <code>{release.version}</code></span><span>Updated {formatDate(release.date)}</span></p>
     </Fragment>
     <MdxContent content={Content} />

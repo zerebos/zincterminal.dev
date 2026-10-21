@@ -1,0 +1,71 @@
+---
+title: Using Zinc
+description: How to install Zinc, set it up the way you work and script it.
+lead: How to install Zinc, set it up the way you work and script it. Written for the private alpha, so details can change between builds.
+---
+
+import {links} from "../../data/site";
+
+## Getting started
+
+### What you need {#requirements}
+
+Windows 10 version 2004 or later, or Windows 11, on an x64 PC. ARM64 builds aren't available yet.
+
+### Install
+
+<Steps>
+
+1. <a href={links.discord}>Request access in the Discord</a>. Testers get a link to each build.
+2. Run `Zinc-win-Setup.exe`. It installs Zinc for your user only, so it doesn't ask for administrator rights.
+3. If Windows SmartScreen stops it, choose **More info**, then **Run anyway**.
+
+</Steps>
+
+<Warning title="Alpha builds aren't signed yet">
+That's why SmartScreen asks. Signing is coming, and once signed builds have earned SmartScreen's trust, it stops asking.
+</Warning>
+
+Rather not install? `Zinc-win-Portable.zip` holds the same build in a folder you can run from anywhere.
+
+### Updates
+
+Installed copies check for a new build once a day and update themselves. You'll find the version you have, and the option to check now, in `Settings > About > Updates`. What changed is in the [changelog](/changelog).
+
+### First launch
+
+The first time Zinc starts, a welcome page asks how you like to work and saves your answers to your settings. Reopen it any time with **Welcome…** in the command palette (<kbd>Ctrl+Shift+P</kbd>). It changes only what you change there.
+
+- **Layout.** Simple, with tabs along the top and one terminal each, or workspaces, in a sidebar or along the top, each with its own tabs and splits.
+- **Panes.** Compact, edge to edge, or cards, each with a header and a gap around it.
+- **Color scheme and font**, with a preview. Pick one scheme, or a pair that follows Windows' light and dark mode.
+- **Default shell.** Zinc lists the shells it found on your PC.
+- **Notifications.** Whether a long command that finishes in the background shows a Windows notification.
+
+### Keys worth knowing {#keys}
+
+| Action | Keys |
+|---|---|
+| Command palette: every action, profile and workspace | <kbd>Ctrl+Shift+P</kbd> |
+| Settings | <kbd>Ctrl+,</kbd> |
+| Quick terminal, from anywhere in Windows | <kbd>{"Win+`"}</kbd> |
+| New tab / new workspace | <kbd>Ctrl+Shift+T</kbd> / <kbd>Ctrl+Alt+T</kbd> |
+| Split right / down | <kbd>Alt+Shift+Plus</kbd> / <kbd>Alt+Shift+Minus</kbd> |
+| Previous / next prompt | <kbd>Ctrl+Shift+↑</kbd> / <kbd>Ctrl+Shift+↓</kbd> |
+| Find in the scrollback | <kbd>Ctrl+Shift+F</kbd> |
+
+Every action and its keys are in `Settings > Keyboard`, where you can change them.
+
+{/* Placeholders, so the footer's links land, until 2.2 and 2.3 write these sections */}
+
+## Configuration
+
+To be written later.
+
+## Shell integration
+
+To be written later.
+
+## The zn CLI {#zn}
+
+To be written later.
