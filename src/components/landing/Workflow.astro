@@ -1,15 +1,11 @@
 ---
-// Workflow... the sidebar and Cards mock-up beside three points and the attention wording
-import Card from "../mock/Card.astro";
-import CardsArea from "../mock/CardsArea.astro";
-import Mock from "../mock/Mock.astro";
-import TitleRow from "../mock/TitleRow.astro";
-import Window from "../mock/Window.astro";
-import WorkspaceSidebar from "../mock/WorkspaceSidebar.astro";
+// Workflow... the sidebar and Cards screenshot beside three points and the attention wording
+import workflowDark from "../../assets/screenshots/workflow-dark.png";
+import workflowLight from "../../assets/screenshots/workflow-light.png";
 import Points from "../site/Points.astro";
+import Screenshot from "../site/Screenshot.astro";
 import Section from "../site/Section.astro";
 import SectionIntro from "../site/SectionIntro.astro";
-import {workflowBuild, workflowLabel, workflowLog, workflowWorkspaces} from "../../data/mocks/workflow";
 import "../../styles/zn/dot.css";
 
 const points = [
@@ -17,8 +13,6 @@ const points = [
     {title: "Shell integration, set up for you", text: "Zinc marks each command in the gutter, so a failure stands out before you read a line. Works with PowerShell, bash, zsh, fish, nushell, elvish and osh, and with cmd (fullest through Clink)."},
     {title: "Attention, in words", text: "A dot on the tab or workspace, and a notification that says what happened."}
 ];
-
-const termPadding = "padding: 8px 12px 10px 6px";
 ---
 <Section id="workflow" labelledby="flow-title">
     <SectionIntro eyebrow="Workflow" title="A terminal that knows what your commands are doing" titleId="flow-title" titleWidth="23ch">
@@ -26,25 +20,14 @@ const termPadding = "padding: 8px 12px 10px 6px";
     </SectionIntro>
 
     <div class="layout">
-        <Mock class="flow-mock">
-            <Window label={workflowLabel}>
-                <TitleRow center="build  ·  ~\src\zinc" />
-                <div class="body">
-                    <WorkspaceSidebar workspaces={workflowWorkspaces} add />
-                    <CardsArea class="flow-cards">
-                        <Card
-                            focused
-                            style="flex: 1.6 1 0"
-                            tabs={[{name: "build", selected: true}, {name: "server", dot: true}, {name: "notes"}]}
-                            actions={["split", "more"]}
-                            lines={workflowBuild}
-                            termStyle={termPadding}
-                        />
-                        <Card dim style="flex: 1 1 0" title={{name: "pwsh", cwd: "~\\src\\zinc"}} lines={workflowLog} termStyle={termPadding} />
-                    </CardsArea>
-                </div>
-            </Window>
-        </Mock>
+        <Screenshot
+            class="flow-shot"
+            src={workflowDark}
+            light={workflowLight}
+            width={1200}
+            sizes="(max-width: 640px) calc(100vw - 32px), (max-width: 1068px) calc(100vw - 80px), 740px"
+            alt="Zinc with four workspaces in a sidebar, as cards. The api workspace has a red mark because a command failed, docs a green mark because one finished, and prod an amber mark because it needs you. The focused card has three tabs and shows a build, then a test run that failed with exit code 8, with a red bar beside it in the gutter. A second card beside it shows a git log."
+        />
 
         <div class="side">
             <Points items={points} class="flush" />
@@ -67,19 +50,8 @@ const termPadding = "padding: 8px 12px 10px 6px";
         align-items: flex-start;
     }
 
-    .layout :global(.flow-mock) {
+    .layout :global(.flow-shot) {
         flex: 2 1 640px;
-    }
-
-    .body {
-        display: flex;
-        background: var(--mica);
-    }
-
-    .body :global(.flow-cards) {
-        flex: 1 1 auto;
-        min-width: 0;
-        min-height: 300px;
     }
 
     .side {

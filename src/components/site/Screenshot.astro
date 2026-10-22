@@ -1,0 +1,58 @@
+---
+// A Zinc screenshot with the window's corners and shadow. With a light twin, both are in the page and CSS shows the one
+// for the current theme, as `Lockup` does, so swapping needs no js.
+import type {ImageMetadata} from "astro";
+import {Image} from "astro:assets";
+
+interface Props {
+    src: ImageMetadata;
+
+    /** The same shot taken in light mode */
+    light?: ImageMetadata;
+    alt: string;
+
+    /** The window's size when it was captured, in DIPs, so the largest it's shown at */
+    width: number;
+
+    /** As `<img sizes>`, the width it takes in the layout */
+    sizes: string;
+    class?: string;
+}
+
+const {src, light, alt, width, sizes, class: className} = Astro.props;
+
+// Half size for phones, the window's own size, and every captured pixel for high-density screens
+const widths = (image: ImageMetadata) => [...new Set([Math.round(width / 2), width, image.width])];
+---
+
+<div class:list={["screenshot", className]}>
+    <Image class:list={["shot", light && "shot-dark"]} src={src} alt={alt} widths={widths(src)} sizes={sizes} format="png" />
+    {light && <Image class="shot shot-light" src={light} alt={alt} widths={widths(light)} sizes={sizes} format="png" />}
+</div>
+
+<style>
+    .screenshot {
+        min-width: 0;
+    }
+
+    /* The capture's corners hold wallpaper, which the radius clips */
+    .shot {
+        display: block;
+        width: 100%;
+        height: auto;
+        border-radius: var(--radius-md);
+        box-shadow: var(--elevation-2);
+    }
+
+    .shot-light {
+        display: none;
+    }
+
+    :global([data-theme="light"]) .shot-dark {
+        display: none;
+    }
+
+    :global([data-theme="light"]) .shot-light {
+        display: block;
+    }
+</style>

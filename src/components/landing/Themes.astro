@@ -1,72 +1,101 @@
 ---
 // Make it yours... Lit Cell and Lit Cell Light first, then the tuned setups
+import type {ImageMetadata} from "astro";
+import {Image} from "astro:assets";
+import litCell from "../../assets/screenshots/gallery-lit-cell.png";
+import litCellLight from "../../assets/screenshots/gallery-lit-cell-light.png";
+import nightfall from "../../assets/screenshots/gallery-nightfall.png";
+import overnightSlumber from "../../assets/screenshots/gallery-overnight-slumber.png";
+import peppermint from "../../assets/screenshots/gallery-peppermint.png";
+import pyrokaiLight from "../../assets/screenshots/gallery-pyrokai-light.png";
 import Shot from "../mock/Shot.astro";
-import Tabs from "../mock/Tabs.astro";
-import Term from "../mock/Term.astro";
-import TitleBar from "../mock/TitleBar.astro";
-import TitleRow from "../mock/TitleRow.astro";
-import Window from "../mock/Window.astro";
-import WorkspaceSidebar from "../mock/WorkspaceSidebar.astro";
 import Section from "../site/Section.astro";
 import SectionIntro from "../site/SectionIntro.astro";
-import {litCellSample, nightfall, nightfallWorkspaces, overnightSlumber, peppermint, peppermintWorkspaces, pyrokaiLight} from "../../data/mocks/gallery";
 
-// Each tile pins its window to a site theme, so it keeps its scheme whatever theme the page is in
-const litCellTiles = [
-    {name: "Lit Cell", theme: "dark", caption: "Cascadia Mono NF 11 pt · the default dark scheme"},
-    {name: "Lit Cell Light", theme: "light", caption: "Cascadia Mono NF 11 pt · the default light scheme"}
-] as const;
+interface Tile {
+    name: string;
+    caption: string;
+    image: ImageMetadata;
+    alt: string;
+}
+
+// Each tile is one fixed look, so it stays the same whatever theme the page is in
+const litCellTiles: Tile[] = [
+    {
+        name: "Lit Cell",
+        caption: "Cascadia Mono NF 11 pt · the default dark scheme",
+        image: litCell,
+        alt: "Zinc in the Lit Cell scheme, with a tab along the top, a colored git diff and a selected word"
+    },
+    {
+        name: "Lit Cell Light",
+        caption: "Cascadia Mono NF 11 pt · the default light scheme",
+        image: litCellLight,
+        alt: "Zinc in the Lit Cell Light scheme, with a tab along the top, a colored git diff and a selected word"
+    }
+];
+
+const tunedTiles: Tile[] = [
+    {
+        name: "Nightfall",
+        caption: "Consolas 12 pt · workspaces in the sidebar, extra padding, block cursor",
+        image: nightfall,
+        alt: "Zinc in the Nightfall scheme, with workspaces in the sidebar and a PowerShell git log"
+    },
+    {
+        name: "Overnight Slumber",
+        caption: "JetBrains Mono NF 11 pt · tabs, bar cursor",
+        image: overnightSlumber,
+        alt: "Zinc in the Overnight Slumber scheme, with two tabs along the top and a Powerline prompt"
+    },
+    {
+        name: "Peppermint",
+        caption: "Lucida Console 13 pt · workspaces in the sidebar with tabs inside, outlined block cursor",
+        image: peppermint,
+        alt: "Zinc in the Peppermint scheme, with workspaces in the sidebar, two tabs inside the workspace and a git log and status in cmd"
+    },
+    {
+        name: "Pyrokai Light",
+        caption: "Departure Mono 12 pt · no tabs, underline cursor",
+        image: pyrokaiLight,
+        alt: "Zinc in the Pyrokai Light scheme, with no tabs or title bar, only the terminal"
+    }
+];
+
+// Half size, the window's own 900 DIPs, and every captured pixel
+const widths = (image: ImageMetadata) => [450, 900, image.width];
 ---
 <Section id="themes" labelledby="yours-title">
     <SectionIntro eyebrow="Make it yours" title="Tuned setups" titleId="yours-title">
         Zinc ships with two schemes of its own, <a class="textlink" href="/lit-cell">Lit Cell and Lit Cell Light</a>, and reads the rest from Ghostty's theme format.
     </SectionIntro>
 
-    <div class="gal">
+    <div class="gal gal-lit">
         {litCellTiles.map(tile => (
             <Shot name={tile.name} caption={tile.caption}>
-                <Window label={`Zinc in the ${tile.name} scheme`} theme={tile.theme}>
-                    <TitleBar tabs={[{name: "pwsh", selected: true}]} />
-                    <Term lines={litCellSample} class="cascadia" />
-                </Window>
+                <Image
+                    src={tile.image}
+                    alt={tile.alt}
+                    widths={widths(tile.image)}
+                    sizes="(max-width: 640px) calc(100vw - 90px), (max-width: 900px) calc(100vw - 140px), (max-width: 1240px) calc(50vw - 100px), 520px"
+                    format="png"
+                />
             </Shot>
         ))}
     </div>
 
-    <div class="gal4">
-        <Shot name="Nightfall" caption="Consolas 12 pt · workspaces in the sidebar, extra padding, block cursor" label="Placeholder mock-up">
-            <Window label="Zinc in the Nightfall scheme, with workspaces in the sidebar" class="scheme-nightfall">
-                <TitleRow />
-                <div class="split">
-                    <WorkspaceSidebar workspaces={nightfallWorkspaces} style="width: 132px" />
-                    <Term lines={nightfall} class="fill consolas" style="padding: 16px" />
-                </div>
-            </Window>
-        </Shot>
-        <Shot name="Overnight Slumber" caption="JetBrains Mono NF 11 pt · tabs, bar cursor" label="Placeholder mock-up">
-            <Window label="Zinc in the Overnight Slumber scheme, with tabs along the top" class="scheme-overnight">
-                <TitleBar tabs={[{name: "pwsh", selected: true, slot: "close"}, {name: "nvim"}]} />
-                <Term lines={overnightSlumber} class="jetbrains" style="padding: 6px" />
-            </Window>
-        </Shot>
-        <Shot name="Peppermint" caption="Lucida Console 13 pt · workspaces in the sidebar with tabs inside, outlined block cursor" label="Placeholder mock-up">
-            <Window label="Zinc in the Peppermint scheme, with workspaces in the sidebar and tabs inside each workspace" class="scheme-peppermint">
-                <TitleRow />
-                <div class="split">
-                    <WorkspaceSidebar workspaces={peppermintWorkspaces} style="width: 132px" />
-                    <div class="column">
-                        <Tabs tabs={[{name: "cmd", selected: true, slot: "close"}, {name: "build"}]} minWidth={88} style="flex: none" />
-                        <Term lines={peppermint} class="fill lucida" style="padding: 6px" />
-                    </div>
-                </div>
-            </Window>
-        </Shot>
-        <Shot name="Pyrokai Light" caption="Departure Mono 12 pt · no tabs, underline cursor" label="Placeholder mock-up">
-            <Window label="Zinc in the Pyrokai Light scheme, with no tabs" theme="light" class="scheme-pyrokai">
-                <TitleBar add={false} style="height: 32px" />
-                <Term lines={pyrokaiLight} class="departure" style="padding: 6px; font-size: 11px" />
-            </Window>
-        </Shot>
+    <div class="gal gal-tuned">
+        {tunedTiles.map(tile => (
+            <Shot name={tile.name} caption={tile.caption}>
+                <Image
+                    src={tile.image}
+                    alt={tile.alt}
+                    widths={widths(tile.image)}
+                    sizes="(max-width: 640px) calc(100vw - 90px), (max-width: 1240px) calc(50vw - 100px), 520px"
+                    format="png"
+                />
+            </Shot>
+        ))}
     </div>
 </Section>
 
@@ -78,146 +107,22 @@ const litCellTiles = [
         margin-top: 48px;
     }
 
-    .gal :global(.cascadia) {
-        font-family: var(--font-cascadia);
-    }
-
-    /* Four tiles of equal height, two by two */
-    .gal4 {
-        display: grid;
-        grid-template-columns: repeat(2, minmax(0, 1fr));
-        gap: 24px;
+    .gal-tuned {
         margin-top: 24px;
     }
 
-    .gal4 :global(.zn-shot-stage) {
+    .gal-tuned :global(.zn-shot-stage) {
         padding: 32px 28px;
-        flex: 1 1 auto;
-        display: flex;
-        flex-direction: column;
-    }
-
-    .gal4 :global(.zn-shot-stage > .zn-window) {
-        flex: 1 1 auto;
-        display: flex;
-        flex-direction: column;
-    }
-
-    .gal4 :global(.zn-window > :last-child) {
-        flex: 1 1 auto;
-    }
-
-    .gal4 :global(.zn-term) {
-        --cell-h: 18px;
-        font-size: 13px;
-        line-height: 18px;
-        min-height: 110px;
-    }
-
-    .split {
-        display: flex;
-        background: var(--mica);
-    }
-
-    .column {
-        flex: 1 1 0;
-        min-width: 0;
-        display: flex;
-        flex-direction: column;
-    }
-
-    .gal4 :global(.fill) {
-        flex: 1 1 0;
-        min-width: 0;
-    }
-
-    .gal4 :global(.consolas) {
-        font-family: Consolas, var(--font-cascadia);
-    }
-
-    .gal4 :global(.jetbrains) {
-        font-family: "JetBrains Mono", var(--font-cascadia);
-    }
-
-    .gal4 :global(.lucida) {
-        font-family: "Lucida Console", var(--font-cascadia);
-    }
-
-    .gal4 :global(.departure) {
-        font-family: "Departure Mono", var(--font-cascadia);
-    }
-
-    /*
-     * Temporary... the tuned setups' own schemes, and Nightfall's teal "infra" workspace.
-     * Delete these with the mock-ups when the screenshots arrive. They're hex because they aren't Zinc's colors.
-     */
-    .gal4 :global(.scheme-nightfall) {
-        --term-bg: #1a140e;
-        --term-fg: #f6e8d0;
-        --term-red: #e87555;
-        --term-green: #83b96f;
-        --term-yellow: #e8ad3f;
-        --term-blue: #5f9ed8;
-        --term-magenta: #bd6fae;
-        --term-cyan: #4dbeb1;
-        --term-bright-black: #5b4a3a;
-        --term-cursor: #d4a85c;
-        --term-cursor-text: #1a140e;
-    }
-
-    .gal4 :global(.scheme-nightfall .zn-ws.colored),
-    .gal4 :global(.scheme-nightfall .zn-ws.colored .zn-ws-icon) {
-        background: #1F6F66;
-        color: #FFFFFF;
-    }
-
-    .gal4 :global(.scheme-overnight) {
-        --term-bg: #0e1729;
-        --term-fg: #ced2d6;
-        --term-red: #ffa7c4;
-        --term-green: #85cc95;
-        --term-yellow: #ffcb8b;
-        --term-blue: #8dabe1;
-        --term-magenta: #c792eb;
-        --term-cyan: #78ccf0;
-        --term-bright-black: #575656;
-        --term-cursor: #ffa7c4;
-    }
-
-    .gal4 :global(.scheme-peppermint) {
-        --term-bg: #000000;
-        --term-fg: #c8c8c8;
-        --term-red: #e74669;
-        --term-green: #89d287;
-        --term-yellow: #dab853;
-        --term-blue: #449fd0;
-        --term-magenta: #da62dc;
-        --term-cyan: #65aaaf;
-        --term-bright-black: #535353;
-        --term-cursor: #bbbbbb;
-    }
-
-    .gal4 :global(.scheme-pyrokai) {
-        --term-bg: #faf6f5;
-        --term-fg: #242120;
-        --term-red: #b84963;
-        --term-green: #568413;
-        --term-yellow: #8e7100;
-        --term-blue: #0979c4;
-        --term-magenta: #b44a74;
-        --term-cyan: #008490;
-        --term-bright-black: #807c7a;
-        --term-cursor: #b65318;
     }
 
     @media (max-width: 900px) {
-        .gal {
+        .gal-lit {
             grid-template-columns: 1fr;
         }
     }
 
     @media (max-width: 640px) {
-        .gal4 {
+        .gal {
             grid-template-columns: 1fr;
         }
     }

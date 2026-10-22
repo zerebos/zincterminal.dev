@@ -5,13 +5,13 @@ import Mock from "./Mock.astro";
 interface Props {
     name: string;
     caption: string;
-    label?: string;
     class?: string;
 }
 
-const {name, caption, label = "Placeholder screenshot", class: className} = Astro.props;
+const {name, caption, class: className} = Astro.props;
 ---
-<Mock tag="figure" label={label} class:list={["zn-shot", className]}>
+
+<Mock tag="figure" label={false} class:list={["zn-shot", className]}>
     <div class="zn-shot-stage zn-dots">
         <slot />
     </div>
@@ -44,7 +44,8 @@ const {name, caption, label = "Placeholder screenshot", class: className} = Astr
         border-radius: var(--radius-md);
         overflow: hidden;
         display: block;
-        max-width: 100%;
+        width: 100%;
+        height: auto;
     }
 
     figcaption {

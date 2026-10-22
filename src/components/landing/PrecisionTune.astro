@@ -1,8 +1,9 @@
 ---
 // Precision, in how you tune it... four points beside the Settings window
-import Mock from "../mock/Mock.astro";
-import SettingsMock from "../mock/SettingsMock.astro";
+import settingsDark from "../../assets/screenshots/settings-dark.png";
+import settingsLight from "../../assets/screenshots/settings-light.png";
 import Points from "../site/Points.astro";
+import Screenshot from "../site/Screenshot.astro";
 import Section from "../site/Section.astro";
 import SectionIntro from "../site/SectionIntro.astro";
 
@@ -22,9 +23,14 @@ const points = [
             <Points items={points} />
             <p class="more">Hundreds of settings, each one explained like these.</p>
         </div>
-        <Mock class="tune-mock">
-            <SettingsMock />
-        </Mock>
+        <Screenshot
+            class="tune-shot"
+            src={settingsDark}
+            light={settingsLight}
+            width={814}
+            sizes="(max-width: 640px) calc(100vw - 32px), (max-width: 1076px) calc(100vw - 80px), 680px"
+            alt="The Zinc Settings window on the Git Bash profile, with a live preview of the terminal above its font settings. Font is inherited from Appearance, Size and Weight are the profile's own with reset arrows, and a bar says the changes were saved to config.toml, with a button to undo 2 changes."
+        />
     </div>
 </Section>
 
@@ -47,7 +53,7 @@ const points = [
         color: var(--ink-muted);
     }
 
-    .layout :global(.tune-mock) {
+    .layout :global(.tune-shot) {
         flex: 1.6 1 600px;
     }
 </style>
