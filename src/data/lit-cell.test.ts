@@ -10,7 +10,7 @@ const variants: VariantId[] = ["dark", "light"];
 const channels = (hex: string) => [1, 3, 5].map(i => parseInt(hex.slice(i, i + 2), 16));
 const toHex = (rgb: number[]) => `#${rgb.map(v => v.toString(16).padStart(2, "0")).join("")}`.toUpperCase();
 
-/** Python's round(): halves go to the even neighbour. */
+/** Python's round(): halves go to the even neighbor. */
 function roundHalfEven(x: number) {
     const floor = Math.floor(x);
     if (x - floor !== 0.5) return Math.round(x);

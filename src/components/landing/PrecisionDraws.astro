@@ -1,10 +1,10 @@
 ---
 // Precision, in what it draws... the same glyphs drawn from the font and drawn by Zinc, magnified on a cell grid
 import CellZoom from "./CellZoom.astro";
-import Lines from "../mock/Lines.astro";
+import Lines from "./Lines.astro";
 import Section from "../site/Section.astro";
 import SectionIntro from "../site/SectionIntro.astro";
-import {block, bx, pl, quad, type Line} from "../mock/term";
+import {block, bx, pl, quad, type Line} from "./term";
 
 const glyphs: Line[] = [
     [bx("rd"), bx("lr", 3), bx("lrd"), bx("lr", 3), bx("ld")],
@@ -30,7 +30,7 @@ const prompt: Line[] = [[pl(["~\\src\\zinc", "blue"], ["main", "green"], ["+2", 
             <div class="panel centered" role="img" aria-label="The same glyphs drawn by Zinc, magnified, meeting edge to edge">
                 <CellZoom lines={glyphs} />
             </div>
-            <figcaption class="cap"><b>Drawn by Zinc.</b> Every line reaches the edge of its cell, so it meets its neighbour exactly, and quadrants like ▚ share exactly one corner. <code>font.builtin-glyphs</code></figcaption>
+            <figcaption class="cap"><b>Drawn by Zinc.</b> Every line reaches the edge of its cell, so it meets its neighbor exactly, and quadrants like ▚ share exactly one corner. <code>font.builtin-glyphs</code></figcaption>
         </figure>
     </div>
 

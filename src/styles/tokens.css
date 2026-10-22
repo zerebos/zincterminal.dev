@@ -87,7 +87,7 @@
     --amber: #FFB000;
     /* Optional glow behind lit cells only: #3DF2A0 at ~6%, a rounded square 1.5× the pitch, radius 50% of the pitch. Dark grounds only; no glow on anything that is not a lit cell. */
     --glow: #3DF2A00F;
-    /* App-icon tile screen: radial gradient stop 0 (centre cx 0.35, cy 0.28, radius 0.95). */
+    /* App-icon tile screen: radial gradient stop 0 (center cx 0.35, cy 0.28, radius 0.95). */
     --tile-screen-0: #113623;
     /* App-icon tile screen: radial gradient stop at 0.55. */
     --tile-screen-55: #07180F;

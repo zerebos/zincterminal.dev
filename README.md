@@ -63,6 +63,6 @@ The docs are one MDX file, `src/content/docs/using-zinc.mdx`, in the `docs` cont
 - `src/components/site/` holds the shared pieces: header, footer, theme switch, buttons, sections and copy buttons.
 - `src/components/landing/` and `src/components/lit-cell/` hold each page's sections.
 - `src/components/reading/` holds the reading pages' pieces (contents list, section spy, changelog and notice rows), and `src/components/prose/` holds the docs' MDX components. Their styles are `src/styles/reading.css` and `src/styles/prose.css`.
-- `src/assets/screenshots/` holds the screenshots of Zinc. `Screenshot.astro` in `src/components/site/` shows one in a window frame and swaps in its light twin when the site is light.
-- `src/components/mock/` holds the gallery's frame (`Shot.astro`) and the precision close-ups' terminal content as data (`term.ts`), drawn by `Lines.astro` and `CellZoom.astro`.
+- `src/assets/screenshots/` holds the screenshots of Zinc. In `src/components/site/`, `Screenshot.astro` shows one in a window frame and swaps in its light twin when the site is light, and `Shot.astro` puts a gallery screenshot on its dotted stage with a caption.
+- The precision close-ups keep their terminal content as data in `src/components/landing/term.ts`, drawn by `Lines.astro` and `CellZoom.astro` beside it.
 - `src/styles/zn/` holds the design system's component styles, ported as they were needed.
