@@ -62,8 +62,8 @@ const tunedTiles: Tile[] = [
     }
 ];
 
-// Half size, the window's own 900 DIPs, and every captured pixel
-const widths = (image: ImageMetadata) => [450, 900, image.width];
+// Half size, the window's own size in DIPs, and every captured pixel
+const widths = (image: ImageMetadata, width: number) => [Math.round(width / 2), width, image.width];
 ---
 <Section id="themes" labelledby="yours-title">
     <SectionIntro eyebrow="Make it yours" title="Tuned setups" titleId="yours-title">
@@ -76,7 +76,7 @@ const widths = (image: ImageMetadata) => [450, 900, image.width];
                 <Image
                     src={tile.image}
                     alt={tile.alt}
-                    widths={widths(tile.image)}
+                    widths={widths(tile.image, 620)}
                     sizes="(max-width: 640px) calc(100vw - 90px), (max-width: 900px) calc(100vw - 140px), (max-width: 1240px) calc(50vw - 100px), 520px"
                     format="png"
                 />
@@ -90,7 +90,7 @@ const widths = (image: ImageMetadata) => [450, 900, image.width];
                 <Image
                     src={tile.image}
                     alt={tile.alt}
-                    widths={widths(tile.image)}
+                    widths={widths(tile.image, 640)}
                     sizes="(max-width: 640px) calc(100vw - 90px), (max-width: 1240px) calc(50vw - 100px), 520px"
                     format="png"
                 />
