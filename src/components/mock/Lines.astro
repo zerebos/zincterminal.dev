@@ -1,5 +1,5 @@
 ---
-// Renders terminal lines from data, for Term and the magnified close-ups
+// Renders terminal lines from data, for the magnified Powerline prompt
 // Everything sits in one expression so no whitespace leaks into the `white-space: pre` output
 import {termVar, type Line} from "./term";
 import "../../styles/zn/term.css";
@@ -9,21 +9,11 @@ interface Props {
 }
 
 const {lines} = Astro.props;
-const armClasses = (arms: string) => [...arms].map(arm => `b${arm}`);
-const eighths = [1, 2, 3, 4, 5, 6, 7, 8].map(n => `${n * 12.5}%`);
 ---
 {lines.map(line => (
     <span class="ln">{line.length === 0 ? " " : line.map(segment => {
         if (typeof segment === "string") return segment;
-        if (segment.kind === "styled") return <span class={segment.style}>{segment.text}</span>;
-        if (segment.kind === "quad") return <span class="q" style={segment.color ? `color: ${termVar(segment.color)}` : undefined} />;
-        if (segment.kind === "box") {
-            return <span class:list={["zn-bx", segment.full ? "full" : armClasses(segment.arms), segment.style]} style={segment.width > 1 ? `width: ${segment.width}ch` : undefined} />;
-        }
-        if (segment.kind === "cursor") return <span class={`cur-${segment.shape}`} />;
-        if (segment.kind === "gutter") return <span class="gut">{segment.mark && <span class:list={["mk", {bad: segment.mark === "failed"}]} />}</span>;
-        if (segment.kind === "swatch") return <span class="sw16" style={`background: ${termVar(segment.color)}`} />;
-        if (segment.kind === "ramp") return <span class:list={["ramp", segment.style]}>{eighths.map(height => <span style={`height: ${height}`} />)}</span>;
+        if (segment.kind !== "powerline") throw new Error(`Lines can't draw a ${segment.kind}, which CellZoom draws`);
         return segment.segments.map(([text, color], i) => {
             const next = segment.segments[i + 1];
             return <><span class="zn-pl" style={`--seg: ${termVar(color)}`}>{text}</span><span class="zn-pl-sep" style={`--seg: ${termVar(color)}${next ? `; --next: ${termVar(next[1])}` : ""}`} /></>;

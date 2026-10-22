@@ -2,7 +2,6 @@
 // Precision, in what it draws... the same glyphs drawn from the font and drawn by Zinc, magnified on a cell grid
 import CellZoom from "./CellZoom.astro";
 import Lines from "../mock/Lines.astro";
-import Mock from "../mock/Mock.astro";
 import Section from "../site/Section.astro";
 import SectionIntro from "../site/SectionIntro.astro";
 import {block, bx, pl, quad, type Line} from "../mock/term";
@@ -21,18 +20,18 @@ const prompt: Line[] = [[pl(["~\\src\\zinc", "blue"], ["main", "green"], ["+2", 
     </SectionIntro>
 
     <div class="pair">
-        <Mock tag="figure" label={false} class="zoom-figure">
+        <figure class="zoom-figure">
             <div class="panel centered" role="img" aria-label="Box drawing glyphs from a font, magnified, with gaps between rows">
                 <CellZoom lines={glyphs} gap={6} />
             </div>
             <figcaption class="cap"><b>Drawn from the font.</b> With 20% more line height, each glyph stops short of its cell and the rows come apart.</figcaption>
-        </Mock>
-        <Mock tag="figure" label={false} class="zoom-figure">
+        </figure>
+        <figure class="zoom-figure">
             <div class="panel centered" role="img" aria-label="The same glyphs drawn by Zinc, magnified, meeting edge to edge">
                 <CellZoom lines={glyphs} />
             </div>
             <figcaption class="cap"><b>Drawn by Zinc.</b> Every line reaches the edge of its cell, so it meets its neighbour exactly, and quadrants like ▚ share exactly one corner. <code>font.builtin-glyphs</code></figcaption>
-        </Mock>
+        </figure>
     </div>
 
     <div class="panel strip" role="img" aria-label="A Powerline prompt, magnified, with segments meeting without seams">
@@ -49,8 +48,9 @@ const prompt: Line[] = [[pl(["~\\src\\zinc", "blue"], ["main", "green"], ["+2", 
         margin-top: 48px;
     }
 
-    .pair :global(.zoom-figure) {
+    .zoom-figure {
         flex: 1 1 420px;
+        min-width: 0;
         margin: 0;
         display: flex;
         flex-direction: column;

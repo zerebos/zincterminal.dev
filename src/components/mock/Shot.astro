@@ -1,7 +1,5 @@
 ---
 // A gallery screenshot on the dotted stage, with its name and caption underneath
-import Mock from "./Mock.astro";
-
 interface Props {
     name: string;
     caption: string;
@@ -11,15 +9,16 @@ interface Props {
 const {name, caption, class: className} = Astro.props;
 ---
 
-<Mock tag="figure" label={false} class:list={["zn-shot", className]}>
+<figure class:list={["zn-shot", className]}>
     <div class="zn-shot-stage zn-dots">
         <slot />
     </div>
     <figcaption><b>{name}</b> · {caption}</figcaption>
-</Mock>
+</figure>
 
 <style>
-    :global(.zn-shot) {
+    .zn-shot {
+        min-width: 0;
         margin: 0;
         display: flex;
         flex-direction: column;

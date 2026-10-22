@@ -55,7 +55,6 @@ The docs are one MDX file, `src/content/docs/using-zinc.mdx`, in the `docs` cont
 - **Lit Cell colors** come from the design tokens in the [lit-cell](https://github.com/zerebos/lit-cell) repository, which is a dependency pinned to a commit in `bun.lock`. At build time, `src/data/lit-cell.ts` reads them and `LitCellVars.astro` writes the `--term-*`, `.lc-dark` and `.lc-light` variables into each page. The same module computes the palette's contrast ratios.
 - **To update Lit Cell,** run `bun update lit-cell` to move to the repository's latest commit, then `bun test`. The tests check that every derived color still matches its mix recipe and that every role resolves.
 - **To try token changes before they're pushed,** run `bun link` in your lit-cell checkout, then `bun link lit-cell` here, so the site reads your local tokens. Run `bun install` to go back to the pinned commit.
-- The four tuned setups in the gallery use their own scheme colors, kept as temporary CSS in `src/components/landing/Themes.astro`. They go away when real screenshots replace those mock-ups.
 
 ## Layout
 
@@ -64,5 +63,6 @@ The docs are one MDX file, `src/content/docs/using-zinc.mdx`, in the `docs` cont
 - `src/components/site/` holds the shared pieces: header, footer, theme switch, buttons, sections and copy buttons.
 - `src/components/landing/` and `src/components/lit-cell/` hold each page's sections.
 - `src/components/reading/` holds the reading pages' pieces (contents list, section spy, changelog and notice rows), and `src/components/prose/` holds the docs' MDX components. Their styles are `src/styles/reading.css` and `src/styles/prose.css`.
-- `src/components/mock/` holds the terminal and window mock-ups. Their content is data in `src/data/mocks/`, rendered by `Lines.astro`.
+- `src/assets/screenshots/` holds the screenshots of Zinc. `Screenshot.astro` in `src/components/site/` shows one in a window frame and swaps in its light twin when the site is light.
+- `src/components/mock/` holds the gallery's frame (`Shot.astro`) and the precision close-ups' terminal content as data (`term.ts`), drawn by `Lines.astro` and `CellZoom.astro`.
 - `src/styles/zn/` holds the design system's component styles, ported as they were needed.
