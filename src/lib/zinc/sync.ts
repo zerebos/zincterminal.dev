@@ -4,7 +4,7 @@
 import {mkdir, readFile, writeFile} from "node:fs/promises";
 import {join} from "node:path";
 import {latestRelease, parseChangelog} from "./changelog";
-import {changelogTexts, findBannedNames, noticeTexts} from "./guard";
+import {changelogTexts, findBannedNames, hasUnclosedCode, noticeTexts} from "./guard";
 import {cleanLicenseText, dotnetMajor, licenseSourcePath, parseNotices} from "./notices";
 import type {Notice} from "./types";
 
@@ -45,6 +45,12 @@ export async function syncZinc(repo: string, outDir: string) {
     if (named.length) {
         const list = named.map(t => `  ${t.where}: ${t.text}`).join("\n");
         throw new Error(`These texts name Windows Terminal. Change them in the Zinc repo, then sync again.\n${list}`);
+    }
+
+    const unclosed = changelogTexts(changelog).filter(t => hasUnclosedCode(t.text));
+    if (unclosed.length) {
+        const list = unclosed.map(t => `  ${t.where}: ${t.text}`).join("\n");
+        throw new Error(`These changelog texts have a backtick that doesn't close, so their code spans pair up wrongly. Write a literal backtick inside a double-backtick span (\`\`Win+\` \`\`) in the Zinc repo, then sync again.\n${list}`);
     }
 
     await mkdir(outDir, {recursive: true});

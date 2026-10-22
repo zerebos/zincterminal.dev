@@ -35,3 +35,18 @@ export function noticeTexts(notices: Notice[]): GuardedText[] {
 export function findBannedNames(texts: GuardedText[]) {
     return texts.filter(t => banned.test(t.text));
 }
+
+/**
+ * Whether Markdown leaves a run of backticks unclosed. A run closes at the next run of the same
+ * length, so a bare backtick in prose, such as "(Win+`)", pairs with the next code span and breaks
+ * both. Write that key as a double-backtick span instead: ``Win+` ``.
+ */
+export function hasUnclosedCode(text: string) {
+    const runs = [...text.matchAll(/`+/g)].map(match => match[0].length);
+    for (let i = 0; i < runs.length; i++) {
+        const close = runs.indexOf(runs[i] ?? 0, i + 1);
+        if (close < 0) return true;
+        i = close;
+    }
+    return false;
+}

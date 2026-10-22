@@ -6,7 +6,7 @@ import {existsSync} from "node:fs";
 import {mkdir, mkdtemp, readFile, rm, writeFile} from "node:fs/promises";
 import {tmpdir} from "node:os";
 import {dirname, join} from "node:path";
-import {changelogTexts, findBannedNames, noticeTexts} from "./guard";
+import {changelogTexts, findBannedNames, hasUnclosedCode, noticeTexts} from "./guard";
 import {outputs, sources, syncZinc} from "./sync";
 import type {ChangelogEntry, Notice} from "./types";
 
@@ -80,6 +80,14 @@ describe("syncZinc", () => {
         expect(existsSync(out)).toBeFalse();
     });
 
+    test("writes nothing when a changelog backtick doesn't close", async () => {
+        const changelog = files[sources.changelog] ?? "";
+        const repo = await fakeRepo({[sources.changelog]: changelog.replace("- Panes as cards.", "- The quick terminal (Win+`) in `Settings > Quick terminal`.")});
+        const out = join(repo, "out");
+        expect(await failure(syncZinc(repo, out))).toMatch(/backtick that doesn't close[\s\S]*0\.1\.0-dev\.12 New: The quick terminal/);
+        expect(existsSync(out)).toBeFalse();
+    });
+
     test("names the file it can't find", async () => {
         const repo = await fakeRepo();
         await rm(join(repo, "assets/fonts"), {recursive: true});
@@ -98,9 +106,20 @@ describe("the guard", () => {
         expect(findBannedNames(changelogTexts([entry]))).toHaveLength(4);
     });
 
+    test.each([
+        ["Plain text", false],
+        ["One `code` and ``Win+` `` and `more`", false],
+        ["The quick terminal (Win+`) in `Settings > Quick terminal`.", true],
+        ["A lone ` backtick", true],
+        ["``unclosed double` ", true],
+    ])("hasUnclosedCode(%j) is %p", (text, unclosed) => {
+        expect(hasUnclosedCode(text)).toBe(unclosed);
+    });
+
     test("passes on the committed JSON", async () => {
         const changelog = await readJson<ChangelogEntry[]>(join(generated, outputs.changelog));
         const notices = await readJson<Notice[]>(join(generated, outputs.notices));
         expect(findBannedNames([...changelogTexts(changelog), ...noticeTexts(notices)])).toEqual([]);
+        expect(changelogTexts(changelog).filter(t => hasUnclosedCode(t.text)).map(t => t.where)).toEqual([]);
     });
 });
