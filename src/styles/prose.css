@@ -28,6 +28,7 @@
 
 /* The `#` link beside a heading, shown on hover or focus */
 .prose-body .anchor {
+    position: relative;
     opacity: 0;
     padding: 4px;
     border-radius: 4px;
@@ -39,6 +40,17 @@
 /* Drawn here so the `#` stays out of the heading's text, which the contents list uses */
 .prose-body .anchor::before {
     content: "#";
+}
+
+/* Grows the hit area to 44px without changing how the link looks */
+.prose-body .anchor::after {
+    content: "";
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    width: 44px;
+    height: 44px;
+    transform: translate(-50%, -50%);
 }
 
 .prose-body :is(h2, h3):hover .anchor,

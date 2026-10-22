@@ -15,7 +15,7 @@ const {entries} = Astro.props;
             <a href={entry.href}>
                 <span class="mk" aria-hidden="true"></span>
                 <span class:list={["label", {mono: entry.mono}]}>{entry.label}</span>
-                {entry.detail && <span class="detail">{entry.detail}</span>}
+                {entry.detail && <>{" "}<span class="detail">{entry.detail}</span></>}
             </a>
             {entry.children && entry.children.length > 0 && (
                 <ul>
