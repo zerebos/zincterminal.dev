@@ -22,10 +22,11 @@
     box-shadow: -1px 0 var(--seg);
 }
 
+/* The overlap is a 1px strip, so the triangle still starts at the separator's own corners */
 .zn-pl-sep::before {
     content: "";
     position: absolute;
     inset: 0 0 0 -1px;
     background: var(--seg);
-    clip-path: polygon(0 0, 100% 50%, 0 100%);
+    clip-path: polygon(0 0, 1px 0, 100% 50%, 1px 100%, 0 100%);
 }
