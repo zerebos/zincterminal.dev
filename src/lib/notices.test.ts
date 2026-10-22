@@ -14,7 +14,7 @@ test.each([
 });
 
 test("every synced notice gets its own id, apart from the page's section ids", () => {
-    const ids = [...notices.map(n => n.name), "Astro", "Geist Mono", "Svelte"].map(noticeId);
+    const ids = [...notices.map(n => n.name), "Astro", "Geist Mono", "Lit Cell", "Svelte"].map(noticeId);
     expect(new Set(ids).size).toBe(ids.length);
     expect(ids).not.toContain("in-zinc");
     expect(ids).not.toContain("on-this-site");
