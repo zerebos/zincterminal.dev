@@ -1,5 +1,87 @@
 [
     {
+        "version": "0.1.0-dev.428",
+        "date": "2026-10-22",
+        "notes": [],
+        "groups": [
+            {
+                "name": "New",
+                "items": [
+                    {
+                        "text": "Panes now move instead of jumping! They slide into place when you split, close, maximize or restore them, and when you drop one beside another, into its tabs, or into another window. Turn the animations off with `Settings > Layout > Panes > Pane animations` (`pane-animations` in `[window]`). While Windows' Animation effects are off, panes jump into place as before.",
+                        "children": []
+                    }
+                ]
+            },
+            {
+                "name": "Changed",
+                "items": [
+                    {
+                        "text": "Clearer wording in setting descriptions.",
+                        "children": []
+                    },
+                    {
+                        "text": "Quick commands like `ls` and `git status` no longer flash in tab labels (with `Folder and command as the title`) or the title bar. A command now shows there, and in pane headers, once it has run for 0.3 seconds. A title the program sets itself still shows right away.",
+                        "children": []
+                    }
+                ]
+            },
+            {
+                "name": "Fixed",
+                "items": [
+                    {
+                        "text": "With an animated shader, the quick terminal kept using the graphics card after you dismissed it, and so did a minimized window. Hidden or minimized, terminals now draw nothing, and they give back their graphics memory after a minute, as background tabs do (`Free memory of hidden tabs`).",
+                        "children": []
+                    },
+                    {
+                        "text": "A pane could miss a frame at startup, leaving an error in the crash log (\"The last drawing session ... must be disposed\").",
+                        "children": []
+                    },
+                    {
+                        "text": "Choosing a split or a new tab from a menu (a pane's ⋯ menu, a tab's or workspace's right-click menu, the terminal's right-click menu) no longer flickers focus back to the old pane for a moment before the new one takes it.",
+                        "children": []
+                    },
+                    {
+                        "text": "In the quick terminal, Maximize pane from the command palette restored the pane right away, because closing the palette moved focus to the first pane. The pane now stays maximized.",
+                        "children": []
+                    },
+                    {
+                        "text": "Dragging a pane or tab into another window made both windows flicker between active and inactive, because the window it came from took focus back. Now the window you drop it on stays active.",
+                        "children": []
+                    },
+                    {
+                        "text": "A prompt that spans the window, like powerlevel10k's frame, no longer leaves copies of itself above the new one when a pane or window gets narrower. Zinc now clears the old prompt for your shell to draw again. It clears the whole prompt in zsh, fish, nushell and elvish, and only the last line in bash, since bash draws only that line again.",
+                        "children": []
+                    },
+                    {
+                        "text": "The scrollbar's marks at each prompt, and the bars beside failed commands, all went away once a full-screen app like `btm` or `vim` had run, and never came back, because Zinc took the app clearing its own screen for a clear of yours. Now they stay.",
+                        "children": []
+                    },
+                    {
+                        "text": "Searching settings now finds \"Pane style\", \"Programs using the clipboard\", and \"Background, text, cursor and selection\", which group several settings under a title of their own.",
+                        "children": []
+                    },
+                    {
+                        "text": "Apps that draw their whole screen as one image, like `terminal-browser`, no longer flash while you move the pointer over them. Zinc showed the screen without the image while each new one arrived.",
+                        "children": []
+                    },
+                    {
+                        "text": "The title bar and the tab switcher no longer show a terminal's folder twice (\"~\\dev\\zinc  ·  C:\\Users\\you\\dev\\zinc\"). The folder now reads the way pane headers show it, with your home folder as ~.",
+                        "children": []
+                    },
+                    {
+                        "text": "In Settings, a config key under a setting now ends with \"…\" when it doesn't fit, and its tooltip shows the whole key.",
+                        "children": []
+                    },
+                    {
+                        "text": "The prompt in the Settings preview is easier to read in light color schemes.",
+                        "children": []
+                    }
+                ]
+            }
+        ]
+    },
+    {
         "version": "0.1.0-dev.393",
         "date": "2026-10-15",
         "notes": [],
