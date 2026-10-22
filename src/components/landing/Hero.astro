@@ -8,21 +8,25 @@ import {links, release} from "../../data/site";
 ---
 <section class="wrap hero" aria-labelledby="hero-title">
     <div class="copy">
-        <p class="positioning">A precise, native terminal for Windows</p>
-        <h1 id="hero-title">Every cell, exactly right.</h1>
-        <p class="lead">Box lines, blocks and Powerline shapes meet without seams in any font. Every setting says what it does and applies the moment you change it.</p>
-        <div class="cta">
-            <Button id="hero-download" href={links.discord} primary large>Request access</Button>
-            <span class="meta">Private alpha · <span class="version">{release.version}</span> · free<br>Access is through Zinc's Discord server</span>
+        <div class="title">
+            <p class="positioning">A precise, native terminal for Windows</p>
+            <h1 id="hero-title">Every cell, exactly right.</h1>
         </div>
-        <InstallCommand class="install" command="winget" comment="# coming soon" />
+        <div class="pitch">
+            <p class="lead">Box lines, blocks and Powerline shapes meet without seams in any font. Every setting says what it does and applies the moment you change it.</p>
+            <div class="cta">
+                <Button id="hero-download" href={links.discord} primary large>Request access</Button>
+                <span class="meta">Private alpha · <span class="version">{release.version}</span> · free<br>Access is through Zinc's Discord server</span>
+            </div>
+            <InstallCommand class="install" command="winget" comment="# coming soon" />
+        </div>
     </div>
     <Screenshot
         class="hero-shot"
         src={heroDark}
         light={heroLight}
         width={913}
-        sizes="(max-width: 640px) calc(100vw - 32px), (max-width: 1116px) calc(100vw - 80px), 680px"
+        sizes="(max-width: 640px) calc(100vw - 32px), (max-width: 1240px) calc(100vw - 80px), 1160px"
         alt="Zinc with panes as cards: a focused card with a Powerline prompt, a file tree and a box-drawn test summary, beside two smaller cards with a git log and a dev server. Three workspaces run along the top, and one has a green mark because its command finished."
     />
 </section>
@@ -33,17 +37,26 @@ import {links, release} from "../../data/site";
         white-space: nowrap;
     }
 
+    /* Stacked... the copy, then the screenshot across the full column */
     .hero {
         display: flex;
-        flex-wrap: wrap;
-        align-items: center;
+        flex-direction: column;
         gap: 56px;
         padding-top: 48px;
         padding-bottom: 112px;
     }
 
+    /* The title on the left and the pitch on the right, their last lines level */
     .copy {
-        flex: 1 1 380px;
+        display: grid;
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+        align-items: end;
+        column-gap: 56px;
+        row-gap: 24px;
+    }
+
+    .title,
+    .pitch {
         min-width: 0;
         display: flex;
         flex-direction: column;
@@ -60,6 +73,7 @@ import {links, release} from "../../data/site";
         margin: 0;
         font: 600 68px/80px var(--font-display);
         letter-spacing: -0.015em;
+        text-wrap: balance;
     }
 
     .lead {
@@ -82,11 +96,17 @@ import {links, release} from "../../data/site";
     }
 
     .hero :global(.hero-shot) {
-        flex: 1.6 1 600px;
+        width: 100%;
     }
 
     .copy :global(.install) {
         max-width: 440px;
+    }
+
+    @media (max-width: 900px) {
+        .copy {
+            grid-template-columns: 1fr;
+        }
     }
 
     @media (max-width: 640px) {
