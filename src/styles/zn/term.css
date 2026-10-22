@@ -112,10 +112,15 @@
     position: relative;
 }
 
+/* The separator overlaps each neighbor by a pixel, so no seam shows where two edges meet between pixels */
+.zn-pl-sep + .zn-pl {
+    box-shadow: -1px 0 var(--seg);
+}
+
 .zn-pl-sep::before {
     content: "";
     position: absolute;
-    inset: 0;
+    inset: 0 0 0 -1px;
     background: var(--seg);
     clip-path: polygon(0 0, 100% 50%, 0 100%);
 }

@@ -1,5 +1,6 @@
 ---
 // Precision, in what it draws... the same glyphs drawn from the font and drawn by Zinc, magnified on a cell grid
+import CellZoom from "./CellZoom.astro";
 import Lines from "../mock/Lines.astro";
 import Mock from "../mock/Mock.astro";
 import Section from "../site/Section.astro";
@@ -22,13 +23,13 @@ const prompt: Line[] = [[pl(["~\\src\\zinc", "blue"], ["main", "green"], ["+2", 
     <div class="pair">
         <Mock tag="figure" label={false} class="zoom-figure">
             <div class="panel centered" role="img" aria-label="Box drawing glyphs from a font, magnified, with gaps between rows">
-                <div class="zoom gappy"><Lines lines={glyphs} /></div>
+                <CellZoom lines={glyphs} gap={6} />
             </div>
             <figcaption class="cap"><b>Drawn from the font.</b> With 20% more line height, each glyph stops short of its cell and the rows come apart.</figcaption>
         </Mock>
         <Mock tag="figure" label={false} class="zoom-figure">
             <div class="panel centered" role="img" aria-label="The same glyphs drawn by Zinc, magnified, meeting edge to edge">
-                <div class="zoom drawn"><Lines lines={glyphs} /></div>
+                <CellZoom lines={glyphs} />
             </div>
             <figcaption class="cap"><b>Drawn by Zinc.</b> Every line reaches the edge of its cell, so it meets its neighbour exactly, and quadrants like ▚ share exactly one corner. <code>font.builtin-glyphs</code></figcaption>
         </Mock>
@@ -102,88 +103,10 @@ const prompt: Line[] = [[pl(["~\\src\\zinc", "blue"], ["main", "green"], ["+2", 
         max-width: 36ch;
     }
 
-    /* The magnified cell grid. Each cell is 1ch by one line, outlined in the line color. */
-    .zoom {
-        --cell-h: 72px;
-        font: 400 56px/72px var(--font-cascadia);
-        white-space: pre;
-        color: var(--term-fg);
-        display: inline-block;
-        background-color: var(--term-bg);
-        background-image:
-            linear-gradient(to right, var(--line) 1px, transparent 1px),
-            linear-gradient(to bottom, var(--line) 1px, transparent 1px);
-        background-size: 1ch var(--cell-h);
-    }
-
-    .zoom.drawn {
-        font-family: var(--font-mono);
-    }
-
-    .zoom :global(.ln) {
-        display: block;
-        height: var(--cell-h);
-    }
-
-    .zoom :global(.zn-bx) {
-        --t: 6px;
-    }
-
-    /* The ▚ quadrant, two blocks that share exactly one corner */
-    .zoom :global(.q) {
-        display: inline-block;
-        width: 1ch;
-        height: var(--cell-h);
-        vertical-align: top;
-        background:
-            linear-gradient(currentColor, currentColor) 0 0 / 50% 50% no-repeat,
-            linear-gradient(currentColor, currentColor) 100% 100% / 50% 50% no-repeat;
-    }
-
-    /* From the font, each glyph stops `--gap` short of the top and bottom of its cell */
-    .zoom.gappy {
-        --gap: 6px;
-        font-family: var(--font-mono);
-    }
-
-    .gappy :global(.zn-bx) {
-        background:
-            linear-gradient(var(--l), var(--l)) left center / calc(50% + var(--t) / 2) var(--t) no-repeat,
-            linear-gradient(var(--r), var(--r)) right center / calc(50% + var(--t) / 2) var(--t) no-repeat,
-            linear-gradient(var(--u), var(--u)) center top var(--gap) / var(--t) calc(50% + var(--t) / 2 - var(--gap)) no-repeat,
-            linear-gradient(var(--d), var(--d)) center bottom var(--gap) / var(--t) calc(50% + var(--t) / 2 - var(--gap)) no-repeat;
-    }
-
-    .gappy :global(.zn-bx.full) {
-        background: linear-gradient(currentColor, currentColor) center / 100% calc(100% - 2 * var(--gap)) no-repeat;
-    }
-
-    .gappy :global(.q) {
-        background:
-            linear-gradient(currentColor, currentColor) left 0 top var(--gap) / 50% calc(50% - var(--gap)) no-repeat,
-            linear-gradient(currentColor, currentColor) right 0 bottom var(--gap) / 50% calc(50% - var(--gap)) no-repeat;
-    }
-
     .zoom-pl {
         --cell-h: 48px;
         font: 500 32px/48px var(--font-mono);
         white-space: pre;
         color: var(--term-fg);
-    }
-
-    @media (max-width: 640px) {
-        .zoom {
-            --cell-h: 48px;
-            font-size: 36px;
-            line-height: 48px;
-        }
-
-        .zoom :global(.zn-bx) {
-            --t: 4px;
-        }
-
-        .zoom.gappy {
-            --gap: 4px;
-        }
     }
 </style>

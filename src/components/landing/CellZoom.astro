@@ -1,0 +1,91 @@
+---
+// A magnified cell grid with box drawing, drawn as one SVG instead of a box per cell
+// Each color is a single path, so shapes that meet across cells show no seam at fractional pixel ratios
+import {termVar, type Line} from "../mock/term";
+
+interface Props {
+    lines: Line[];
+
+    /** How far each glyph stops short of the top and bottom of its cell, as a font's glyphs do */
+    gap?: number;
+}
+
+const {lines, gap = 0} = Astro.props;
+
+// One cell in SVG units, which are CSS pixels at full size
+const cw = 34;
+const ch = 72;
+const t = 6;
+
+const paths = new Map<string, string>();
+const rect = (fill: string, x: number, y: number, w: number, h: number) => {
+    paths.set(fill, `${paths.get(fill) ?? ""}M${x} ${y}h${w}v${h}h${-w}z`);
+};
+
+let cols = 0;
+lines.forEach((line, row) => {
+    const top = row * ch;
+    const mid = top + ch / 2;
+    let col = 0;
+    for (const segment of line) {
+        if (typeof segment === "string") {
+            col += segment.length;
+            continue;
+        }
+        const left = col * cw;
+        if (segment.kind === "quad") {
+            const fill = segment.color ? termVar(segment.color) : "currentColor";
+            rect(fill, left, top + gap, cw / 2, ch / 2 - gap);
+            rect(fill, left + cw / 2, mid, cw / 2, ch / 2 - gap);
+            col += 1;
+            continue;
+        }
+        if (segment.kind !== "box") throw new Error(`CellZoom can't draw a ${segment.kind}`);
+        const right = left + segment.width * cw;
+        const center = (left + right) / 2;
+        if (segment.full) rect("currentColor", left, top + gap, right - left, ch - 2 * gap);
+        if (segment.arms.includes("l")) rect("currentColor", left, mid - t / 2, center + t / 2 - left, t);
+        if (segment.arms.includes("r")) rect("currentColor", center - t / 2, mid - t / 2, right - center + t / 2, t);
+        if (segment.arms.includes("u")) rect("currentColor", center - t / 2, top + gap, t, ch / 2 + t / 2 - gap);
+        if (segment.arms.includes("d")) rect("currentColor", center - t / 2, mid - t / 2, t, ch / 2 + t / 2 - gap);
+        col += segment.width;
+    }
+    cols = Math.max(cols, col);
+});
+
+const width = cols * cw;
+const height = lines.length * ch;
+
+// A line on the left and top edge of every cell, stroked half a unit in so it covers one whole pixel
+const grid = [
+    ...Array.from({length: cols}, (_, c) => `M${c * cw + 0.5} 0V${height}`),
+    ...Array.from({length: lines.length}, (_, r) => `M0 ${r * ch + 0.5}H${width}`)
+].join("");
+---
+<svg class="cell-zoom" viewBox={`0 0 ${width} ${height}`} width={width} height={height} style={`--rows: ${lines.length}`} aria-hidden="true">
+    <path class="grid" d={grid} />
+    {[...paths].map(([fill, d]) => <path d={d} style={`fill: ${fill}`} />)}
+</svg>
+
+<style>
+    .cell-zoom {
+        display: block;
+        color: var(--term-fg);
+        background: var(--term-bg);
+    }
+
+    .grid {
+        fill: none;
+        stroke: var(--line);
+        stroke-width: 1px;
+        vector-effect: non-scaling-stroke;
+        shape-rendering: crispEdges;
+    }
+
+    @media (max-width: 640px) {
+        .cell-zoom {
+            width: auto;
+            height: calc(var(--rows) * 48px);
+        }
+    }
+</style>
