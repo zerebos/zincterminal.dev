@@ -56,10 +56,10 @@ lines.forEach((line, row) => {
 const width = cols * cw;
 const height = lines.length * ch;
 
-// A line on the left and top edge of every cell, stroked half a unit in so it covers one whole pixel
+// A line on every cell edge, stroked half a unit in so it covers one whole pixel inside the view box
 const grid = [
-    ...Array.from({length: cols}, (_, c) => `M${c * cw + 0.5} 0V${height}`),
-    ...Array.from({length: lines.length}, (_, r) => `M0 ${r * ch + 0.5}H${width}`)
+    ...Array.from({length: cols + 1}, (_, c) => `M${Math.min(c * cw + 0.5, width - 0.5)} 0V${height}`),
+    ...Array.from({length: lines.length + 1}, (_, r) => `M0 ${Math.min(r * ch + 0.5, height - 0.5)}H${width}`)
 ].join("");
 ---
 <svg class="cell-zoom" viewBox={`0 0 ${width} ${height}`} width={width} height={height} style={`--rows: ${lines.length}`} aria-hidden="true">

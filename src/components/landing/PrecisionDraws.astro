@@ -103,9 +103,14 @@ const prompt: Line[] = [[pl(["~\\src\\zinc", "blue"], ["main", "green"], ["+2", 
         max-width: 36ch;
     }
 
+    .panel.strip {
+        container-type: inline-size;
+    }
+
+    /* The prompt is 25 cells, or 15em, wide. It shrinks to fit a narrow panel instead of being cut off */
     .zoom-pl {
-        --cell-h: 48px;
-        font: 500 32px/48px var(--font-mono);
+        --cell-h: 1.5em;
+        font: 500 min(32px, 100cqi / 15) / 1.5 var(--font-mono);
         white-space: pre;
         color: var(--term-fg);
     }
