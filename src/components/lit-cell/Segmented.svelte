@@ -51,7 +51,5 @@
     button.on {
         background: var(--accent-subtle);
         color: var(--ink);
-        /* TODO: reconsider later, this didn't feel right */
-        /* box-shadow: inset 0 -2px 0 var(--accent); */
     }
 </style>

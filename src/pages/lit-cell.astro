@@ -12,11 +12,11 @@ import ZincNod from "../components/lit-cell/ZincNod.astro";
 import {footerProduct, footerProject, links, type FooterColumn, type NavLink} from "../data/site";
 
 const nav: NavLink[] = [
-    {label: "Zinc", href: "/", optional: true},
+    {label: "Zinc", href: "/"},
     {label: "Lit Cell", href: "/lit-cell", current: true},
     {label: "Install", href: "#install"},
-    {label: "Spec", href: links.litCellSpec, optional: true},
-    {label: "GitHub", href: links.litCellRepo, optional: true}
+    {label: "Spec", href: links.litCellSpec},
+    {label: "GitHub", href: links.litCellRepo}
 ];
 
 const footer: FooterColumn[] = [
