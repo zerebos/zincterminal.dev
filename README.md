@@ -11,6 +11,8 @@ It has six pages:
 - `/changelog`: what changed in each build, generated from Zinc's changelog.
 - `/notices`: the third-party notices for Zinc and for this site.
 
+Any other address gets the 404 page, `src/pages/404.astro`.
+
 ## Working on it
 
 The site is static Astro with a few Svelte islands, built with Bun.
@@ -33,6 +35,8 @@ The site is static Astro with a few Svelte islands, built with Bun.
 Every download button links straight to `downloads.zincterminal.dev`, which always holds the latest build. For links to share, `public/_redirects` sends `/download` to the installer and `/download/portable` to the zip, as temporary (302) redirects so the targets can change.
 
 The site is a Worker with only static assets (`wrangler.jsonc`), and Cloudflare reads `_redirects` from the assets folder, so the redirects need no other setup. Each rule needs its trailing-slash form too, because `/download/` doesn't match `/download`. `bunx wrangler dev` serves `dist/` locally with the redirects applied, and its log says how many rules it parsed.
+
+A path with nothing behind it answers 404 with the built `404.html`, because `wrangler.jsonc` sets `not_found_handling` to `"404-page"`. When a page moves, give its old address a redirect in `_redirects` instead of leaving it to the 404 page.
 
 ## Content from Zinc
 
