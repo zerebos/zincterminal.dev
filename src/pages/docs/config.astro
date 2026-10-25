@@ -1,6 +1,7 @@
 ---
 // Every setting in config.toml, generated from Zinc's settings catalog
 import ConfigFilter from "../../components/reading/ConfigFilter.svelte";
+import Note from "../../components/prose/Note.astro";
 import ReadingLayout from "../../layouts/ReadingLayout.astro";
 import SettingEntry from "../../components/reading/SettingEntry.astro";
 import type {TocEntry} from "../../components/reading/toc";
@@ -11,7 +12,7 @@ import {inlineMarkdown} from "../../lib/markdown/inline";
 import {byTable, sameValuesAs} from "../../lib/zinc/settings";
 import type {SettingsCatalog} from "../../lib/zinc/types";
 
-const {sections, settings} = catalog as SettingsCatalog;
+const {sections, settings, fileOnly} = catalog as SettingsCatalog;
 const tables = byTable(settings, configTables);
 const sameAs = sameValuesAs(settings);
 
@@ -49,6 +50,10 @@ const toc: TocEntry[] = tables.map(table => ({
             {table.settings.map(setting => <SettingEntry setting={setting} sections={sections} sameAs={sameAs.get(setting.key)} />)}
         </section>
     ))}
+    <Note title="Only in the file">
+        <p>A few things have no place in Settings: <code>include</code> at the top, <code>[profile.&lt;id&gt;]</code> sections and <code>[keys]</code>. The guide covers <a href={`${links.docs}#profiles`}>profiles</a> and <a href={`${links.docs}#config-file`}>the file itself</a>.</p>
+        {fileOnly.map(entry => <p><code>{entry.key}</code> {entry.text}</p>)}
+    </Note>
 </ReadingLayout>
 
 <style>

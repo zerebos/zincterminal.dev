@@ -2,11 +2,12 @@
 
 The website for [Zinc](https://zincterminal.dev), a native Windows terminal built on libghostty.
 
-It has five pages:
+It has six pages:
 
 - `/`: the Zinc landing page.
 - `/lit-cell`: the page for Lit Cell, Zinc's default color scheme (dark and light).
 - `/docs`: using Zinc, from installing to the `zn` command line.
+- `/docs/config`: every setting in `config.toml`, generated from Zinc's settings catalog.
 - `/changelog`: what changed in each build, generated from Zinc's changelog.
 - `/notices`: the third-party notices for Zinc and for this site.
 
@@ -35,15 +36,25 @@ The site is a Worker with only static assets (`wrangler.jsonc`), and Cloudflare 
 
 ## Content from Zinc
 
-The changelog, the third-party notices and the site-wide version come from the Zinc repository. It's private for now, so the build can't read it, and a committed snapshot stands in.
+The changelog, the third-party notices, the settings and the site-wide version come from the Zinc repository. It's private for now, so the build can't read it, and a committed snapshot stands in.
 
 - **`bun run sync:zinc`** reads a Zinc checkout (`../zinc`, or the path in `ZINC_REPO`) and writes JSON to `src/data/generated/`:
   - `zinc-changelog.json` holds every released build from `CHANGELOG.md`, skipping `## Unreleased`.
   - `zinc-notices.json` holds the components in `src/Zinc.Core/OpenSourceNotices.cs`, with their license texts from `assets/`. The .NET version comes from `<TargetFramework>` in `src/Zinc/Zinc.csproj`.
   - `zinc-release.json` holds the newest build's version and date, which the hero, "Try the alpha", the docs and the notices show.
+  - `zinc-settings.json` holds the settings in `src/Zinc.Core/Settings/SettingsCatalog.cs` (the ones the Settings window edits, plus the shells it looks for), with the constants they use from `src/Zinc.Core/Config.cs`. Settings marked `Unfinished` are left out.
 - **Run it after each Zinc release, and commit the JSON.** The build reads only the JSON.
-- **The sync stops and writes nothing** when a source has a shape it doesn't know, when text the site shows as its own names a terminal the brand rules keep off the site (see `src/lib/zinc/guard.ts`), or when a changelog backtick doesn't close. Fix the text in Zinc, then sync again. The parsers live in `src/lib/zinc/`, with tests that use small inline inputs, never `../zinc`.
+- **The sync stops and writes nothing** when a source has a shape it doesn't know (a new setting kind or property, say), when text the site shows as its own names a terminal the brand rules keep off the site (see `src/lib/zinc/guard.ts`), or when a changelog backtick doesn't close. Fix the text in Zinc, then sync again. The parsers live in `src/lib/zinc/`, with tests that use small inline inputs, never `../zinc`.
 - **"On this website"** on the notices page lists what reaches visitors' browsers: Astro, Geist Mono, Lit Cell and Svelte. That list is `src/data/website-notices.ts`, and its texts and versions are read from the packages at build time.
+
+## The config reference
+
+`/docs/config` is drawn entirely from `zinc-settings.json`, so a Zinc release that changes a setting only needs a sync. Two things live on the site instead:
+
+- **Each table's title and opening line** are in `src/data/config-tables.ts`, in page order. When Zinc adds a table, the build stops and names it, so add its entry there. A listed table with no settings stops the build too.
+- **The wording rules** are in `src/lib/zinc/settings.ts`, with tests: the type in words, ranges, defaults as TOML values or in words, examples from a text setting's placeholder, and which settings share another's values.
+
+The filter is `src/components/reading/ConfigFilter.svelte`. Each setting carries its searchable text in `data-text`, and the island only hides what doesn't match.
 
 ## Writing the docs
 
@@ -64,7 +75,7 @@ The docs are one MDX file, `src/content/docs/using-zinc.mdx`, in the `docs` cont
 
 ## Layout
 
-- `src/pages/` holds the five pages. `src/layouts/Base.astro` holds the shared document shell and the no-flash theme script, and `src/layouts/ReadingLayout.astro` holds the sidebar layout for docs, changelog and notices.
+- `src/pages/` holds the six pages. `src/layouts/Base.astro` holds the shared document shell and the no-flash theme script, and `src/layouts/ReadingLayout.astro` holds the sidebar layout for docs, changelog and notices.
 - `src/data/site.ts` holds the links (the downloads, the feedback address and the Discord among them), the release info and the shared footer. Zinc's GitHub links are `null` and left out until the repo is public.
 - `src/components/site/` holds the shared pieces: header, footer, theme switch, buttons, sections and copy buttons.
 - `src/components/landing/` and `src/components/lit-cell/` hold each page's sections.
