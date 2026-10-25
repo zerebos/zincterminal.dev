@@ -25,7 +25,7 @@ const toc: TocEntry[] = builds.map(build => ({
 
 <ReadingLayout
     title="What's new in Zinc"
-    description="What changed in each build testers got, newest first."
+    description="What changed in each build, newest first."
     current="changelog"
     kicker="Changelog"
     heading="What's new"
@@ -34,8 +34,8 @@ const toc: TocEntry[] = builds.map(build => ({
     tocSummary="Jump to a build"
 >
     <Fragment slot="intro">
-        <p class="lead">What changed in each build testers got, newest first. Builds are numbered <code>0.1.0-dev.N</code>, where N counts the commits behind them.</p>
-        <p class="meta"><span>Not testing yet? <a href={links.discord}>Request access in the Discord</a>.</span></p>
+        <p class="lead">What changed in each build, newest first. Builds are numbered <code>0.1.0-dev.N</code>, where N counts the commits behind them.</p>
+        <p class="meta"><span>Not using Zinc yet? <a href="/#install">Download the latest build</a>.</span></p>
     </Fragment>
     {full.map((build, i) => (
         <section class="rel" aria-labelledby={build.id}>
@@ -69,8 +69,8 @@ const toc: TocEntry[] = builds.map(build => ({
         </>
     )}
     <Fragment slot="endnote">
-        <p><b>Found a bug in a build?</b> Report it in the Discord, with the version from Settings › About.</p>
-        <Button href={links.discord}>Report an issue</Button>
+        <p><b>Found a bug in a build?</b> Email <a href={links.feedback}>{links.feedbackEmail}</a> with the version from Settings › About, or tell us in the Discord.</p>
+        <Button href={links.feedback}>Send feedback</Button>
     </Fragment>
 </ReadingLayout>
 
