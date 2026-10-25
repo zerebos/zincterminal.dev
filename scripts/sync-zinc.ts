@@ -9,9 +9,9 @@ const repo = resolve(process.env.ZINC_REPO ?? "../zinc");
 const outDir = resolve(import.meta.dir, "../src/data/generated");
 
 try {
-    const {changelog, notices, release} = await syncZinc(repo, outDir);
+    const {changelog, notices, release, settings} = await syncZinc(repo, outDir);
     console.log(`Synced ${release.version} (${release.date}) from ${repo}`);
-    console.log(`  ${changelog.length} builds, ${notices.length} components`);
+    console.log(`  ${changelog.length} builds, ${notices.length} components, ${settings.settings.length} settings`);
 }
 catch (error) {
     console.error(error instanceof Error ? error.message : error);

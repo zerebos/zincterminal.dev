@@ -6,9 +6,9 @@ import {existsSync} from "node:fs";
 import {mkdir, mkdtemp, readFile, rm, writeFile} from "node:fs/promises";
 import {tmpdir} from "node:os";
 import {dirname, join} from "node:path";
-import {changelogTexts, findBannedNames, hasUnclosedCode, noticeTexts} from "./guard";
+import {changelogTexts, findBannedNames, hasUnclosedCode, noticeTexts, settingsTexts} from "./guard";
 import {outputs, sources, syncZinc} from "./sync";
-import type {ChangelogEntry, Notice} from "./types";
+import type {ChangelogEntry, Notice, SettingsCatalog} from "./types";
 
 
 const generated = join(import.meta.dir, "../../data/generated");
@@ -23,6 +23,21 @@ const files = {
         new("Cascadia Mono NF", "2407.024", "The default font", "OFL-1.1", "https://github.com/microsoft/cascadia-code", @"Fonts\LICENSE-CascadiaCode.txt", []),
     ];
 }`,
+    [sources.settings]: String.raw`public static class SettingsCatalog
+{
+    public static IReadOnlyList<SettingsSection> Sections { get; } = [new("terminal", "Terminal", "")];
+
+    public static IReadOnlyList<SettingDef> All { get; } =
+    [
+        new("terminal", "Scrollback", "terminal.scrollback-lines", "Scrollback lines", "How far back you can scroll.", SettingKind.Number, (long)Config.DefaultScrollbackLines)
+            { Maximum = Config.MaxScrollbackLines, Step = 1000 },
+    ];
+
+    public static IReadOnlyList<SettingDef> Discovery { get; } = [];
+
+    public static IReadOnlyDictionary<string, string> FileOnly { get; } = new Dictionary<string, string> { };
+}`,
+    [sources.config]: "public const int DefaultScrollbackLines = 10_000;\npublic const int MaxScrollbackLines = 100_000;\n",
     "assets/licenses/dotnet.txt": "The MIT License (MIT)\r\n\r\n",
     "assets/fonts/LICENSE-CascadiaCode.txt": "SIL OPEN FONT LICENSE\n",
 };
@@ -56,7 +71,7 @@ async function failure(promise: Promise<unknown>) {
 const readJson = async <T>(path: string) => JSON.parse(await readFile(path, "utf8")) as T;
 
 describe("syncZinc", () => {
-    test("writes the changelog, notices and release", async () => {
+    test("writes the changelog, notices, release and settings", async () => {
         const repo = await fakeRepo();
         const out = join(repo, "out");
         await syncZinc(repo, out);
@@ -70,6 +85,17 @@ describe("syncZinc", () => {
             [".NET", "10", "The MIT License (MIT)"],
             ["Cascadia Mono NF", "2407.024", "SIL OPEN FONT LICENSE"],
         ]);
+
+        const settings = await readJson<SettingsCatalog>(join(out, outputs.settings));
+        expect(settings.settings.map(s => [s.key, s.default, s.maximum])).toEqual([["terminal.scrollback-lines", 10000, 100000]]);
+    });
+
+    test("writes nothing when a setting names Windows Terminal", async () => {
+        const catalog = files[sources.settings] ?? "";
+        const repo = await fakeRepo({[sources.settings]: catalog.replace("How far back you can scroll.", "As in Windows Terminal.")});
+        const out = join(repo, "out");
+        expect(await failure(syncZinc(repo, out))).toMatch(/terminal\.scrollback-lines: As in Windows Terminal\./);
+        expect(existsSync(out)).toBeFalse();
     });
 
     test("writes nothing when a text names Windows Terminal", async () => {
@@ -119,7 +145,8 @@ describe("the guard", () => {
     test("passes on the committed JSON", async () => {
         const changelog = await readJson<ChangelogEntry[]>(join(generated, outputs.changelog));
         const notices = await readJson<Notice[]>(join(generated, outputs.notices));
-        expect(findBannedNames([...changelogTexts(changelog), ...noticeTexts(notices)])).toEqual([]);
+        const settings = await readJson<SettingsCatalog>(join(generated, outputs.settings));
+        expect(findBannedNames([...changelogTexts(changelog), ...noticeTexts(notices), ...settingsTexts(settings)])).toEqual([]);
         expect(changelogTexts(changelog).filter(t => hasUnclosedCode(t.text)).map(t => t.where)).toEqual([]);
     });
 });

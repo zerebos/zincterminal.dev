@@ -1,7 +1,7 @@
 // The site never names Windows Terminal in its own words. This checks the text we show as ours
 // (changelog items, use texts, docs), not URLs or license texts.
 
-import type {ChangelogEntry, Notice} from "./types";
+import type {ChangelogEntry, Notice, SettingsCatalog} from "./types";
 
 
 const banned = /windows\s+terminal/i;
@@ -29,6 +29,16 @@ export function noticeTexts(notices: Notice[]): GuardedText[] {
         {where: `${n.name} use`, text: n.use},
         {where: `${n.name} license`, text: n.license},
     ]);
+}
+
+export function settingsTexts(catalog: SettingsCatalog): GuardedText[] {
+    return [
+        ...catalog.sections.map(s => ({where: `section ${s.id}`, text: s.title})),
+        ...catalog.settings.flatMap(s => [s.group, s.label, s.description, s.placeholder ?? "", s.nullLabel ?? "", s.unit ?? ""]
+            .concat(s.choices.flatMap(c => [c.label, c.detail ?? ""]))
+            .map(text => ({where: s.key, text}))),
+        ...catalog.fileOnly.map(f => ({where: f.key, text: f.text})),
+    ];
 }
 
 /** The texts that name it, empty when all is well */

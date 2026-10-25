@@ -3,8 +3,9 @@
 
 import {mkdir, readFile, writeFile} from "node:fs/promises";
 import {join} from "node:path";
+import {parseCatalog, parseConstants} from "./catalog";
 import {latestRelease, parseChangelog} from "./changelog";
-import {changelogTexts, findBannedNames, hasUnclosedCode, noticeTexts} from "./guard";
+import {changelogTexts, findBannedNames, hasUnclosedCode, noticeTexts, settingsTexts} from "./guard";
 import {cleanLicenseText, dotnetMajor, licenseSourcePath, parseNotices} from "./notices";
 import type {Notice} from "./types";
 
@@ -13,12 +14,17 @@ export const sources = {
     changelog: "CHANGELOG.md",
     notices: "src/Zinc.Core/OpenSourceNotices.cs",
     project: "src/Zinc/Zinc.csproj",
+    settings: "src/Zinc.Core/Settings/SettingsCatalog.cs",
+
+    // The constants the catalog uses, such as `Config.MaxScrollbackLines`
+    config: "src/Zinc.Core/Config.cs",
 };
 
 export const outputs = {
     changelog: "zinc-changelog.json",
     notices: "zinc-notices.json",
     release: "zinc-release.json",
+    settings: "zinc-settings.json",
 };
 
 async function read(repo: string, path: string) {
@@ -41,7 +47,10 @@ export async function syncZinc(repo: string, outDir: string) {
         licenseText: cleanLicenseText(await read(repo, licenseSourcePath(licenseFile))),
     })));
 
-    const named = findBannedNames([...changelogTexts(changelog), ...noticeTexts(notices)]);
+    const constants = parseConstants(await read(repo, sources.config), "Config");
+    const settings = parseCatalog(await read(repo, sources.settings), constants);
+
+    const named = findBannedNames([...changelogTexts(changelog), ...noticeTexts(notices), ...settingsTexts(settings)]);
     if (named.length) {
         const list = named.map(t => `  ${t.where}: ${t.text}`).join("\n");
         throw new Error(`These texts name Windows Terminal. Change them in the Zinc repo, then sync again.\n${list}`);
@@ -58,6 +67,7 @@ export async function syncZinc(repo: string, outDir: string) {
     await write(outputs.changelog, changelog);
     await write(outputs.notices, notices);
     await write(outputs.release, release);
+    await write(outputs.settings, settings);
 
-    return {changelog, notices, release};
+    return {changelog, notices, release, settings};
 }

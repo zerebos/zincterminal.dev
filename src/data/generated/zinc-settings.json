@@ -1,0 +1,2645 @@
+{
+    "sections": [
+        {
+            "id": "appearance",
+            "title": "Appearance"
+        },
+        {
+            "id": "layout",
+            "title": "Layout"
+        },
+        {
+            "id": "profiles",
+            "title": "Profiles"
+        },
+        {
+            "id": "keyboard",
+            "title": "Keyboard"
+        },
+        {
+            "id": "terminal",
+            "title": "Terminal"
+        },
+        {
+            "id": "notifications",
+            "title": "Notifications"
+        },
+        {
+            "id": "quick",
+            "title": "Quick terminal"
+        },
+        {
+            "id": "about",
+            "title": "About"
+        }
+    ],
+    "settings": [
+        {
+            "section": "appearance",
+            "group": "Font",
+            "key": "font.family",
+            "label": "Font",
+            "description": "Any monospace font. Nerd Fonts also show prompt icons.",
+            "kind": "font",
+            "default": "Cascadia Mono NF",
+            "choices": [],
+            "unit": null,
+            "minimum": 0,
+            "maximum": null,
+            "step": 1,
+            "placeholder": null,
+            "nullLabel": null,
+            "numbersAsNumbers": false
+        },
+        {
+            "section": "appearance",
+            "group": "Font",
+            "key": "font.size",
+            "label": "Size",
+            "description": "Ctrl+0 returns to this size.",
+            "kind": "number",
+            "default": 10.5,
+            "choices": [],
+            "unit": "pt",
+            "minimum": 4,
+            "maximum": 72,
+            "step": 0.5,
+            "placeholder": null,
+            "nullLabel": null,
+            "numbersAsNumbers": false
+        },
+        {
+            "section": "appearance",
+            "group": "Font",
+            "key": "font.weight",
+            "label": "Weight",
+            "description": "How heavy normal text is. A font without that weight shows its nearest one.",
+            "kind": "choice",
+            "default": "normal",
+            "choices": [
+                {
+                    "label": "Thin",
+                    "value": "thin",
+                    "detail": null
+                },
+                {
+                    "label": "Extra light",
+                    "value": "extra-light",
+                    "detail": null
+                },
+                {
+                    "label": "Light",
+                    "value": "light",
+                    "detail": null
+                },
+                {
+                    "label": "Normal",
+                    "value": "normal",
+                    "detail": null
+                },
+                {
+                    "label": "Medium",
+                    "value": "medium",
+                    "detail": null
+                },
+                {
+                    "label": "Semibold",
+                    "value": "semibold",
+                    "detail": null
+                },
+                {
+                    "label": "Bold",
+                    "value": "bold",
+                    "detail": null
+                },
+                {
+                    "label": "Extra bold",
+                    "value": "extra-bold",
+                    "detail": null
+                },
+                {
+                    "label": "Black",
+                    "value": "black",
+                    "detail": null
+                }
+            ],
+            "unit": null,
+            "minimum": 0,
+            "maximum": null,
+            "step": 1,
+            "placeholder": null,
+            "nullLabel": null,
+            "numbersAsNumbers": false
+        },
+        {
+            "section": "appearance",
+            "group": "Font",
+            "key": "font.bold-weight",
+            "label": "Bold weight",
+            "description": "How heavy bold text is.",
+            "kind": "choice",
+            "default": "bold",
+            "choices": [
+                {
+                    "label": "Thin",
+                    "value": "thin",
+                    "detail": null
+                },
+                {
+                    "label": "Extra light",
+                    "value": "extra-light",
+                    "detail": null
+                },
+                {
+                    "label": "Light",
+                    "value": "light",
+                    "detail": null
+                },
+                {
+                    "label": "Normal",
+                    "value": "normal",
+                    "detail": null
+                },
+                {
+                    "label": "Medium",
+                    "value": "medium",
+                    "detail": null
+                },
+                {
+                    "label": "Semibold",
+                    "value": "semibold",
+                    "detail": null
+                },
+                {
+                    "label": "Bold",
+                    "value": "bold",
+                    "detail": null
+                },
+                {
+                    "label": "Extra bold",
+                    "value": "extra-bold",
+                    "detail": null
+                },
+                {
+                    "label": "Black",
+                    "value": "black",
+                    "detail": null
+                }
+            ],
+            "unit": null,
+            "minimum": 0,
+            "maximum": null,
+            "step": 1,
+            "placeholder": null,
+            "nullLabel": null,
+            "numbersAsNumbers": false
+        },
+        {
+            "section": "appearance",
+            "group": "Font",
+            "key": "font.ligatures",
+            "label": "Ligatures",
+            "description": "Fonts that have them (Cascadia Code, JetBrains Mono, Fira Code) join => != -> and the like into one shape. Each character keeps its own cell, and the character under the cursor isn't joined.",
+            "kind": "toggle",
+            "default": false,
+            "choices": [],
+            "unit": null,
+            "minimum": 0,
+            "maximum": null,
+            "step": 1,
+            "placeholder": null,
+            "nullLabel": null,
+            "numbersAsNumbers": false
+        },
+        {
+            "section": "appearance",
+            "group": "Font",
+            "key": "font.fallback",
+            "label": "Fallback fonts",
+            "description": "For characters your font lacks, tried in order before Windows picks one. Separate them with commas.",
+            "kind": "text",
+            "default": null,
+            "choices": [],
+            "unit": null,
+            "minimum": 0,
+            "maximum": null,
+            "step": 1,
+            "placeholder": "Symbols Nerd Font, Noto Sans JP",
+            "nullLabel": null,
+            "numbersAsNumbers": false
+        },
+        {
+            "section": "appearance",
+            "group": "Font",
+            "key": "font.adjust-cell-height",
+            "label": "Line height",
+            "description": "More room between lines, as a percentage (20%) or in pixels (2). A negative value gives less. Text stays centered.",
+            "kind": "text",
+            "default": null,
+            "choices": [],
+            "unit": null,
+            "minimum": 0,
+            "maximum": null,
+            "step": 1,
+            "placeholder": "0",
+            "nullLabel": null,
+            "numbersAsNumbers": true
+        },
+        {
+            "section": "appearance",
+            "group": "Font",
+            "key": "font.builtin-glyphs",
+            "label": "Built-in glyphs",
+            "description": "Zinc draws box lines, blocks and Powerline shapes itself, so they join up in any font.",
+            "kind": "toggle",
+            "default": true,
+            "choices": [],
+            "unit": null,
+            "minimum": 0,
+            "maximum": null,
+            "step": 1,
+            "placeholder": null,
+            "nullLabel": null,
+            "numbersAsNumbers": false
+        },
+        {
+            "section": "appearance",
+            "group": "Font",
+            "key": "font.adjust-box-thickness",
+            "label": "Line thickness",
+            "description": "Thicker or thinner built-in lines, in pixels (1, -1) or as a percentage (20%).",
+            "kind": "text",
+            "default": null,
+            "choices": [],
+            "unit": null,
+            "minimum": 0,
+            "maximum": null,
+            "step": 1,
+            "placeholder": "0",
+            "nullLabel": null,
+            "numbersAsNumbers": true
+        },
+        {
+            "section": "appearance",
+            "group": "Colors",
+            "key": "colors.theme",
+            "label": "Color scheme",
+            "description": "About 650 are included. Add your own to the themes folder next to config.toml.",
+            "kind": "scheme",
+            "default": null,
+            "choices": [],
+            "unit": null,
+            "minimum": 0,
+            "maximum": null,
+            "step": 1,
+            "placeholder": null,
+            "nullLabel": null,
+            "numbersAsNumbers": false
+        },
+        {
+            "section": "appearance",
+            "group": "Colors",
+            "key": "colors.palette-generate",
+            "label": "Match 256 colors to the scheme",
+            "description": "Programs that use the extended 256 colors (vim and htop themes) get shades made from the scheme's 16, not the standard ones.",
+            "kind": "toggle",
+            "default": false,
+            "choices": [],
+            "unit": null,
+            "minimum": 0,
+            "maximum": null,
+            "step": 1,
+            "placeholder": null,
+            "nullLabel": null,
+            "numbersAsNumbers": false
+        },
+        {
+            "section": "appearance",
+            "group": "Colors",
+            "key": "colors.palette-harmonious",
+            "label": "Shades from background to text in light schemes",
+            "description": "When off, shades run from dark to light, which is what programs expect.",
+            "kind": "toggle",
+            "default": false,
+            "choices": [],
+            "unit": null,
+            "minimum": 0,
+            "maximum": null,
+            "step": 1,
+            "placeholder": null,
+            "nullLabel": null,
+            "numbersAsNumbers": false
+        },
+        {
+            "section": "appearance",
+            "group": "Colors",
+            "key": "colors.background",
+            "label": "Background",
+            "description": "",
+            "kind": "color",
+            "default": null,
+            "choices": [],
+            "unit": null,
+            "minimum": 0,
+            "maximum": null,
+            "step": 1,
+            "placeholder": null,
+            "nullLabel": null,
+            "numbersAsNumbers": false
+        },
+        {
+            "section": "appearance",
+            "group": "Colors",
+            "key": "colors.foreground",
+            "label": "Text",
+            "description": "",
+            "kind": "color",
+            "default": null,
+            "choices": [],
+            "unit": null,
+            "minimum": 0,
+            "maximum": null,
+            "step": 1,
+            "placeholder": null,
+            "nullLabel": null,
+            "numbersAsNumbers": false
+        },
+        {
+            "section": "appearance",
+            "group": "Colors",
+            "key": "colors.cursor",
+            "label": "Cursor",
+            "description": "",
+            "kind": "color",
+            "default": null,
+            "choices": [],
+            "unit": null,
+            "minimum": 0,
+            "maximum": null,
+            "step": 1,
+            "placeholder": null,
+            "nullLabel": null,
+            "numbersAsNumbers": false
+        },
+        {
+            "section": "appearance",
+            "group": "Colors",
+            "key": "colors.cursor-text",
+            "label": "Cursor text",
+            "description": "The character under a block cursor. If the scheme doesn't set one either, it's the background color.",
+            "kind": "color",
+            "default": null,
+            "choices": [],
+            "unit": null,
+            "minimum": 0,
+            "maximum": null,
+            "step": 1,
+            "placeholder": null,
+            "nullLabel": null,
+            "numbersAsNumbers": false
+        },
+        {
+            "section": "appearance",
+            "group": "Colors",
+            "key": "colors.selection-background",
+            "label": "Selection",
+            "description": "Behind selected text. If the scheme doesn't set one either, selection inverts the colors.",
+            "kind": "color",
+            "default": null,
+            "choices": [],
+            "unit": null,
+            "minimum": 0,
+            "maximum": null,
+            "step": 1,
+            "placeholder": null,
+            "nullLabel": null,
+            "numbersAsNumbers": false
+        },
+        {
+            "section": "appearance",
+            "group": "Colors",
+            "key": "colors.selection-foreground",
+            "label": "Selected text",
+            "description": "If the scheme doesn't set one either, the text keeps its color, or inverts with the selection when \"Selection\" has no color either.",
+            "kind": "color",
+            "default": null,
+            "choices": [],
+            "unit": null,
+            "minimum": 0,
+            "maximum": null,
+            "step": 1,
+            "placeholder": null,
+            "nullLabel": null,
+            "numbersAsNumbers": false
+        },
+        {
+            "section": "appearance",
+            "group": "Colors",
+            "key": "colors.pane-header",
+            "label": "Pane headers",
+            "description": "Behind pane titles and tabs. On cards, the border is a step stronger.",
+            "kind": "color",
+            "default": null,
+            "choices": [
+                {
+                    "label": "Same as the terminal",
+                    "value": "terminal",
+                    "detail": "Hidden tabs get a shade instead, so the shown tab still stands out. Cards have no border."
+                },
+                {
+                    "label": "Subtle",
+                    "value": "subtle",
+                    "detail": null
+                },
+                {
+                    "label": "Standard",
+                    "value": null,
+                    "detail": null
+                },
+                {
+                    "label": "Strong",
+                    "value": "strong",
+                    "detail": null
+                }
+            ],
+            "unit": null,
+            "minimum": 0,
+            "maximum": null,
+            "step": 1,
+            "placeholder": "From the background",
+            "nullLabel": "Standard",
+            "numbersAsNumbers": false
+        },
+        {
+            "section": "appearance",
+            "group": "Readability",
+            "key": "colors.minimum-contrast",
+            "label": "Minimum contrast",
+            "description": "Text that reads poorly against its background turns black or white. 1 turns it off, 4.5 is the usual accessibility level, and 21 makes all text black or white.",
+            "kind": "number",
+            "default": 1,
+            "choices": [],
+            "unit": null,
+            "minimum": 1,
+            "maximum": 21,
+            "step": 0.5,
+            "placeholder": null,
+            "nullLabel": null,
+            "numbersAsNumbers": false
+        },
+        {
+            "section": "appearance",
+            "group": "Readability",
+            "key": "colors.bold-is-bright",
+            "label": "Bold in bright colors",
+            "description": "Bold text in the first eight colors shows their bright versions, as older terminals did.",
+            "kind": "toggle",
+            "default": false,
+            "choices": [],
+            "unit": null,
+            "minimum": 0,
+            "maximum": null,
+            "step": 1,
+            "placeholder": null,
+            "nullLabel": null,
+            "numbersAsNumbers": false
+        },
+        {
+            "section": "appearance",
+            "group": "Readability",
+            "key": "colors.bold",
+            "label": "Bold text color",
+            "description": "For bold text in the default text color.",
+            "kind": "color",
+            "default": null,
+            "choices": [],
+            "unit": null,
+            "minimum": 0,
+            "maximum": null,
+            "step": 1,
+            "placeholder": "Same as the text",
+            "nullLabel": null,
+            "numbersAsNumbers": false
+        },
+        {
+            "section": "appearance",
+            "group": "Readability",
+            "key": "colors.faint-opacity",
+            "label": "Faint text",
+            "description": "How bright dim text is (1: as bright as other text).",
+            "kind": "number",
+            "default": 0.5,
+            "choices": [],
+            "unit": null,
+            "minimum": 0.1,
+            "maximum": 1,
+            "step": 0.05,
+            "placeholder": null,
+            "nullLabel": null,
+            "numbersAsNumbers": false
+        },
+        {
+            "section": "appearance",
+            "group": "Readability",
+            "key": "colors.find-highlight",
+            "label": "Find highlight",
+            "description": "Behind each match of Find.",
+            "kind": "color",
+            "default": null,
+            "choices": [],
+            "unit": null,
+            "minimum": 0,
+            "maximum": null,
+            "step": 1,
+            "placeholder": "Zinc's yellow",
+            "nullLabel": null,
+            "numbersAsNumbers": false
+        },
+        {
+            "section": "appearance",
+            "group": "Readability",
+            "key": "colors.find-highlight-current",
+            "label": "Current match",
+            "description": "Behind the match Find is on.",
+            "kind": "color",
+            "default": null,
+            "choices": [],
+            "unit": null,
+            "minimum": 0,
+            "maximum": null,
+            "step": 1,
+            "placeholder": "Zinc's orange",
+            "nullLabel": null,
+            "numbersAsNumbers": false
+        },
+        {
+            "section": "appearance",
+            "group": "Cursor",
+            "key": "terminal.cursor-style",
+            "label": "Cursor shape",
+            "description": "Until a program picks its own (vim's insert mode often does).",
+            "kind": "choice",
+            "default": "block",
+            "choices": [
+                {
+                    "label": "Block",
+                    "value": "block",
+                    "detail": null
+                },
+                {
+                    "label": "Bar",
+                    "value": "bar",
+                    "detail": null
+                },
+                {
+                    "label": "Underline",
+                    "value": "underline",
+                    "detail": null
+                },
+                {
+                    "label": "Hollow block",
+                    "value": "block-hollow",
+                    "detail": null
+                }
+            ],
+            "unit": null,
+            "minimum": 0,
+            "maximum": null,
+            "step": 1,
+            "placeholder": null,
+            "nullLabel": null,
+            "numbersAsNumbers": false
+        },
+        {
+            "section": "appearance",
+            "group": "Cursor",
+            "key": "terminal.cursor-blink",
+            "label": "Blinking cursor",
+            "description": "Until a program says otherwise.",
+            "kind": "toggle",
+            "default": false,
+            "choices": [],
+            "unit": null,
+            "minimum": 0,
+            "maximum": null,
+            "step": 1,
+            "placeholder": null,
+            "nullLabel": null,
+            "numbersAsNumbers": false
+        },
+        {
+            "section": "appearance",
+            "group": "Cursor",
+            "key": "colors.cursor-opacity",
+            "label": "Cursor opacity",
+            "description": "1: solid. Lower lets the character under a block cursor show in its own color.",
+            "kind": "number",
+            "default": 1,
+            "choices": [],
+            "unit": null,
+            "minimum": 0.1,
+            "maximum": 1,
+            "step": 0.05,
+            "placeholder": null,
+            "nullLabel": null,
+            "numbersAsNumbers": false
+        },
+        {
+            "section": "appearance",
+            "group": "Cursor",
+            "key": "terminal.cursor-style-at-prompt",
+            "label": "Cursor at the prompt",
+            "description": "While the shell waits for a command. A program's own cursor still wins. Needs shell integration.",
+            "kind": "choice",
+            "default": "same",
+            "choices": [
+                {
+                    "label": "Same as above",
+                    "value": "same",
+                    "detail": null
+                },
+                {
+                    "label": "Bar",
+                    "value": "bar",
+                    "detail": "Like a text box."
+                },
+                {
+                    "label": "Block",
+                    "value": "block",
+                    "detail": null
+                },
+                {
+                    "label": "Underline",
+                    "value": "underline",
+                    "detail": null
+                },
+                {
+                    "label": "Hollow block",
+                    "value": "block-hollow",
+                    "detail": null
+                }
+            ],
+            "unit": null,
+            "minimum": 0,
+            "maximum": null,
+            "step": 1,
+            "placeholder": null,
+            "nullLabel": null,
+            "numbersAsNumbers": false
+        },
+        {
+            "section": "appearance",
+            "group": "Window",
+            "key": "window.appearance",
+            "label": "Light or dark",
+            "description": "Windows, menus and dialogs. The terminal keeps its color scheme. Restart Zinc to apply.",
+            "kind": "choice",
+            "default": "system",
+            "choices": [
+                {
+                    "label": "Same as Windows",
+                    "value": "system",
+                    "detail": "Windows Settings > Personalization > Colors > Choose your mode."
+                },
+                {
+                    "label": "Light",
+                    "value": "light",
+                    "detail": null
+                },
+                {
+                    "label": "Dark",
+                    "value": "dark",
+                    "detail": null
+                }
+            ],
+            "unit": null,
+            "minimum": 0,
+            "maximum": null,
+            "step": 1,
+            "placeholder": null,
+            "nullLabel": null,
+            "numbersAsNumbers": false
+        },
+        {
+            "section": "appearance",
+            "group": "Window",
+            "key": "window.accent",
+            "label": "Accent color",
+            "description": "Selections, focus lines, switches and buttons. Restart Zinc to apply.",
+            "kind": "choice",
+            "default": "zinc",
+            "choices": [
+                {
+                    "label": "Zinc green",
+                    "value": "zinc",
+                    "detail": null
+                },
+                {
+                    "label": "Windows' accent",
+                    "value": "windows",
+                    "detail": "The one in Windows Settings > Personalization > Colors."
+                }
+            ],
+            "unit": null,
+            "minimum": 0,
+            "maximum": null,
+            "step": 1,
+            "placeholder": null,
+            "nullLabel": null,
+            "numbersAsNumbers": false
+        },
+        {
+            "section": "appearance",
+            "group": "Background",
+            "key": "window.backdrop",
+            "label": "Window background",
+            "description": "What's behind everything in the window: tabs, sidebar and terminal.",
+            "kind": "choice",
+            "default": "mica",
+            "choices": [
+                {
+                    "label": "Mica",
+                    "value": "mica",
+                    "detail": "Not see-through. It takes a tint from your wallpaper, as Windows apps do."
+                },
+                {
+                    "label": "Acrylic (frosted)",
+                    "value": "acrylic",
+                    "detail": "The windows behind show, blurred."
+                },
+                {
+                    "label": "Clear",
+                    "value": "none",
+                    "detail": "The windows behind show as they are."
+                }
+            ],
+            "unit": null,
+            "minimum": 0,
+            "maximum": null,
+            "step": 1,
+            "placeholder": null,
+            "nullLabel": null,
+            "numbersAsNumbers": false
+        },
+        {
+            "section": "appearance",
+            "group": "Background",
+            "key": "window.backdrop-tint",
+            "label": "Window tint",
+            "description": "How much color an acrylic or clear background carries. Lower is more see-through.",
+            "kind": "number",
+            "default": 0.3,
+            "choices": [],
+            "unit": null,
+            "minimum": 0,
+            "maximum": 1,
+            "step": 0.05,
+            "placeholder": null,
+            "nullLabel": null,
+            "numbersAsNumbers": false
+        },
+        {
+            "section": "appearance",
+            "group": "Background",
+            "key": "window.backdrop-color",
+            "label": "Window tint color",
+            "description": "The color an acrylic or clear background is tinted with.",
+            "kind": "color",
+            "default": null,
+            "choices": [],
+            "unit": null,
+            "minimum": 0,
+            "maximum": null,
+            "step": 1,
+            "placeholder": "The terminal's background",
+            "nullLabel": "Use the terminal's background",
+            "numbersAsNumbers": false
+        },
+        {
+            "section": "appearance",
+            "group": "Background",
+            "key": "colors.background-opacity",
+            "label": "Terminal background opacity",
+            "description": "Lower lets the window background show behind the text (1: solid). Colored cells stay solid.",
+            "kind": "number",
+            "default": 1,
+            "choices": [],
+            "unit": null,
+            "minimum": 0,
+            "maximum": 1,
+            "step": 0.05,
+            "placeholder": null,
+            "nullLabel": null,
+            "numbersAsNumbers": false
+        },
+        {
+            "section": "appearance",
+            "group": "Shaders",
+            "key": "shaders.files",
+            "label": "Custom shaders",
+            "description": "Effects drawn over the terminal, such as CRT screens, glow and cursor trails. They're GLSL files written for Ghostty or Shadertoy, and they run in order.",
+            "kind": "files",
+            "default": null,
+            "choices": [],
+            "unit": null,
+            "minimum": 0,
+            "maximum": null,
+            "step": 1,
+            "placeholder": null,
+            "nullLabel": null,
+            "numbersAsNumbers": false
+        },
+        {
+            "section": "appearance",
+            "group": "Shaders",
+            "key": "shaders.animation",
+            "label": "Animation",
+            "description": "For animated shaders. The others redraw only when the terminal changes.",
+            "kind": "choice",
+            "default": true,
+            "choices": [
+                {
+                    "label": "While focused",
+                    "value": true,
+                    "detail": "Unfocused, they pause where they are. The text under them still updates."
+                },
+                {
+                    "label": "Always",
+                    "value": "always",
+                    "detail": "Every terminal with shaders keeps redrawing, focused or not."
+                },
+                {
+                    "label": "Never",
+                    "value": false,
+                    "detail": "They hold still, cursor effects included, and are drawn only when the terminal changes."
+                }
+            ],
+            "unit": null,
+            "minimum": 0,
+            "maximum": null,
+            "step": 1,
+            "placeholder": null,
+            "nullLabel": null,
+            "numbersAsNumbers": false
+        },
+        {
+            "section": "appearance",
+            "group": "Spacing",
+            "key": "terminal.padding-x",
+            "label": "Padding left and right",
+            "description": "Between the window's edge and the text.",
+            "kind": "number",
+            "default": 6,
+            "choices": [],
+            "unit": "pt",
+            "minimum": 0,
+            "maximum": 100,
+            "step": 1,
+            "placeholder": null,
+            "nullLabel": null,
+            "numbersAsNumbers": false
+        },
+        {
+            "section": "appearance",
+            "group": "Spacing",
+            "key": "terminal.padding-y",
+            "label": "Padding top and bottom",
+            "description": "Between the window's edge and the text.",
+            "kind": "number",
+            "default": 6,
+            "choices": [],
+            "unit": "pt",
+            "minimum": 0,
+            "maximum": 100,
+            "step": 1,
+            "placeholder": null,
+            "nullLabel": null,
+            "numbersAsNumbers": false
+        },
+        {
+            "section": "appearance",
+            "group": "Spacing",
+            "key": "terminal.padding-balance",
+            "label": "Even padding",
+            "description": "Splits the leftover space between both sides. When off, all of it goes to the right and bottom.",
+            "kind": "toggle",
+            "default": false,
+            "choices": [],
+            "unit": null,
+            "minimum": 0,
+            "maximum": null,
+            "step": 1,
+            "placeholder": null,
+            "nullLabel": null,
+            "numbersAsNumbers": false
+        },
+        {
+            "section": "layout",
+            "group": "Workspaces",
+            "key": "window.workspace-tabs",
+            "label": "Workspaces",
+            "description": "Tabs along the top, or a list in a sidebar. Applies to windows opened from now on.",
+            "kind": "choice",
+            "default": "top",
+            "choices": [
+                {
+                    "label": "Along the top",
+                    "value": "top",
+                    "detail": null
+                },
+                {
+                    "label": "In a sidebar",
+                    "value": "left",
+                    "detail": null
+                }
+            ],
+            "unit": null,
+            "minimum": 0,
+            "maximum": null,
+            "step": 1,
+            "placeholder": null,
+            "nullLabel": null,
+            "numbersAsNumbers": false
+        },
+        {
+            "section": "layout",
+            "group": "Workspaces",
+            "key": "window.sidebar",
+            "label": "Sidebar",
+            "description": "Only when \"Workspaces\" is \"In a sidebar\".",
+            "kind": "choice",
+            "default": "full",
+            "choices": [
+                {
+                    "label": "Full",
+                    "value": "full",
+                    "detail": null
+                },
+                {
+                    "label": "Icons only",
+                    "value": "rail",
+                    "detail": null
+                },
+                {
+                    "label": "Auto-hide",
+                    "value": "auto-hide",
+                    "detail": "Slides out when the pointer reaches the window's left edge."
+                }
+            ],
+            "unit": null,
+            "minimum": 0,
+            "maximum": null,
+            "step": 1,
+            "placeholder": null,
+            "nullLabel": null,
+            "numbersAsNumbers": false
+        },
+        {
+            "section": "layout",
+            "group": "Workspaces",
+            "key": "window.title-bar",
+            "label": "Title bar",
+            "description": "Only when \"Workspaces\" is \"In a sidebar\".",
+            "kind": "choice",
+            "default": "show",
+            "choices": [
+                {
+                    "label": "Shown",
+                    "value": "show",
+                    "detail": null
+                },
+                {
+                    "label": "Auto-hide",
+                    "value": "auto-hide",
+                    "detail": "Slides down when the pointer reaches the window's top edge."
+                }
+            ],
+            "unit": null,
+            "minimum": 0,
+            "maximum": null,
+            "step": 1,
+            "placeholder": null,
+            "nullLabel": null,
+            "numbersAsNumbers": false
+        },
+        {
+            "section": "layout",
+            "group": "Workspaces",
+            "key": "window.new-workspace-page",
+            "label": "Start page for new workspaces",
+            "description": "Choose a profile, a folder and a name when you open a workspace. Enter starts the default profile.",
+            "kind": "toggle",
+            "default": true,
+            "choices": [],
+            "unit": null,
+            "minimum": 0,
+            "maximum": null,
+            "step": 1,
+            "placeholder": null,
+            "nullLabel": null,
+            "numbersAsNumbers": false
+        },
+        {
+            "section": "layout",
+            "group": "Workspaces",
+            "key": "window.workspace-colors",
+            "label": "Colors for new workspaces",
+            "description": "For the ones you don't color yourself.",
+            "kind": "choice",
+            "default": "off",
+            "choices": [
+                {
+                    "label": "None",
+                    "value": "off",
+                    "detail": null
+                },
+                {
+                    "label": "By folder",
+                    "value": "folder",
+                    "detail": "A workspace with a folder gets that folder's color, the same one every time."
+                },
+                {
+                    "label": "One after another",
+                    "value": "cycle",
+                    "detail": "Each new workspace takes the next color."
+                }
+            ],
+            "unit": null,
+            "minimum": 0,
+            "maximum": null,
+            "step": 1,
+            "placeholder": null,
+            "nullLabel": null,
+            "numbersAsNumbers": false
+        },
+        {
+            "section": "layout",
+            "group": "Panes",
+            "key": "window.start-in",
+            "label": "New tabs and splits start",
+            "description": "New tabs in a workspace with its own folder start there. Without \"Tabs inside panes\", this is for splits only, because a new tab is a new workspace.",
+            "kind": "choice",
+            "default": "current",
+            "choices": [
+                {
+                    "label": "Where you are",
+                    "value": "current",
+                    "detail": "In the focused terminal's current folder."
+                },
+                {
+                    "label": "In the profile's folder",
+                    "value": "profile",
+                    "detail": "Or in the workspace's folder, when it has one."
+                }
+            ],
+            "unit": null,
+            "minimum": 0,
+            "maximum": null,
+            "step": 1,
+            "placeholder": null,
+            "nullLabel": null,
+            "numbersAsNumbers": false
+        },
+        {
+            "section": "layout",
+            "group": "Panes",
+            "key": "window.pane-tabs",
+            "label": "Tabs inside panes",
+            "description": "Each pane can hold several tabs.",
+            "kind": "toggle",
+            "default": true,
+            "choices": [],
+            "unit": null,
+            "minimum": 0,
+            "maximum": null,
+            "step": 1,
+            "placeholder": null,
+            "nullLabel": null,
+            "numbersAsNumbers": false
+        },
+        {
+            "section": "layout",
+            "group": "Panes",
+            "key": "window.pane-tabs-as",
+            "label": "Show pane tabs as",
+            "description": "Only with \"Tabs inside panes\" on.",
+            "kind": "choice",
+            "default": "tabs",
+            "choices": [
+                {
+                    "label": "Tabs",
+                    "value": "tabs",
+                    "detail": "A row of tabs. When they don't fit, they shorten, then show only their icons, then fold into a menu."
+                },
+                {
+                    "label": "A menu",
+                    "value": "menu",
+                    "detail": "The shown tab, then a count (\"2 of 5\") that opens a menu of every tab. Switch tabs with the menu or with keys."
+                }
+            ],
+            "unit": null,
+            "minimum": 0,
+            "maximum": null,
+            "step": 1,
+            "placeholder": null,
+            "nullLabel": null,
+            "numbersAsNumbers": false
+        },
+        {
+            "section": "layout",
+            "group": "Panes",
+            "key": "window.pane-headers",
+            "label": "Pane headers",
+            "description": "The row above a pane. Its tabs, or its title when it has one tab.",
+            "kind": "choice",
+            "default": "with-tabs",
+            "choices": [
+                {
+                    "label": "Automatic",
+                    "value": "auto",
+                    "detail": "On every pane once a workspace is split, and on any pane with two or more tabs."
+                },
+                {
+                    "label": "With several tabs",
+                    "value": "with-tabs",
+                    "detail": "On panes with two or more tabs."
+                },
+                {
+                    "label": "Always",
+                    "value": "always",
+                    "detail": null
+                },
+                {
+                    "label": "Never",
+                    "value": "never",
+                    "detail": null
+                }
+            ],
+            "unit": null,
+            "minimum": 0,
+            "maximum": null,
+            "step": 1,
+            "placeholder": null,
+            "nullLabel": null,
+            "numbersAsNumbers": false
+        },
+        {
+            "section": "layout",
+            "group": "Panes",
+            "key": "window.pane-header-buttons",
+            "label": "Header buttons",
+            "description": "Split, maximize and more on the right of a pane's header, with a program's progress beside them.",
+            "kind": "choice",
+            "default": "hide",
+            "choices": [
+                {
+                    "label": "Always",
+                    "value": "always",
+                    "detail": "On every pane."
+                },
+                {
+                    "label": "Focused pane",
+                    "value": "focused",
+                    "detail": "On the focused pane, and on the others while the pointer is over their header."
+                },
+                {
+                    "label": "On hover",
+                    "value": "hover",
+                    "detail": "On a pane while the pointer is over its header. Touch and pen have no hover. The command palette and a pane's right-click menu have every action."
+                },
+                {
+                    "label": "Hide",
+                    "value": "hide",
+                    "detail": null
+                }
+            ],
+            "unit": null,
+            "minimum": 0,
+            "maximum": null,
+            "step": 1,
+            "placeholder": null,
+            "nullLabel": null,
+            "numbersAsNumbers": false
+        },
+        {
+            "section": "layout",
+            "group": "Panes",
+            "key": "window.pane-gap",
+            "label": "Gap between panes",
+            "description": "Above 0, panes are rounded cards with space between them. At 0 they meet at a thin divider.",
+            "kind": "number",
+            "default": 0,
+            "choices": [],
+            "unit": "px",
+            "minimum": 0,
+            "maximum": 32,
+            "step": 1,
+            "placeholder": null,
+            "nullLabel": null,
+            "numbersAsNumbers": false
+        },
+        {
+            "section": "layout",
+            "group": "Panes",
+            "key": "window.pane-gap-edges",
+            "label": "Gap at the workspace edges",
+            "description": "The same gap around the outside, split or not, so splitting never moves a pane's outer edges. Only with a \"Gap between panes\" above 0.",
+            "kind": "toggle",
+            "default": false,
+            "choices": [],
+            "unit": null,
+            "minimum": 0,
+            "maximum": null,
+            "step": 1,
+            "placeholder": null,
+            "nullLabel": null,
+            "numbersAsNumbers": false
+        },
+        {
+            "section": "layout",
+            "group": "Panes",
+            "key": "window.pane-focus",
+            "label": "Show focus with",
+            "description": "How the focused pane stands out from the others.",
+            "kind": "choice",
+            "default": "tab-accent",
+            "choices": [
+                {
+                    "label": "Ring",
+                    "value": "ring",
+                    "detail": "An accent-colored outline around the focused pane."
+                },
+                {
+                    "label": "Tab accent",
+                    "value": "tab-accent",
+                    "detail": "An accent-colored line along the top of the focused pane."
+                },
+                {
+                    "label": "None",
+                    "value": "none",
+                    "detail": "Only the dimming of other panes (\"Unfocused panes\") marks the focused pane. With \"Unfocused panes\" at 1, nothing does."
+                }
+            ],
+            "unit": null,
+            "minimum": 0,
+            "maximum": null,
+            "step": 1,
+            "placeholder": null,
+            "nullLabel": null,
+            "numbersAsNumbers": false
+        },
+        {
+            "section": "layout",
+            "group": "Panes",
+            "key": "window.pane-animations",
+            "label": "Pane animations",
+            "description": "Panes slide into place when you split, close, maximize or move them. They don't while \"Animation effects\" is off in Windows Settings.",
+            "kind": "toggle",
+            "default": true,
+            "choices": [],
+            "unit": null,
+            "minimum": 0,
+            "maximum": null,
+            "step": 1,
+            "placeholder": null,
+            "nullLabel": null,
+            "numbersAsNumbers": false
+        },
+        {
+            "section": "layout",
+            "group": "Panes",
+            "key": "window.pane-resize-step",
+            "label": "Resize step",
+            "description": "How far a resize key moves the divider, as a share of the panes it splits.",
+            "kind": "number",
+            "default": 5,
+            "choices": [],
+            "unit": "%",
+            "minimum": 1,
+            "maximum": 50,
+            "step": 1,
+            "placeholder": null,
+            "nullLabel": null,
+            "numbersAsNumbers": false
+        },
+        {
+            "section": "layout",
+            "group": "Panes",
+            "key": "window.unfocused-pane-opacity",
+            "label": "Unfocused panes",
+            "description": "How bright unfocused panes stay (1: not dimmed).",
+            "kind": "number",
+            "default": 0.7,
+            "choices": [],
+            "unit": null,
+            "minimum": 0.15,
+            "maximum": 1,
+            "step": 0.05,
+            "placeholder": null,
+            "nullLabel": null,
+            "numbersAsNumbers": false
+        },
+        {
+            "section": "layout",
+            "group": "Panes",
+            "key": "window.unfocused-pane-fill",
+            "label": "Dimming color",
+            "description": "What unfocused panes fade toward.",
+            "kind": "color",
+            "default": null,
+            "choices": [],
+            "unit": null,
+            "minimum": 0,
+            "maximum": null,
+            "step": 1,
+            "placeholder": "The pane's background",
+            "nullLabel": null,
+            "numbersAsNumbers": false
+        },
+        {
+            "section": "layout",
+            "group": "Panes",
+            "key": "window.divider-color",
+            "label": "Divider color",
+            "description": "The line between split panes, when \"Gap between panes\" is 0.",
+            "kind": "color",
+            "default": null,
+            "choices": [],
+            "unit": null,
+            "minimum": 0,
+            "maximum": null,
+            "step": 1,
+            "placeholder": "Zinc's grey",
+            "nullLabel": null,
+            "numbersAsNumbers": false
+        },
+        {
+            "section": "layout",
+            "group": "When you come back",
+            "key": "window.save-state",
+            "label": "Reopen windows",
+            "description": "Windows, workspaces, splits and tabs come back in their folders.",
+            "kind": "choice",
+            "default": "always",
+            "choices": [
+                {
+                    "label": "Reopen them",
+                    "value": "always",
+                    "detail": null
+                },
+                {
+                    "label": "Start fresh",
+                    "value": "never",
+                    "detail": null
+                }
+            ],
+            "unit": null,
+            "minimum": 0,
+            "maximum": null,
+            "step": 1,
+            "placeholder": null,
+            "nullLabel": null,
+            "numbersAsNumbers": false
+        },
+        {
+            "section": "layout",
+            "group": "When you come back",
+            "key": "window.quit-after-last-window-closed",
+            "label": "When the last window closes",
+            "description": "",
+            "kind": "choice",
+            "default": null,
+            "choices": [
+                {
+                    "label": "Automatic",
+                    "value": null,
+                    "detail": "While the quick terminal's hotkey is set, it stays in the tray so the hotkey keeps working. Otherwise it quits."
+                },
+                {
+                    "label": "Quit",
+                    "value": true,
+                    "detail": null
+                },
+                {
+                    "label": "Stay in the tray",
+                    "value": false,
+                    "detail": "Click the tray icon to open a window again."
+                }
+            ],
+            "unit": null,
+            "minimum": 0,
+            "maximum": null,
+            "step": 1,
+            "placeholder": null,
+            "nullLabel": null,
+            "numbersAsNumbers": false
+        },
+        {
+            "section": "layout",
+            "group": "When you come back",
+            "key": "window.launch-at-login",
+            "label": "When you sign in to Windows",
+            "description": "",
+            "kind": "choice",
+            "default": "off",
+            "choices": [
+                {
+                    "label": "Don't start Zinc",
+                    "value": "off",
+                    "detail": null
+                },
+                {
+                    "label": "Start in the tray",
+                    "value": "tray",
+                    "detail": "No window opens. The quick terminal's hotkey works, and the tray icon opens your windows."
+                },
+                {
+                    "label": "Open my windows",
+                    "value": "windows",
+                    "detail": "As they were when you left, or a new one."
+                }
+            ],
+            "unit": null,
+            "minimum": 0,
+            "maximum": null,
+            "step": 1,
+            "placeholder": null,
+            "nullLabel": null,
+            "numbersAsNumbers": false
+        },
+        {
+            "section": "layout",
+            "group": "When you come back",
+            "key": "window.explorer-menu",
+            "label": "Open in Zinc from File Explorer",
+            "description": "Adds \"Open in Zinc\" to the right-click menu of folders and drives. On Windows 11 it's under \"Show more options\".",
+            "kind": "toggle",
+            "default": false,
+            "choices": [],
+            "unit": null,
+            "minimum": 0,
+            "maximum": null,
+            "step": 1,
+            "placeholder": null,
+            "nullLabel": null,
+            "numbersAsNumbers": false
+        },
+        {
+            "section": "layout",
+            "group": "Closing",
+            "key": "window.confirm-close",
+            "label": "Ask before closing",
+            "description": "When a tab, pane, workspace or window you close still runs a command, or holds two or more tabs. Zinc knows a command is running through shell integration.",
+            "kind": "toggle",
+            "default": true,
+            "choices": [],
+            "unit": null,
+            "minimum": 0,
+            "maximum": null,
+            "step": 1,
+            "placeholder": null,
+            "nullLabel": null,
+            "numbersAsNumbers": false
+        },
+        {
+            "section": "layout",
+            "group": "Closing",
+            "key": "window.confirm-quit",
+            "label": "Ask before quitting with a running command",
+            "description": "When you quit Zinc (or restart it for an update) while a command still runs.",
+            "kind": "toggle",
+            "default": true,
+            "choices": [],
+            "unit": null,
+            "minimum": 0,
+            "maximum": null,
+            "step": 1,
+            "placeholder": null,
+            "nullLabel": null,
+            "numbersAsNumbers": false
+        },
+        {
+            "section": "terminal",
+            "group": "Shell",
+            "key": "terminal.shell-integration",
+            "label": "Shell integration",
+            "description": "Marks prompts and commands in PowerShell, bash and zsh (WSL too), so you can jump between prompts, copy a command's output and see which commands failed.",
+            "kind": "choice",
+            "default": "auto",
+            "choices": [
+                {
+                    "label": "On",
+                    "value": "auto",
+                    "detail": null
+                },
+                {
+                    "label": "Off",
+                    "value": "off",
+                    "detail": null
+                }
+            ],
+            "unit": null,
+            "minimum": 0,
+            "maximum": null,
+            "step": 1,
+            "placeholder": null,
+            "nullLabel": null,
+            "numbersAsNumbers": false
+        },
+        {
+            "section": "terminal",
+            "group": "Shell",
+            "key": "terminal.command-marks",
+            "label": "Command marks",
+            "description": "The bar beside a command's output.",
+            "kind": "choice",
+            "default": "failures",
+            "choices": [
+                {
+                    "label": "Failed commands",
+                    "value": "failures",
+                    "detail": null
+                },
+                {
+                    "label": "Every command",
+                    "value": "all",
+                    "detail": null
+                },
+                {
+                    "label": "None",
+                    "value": "none",
+                    "detail": null
+                }
+            ],
+            "unit": null,
+            "minimum": 0,
+            "maximum": null,
+            "step": 1,
+            "placeholder": null,
+            "nullLabel": null,
+            "numbersAsNumbers": false
+        },
+        {
+            "section": "terminal",
+            "group": "Shell",
+            "key": "terminal.close-on-exit",
+            "label": "When the program ends",
+            "description": "",
+            "kind": "choice",
+            "default": "success",
+            "choices": [
+                {
+                    "label": "Close if it succeeded",
+                    "value": "success",
+                    "detail": "A failure stays on screen so you can read why. Any key closes it."
+                },
+                {
+                    "label": "Always close",
+                    "value": "always",
+                    "detail": null
+                },
+                {
+                    "label": "Keep it open",
+                    "value": "never",
+                    "detail": "Any key closes it."
+                }
+            ],
+            "unit": null,
+            "minimum": 0,
+            "maximum": null,
+            "step": 1,
+            "placeholder": null,
+            "nullLabel": null,
+            "numbersAsNumbers": false
+        },
+        {
+            "section": "terminal",
+            "group": "Shell",
+            "key": "terminal.reload-environment",
+            "label": "Pick up environment changes",
+            "description": "New tabs read PATH and other variables from Windows as they start, so an installer's changes work without restarting Zinc.",
+            "kind": "toggle",
+            "default": true,
+            "choices": [],
+            "unit": null,
+            "minimum": 0,
+            "maximum": null,
+            "step": 1,
+            "placeholder": null,
+            "nullLabel": null,
+            "numbersAsNumbers": false
+        },
+        {
+            "section": "terminal",
+            "group": "Shell",
+            "key": "terminal.program-titles",
+            "label": "Program titles",
+            "description": "Shells and programs set the tab's title (often the folder or the running command). When off, tabs show the profile's name.",
+            "kind": "toggle",
+            "default": true,
+            "choices": [],
+            "unit": null,
+            "minimum": 0,
+            "maximum": null,
+            "step": 1,
+            "placeholder": null,
+            "nullLabel": null,
+            "numbersAsNumbers": false
+        },
+        {
+            "section": "terminal",
+            "group": "Shell",
+            "key": "terminal.shell-titles",
+            "label": "Folder and command as the title",
+            "description": "The folder at the prompt, the running command otherwise. A program's own title still wins. Needs shell integration.",
+            "kind": "toggle",
+            "default": true,
+            "choices": [],
+            "unit": null,
+            "minimum": 0,
+            "maximum": null,
+            "step": 1,
+            "placeholder": null,
+            "nullLabel": null,
+            "numbersAsNumbers": false
+        },
+        {
+            "section": "terminal",
+            "group": "Scrollback",
+            "key": "terminal.scrollback-lines",
+            "label": "Scrollback lines",
+            "description": "How far back you can scroll.",
+            "kind": "number",
+            "default": 10000,
+            "choices": [],
+            "unit": null,
+            "minimum": 0,
+            "maximum": 100000,
+            "step": 1000,
+            "placeholder": null,
+            "nullLabel": null,
+            "numbersAsNumbers": false
+        },
+        {
+            "section": "terminal",
+            "group": "Mouse",
+            "key": "terminal.mouse-pointer",
+            "label": "Pointer over text",
+            "description": "",
+            "kind": "choice",
+            "default": "arrow",
+            "choices": [
+                {
+                    "label": "Arrow",
+                    "value": "arrow",
+                    "detail": null
+                },
+                {
+                    "label": "I-beam",
+                    "value": "text",
+                    "detail": null
+                }
+            ],
+            "unit": null,
+            "minimum": 0,
+            "maximum": null,
+            "step": 1,
+            "placeholder": null,
+            "nullLabel": null,
+            "numbersAsNumbers": false
+        },
+        {
+            "section": "terminal",
+            "group": "Mouse",
+            "key": "terminal.word-boundaries",
+            "label": "Word boundaries",
+            "description": "Characters that end a word when you double-click (space and tab always do). Empty: the ones shown.",
+            "kind": "text",
+            "default": null,
+            "choices": [],
+            "unit": null,
+            "minimum": 0,
+            "maximum": null,
+            "step": 1,
+            "placeholder": "'\"│`|:;,()[]{}<>$",
+            "nullLabel": null,
+            "numbersAsNumbers": false
+        },
+        {
+            "section": "terminal",
+            "group": "Mouse",
+            "key": "terminal.click-to-move",
+            "label": "Click to move the cursor",
+            "description": "At a shell prompt, clicking in the command you're typing moves the cursor there. Needs shell integration.",
+            "kind": "toggle",
+            "default": true,
+            "choices": [],
+            "unit": null,
+            "minimum": 0,
+            "maximum": null,
+            "step": 1,
+            "placeholder": null,
+            "nullLabel": null,
+            "numbersAsNumbers": false
+        },
+        {
+            "section": "terminal",
+            "group": "Mouse",
+            "key": "terminal.right-click",
+            "label": "Right-click",
+            "description": "Shift+F10 or the Menu key opens the menu anywhere.",
+            "kind": "choice",
+            "default": "menu",
+            "choices": [
+                {
+                    "label": "Menu",
+                    "value": "menu",
+                    "detail": "Copy, paste, find, the link or command you clicked, split and close."
+                },
+                {
+                    "label": "Copy or paste",
+                    "value": "copy-paste",
+                    "detail": "Copies a selection, or pastes when there's none."
+                },
+                {
+                    "label": "Paste",
+                    "value": "paste",
+                    "detail": null
+                }
+            ],
+            "unit": null,
+            "minimum": 0,
+            "maximum": null,
+            "step": 1,
+            "placeholder": null,
+            "nullLabel": null,
+            "numbersAsNumbers": false
+        },
+        {
+            "section": "terminal",
+            "group": "Mouse",
+            "key": "terminal.link-click",
+            "label": "Open links with",
+            "description": "Web links and files shown in the terminal.",
+            "kind": "choice",
+            "default": "ctrl",
+            "choices": [
+                {
+                    "label": "Ctrl+click",
+                    "value": "ctrl",
+                    "detail": "Holding Ctrl underlines the links."
+                },
+                {
+                    "label": "Alt+click",
+                    "value": "alt",
+                    "detail": "Holding Alt underlines the links."
+                },
+                {
+                    "label": "A click",
+                    "value": "click",
+                    "detail": "Dragging across a link still selects it. A program using the mouse still gets the click."
+                }
+            ],
+            "unit": null,
+            "minimum": 0,
+            "maximum": null,
+            "step": 1,
+            "placeholder": null,
+            "nullLabel": null,
+            "numbersAsNumbers": false
+        },
+        {
+            "section": "terminal",
+            "group": "Mouse",
+            "key": "terminal.middle-click-paste",
+            "label": "Middle-click pastes",
+            "description": "Unless the program uses the mouse.",
+            "kind": "toggle",
+            "default": false,
+            "choices": [],
+            "unit": null,
+            "minimum": 0,
+            "maximum": null,
+            "step": 1,
+            "placeholder": null,
+            "nullLabel": null,
+            "numbersAsNumbers": false
+        },
+        {
+            "section": "terminal",
+            "group": "Mouse",
+            "key": "window.focus-follows-mouse",
+            "label": "Focus follows mouse",
+            "description": "Moving the pointer into a pane focuses it.",
+            "kind": "toggle",
+            "default": false,
+            "choices": [],
+            "unit": null,
+            "minimum": 0,
+            "maximum": null,
+            "step": 1,
+            "placeholder": null,
+            "nullLabel": null,
+            "numbersAsNumbers": false
+        },
+        {
+            "section": "terminal",
+            "group": "Clipboard",
+            "key": "terminal.copy-on-select",
+            "label": "Copy on select",
+            "description": "Copies text as soon as you select it. The selection stays.",
+            "kind": "toggle",
+            "default": false,
+            "choices": [],
+            "unit": null,
+            "minimum": 0,
+            "maximum": null,
+            "step": 1,
+            "placeholder": null,
+            "nullLabel": null,
+            "numbersAsNumbers": false
+        },
+        {
+            "section": "terminal",
+            "group": "Clipboard",
+            "key": "terminal.copy-formatting",
+            "label": "Copy with formatting",
+            "description": "Copies colors and styles too, for documents and email. Apps that take plain text still get plain text.",
+            "kind": "toggle",
+            "default": false,
+            "choices": [],
+            "unit": null,
+            "minimum": 0,
+            "maximum": null,
+            "step": 1,
+            "placeholder": null,
+            "nullLabel": null,
+            "numbersAsNumbers": false
+        },
+        {
+            "section": "terminal",
+            "group": "Clipboard",
+            "key": "terminal.paste-warning",
+            "label": "Paste warning",
+            "description": "Ask before pasting text with more than one line.",
+            "kind": "choice",
+            "default": "auto",
+            "choices": [
+                {
+                    "label": "Automatic",
+                    "value": "auto",
+                    "detail": "When the program would take each line as Enter and run it. A program that marks pastes (bracketed paste) gets no warning."
+                },
+                {
+                    "label": "Always",
+                    "value": "multiline",
+                    "detail": "Whenever a paste has more than one line."
+                },
+                {
+                    "label": "Never",
+                    "value": "never",
+                    "detail": null
+                }
+            ],
+            "unit": null,
+            "minimum": 0,
+            "maximum": null,
+            "step": 1,
+            "placeholder": null,
+            "nullLabel": null,
+            "numbersAsNumbers": false
+        },
+        {
+            "section": "terminal",
+            "group": "Clipboard",
+            "key": "terminal.large-paste-warning",
+            "label": "Large pastes",
+            "description": "Ask before pasting more than 5 KB.",
+            "kind": "toggle",
+            "default": true,
+            "choices": [],
+            "unit": null,
+            "minimum": 0,
+            "maximum": null,
+            "step": 1,
+            "placeholder": null,
+            "nullLabel": null,
+            "numbersAsNumbers": false
+        },
+        {
+            "section": "terminal",
+            "group": "Clipboard",
+            "key": "terminal.clipboard-write",
+            "label": "Programs may copy",
+            "description": "Copying with OSC 52, as tmux, neovim and remote shells do.",
+            "kind": "toggle",
+            "default": true,
+            "choices": [],
+            "unit": null,
+            "minimum": 0,
+            "maximum": null,
+            "step": 1,
+            "placeholder": null,
+            "nullLabel": null,
+            "numbersAsNumbers": false
+        },
+        {
+            "section": "terminal",
+            "group": "Clipboard",
+            "key": "terminal.clipboard-read",
+            "label": "Programs reading the clipboard",
+            "description": "Anything running, including a remote host, could read it.",
+            "kind": "choice",
+            "default": "ask",
+            "choices": [
+                {
+                    "label": "Ask each time",
+                    "value": "ask",
+                    "detail": "Allow once, for the tab, or not."
+                },
+                {
+                    "label": "Allow",
+                    "value": "allow",
+                    "detail": null
+                },
+                {
+                    "label": "Deny",
+                    "value": "deny",
+                    "detail": null
+                }
+            ],
+            "unit": null,
+            "minimum": 0,
+            "maximum": null,
+            "step": 1,
+            "placeholder": null,
+            "nullLabel": null,
+            "numbersAsNumbers": false
+        },
+        {
+            "section": "terminal",
+            "group": "Bell",
+            "key": "terminal.bell",
+            "label": "Bell",
+            "description": "When a program rings it, e.g. at a failed tab completion.",
+            "kind": "choice",
+            "default": "attention",
+            "choices": [
+                {
+                    "label": "Tab dot",
+                    "value": "attention",
+                    "detail": "A dot on its tab, and the taskbar button flashes, when you aren't looking at that pane."
+                },
+                {
+                    "label": "Flash the pane",
+                    "value": "flash",
+                    "detail": "Marks the tab too."
+                },
+                {
+                    "label": "None",
+                    "value": "none",
+                    "detail": null
+                }
+            ],
+            "unit": null,
+            "minimum": 0,
+            "maximum": null,
+            "step": 1,
+            "placeholder": null,
+            "nullLabel": null,
+            "numbersAsNumbers": false
+        },
+        {
+            "section": "terminal",
+            "group": "Bell",
+            "key": "terminal.bell-sound",
+            "label": "Bell sound",
+            "description": "Plays Windows' default sound too.",
+            "kind": "toggle",
+            "default": false,
+            "choices": [],
+            "unit": null,
+            "minimum": 0,
+            "maximum": null,
+            "step": 1,
+            "placeholder": null,
+            "nullLabel": null,
+            "numbersAsNumbers": false
+        },
+        {
+            "section": "terminal",
+            "group": "Bell",
+            "key": "terminal.screen-flash-bell",
+            "label": "Visual bell",
+            "description": "Programs that flash the screen instead of beeping (Git Bash does) ring Zinc's bell, as set in \"Bell\".",
+            "kind": "toggle",
+            "default": true,
+            "choices": [],
+            "unit": null,
+            "minimum": 0,
+            "maximum": null,
+            "step": 1,
+            "placeholder": null,
+            "nullLabel": null,
+            "numbersAsNumbers": false
+        },
+        {
+            "section": "terminal",
+            "group": "Command line",
+            "key": "cli.remote-control",
+            "label": "Remote control",
+            "description": "Lets zn, Zinc's command-line tool, open, arrange and close tabs, type into them and read them. Any program running as you could use it.",
+            "kind": "toggle",
+            "default": false,
+            "choices": [],
+            "unit": null,
+            "minimum": 0,
+            "maximum": null,
+            "step": 1,
+            "placeholder": null,
+            "nullLabel": null,
+            "numbersAsNumbers": false
+        },
+        {
+            "section": "terminal",
+            "group": "Command line",
+            "key": "cli.path",
+            "label": "Use zn in other terminals",
+            "description": "Adds zn to your PATH, so other terminals find it too (Zinc's own terminals always do). Shells started from now on see it.",
+            "kind": "toggle",
+            "default": false,
+            "choices": [],
+            "unit": null,
+            "minimum": 0,
+            "maximum": null,
+            "step": 1,
+            "placeholder": null,
+            "nullLabel": null,
+            "numbersAsNumbers": false
+        },
+        {
+            "section": "terminal",
+            "group": "Troubleshooting",
+            "key": "terminal.input-method",
+            "label": "Input methods",
+            "description": "Type Japanese, Chinese, Korean and more with Windows' input methods (IME). Turn it off if keys behave oddly.",
+            "kind": "toggle",
+            "default": true,
+            "choices": [],
+            "unit": null,
+            "minimum": 0,
+            "maximum": null,
+            "step": 1,
+            "placeholder": null,
+            "nullLabel": null,
+            "numbersAsNumbers": false
+        },
+        {
+            "section": "about",
+            "group": "Updates",
+            "key": "updates.check",
+            "label": "Check for updates automatically",
+            "description": "Once a day. New versions download in the background, and you choose when to restart. Only for Zinc installed with its installer.",
+            "kind": "toggle",
+            "default": true,
+            "choices": [],
+            "unit": null,
+            "minimum": 0,
+            "maximum": null,
+            "step": 1,
+            "placeholder": null,
+            "nullLabel": null,
+            "numbersAsNumbers": false
+        },
+        {
+            "section": "about",
+            "group": "Troubleshooting",
+            "key": "debug.logging",
+            "label": "Debug log",
+            "description": "Keeps a record of what Zinc does, to send with a bug report. Turn it on, make the problem happen, then copy the log.",
+            "kind": "toggle",
+            "default": false,
+            "choices": [],
+            "unit": null,
+            "minimum": 0,
+            "maximum": null,
+            "step": 1,
+            "placeholder": null,
+            "nullLabel": null,
+            "numbersAsNumbers": false
+        },
+        {
+            "section": "terminal",
+            "group": "Troubleshooting",
+            "key": "window.low-latency-drawing",
+            "label": "Low-latency drawing",
+            "description": "What you type shows up about one screen refresh sooner. Turn it off if a terminal draws wrong or stops drawing, and tell us. Applies to terminals opened from now on.",
+            "kind": "toggle",
+            "default": true,
+            "choices": [],
+            "unit": null,
+            "minimum": 0,
+            "maximum": null,
+            "step": 1,
+            "placeholder": null,
+            "nullLabel": null,
+            "numbersAsNumbers": false
+        },
+        {
+            "section": "terminal",
+            "group": "Troubleshooting",
+            "key": "window.free-hidden-memory",
+            "label": "Free memory of hidden tabs",
+            "description": "Background tabs, minimized windows and the dismissed quick terminal give back their graphics memory and rebuild it when you return. Turn it off if switching tabs flashes. Only with \"Low-latency drawing\".",
+            "kind": "toggle",
+            "default": true,
+            "choices": [],
+            "unit": null,
+            "minimum": 0,
+            "maximum": null,
+            "step": 1,
+            "placeholder": null,
+            "nullLabel": null,
+            "numbersAsNumbers": false
+        },
+        {
+            "section": "terminal",
+            "group": "Troubleshooting",
+            "key": "window.free-hidden-after",
+            "label": "Free it after",
+            "description": "Seconds, or with a unit: 45s, 2m.",
+            "kind": "text",
+            "default": 60,
+            "choices": [],
+            "unit": null,
+            "minimum": 0,
+            "maximum": null,
+            "step": 1,
+            "placeholder": "60",
+            "nullLabel": null,
+            "numbersAsNumbers": true
+        },
+        {
+            "section": "terminal",
+            "group": "Troubleshooting",
+            "key": "window.software-rendering",
+            "label": "Software rendering",
+            "description": "Draws with the processor instead of the graphics card, which is slower. Use it for broken graphics drivers, some virtual machines and remote desktop glitches. Applies to terminals opened from now on.",
+            "kind": "toggle",
+            "default": false,
+            "choices": [],
+            "unit": null,
+            "minimum": 0,
+            "maximum": null,
+            "step": 1,
+            "placeholder": null,
+            "nullLabel": null,
+            "numbersAsNumbers": false
+        },
+        {
+            "section": "notifications",
+            "group": "Long commands",
+            "key": "notify.command-finished",
+            "label": "Long command finishes",
+            "description": "In a pane you weren't looking at.",
+            "kind": "choice",
+            "default": "badge",
+            "choices": [
+                {
+                    "label": "Tab dot",
+                    "value": "badge",
+                    "detail": "A dot on its tab. The taskbar button also flashes if Zinc is in the background."
+                },
+                {
+                    "label": "Notification",
+                    "value": "toast",
+                    "detail": "A dot on its tab, and a Windows notification if Zinc is in the background."
+                },
+                {
+                    "label": "Always notify",
+                    "value": "toast-always",
+                    "detail": "A Windows notification whenever you aren't looking at that pane, even in Zinc."
+                },
+                {
+                    "label": "None",
+                    "value": "never",
+                    "detail": "No dot, no notification."
+                }
+            ],
+            "unit": null,
+            "minimum": 0,
+            "maximum": null,
+            "step": 1,
+            "placeholder": null,
+            "nullLabel": null,
+            "numbersAsNumbers": false
+        },
+        {
+            "section": "notifications",
+            "group": "Long commands",
+            "key": "notify.command-finished-after",
+            "label": "Counts as long after",
+            "description": "Seconds, or with a unit: 45s, 2m.",
+            "kind": "text",
+            "default": 10,
+            "choices": [],
+            "unit": null,
+            "minimum": 0,
+            "maximum": null,
+            "step": 1,
+            "placeholder": "10",
+            "nullLabel": null,
+            "numbersAsNumbers": true
+        },
+        {
+            "section": "notifications",
+            "group": "Long commands",
+            "key": "notify.command-finished-sound",
+            "label": "Sound",
+            "description": "Plays when a long command finishes out of view (a Windows notification has its own).",
+            "kind": "choice",
+            "default": "off",
+            "choices": [
+                {
+                    "label": "None",
+                    "value": "off",
+                    "detail": null
+                },
+                {
+                    "label": "Windows' notification sound",
+                    "value": "notification",
+                    "detail": null
+                },
+                {
+                    "label": "Windows' default beep",
+                    "value": "beep",
+                    "detail": null
+                }
+            ],
+            "unit": null,
+            "minimum": 0,
+            "maximum": null,
+            "step": 1,
+            "placeholder": null,
+            "nullLabel": null,
+            "numbersAsNumbers": false
+        },
+        {
+            "section": "notifications",
+            "group": "Programs",
+            "key": "notify.programs",
+            "label": "Program notifications",
+            "description": "When a program asks for one, e.g. a build script finishing (OSC 9 or 777).",
+            "kind": "choice",
+            "default": "badge",
+            "choices": [
+                {
+                    "label": "Tab dot",
+                    "value": "badge",
+                    "detail": "A dot on its tab. The taskbar button also flashes if Zinc is in the background."
+                },
+                {
+                    "label": "Notification",
+                    "value": "toast",
+                    "detail": "A dot on its tab, and a Windows notification if Zinc is in the background."
+                },
+                {
+                    "label": "Always notify",
+                    "value": "toast-always",
+                    "detail": "A Windows notification whenever you aren't looking at that pane, even in Zinc."
+                },
+                {
+                    "label": "None",
+                    "value": "never",
+                    "detail": "No dot, no notification."
+                }
+            ],
+            "unit": null,
+            "minimum": 0,
+            "maximum": null,
+            "step": 1,
+            "placeholder": null,
+            "nullLabel": null,
+            "numbersAsNumbers": false
+        },
+        {
+            "section": "notifications",
+            "group": "Dot colors",
+            "key": "notify.finished-color",
+            "label": "Finished",
+            "description": "A command finished, or a program sent a notification.",
+            "kind": "color",
+            "default": null,
+            "choices": [],
+            "unit": null,
+            "minimum": 0,
+            "maximum": null,
+            "step": 1,
+            "placeholder": "Zinc's green",
+            "nullLabel": "Use Zinc's green",
+            "numbersAsNumbers": false
+        },
+        {
+            "section": "notifications",
+            "group": "Dot colors",
+            "key": "notify.bell-color",
+            "label": "Bell",
+            "description": "A program rang the bell.",
+            "kind": "color",
+            "default": null,
+            "choices": [],
+            "unit": null,
+            "minimum": 0,
+            "maximum": null,
+            "step": 1,
+            "placeholder": "Zinc's amber",
+            "nullLabel": "Use Zinc's amber",
+            "numbersAsNumbers": false
+        },
+        {
+            "section": "notifications",
+            "group": "Dot colors",
+            "key": "notify.failed-color",
+            "label": "Failed",
+            "description": "A command failed, or a program exited with an error.",
+            "kind": "color",
+            "default": null,
+            "choices": [],
+            "unit": null,
+            "minimum": 0,
+            "maximum": null,
+            "step": 1,
+            "placeholder": "Zinc's red",
+            "nullLabel": "Use Zinc's red",
+            "numbersAsNumbers": false
+        },
+        {
+            "section": "quick",
+            "group": "Summon",
+            "key": "quick-terminal.hotkey",
+            "label": "Hotkey",
+            "description": "Shows and hides the quick terminal from anywhere, e.g. win+grave or ctrl+alt+t.",
+            "kind": "text",
+            "default": "win+grave",
+            "choices": [],
+            "unit": null,
+            "minimum": 0,
+            "maximum": null,
+            "step": 1,
+            "placeholder": null,
+            "nullLabel": null,
+            "numbersAsNumbers": false
+        },
+        {
+            "section": "quick",
+            "group": "Placement",
+            "key": "quick-terminal.position",
+            "label": "Position",
+            "description": "",
+            "kind": "choice",
+            "default": "center",
+            "choices": [
+                {
+                    "label": "Top",
+                    "value": "top",
+                    "detail": null
+                },
+                {
+                    "label": "Bottom",
+                    "value": "bottom",
+                    "detail": null
+                },
+                {
+                    "label": "Left",
+                    "value": "left",
+                    "detail": null
+                },
+                {
+                    "label": "Right",
+                    "value": "right",
+                    "detail": null
+                },
+                {
+                    "label": "Center",
+                    "value": "center",
+                    "detail": null
+                }
+            ],
+            "unit": null,
+            "minimum": 0,
+            "maximum": null,
+            "step": 1,
+            "placeholder": null,
+            "nullLabel": null,
+            "numbersAsNumbers": false
+        },
+        {
+            "section": "quick",
+            "group": "Placement",
+            "key": "quick-terminal.screen",
+            "label": "Screen",
+            "description": "",
+            "kind": "choice",
+            "default": "mouse",
+            "choices": [
+                {
+                    "label": "With the pointer",
+                    "value": "mouse",
+                    "detail": "Opens on the screen the pointer is on."
+                },
+                {
+                    "label": "Main",
+                    "value": "main",
+                    "detail": "Always opens on the main screen."
+                }
+            ],
+            "unit": null,
+            "minimum": 0,
+            "maximum": null,
+            "step": 1,
+            "placeholder": null,
+            "nullLabel": null,
+            "numbersAsNumbers": false
+        },
+        {
+            "section": "quick",
+            "group": "Placement",
+            "key": "quick-terminal.size",
+            "label": "Size",
+            "description": "A percentage or pixels (50%, 600px) along its edge. Empty: 50%, or 70% by 60% at \"Center\".",
+            "kind": "text",
+            "default": null,
+            "choices": [],
+            "unit": null,
+            "minimum": 0,
+            "maximum": null,
+            "step": 1,
+            "placeholder": "50%",
+            "nullLabel": null,
+            "numbersAsNumbers": false
+        },
+        {
+            "section": "quick",
+            "group": "Behavior",
+            "key": "quick-terminal.autohide",
+            "label": "Hide when it loses focus",
+            "description": "",
+            "kind": "toggle",
+            "default": true,
+            "choices": [],
+            "unit": null,
+            "minimum": 0,
+            "maximum": null,
+            "step": 1,
+            "placeholder": null,
+            "nullLabel": null,
+            "numbersAsNumbers": false
+        },
+        {
+            "section": "quick",
+            "group": "Behavior",
+            "key": "quick-terminal.animation-duration",
+            "label": "Animation",
+            "description": "How long the quick terminal takes to fade in and out. At 0 it appears at once.",
+            "kind": "number",
+            "default": 0.2,
+            "choices": [],
+            "unit": "seconds",
+            "minimum": 0,
+            "maximum": 2,
+            "step": 0.05,
+            "placeholder": null,
+            "nullLabel": null,
+            "numbersAsNumbers": false
+        },
+        {
+            "section": "profiles",
+            "group": "Find shells on this PC",
+            "key": "discover.wsl",
+            "label": "WSL distributions",
+            "description": "",
+            "kind": "toggle",
+            "default": true,
+            "choices": [],
+            "unit": null,
+            "minimum": 0,
+            "maximum": null,
+            "step": 1,
+            "placeholder": null,
+            "nullLabel": null,
+            "numbersAsNumbers": false
+        },
+        {
+            "section": "profiles",
+            "group": "Find shells on this PC",
+            "key": "discover.powershell",
+            "label": "PowerShell 7 and Windows PowerShell",
+            "description": "",
+            "kind": "toggle",
+            "default": true,
+            "choices": [],
+            "unit": null,
+            "minimum": 0,
+            "maximum": null,
+            "step": 1,
+            "placeholder": null,
+            "nullLabel": null,
+            "numbersAsNumbers": false
+        },
+        {
+            "section": "profiles",
+            "group": "Find shells on this PC",
+            "key": "discover.cmd",
+            "label": "Command Prompt",
+            "description": "",
+            "kind": "toggle",
+            "default": true,
+            "choices": [],
+            "unit": null,
+            "minimum": 0,
+            "maximum": null,
+            "step": 1,
+            "placeholder": null,
+            "nullLabel": null,
+            "numbersAsNumbers": false
+        },
+        {
+            "section": "profiles",
+            "group": "Find shells on this PC",
+            "key": "discover.git-bash",
+            "label": "Git Bash",
+            "description": "",
+            "kind": "toggle",
+            "default": true,
+            "choices": [],
+            "unit": null,
+            "minimum": 0,
+            "maximum": null,
+            "step": 1,
+            "placeholder": null,
+            "nullLabel": null,
+            "numbersAsNumbers": false
+        },
+        {
+            "section": "profiles",
+            "group": "Find shells on this PC",
+            "key": "discover.msys2",
+            "label": "MSYS2",
+            "description": "",
+            "kind": "toggle",
+            "default": true,
+            "choices": [],
+            "unit": null,
+            "minimum": 0,
+            "maximum": null,
+            "step": 1,
+            "placeholder": null,
+            "nullLabel": null,
+            "numbersAsNumbers": false
+        },
+        {
+            "section": "profiles",
+            "group": "Find shells on this PC",
+            "key": "discover.visual-studio",
+            "label": "Visual Studio developer shells",
+            "description": "",
+            "kind": "toggle",
+            "default": true,
+            "choices": [],
+            "unit": null,
+            "minimum": 0,
+            "maximum": null,
+            "step": 1,
+            "placeholder": null,
+            "nullLabel": null,
+            "numbersAsNumbers": false
+        },
+        {
+            "section": "profiles",
+            "group": "Find shells on this PC",
+            "key": "discover.ssh",
+            "label": "SSH hosts",
+            "description": "From ~/.ssh/config.",
+            "kind": "toggle",
+            "default": true,
+            "choices": [],
+            "unit": null,
+            "minimum": 0,
+            "maximum": null,
+            "step": 1,
+            "placeholder": null,
+            "nullLabel": null,
+            "numbersAsNumbers": false
+        }
+    ],
+    "fileOnly": [
+        {
+            "key": "colors.palette",
+            "text": "Palette colors by number (palette.1 = \"#AC4242\") are set in config.toml."
+        },
+        {
+            "key": "shaders.folders",
+            "text": "Folders of shaders to choose from. Add and remove them on the shaders page (the library's … menu)."
+        }
+    ]
+}
