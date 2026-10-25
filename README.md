@@ -27,6 +27,12 @@ The site is static Astro with a few Svelte islands, built with Bun.
 | `bun run deploy` | Builds and deploys to Cloudflare with wrangler |
 | `bun run sync:zinc` | Refreshes the changelog, notices and release info from a Zinc checkout |
 
+## Downloads and short links
+
+Every download button links straight to `downloads.zincterminal.dev`, which always holds the latest build. For links to share, `public/_redirects` sends `/download` to the installer and `/download/portable` to the zip, as temporary (302) redirects so the targets can change.
+
+The site is a Worker with only static assets (`wrangler.jsonc`), and Cloudflare reads `_redirects` from the assets folder, so the redirects need no other setup. Each rule needs its trailing-slash form too, because `/download/` doesn't match `/download`. `bunx wrangler dev` serves `dist/` locally with the redirects applied, and its log says how many rules it parsed.
+
 ## Content from Zinc
 
 The changelog, the third-party notices and the site-wide version come from the Zinc repository. It's private for now, so the build can't read it, and a committed snapshot stands in.
@@ -59,7 +65,7 @@ The docs are one MDX file, `src/content/docs/using-zinc.mdx`, in the `docs` cont
 ## Layout
 
 - `src/pages/` holds the five pages. `src/layouts/Base.astro` holds the shared document shell and the no-flash theme script, and `src/layouts/ReadingLayout.astro` holds the sidebar layout for docs, changelog and notices.
-- `src/data/site.ts` holds the links, the release info and the shared footer. Undecided links are `#`, and Zinc's GitHub links are `null` and left out until the repo is public.
+- `src/data/site.ts` holds the links (the downloads, the feedback address and the Discord among them), the release info and the shared footer. Zinc's GitHub links are `null` and left out until the repo is public.
 - `src/components/site/` holds the shared pieces: header, footer, theme switch, buttons, sections and copy buttons.
 - `src/components/landing/` and `src/components/lit-cell/` hold each page's sections.
 - `src/components/reading/` holds the reading pages' pieces (contents list, section spy, changelog and notice rows), and `src/components/prose/` holds the docs' MDX components. Their styles are `src/styles/reading.css` and `src/styles/prose.css`.

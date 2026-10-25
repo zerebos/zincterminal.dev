@@ -1,0 +1,6 @@
+# Short links to share. Temporary (302), because the targets can move.
+# A trailing slash doesn't match on its own, so each has both forms.
+/download https://downloads.zincterminal.dev/Zinc-win-Setup.exe 302
+/download/ https://downloads.zincterminal.dev/Zinc-win-Setup.exe 302
+/download/portable https://downloads.zincterminal.dev/Zinc-win-Portable.zip 302
+/download/portable/ https://downloads.zincterminal.dev/Zinc-win-Portable.zip 302
