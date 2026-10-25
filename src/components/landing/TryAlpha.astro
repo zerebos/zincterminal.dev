@@ -38,13 +38,16 @@ const missing = [
 <Section id="install" labelledby="install-title">
     <div class="layout">
         <div class="get">
-            <div><SectionIntro eyebrow="Private alpha" title="Try the alpha" titleId="install-title" /></div>
+            <div><SectionIntro eyebrow="Alpha" title="Try the alpha" titleId="install-title" /></div>
             <div class="buttons">
-                <Button href={links.discord} primary large>Request access</Button>
+                <Button href={links.download} primary large>Download for Windows</Button>
+                <Button href={links.downloadPortable} large>Portable zip</Button>
                 {links.zincRepo && <Button href={links.zincRepo} large>View source on GitHub</Button>}
             </div>
-            <p class="cap">Zinc is in private alpha and free. Request access through Zinc's Discord server; once you have it, the installer sets Zinc up for your account only and keeps it up to date. Current build: <span class="version">{release.version}</span> · {release.requirements}</p>
+            <p class="cap">Zinc is in public alpha and free. The installer sets it up for your account only, with no administrator prompt, and keeps it up to date. Current build: <span class="version">{release.version}</span> · {release.requirements}</p>
+            <p class="cap">Alpha builds aren't signed yet, so Windows SmartScreen may ask first: choose <b>More info</b>, then <b>Run anyway</b>.</p>
             <InstallCommand command="winget" comment="# coming soon" />
+            <p class="cap">Found a bug or have an idea? Email <a class="textlink" href={links.feedback}>{links.feedbackEmail}</a> or join the <a class="textlink" href={links.discord}>Discord</a>.</p>
             <CodeBlock name="zn --help" lines={help} copy="zn --help" copyLabel="Copy command" copyDuration={1600} />
             <p class="cap note">Inside a Zinc terminal, <code class="zn-inline">zn</code> acts on that terminal and its pane, workspace and window. Outside, it acts on the window you used last.</p>
         </div>

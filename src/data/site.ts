@@ -4,8 +4,16 @@ import zincRelease from "./generated/zinc-release.json";
 // Undecided ones are "#" so they show as visible placeholders. Zinc's GitHub links are null, and left
 // out wherever they appear, until the Zinc repo is public.
 
+const feedbackEmail = "feedback@zincterminal.dev";
+
 export const links = {
-    discord: "https://discord.gg/Fq7WMRDPWu",
+    // Always the latest build
+    download: "https://downloads.zincterminal.dev/Zinc-win-Setup.exe",
+    downloadPortable: "https://downloads.zincterminal.dev/Zinc-win-Portable.zip",
+
+    feedbackEmail,
+    feedback: `mailto:${feedbackEmail}`,
+    discord: "https://discord.gg/hfBuYW9JTe",
     litCellRepo: "https://github.com/zerebos/lit-cell",
     litCellSpec: "https://github.com/zerebos/lit-cell/blob/main/SPEC.md",
     litCellIssues: "https://github.com/zerebos/lit-cell/issues",
@@ -55,7 +63,7 @@ export interface FooterColumn {
 }
 
 /** Leaves out links that are hidden for now */
-export const shown = <T extends {href: string | null}>(items: T[]) => items.filter((item): item is T & {href: string} => item.href !== null);
+export const shown = <T extends {href: string | null;}>(items: T[]) => items.filter((item): item is T & {href: string;} => item.href !== null);
 
 /** The footer's columns, shared by every page. The Lit Cell page swaps the middle one for its own. */
 export const footerProduct: FooterColumn = {
@@ -65,7 +73,7 @@ export const footerProduct: FooterColumn = {
         {label: "Themes", href: "/#themes"},
         {label: "Lit Cell", href: "/lit-cell"},
         {label: "Changelog", href: links.changelog},
-        {label: "Request access", href: links.discord}
+        {label: "Download", href: "/#install"}
     ]
 };
 

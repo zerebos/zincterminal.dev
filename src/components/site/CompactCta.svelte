@@ -26,11 +26,11 @@
 
 <a
     class={["zn-btn zn-btn-primary compact", {off: !shown}]}
-    href={links.discord}
+    href={links.download}
     aria-hidden={!shown}
     tabindex={shown ? 0 : -1}
 >
-    Request access
+    Download
 </a>
 
 <style>
