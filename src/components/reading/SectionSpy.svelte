@@ -20,13 +20,15 @@
         if (held) return;
         const atEnd = window.innerHeight + window.scrollY >= document.documentElement.scrollHeight - 2;
         if (atEnd) {
-            current = ids.at(-1);
+            current = ids.findLast(id => document.getElementById(id)?.checkVisibility()) ?? ids.at(-1);
             return;
         }
         let next = ids[0];
         for (const id of ids) {
-            const top = document.getElementById(id)?.getBoundingClientRect().top;
-            if (top !== undefined && top <= window.innerHeight * line) next = id;
+            // A section the config filter hides has no box, and would read as scrolled past
+            const section = document.getElementById(id);
+            if (!section?.checkVisibility()) continue;
+            if (section.getBoundingClientRect().top <= window.innerHeight * line) next = id;
         }
         current = next;
     }

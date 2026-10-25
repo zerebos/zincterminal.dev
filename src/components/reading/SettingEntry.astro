@@ -22,9 +22,12 @@ const example = exampleText(setting);
 const rows = sameAs ? [] : choiceRows(setting);
 const details = rows.some(row => row.detail);
 const path = settingsPath(setting, sections);
+
+// What the filter matches against
+const text = [setting.key, setting.label, setting.description, kindText(setting)].join(" ").toLowerCase();
 ---
 
-<div class="cfg" id={setting.key}>
+<div class="cfg" id={setting.key} data-text={text}>
     <div class="cfg-head">
         <h3 class="cfg-key"><a class="cfg-link" href={`#${setting.key}`}><span class="cfg-sec">{table}.</span>{name}</a></h3>
         <span class="cfg-label">{setting.label}</span>
@@ -63,6 +66,11 @@ const path = settingsPath(setting, sections);
     .cfg {
         padding: 28px 0;
         border-top: 1px solid var(--line);
+    }
+
+    /* Lands below the header and the sticky filter. With `[id]`, so it outranks the layout's `.doc [id]`. */
+    .cfg[id] {
+        scroll-margin-top: 136px;
     }
 
     .cfg-head {
