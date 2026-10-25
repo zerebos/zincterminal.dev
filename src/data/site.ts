@@ -1,8 +1,7 @@
 import type {Release} from "../lib/zinc/types";
 import zincRelease from "./generated/zinc-release.json";
 
-// Undecided ones are "#" so they show as visible placeholders. Zinc's GitHub links are null, and left
-// out wherever they appear, until the Zinc repo is public.
+// Zinc's GitHub links are null, and left out wherever they appear, until the Zinc repo is public
 
 const feedbackEmail = "feedback@zincterminal.dev";
 
@@ -24,18 +23,12 @@ export const links = {
     changelog: "/changelog",
     thirdPartyNotices: "/notices",
 
-    // Undecided until after the alpha
-    license: "#",
-
     // Hidden until the Zinc repo is public
     zincRepo: null as string | null,
     zincReleases: null as string | null,
     zincIssues: null as string | null,
     zincRoadmap: null as string | null
 };
-
-/** Where to report an issue... the Zinc repo's issues once it's public, Discord until then */
-export const reportIssue = links.zincIssues ?? links.discord;
 
 // The newest build in Zinc's changelog, from `bun run sync:zinc`
 const latest: Release = zincRelease;
@@ -92,8 +85,8 @@ export const footerProject: FooterColumn = {
     links: shown([
         {label: "Source on GitHub", href: links.zincRepo},
         {label: "Releases", href: links.zincReleases},
-        {label: "Report an issue", href: reportIssue},
-        {label: "Third-party notices", href: links.thirdPartyNotices}
+        {label: "Send feedback", href: links.feedback},
+        {label: "Discord", href: links.discord}
     ])
 };
 
