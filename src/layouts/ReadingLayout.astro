@@ -3,6 +3,7 @@
 // Below 900px the sidebar becomes a collapsible card under the intro
 import Base from "./Base.astro";
 import Button from "../components/site/Button.astro";
+import DocSwitch from "../components/reading/DocSwitch.astro";
 import Footer from "../components/site/Footer.astro";
 import Header from "../components/site/Header.astro";
 import LitCell from "../components/site/LitCell.astro";
@@ -28,9 +29,12 @@ interface Props {
 
     /** The mobile card's summary, `tocLabel` by default */
     tocSummary?: string;
+
+    /** Shows the Guide / Config reference switch on the docs pages, marking this half */
+    docs?: "guide" | "config";
 }
 
-const {title, description, current, kicker, heading, toc, tocLabel = "On this page", tocSummary = tocLabel} = Astro.props;
+const {title, description, current, kicker, heading, toc, tocLabel = "On this page", tocSummary = tocLabel, docs} = Astro.props;
 
 const nav: NavLink[] = [
     {label: "Zinc", href: "/", optional: true},
@@ -48,12 +52,14 @@ const nav: NavLink[] = [
     </Header>
     <main class="doc">
         <div class="doc-side">
+            {docs && <DocSwitch current={docs} label="Docs" />}
             <p class="side-label" aria-hidden="true">{tocLabel}</p>
             <nav aria-label={tocLabel}>
                 <Toc entries={toc} />
             </nav>
         </div>
         <article class="prose">
+            {docs && <div class="docswitch-m"><DocSwitch current={docs} label="Docs, compact" /></div>}
             <p class="kicker"><LitCell pitch={12} />{kicker}</p>
             <h1>{heading}</h1>
             <div class="intro">

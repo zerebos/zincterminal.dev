@@ -33,6 +33,12 @@
     color: var(--ink-muted);
 }
 
+/* The docs switch above the kicker, in place of the sidebar's on narrow screens */
+.docswitch-m {
+    display: none;
+    max-width: 320px;
+}
+
 /* The contents card that replaces the sidebar on narrow screens */
 .toc-m {
     display: none;
@@ -129,7 +135,8 @@
         display: none;
     }
 
-    .toc-m {
+    .toc-m,
+    .docswitch-m {
         display: block;
     }
 }

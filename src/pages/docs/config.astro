@@ -1,0 +1,64 @@
+---
+// Every setting in config.toml, generated from Zinc's settings catalog
+import ReadingLayout from "../../layouts/ReadingLayout.astro";
+import type {TocEntry} from "../../components/reading/toc";
+import {configTables} from "../../data/config-tables";
+import catalog from "../../data/generated/zinc-settings.json";
+import {links, release} from "../../data/site";
+import {inlineMarkdown} from "../../lib/markdown/inline";
+import {byTable} from "../../lib/zinc/settings";
+import type {SettingsCatalog} from "../../lib/zinc/types";
+
+const tables = byTable((catalog as SettingsCatalog).settings, configTables);
+
+const toc: TocEntry[] = tables.map(table => ({
+    label: `[${table.table}]`,
+    href: `#${table.table}`,
+    mono: true,
+    detail: String(table.settings.length)
+}));
+---
+
+<ReadingLayout
+    title="Zinc config reference"
+    description="Every setting in config.toml. Its key, its values, its default and where to find it in Settings."
+    current="docs"
+    kicker="Docs"
+    heading="Config reference"
+    toc={toc}
+    tocLabel="Sections"
+    tocSummary="Jump to a section"
+    docs="config"
+>
+    <Fragment slot="intro">
+        <p class="lead">Every setting in <code>config.toml</code>. Its key, its values, its default and where to find it in Settings. For how the file works, see <a href={`${links.docs}#config-file`}>the guide</a>.</p>
+        <p class="meta"><span>For <code>{release.version}</code></span><span>Made from the same list the Settings window uses</span></p>
+    </Fragment>
+    {tables.map(table => (
+        <section class="cfg-table" aria-labelledby={`h-${table.table}`}>
+            <h2 id={table.table}>
+                <span id={`h-${table.table}`}><code class="tbl">[{table.table}]</code> {table.title}</span>
+                <a class="anchor" href={`#${table.table}`} aria-label={`Link to ${table.title}`}></a>
+            </h2>
+            <p class="cfg-about" set:html={inlineMarkdown(table.about)} />
+            <ul>
+                {table.settings.map(setting => <li id={setting.key}><code>{setting.key}</code></li>)}
+            </ul>
+        </section>
+    ))}
+</ReadingLayout>
+
+<style>
+    /* Element and class together, to outrank prose.css without naming the layout's elements, which this page's scope can't match */
+    h2 code.tbl {
+        padding: 4px 8px;
+        border-radius: 6px;
+        font: 500 0.8em/1 var(--font-mono);
+    }
+
+    p.cfg-about {
+        font-size: 15px;
+        line-height: 24px;
+        color: var(--ink-muted);
+    }
+</style>

@@ -20,6 +20,7 @@ export const links = {
     libghostty: "https://github.com/ghostty-org/ghostty",
 
     docs: "/docs",
+    config: "/docs/config",
     changelog: "/changelog",
     thirdPartyNotices: "/notices",
 
@@ -76,7 +77,8 @@ export const footerDocs: FooterColumn = {
         {label: "Getting started", href: `${links.docs}#getting-started`},
         {label: "Configuration", href: `${links.docs}#configuration`},
         {label: "Shell integration", href: `${links.docs}#shell-integration`},
-        {label: "The zn CLI", href: `${links.docs}#zn`}
+        {label: "The zn CLI", href: `${links.docs}#zn`},
+        {label: "Config reference", href: links.config}
     ]
 };
 
