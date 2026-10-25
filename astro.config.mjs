@@ -1,4 +1,5 @@
 import {defineConfig} from "astro/config";
+import sitemap from "@astrojs/sitemap";
 import mdx from "@astrojs/mdx";
 import svelte from "@astrojs/svelte";
 import {satteri, satteriHeadingIdsPlugin} from "@astrojs/markdown-satteri";
@@ -11,7 +12,7 @@ import {headingAnchors, settingsPaths, tableBoxes} from "./src/lib/markdown/plug
 export default defineConfig({
     site: "https://zincterminal.dev",
     output: "static",
-    integrations: [svelte(), mdx()],
+    integrations: [svelte(), mdx(), sitemap()],
     markdown: {
         // Heading ids first, because the anchors link to them
         processor: satteri({
