@@ -2,15 +2,14 @@
 // The layout for docs, changelog and notices... a sticky contents sidebar beside a 720px text column
 // Below 900px the sidebar becomes a collapsible card under the intro
 import Base from "./Base.astro";
-import Button from "../components/site/Button.astro";
 import DocSwitch from "../components/reading/DocSwitch.astro";
 import Footer from "../components/site/Footer.astro";
-import Header from "../components/site/Header.astro";
+import DocsHeader from "../components/site/DocsHeader.astro";
 import LitCell from "../components/site/LitCell.astro";
 import SectionSpy from "../components/reading/SectionSpy.svelte";
 import Toc from "../components/reading/Toc.astro";
 import type {TocEntry} from "../components/reading/toc";
-import {footer, links, type NavLink} from "../data/site";
+import {footer} from "../data/site";
 import "../styles/reading.css";
 import "../styles/prose.css";
 
@@ -35,21 +34,10 @@ interface Props {
 }
 
 const {title, description, current, kicker, heading, toc, tocLabel = "On this page", tocSummary = tocLabel, docs} = Astro.props;
-
-const nav: NavLink[] = [
-    {label: "Zinc", href: "/", optional: true},
-    {label: "Docs", href: links.docs, current: current === "docs"},
-    {label: "Changelog", href: links.changelog, current: current === "changelog"},
-    {label: "Lit Cell", href: "/lit-cell", optional: true}
-];
 ---
 
 <Base title={title} description={description}>
-    <Header links={nav} hairline="always" mobile="collapse">
-        <div slot="actions" class="navcta">
-            <Button href={links.download} primary>Download</Button>
-        </div>
-    </Header>
+    <DocsHeader current={current} />
     <main class="doc">
         <div class="doc-side">
             {docs && <DocSwitch current={docs} label="Docs" />}
@@ -80,11 +68,3 @@ const nav: NavLink[] = [
     <SectionSpy client:load ids={toc.map(entry => entry.href.slice(1))} />
     <Footer columns={footer} />
 </Base>
-
-<style>
-    @media (max-width: 640px) {
-        .navcta {
-            display: none;
-        }
-    }
-</style>

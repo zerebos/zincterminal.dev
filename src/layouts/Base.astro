@@ -10,12 +10,16 @@ interface Props {
 
     /** The 1200x630 share image and its alt text, Zinc's by default */
     image?: {src: string, alt: string;};
+
+    /** Keeps the page out of search results, and gives it no canonical address, as the 404 page needs */
+    noindex?: boolean;
 }
 
 const {
     title,
     description = "Zinc, a precise, native terminal for Windows.",
-    image = {src: "/brand/zinc-og.png", alt: "zinc. Every cell, exactly right. A precise, native terminal for Windows."}
+    image = {src: "/brand/zinc-og.png", alt: "zinc. Every cell, exactly right. A precise, native terminal for Windows."},
+    noindex = false
 } = Astro.props;
 const canonical = new URL(Astro.url.pathname, Astro.site);
 ---
@@ -45,7 +49,7 @@ const canonical = new URL(Astro.url.pathname, Astro.site);
         </script>
         <title>{title}</title>
         <meta name="description" content={description}>
-        <link rel="canonical" href={canonical}>
+        {noindex ? <meta name="robots" content="noindex"> : <link rel="canonical" href={canonical}>}
         <meta property="og:type" content="website">
         <meta property="og:site_name" content="Zinc">
         <meta property="og:title" content={title}>

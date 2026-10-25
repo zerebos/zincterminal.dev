@@ -1,0 +1,184 @@
+---
+// Shown for any address with nothing behind it... the missing cell, then ways back in
+import Base from "../layouts/Base.astro";
+import DocsHeader from "../components/site/DocsHeader.astro";
+import Footer from "../components/site/Footer.astro";
+import {footer, links} from "../data/site";
+
+const lead = "Nothing lives at this address. It may have moved, or the link has a typo.";
+
+const ways = [
+    {title: "Download Zinc", detail: "The latest alpha installer for Windows", href: links.download},
+    {title: "Docs", detail: "Install, set up and script Zinc", href: links.docs},
+    {title: "Config reference", detail: "Every setting in config.toml", href: links.config},
+    {title: "Changelog", detail: "What changed in each build", href: links.changelog},
+    {title: "Lit Cell", detail: "Zinc's color schemes, for any terminal", href: "/lit-cell"},
+    {title: "Home", detail: "What Zinc is and how it works", href: "/"}
+];
+---
+
+<Base title="Page not found" description={lead} noindex>
+    <DocsHeader hairline="scroll" />
+    <main class="wrap nf">
+        <div class="cells" role="img" aria-label="Nine cells in a square, one of them dark">
+            {Array.from({length: 9}, (_, i) => <span class:list={["cell", {off: i === 5}]}></span>)}
+        </div>
+        <p class="code">404</p>
+        <h1>Page not found</h1>
+        <p class="lead">{lead}</p>
+        <ul class="ways">
+            {ways.map(way => (
+                <li>
+                    <a href={way.href}>
+                        <span class="text"><b>{way.title}</b>{" "}<span>{way.detail}</span></span>
+                        <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.3" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3 8h10M9 4l4 4-4 4" /></svg>
+                    </a>
+                </li>
+            ))}
+        </ul>
+        <p class="feedback">Followed a link from somewhere? Tell us at <a href={links.feedback}>{links.feedbackEmail}</a> so we can fix it.</p>
+    </main>
+    <Footer columns={footer} />
+</Base>
+
+<style>
+    .nf {
+        padding-top: 96px;
+        padding-bottom: 128px;
+    }
+
+    .cells {
+        display: grid;
+        grid-template-columns: repeat(3, 28px);
+        gap: 6px;
+        margin: 0 0 32px;
+    }
+
+    .cell {
+        width: 28px;
+        height: 28px;
+        border-radius: 3px;
+        background: var(--accent);
+    }
+
+    /* The missing one */
+    .cell.off {
+        background: transparent;
+        box-shadow: inset 0 0 0 1.5px var(--line);
+    }
+
+    .code {
+        margin: 0 0 8px;
+        font: 500 13px/20px var(--font-mono);
+        color: var(--accent-text);
+    }
+
+    h1 {
+        margin: 0;
+        font: 600 56px/64px var(--font-display);
+        letter-spacing: -0.01em;
+    }
+
+    .lead {
+        max-width: 52ch;
+        margin: 16px 0 0;
+        font: 400 18px/28px var(--font-sans);
+        color: var(--ink-muted);
+    }
+
+    .ways {
+        display: grid;
+        grid-template-columns: repeat(3, minmax(0, 1fr));
+        gap: 12px;
+        max-width: 960px;
+        margin: 48px 0 0;
+        padding: 0;
+        list-style: none;
+    }
+
+    .ways a {
+        display: flex;
+        align-items: center;
+        gap: 16px;
+        min-height: 72px;
+        padding: 14px 16px;
+        box-sizing: border-box;
+        border: 1px solid var(--line);
+        border-radius: 8px;
+        background: var(--surface-raised);
+        color: var(--ink);
+        text-decoration: none;
+    }
+
+    .ways a:hover {
+        border-color: var(--accent);
+        background: var(--accent-subtle);
+    }
+
+    .ways a:focus-visible,
+    .feedback a:focus-visible {
+        outline: 2px solid var(--focus-ring);
+        outline-offset: 2px;
+    }
+
+    .text {
+        flex: 1;
+        min-width: 0;
+        display: flex;
+        flex-direction: column;
+        gap: 2px;
+    }
+
+    .text b {
+        font: 600 15px/22px var(--font-sans);
+    }
+
+    .text span {
+        font: 400 13px/18px var(--font-sans);
+        color: var(--ink-muted);
+    }
+
+    .ways svg {
+        width: 16px;
+        height: 16px;
+        flex: none;
+        color: var(--ink-muted);
+    }
+
+    .ways a:hover svg {
+        color: var(--accent-text);
+    }
+
+    .feedback {
+        margin: 32px 0 0;
+        font: 400 14px/20px var(--font-sans);
+        color: var(--ink-muted);
+    }
+
+    .feedback a {
+        color: var(--accent-text);
+        text-underline-offset: 3px;
+    }
+
+    @media (max-width: 900px) {
+        .ways {
+            grid-template-columns: repeat(2, minmax(0, 1fr));
+        }
+    }
+
+    @media (max-width: 640px) {
+        .nf {
+            padding-top: 56px;
+            padding-bottom: 96px;
+        }
+
+        h1 {
+            font-size: 40px;
+            line-height: 48px;
+        }
+
+        .ways {
+            grid-template-columns: minmax(0, 1fr);
+        }
+    }
+</style>

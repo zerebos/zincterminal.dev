@@ -1,0 +1,39 @@
+---
+// The header for the docs, changelog, notices and 404 pages... Zinc, Docs, Changelog and Lit Cell,
+// the theme switch, and a Download button that hides on phones
+import Button from "./Button.astro";
+import Header from "./Header.astro";
+import {links, type NavLink} from "../../data/site";
+
+interface Props {
+
+    /** The nav link to mark as the current page, none when left out */
+    current?: "docs" | "changelog";
+
+    /** "always" keeps the hairline on, "scroll" shows it once the page scrolls */
+    hairline?: "scroll" | "always";
+}
+
+const {current, hairline = "always"} = Astro.props;
+
+const nav: NavLink[] = [
+    {label: "Zinc", href: "/", optional: true},
+    {label: "Docs", href: links.docs, current: current === "docs"},
+    {label: "Changelog", href: links.changelog, current: current === "changelog"},
+    {label: "Lit Cell", href: "/lit-cell", optional: true}
+];
+---
+
+<Header links={nav} hairline={hairline} mobile="collapse">
+    <div slot="actions" class="navcta">
+        <Button href={links.download} primary>Download</Button>
+    </div>
+</Header>
+
+<style>
+    @media (max-width: 640px) {
+        .navcta {
+            display: none;
+        }
+    }
+</style>
