@@ -1,0 +1,211 @@
+---
+// One setting in the config reference... its key, label and description, what it takes, its default,
+// where it is in Settings, and its values when it's a choice
+import {choiceRows, defaultText, exampleText, kindText, perProfile, rangeText, settingsPath, tableOf} from "../../lib/zinc/settings";
+import type {Setting, SettingsSection} from "../../lib/zinc/types";
+
+interface Props {
+    setting: Setting;
+    sections: SettingsSection[];
+
+    /** The key of an earlier setting with the same values, shown instead of the values table */
+    sameAs?: string;
+}
+
+const {setting, sections, sameAs} = Astro.props;
+
+const table = tableOf(setting.key);
+const name = setting.key.slice(table.length + 1);
+const range = rangeText(setting);
+const fallback = defaultText(setting);
+const example = exampleText(setting);
+const rows = sameAs ? [] : choiceRows(setting);
+const details = rows.some(row => row.detail);
+const path = settingsPath(setting, sections);
+---
+
+<div class="cfg" id={setting.key}>
+    <div class="cfg-head">
+        <h3 class="cfg-key"><a class="cfg-link" href={`#${setting.key}`}><span class="cfg-sec">{table}.</span>{name}</a></h3>
+        <span class="cfg-label">{setting.label}</span>
+        {perProfile(setting.key) && <span class="cfg-tag" title="A profile can set its own">Per profile</span>}
+    </div>
+    {setting.description && <p class="cfg-desc">{setting.description}</p>}
+    <dl class="cfg-meta">
+        <div><dt>Type</dt><dd>{kindText(setting)}{range && <span class="dim">, {range}</span>}</dd></div>
+        <div><dt>Default</dt><dd>{"code" in fallback ? <code>{fallback.code}</code> : fallback.words}</dd></div>
+        {example && <div><dt>Example</dt><dd><code>{name} = {example}</code></dd></div>}
+        <div><dt>In Settings</dt><dd><span class="ui">{path.map((step, i) => <>{i > 0 && <span class="sep">›</span>}{step}</>)}</span></dd></div>
+    </dl>
+    {sameAs && <p class="cfg-same">Takes the same values as <a href={`#${sameAs}`}>{sameAs}</a>.</p>}
+    {rows.length > 0 && (
+        <div class:list={["cfg-choices", {details}]} role="table" aria-label={`Values for ${setting.key}`}>
+            <div class="ch-row ch-headrow" role="row">
+                <span role="columnheader">Value</span>
+                <span role="columnheader">In Settings</span>
+                {details && <span role="columnheader">Means</span>}
+            </div>
+            {rows.map(row => (
+                <div class="ch-row" role="row">
+                    <span role="cell">
+                        {row.value === null ? <span class="dim">Not set</span> : <code>{row.value}</code>}
+                        {row.isDefault && <span class="ch-def">default</span>}
+                    </span>
+                    <span role="cell">{row.label}</span>
+                    {details && <span role="cell" class="dim">{row.detail}</span>}
+                </div>
+            ))}
+        </div>
+    )}
+</div>
+
+<style>
+    .cfg {
+        padding: 28px 0;
+        border-top: 1px solid var(--line);
+    }
+
+    .cfg-head {
+        display: flex;
+        flex-wrap: wrap;
+        align-items: baseline;
+        gap: 6px 14px;
+    }
+
+    .cfg-key {
+        display: block;
+        margin: 0;
+        font: 600 17px/24px var(--font-mono);
+    }
+
+    /* Doubled up to outrank the prose rule that colors links in the body */
+    .cfg .cfg-key a.cfg-link {
+        color: var(--ink);
+        text-decoration: none;
+    }
+
+    .cfg .cfg-key a.cfg-link:hover {
+        color: var(--accent-text);
+        text-decoration: underline;
+        text-underline-offset: 3px;
+    }
+
+    .cfg-key a:focus-visible {
+        outline: 2px solid var(--focus-ring);
+        outline-offset: 2px;
+        border-radius: 2px;
+    }
+
+    .cfg-sec {
+        font-weight: 400;
+        color: var(--ink-muted);
+    }
+
+    .cfg-label {
+        font: 400 14px/20px var(--font-sans);
+        color: var(--ink-muted);
+    }
+
+    .cfg-tag {
+        margin-left: auto;
+        padding: 1px 6px;
+        border: 1px solid var(--line);
+        border-radius: 4px;
+        font: 500 11px/16px var(--font-mono);
+        color: var(--accent-text);
+    }
+
+    .cfg-desc {
+        margin: 10px 0 0;
+        font-size: 15px;
+        line-height: 24px;
+    }
+
+    .cfg-meta {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(150px, auto));
+        justify-content: start;
+        gap: 10px 28px;
+        margin: 16px 0 0;
+    }
+
+    .cfg-meta div {
+        min-width: 0;
+    }
+
+    .cfg-meta dt {
+        margin: 0 0 2px;
+        font: 500 11px/16px var(--font-mono);
+        color: var(--ink-muted);
+    }
+
+    .cfg-meta dd {
+        margin: 0;
+        font: 400 14px/20px var(--font-sans);
+    }
+
+    .dim {
+        color: var(--ink-muted);
+    }
+
+    .cfg-same {
+        margin: 12px 0 0;
+        font-size: 14px;
+        line-height: 20px;
+        color: var(--ink-muted);
+    }
+
+    .cfg-choices {
+        margin: 16px 0 0;
+        border: 1px solid var(--line);
+        border-radius: 6px;
+        overflow: hidden;
+    }
+
+    .ch-row {
+        display: grid;
+        grid-template-columns: minmax(150px, auto) minmax(0, 1fr);
+        align-items: baseline;
+        gap: 16px;
+        padding: 8px 14px;
+        border-top: 1px solid var(--line);
+        font: 400 14px/20px var(--font-sans);
+    }
+
+    .details .ch-row {
+        grid-template-columns: minmax(150px, auto) minmax(120px, 170px) minmax(0, 1fr);
+    }
+
+    .ch-headrow {
+        border-top: 0;
+        background: var(--surface-raised);
+        font: 500 11px/16px var(--font-mono);
+        color: var(--ink-muted);
+    }
+
+    .ch-def {
+        margin-left: 8px;
+        font: 500 11px/16px var(--font-mono);
+        color: var(--accent-text);
+    }
+
+    /* Two columns on phones, with what a value means across both */
+    @media (max-width: 640px) {
+        .ch-row,
+        .details .ch-row {
+            grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
+        }
+
+        .ch-row > span:nth-child(3) {
+            grid-column: 1 / -1;
+        }
+
+        .ch-headrow > span:nth-child(3) {
+            display: none;
+        }
+
+        .cfg-tag {
+            margin-left: 0;
+        }
+    }
+</style>

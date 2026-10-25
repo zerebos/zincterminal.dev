@@ -1,15 +1,18 @@
 ---
 // Every setting in config.toml, generated from Zinc's settings catalog
 import ReadingLayout from "../../layouts/ReadingLayout.astro";
+import SettingEntry from "../../components/reading/SettingEntry.astro";
 import type {TocEntry} from "../../components/reading/toc";
 import {configTables} from "../../data/config-tables";
 import catalog from "../../data/generated/zinc-settings.json";
 import {links, release} from "../../data/site";
 import {inlineMarkdown} from "../../lib/markdown/inline";
-import {byTable} from "../../lib/zinc/settings";
+import {byTable, sameValuesAs} from "../../lib/zinc/settings";
 import type {SettingsCatalog} from "../../lib/zinc/types";
 
-const tables = byTable((catalog as SettingsCatalog).settings, configTables);
+const {sections, settings} = catalog as SettingsCatalog;
+const tables = byTable(settings, configTables);
+const sameAs = sameValuesAs(settings);
 
 const toc: TocEntry[] = tables.map(table => ({
     label: `[${table.table}]`,
@@ -41,9 +44,7 @@ const toc: TocEntry[] = tables.map(table => ({
                 <a class="anchor" href={`#${table.table}`} aria-label={`Link to ${table.title}`}></a>
             </h2>
             <p class="cfg-about" set:html={inlineMarkdown(table.about)} />
-            <ul>
-                {table.settings.map(setting => <li id={setting.key}><code>{setting.key}</code></li>)}
-            </ul>
+            {table.settings.map(setting => <SettingEntry setting={setting} sections={sections} sameAs={sameAs.get(setting.key)} />)}
         </section>
     ))}
 </ReadingLayout>
@@ -57,6 +58,7 @@ const toc: TocEntry[] = tables.map(table => ({
     }
 
     p.cfg-about {
+        margin-bottom: 24px;
         font-size: 15px;
         line-height: 24px;
         color: var(--ink-muted);
