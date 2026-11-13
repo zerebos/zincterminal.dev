@@ -11,6 +11,23 @@ export interface ConfigTable {
     about: string;
 }
 
+/** The profile fields' table, which the page shows after `[discover]` */
+export const profileTable: ConfigTable & {id: string;} = {
+    table: "profile.<id>",
+    id: "profile",
+    title: "Profiles",
+    about: "Each `[profile.<id>]` table is a profile. Besides these keys, it can set its own value for any setting marked \"Per profile\".",
+};
+
+// TODO: Zinc's reference gives these defaults as `null`. Drop this once it exports them in words.
+/** The profile fields' defaults in words, for the ones whose default Zinc gives as `null` */
+export const profileFieldDefaults: Record<string, string> = {
+    "name": "The profile's id",
+    "command": "Your default WSL distribution, else PowerShell 7, else Windows PowerShell",
+    "working-directory": "Your home folder",
+    "icon": "The program's own icon",
+};
+
 export const configTables: ConfigTable[] = [
     {table: "font", title: "Font", about: "The terminal's font. A profile can set its own, under `[profile.<id>.font]`."},
     {table: "colors", title: "Colors", about: "The color scheme, and colors that override it. A profile can set its own, under `[profile.<id>.colors]`."},

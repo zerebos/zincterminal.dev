@@ -5,9 +5,12 @@ import type {TocEntry} from "../components/reading/toc";
 import notices from "../data/generated/zinc-notices.json";
 import {links, release} from "../data/site";
 import {websiteNotices} from "../data/website-notices";
+import {thirdPartyNotices} from "../lib/notices";
+
+const components = thirdPartyNotices(notices);
 
 const toc: TocEntry[] = [
-    {label: "In Zinc", href: "#in-zinc", detail: String(notices.length)},
+    {label: "In Zinc", href: "#in-zinc", detail: String(components.length)},
     {label: "On this website", href: "#on-this-site", detail: String(websiteNotices.length)}
 ];
 ---
@@ -24,7 +27,7 @@ const toc: TocEntry[] = [
     <h2 id="in-zinc">In Zinc<a class="anchor" href="#in-zinc" aria-label="Link to In Zinc"></a></h2>
     <p class="for">For <code>{release.version}</code>. Select a row for its license text.</p>
     <div class="lics">
-        {notices.map(notice => <NoticeRow notice={notice} />)}
+        {components.map(notice => <NoticeRow notice={notice} />)}
     </div>
     <h2 id="on-this-site">On this website<a class="anchor" href="#on-this-site" aria-label="Link to On this website"></a></h2>
     <div class="lics">

@@ -1,6 +1,6 @@
 import {expect, test} from "bun:test";
 import notices from "../data/generated/zinc-notices.json";
-import {displayUrl, noticeId} from "./notices";
+import {displayUrl, noticeId, thirdPartyNotices} from "./notices";
 
 
 test.each([
@@ -26,4 +26,14 @@ test.each([
     ["https://ziglang.org/", "ziglang.org"],
 ])("displayUrl(%j) is %j", (url, text) => {
     expect(displayUrl(url)).toBe(text);
+});
+
+test("leaves out Zinc's own notice", () => {
+    const components = thirdPartyNotices(notices);
+    expect(components.map(n => n.name)).not.toContain("Zinc");
+    expect(components).toHaveLength(notices.length - 1);
+});
+
+test("stops when there's no notice for Zinc itself", () => {
+    expect(() => thirdPartyNotices(notices.filter(n => n.name !== "Zinc"))).toThrow(/no entry named Zinc/);
 });

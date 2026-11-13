@@ -6,9 +6,6 @@ import type {Setting, SettingsSection, SettingValue} from "./types";
 /** A setting's table in config.toml: `font` for `font.size` */
 export const tableOf = (key: string) => key.split(".")[0] ?? key;
 
-/** Whether a profile can set its own value, as Zinc's `ProfileOverridable` decides */
-export const perProfile = (key: string) => ["font", "colors", "terminal", "shaders"].includes(tableOf(key));
-
 /**
  * The settings grouped by table, in the order `tables` gives. Throws when the catalog has a table
  * that isn't listed, or a listed table has no settings, so the two can't drift apart.

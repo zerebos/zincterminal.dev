@@ -1,7 +1,7 @@
 ---
 // One setting in the config reference... its key, label and description, what it takes, its default,
 // where it is in Settings, and its values when it's a choice
-import {choiceRows, defaultText, exampleText, kindText, perProfile, rangeText, settingsPath, tableOf} from "../../lib/zinc/settings";
+import {choiceRows, defaultText, exampleText, kindText, rangeText, settingsPath, tableOf} from "../../lib/zinc/settings";
 import type {Setting, SettingsSection} from "../../lib/zinc/types";
 
 interface Props {
@@ -10,28 +10,38 @@ interface Props {
 
     /** The key of an earlier setting with the same values, shown instead of the values table */
     sameAs?: string;
+
+    /** The table it's under when its key doesn't start with one, such as `profile.<id>` for `command` */
+    table?: string;
+
+    /** Its anchor, when its key alone doesn't make a good one */
+    id?: string;
+
+    /** Its default in words, which replaces the default and the example worked out from the catalog */
+    defaultWords?: string;
 }
 
-const {setting, sections, sameAs} = Astro.props;
+const {setting, sections, sameAs, defaultWords} = Astro.props;
 
-const table = tableOf(setting.key);
-const name = setting.key.slice(table.length + 1);
+const table = Astro.props.table ?? tableOf(setting.key);
+const name = Astro.props.table ? setting.key : setting.key.slice(table.length + 1);
+const id = Astro.props.id ?? setting.key;
 const range = rangeText(setting);
-const fallback = defaultText(setting);
-const example = exampleText(setting);
+const fallback = defaultWords ? {words: defaultWords} : defaultText(setting);
+const example = defaultWords ? "" : exampleText(setting);
 const rows = sameAs ? [] : choiceRows(setting);
 const details = rows.some(row => row.detail);
 const path = settingsPath(setting, sections);
 
 // What the filter matches against
-const text = [setting.key, setting.label, setting.description, kindText(setting)].join(" ").toLowerCase();
+const text = [`${table}.${name}`, setting.label, setting.description, kindText(setting)].join(" ").toLowerCase();
 ---
 
-<div class="cfg" id={setting.key} data-text={text}>
+<div class="cfg" id={id} data-text={text}>
     <div class="cfg-head">
-        <h3 class="cfg-key"><a class="cfg-link" href={`#${setting.key}`}><span class="cfg-sec">{table}.</span>{name}</a></h3>
+        <h3 class="cfg-key"><a class="cfg-link" href={`#${id}`}><span class="cfg-sec">{table}.</span>{name}</a></h3>
         <span class="cfg-label">{setting.label}</span>
-        {perProfile(setting.key) && <span class="cfg-tag" title="A profile can set its own">Per profile</span>}
+        {setting.profileOverridable && <span class="cfg-tag" title="A profile can set its own">Per profile</span>}
     </div>
     {setting.description && <p class="cfg-desc">{setting.description}</p>}
     <dl class="cfg-meta">

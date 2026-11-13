@@ -1,19 +1,17 @@
 import {describe, expect, test} from "bun:test";
-import {byTable, choiceRows, defaultText, exampleText, kindText, perProfile, rangeText, sameValuesAs, settingsPath, tableOf} from "./settings";
+import {byTable, choiceRows, defaultText, exampleText, kindText, rangeText, sameValuesAs, settingsPath, tableOf} from "./settings";
 import type {Setting} from "./types";
 
 
 const setting = (key: string, more: Partial<Setting> = {}): Setting => ({section: "appearance", group: "Font", key, label: key, description: "", kind: "toggle", default: false, choices: [], unit: null, minimum: 0, maximum: null, step: 1, placeholder: null, nullLabel: null, numbersAsNumbers: false, profileOverridable: false, ...more});
 
-describe("tableOf and perProfile", () => {
+describe("tableOf", () => {
     test.each([
-        ["font.size", "font", true],
-        ["shaders.files", "shaders", true],
-        ["quick-terminal.size", "quick-terminal", false],
-        ["window.backdrop", "window", false],
-    ])("%s is in [%s], per profile %p", (key, table, profile) => {
+        ["font.size", "font"],
+        ["quick-terminal.size", "quick-terminal"],
+        ["command", "command"],
+    ])("%s is in [%s]", (key, table) => {
         expect(tableOf(key)).toBe(table);
-        expect(perProfile(key)).toBe(profile);
     });
 });
 
