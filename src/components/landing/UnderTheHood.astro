@@ -1,10 +1,15 @@
 ---
-// Precision, in what it draws... the same glyphs drawn from the font and drawn by Zinc, magnified on a cell grid
+// Under the hood... the libghostty credit, the same glyphs drawn from the font and as cell geometry, magnified on
+// a cell grid, then what comes from libghostty and what from Zinc
+import {Image} from "astro:assets";
+import ghosttyIcon from "../../assets/ghostty/icon.png";
 import CellZoom from "./CellZoom.astro";
 import Lines from "./Lines.astro";
+import Points from "../site/Points.astro";
 import Section from "../site/Section.astro";
 import SectionIntro from "../site/SectionIntro.astro";
 import {block, bx, pl, quad, type Line} from "./term";
+import {links} from "../../data/site";
 
 const glyphs: Line[] = [
     [bx("rd"), bx("lr", 3), bx("lrd"), bx("lr", 3), bx("ld")],
@@ -13,10 +18,22 @@ const glyphs: Line[] = [
 ];
 
 const prompt: Line[] = [[pl(["~\\src\\zinc", "blue"], ["main", "green"], ["+2", "yellow"])]];
+
+const fromLibghostty = [
+    {title: "The terminal core", text: "It reads what programs send, and keeps the screen, the scrollback and the selection."},
+    {title: "Box lines and Powerline shapes", text: "Ghostty's rasterizer draws them as cell geometry, not font glyphs, so they meet in any font at any line height."}
+];
+
+const fromZinc = [
+    {title: "A renderer for Windows", text: "Each glyph is drawn once, then placed exactly on its cell."},
+    {title: "Ligatures that keep the grid", text: "Fonts that join => and != into one shape still give each character its own cell."},
+    {title: "Fallback for everything else", text: "CJK, emoji and symbols your font lacks come from DirectWrite, and stay on the grid too."},
+    {title: "Line height and thickness, yours to tune", text: "Add room between lines, or make the drawn lines heavier or lighter, and they still join."}
+];
 ---
-<Section id="precision" labelledby="draws-title">
-    <SectionIntro eyebrow="Precision, in what it draws" title="Box drawing meets without seams in any font" titleId="draws-title">
-        Zinc draws box lines, blocks and Powerline shapes itself, cell by cell, instead of trusting the font to line up. Raise the line height and they still join.
+<Section id="core" labelledby="core-title">
+    <SectionIntro eyebrow="Under the hood" title="Built on libghostty, drawn by Zinc" titleId="core-title">
+        Zinc's terminal core is <a class="textlink" href={links.libghostty}>libghostty</a>, the same core that powers Ghostty. Everything around it, and the way it reaches your screen, is Zinc's own, written for Windows. Thanks to the Ghostty project and its contributors.
     </SectionIntro>
 
     <div class="pair">
@@ -30,13 +47,24 @@ const prompt: Line[] = [[pl(["~\\src\\zinc", "blue"], ["main", "green"], ["+2", 
             <div class="panel centered" role="img" aria-label="The same glyphs drawn by Zinc, magnified, meeting edge to edge">
                 <CellZoom lines={glyphs} />
             </div>
-            <figcaption class="cap"><b>Drawn by Zinc.</b> Every line reaches the edge of its cell, so it meets its neighbor exactly, and quadrants like ▚ share exactly one corner. <code>font.builtin-glyphs</code></figcaption>
+            <figcaption class="cap"><b>Drawn as cell geometry.</b> Every line reaches the edge of its cell, so it meets its neighbor exactly, and quadrants like ▚ share exactly one corner. <code>font.builtin-glyphs</code></figcaption>
         </figure>
     </div>
 
     <div class="panel strip" role="img" aria-label="A Powerline prompt, magnified, with segments meeting without seams">
         <div class="zoom-pl"><Lines lines={prompt} /></div>
         <p class="cap"><b>Powerline, no patched font needed.</b> Separators are drawn as cell geometry, so segments sit flush at any size.</p>
+    </div>
+
+    <div class="split2">
+        <div>
+            <h3><Image src={ghosttyIcon} alt="" width={20} height={20} densities={[1, 2]} format="png" />From libghostty</h3>
+            <Points items={fromLibghostty} class="split-points" />
+        </div>
+        <div>
+            <h3><img src="/brand/app-icon-48.png" alt="" width="20" height="20">From Zinc</h3>
+            <Points items={fromZinc} class="split-points" />
+        </div>
     </div>
 </Section>
 
@@ -81,7 +109,8 @@ const prompt: Line[] = [[pl(["~\\src\\zinc", "blue"], ["main", "green"], ["+2", 
         flex-wrap: wrap;
         align-items: center;
         justify-content: space-between;
-        gap: 24px;
+        gap: 16px 24px;
+        padding: 24px 32px;
     }
 
     .cap {
@@ -105,6 +134,36 @@ const prompt: Line[] = [[pl(["~\\src\\zinc", "blue"], ["main", "green"], ["+2", 
 
     .panel.strip {
         container-type: inline-size;
+    }
+
+    .split2 {
+        display: grid;
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+        gap: 40px;
+        margin-top: 48px;
+    }
+
+    h3 {
+        margin: 0 0 4px;
+        font: 600 16px/24px var(--font-display);
+        display: flex;
+        align-items: center;
+        gap: 10px;
+    }
+
+    /* The 20px icon hangs 4px left, so it centers on the 12px bullets below and the heading text lines up with theirs */
+    h3 :global(img) {
+        margin-left: -4px;
+    }
+
+    .split2 :global(.split-points) {
+        margin-top: 16px;
+    }
+
+    @media (max-width: 900px) {
+        .split2 {
+            grid-template-columns: minmax(0, 1fr);
+        }
     }
 
     /* The prompt is 25 cells, or 15em, wide. It shrinks to fit a narrow panel instead of being cut off */

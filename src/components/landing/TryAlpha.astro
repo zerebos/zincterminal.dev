@@ -1,33 +1,10 @@
 ---
-// Try the alpha... how to get it and what `zn` does, beside what Zinc doesn't do yet
+// Try the alpha... how to get it, beside what Zinc doesn't do yet
 import Button from "../site/Button.astro";
-import CodeBlock, {type CodeLine} from "../site/CodeBlock.astro";
 import InstallCommand from "../site/InstallCommand.astro";
 import Section from "../site/Section.astro";
 import SectionIntro from "../site/SectionIntro.astro";
 import {links, release} from "../../data/site";
-import "../../styles/zn/code.css";
-
-// One `zn <thing> <verb>` line, with the verbs split by magenta pipes
-const thing = (name: string, verbs: string[]): CodeLine => [
-    ["k", "zn"],
-    ` ${name.padEnd(12)}`,
-    ...verbs.flatMap((verb, i) => (i === 0 ? [verb] : [" ", ["p", "|"] as ["p", string], ` ${verb}`]))
-];
-
-const help: CodeLine[] = [
-    [["c", "# zn controls the running Zinc from a script or a shell"]],
-    [["k", "zn"], " ", ["s", "<thing>"], " ", ["s", "<verb>"], " [options] [-- command]"],
-    [],
-    thing("window", ["list", "new", "focus", "close"]),
-    thing("workspace", ["list", "new", "focus", "close", "rename", "color", "icon", "move"]),
-    thing("pane", ["list", "split", "focus", "close"]),
-    thing("terminal", ["list", "new", "send", "read", "title", "focus", "move", "close"]),
-    [],
-    [["k", "zn"], " list         ", ["c", "# everything open"]],
-    [["k", "zn"], " action       ", ["c", "# runs any action by its name, as a key would"]],
-    [["k", "zn"], " version      ", ["c", "# zn's version and the running Zinc's"]]
-];
 
 const missing = [
     ["Sixel images", "Not supported; kitty graphics show their current frame"],
@@ -37,8 +14,8 @@ const missing = [
 ---
 <Section id="install" labelledby="install-title">
     <div class="layout">
+        <div class="head"><SectionIntro eyebrow="Alpha" title="Try the alpha" titleId="install-title" /></div>
         <div class="get">
-            <div><SectionIntro eyebrow="Alpha" title="Try the alpha" titleId="install-title" /></div>
             <div class="buttons">
                 <Button href={links.download} primary large>Download for Windows</Button>
                 <Button href={links.downloadPortable} large>Portable zip</Button>
@@ -48,8 +25,6 @@ const missing = [
             <p class="cap">Alpha builds aren't signed yet, so Windows SmartScreen may ask first: choose <b>More info</b>, then <b>Run anyway</b>.</p>
             <InstallCommand command="winget" comment="# coming soon" />
             <p class="cap">Found a bug or have an idea? <a class="textlink" href={links.zincIssues}>Open an issue on GitHub</a>, email <a class="textlink" href={links.feedback}>{links.feedbackEmail}</a> or join the <a class="textlink" href={links.discord}>Discord</a>.</p>
-            <CodeBlock name="zn --help" lines={help} copy="zn --help" copyLabel="Copy command" copyDuration={1600} />
-            <p class="cap note">Inside a Zinc terminal, <code class="zn-inline">zn</code> acts on that terminal and its pane, workspace and window. Outside, it acts on the window you used last.</p>
         </div>
         <div class="missing">
             <h3>Not there yet</h3>
@@ -63,16 +38,24 @@ const missing = [
 </Section>
 
 <style>
+    /* The title has a row to itself, so "Not there yet" starts level with the buttons */
     .layout {
-        display: flex;
-        flex-wrap: wrap;
-        gap: 64px;
-        align-items: flex-start;
+        display: grid;
+        grid-template-columns: minmax(0, 1.55fr) minmax(0, 1fr);
+        grid-template-areas:
+            "head ."
+            "get missing";
+        column-gap: 64px;
+        row-gap: 20px;
+        align-items: start;
+    }
+
+    .head {
+        grid-area: head;
     }
 
     .get {
-        flex: 1.3 1 480px;
-        min-width: 0;
+        grid-area: get;
         display: flex;
         flex-direction: column;
         gap: 20px;
@@ -96,13 +79,8 @@ const missing = [
         white-space: nowrap;
     }
 
-    .cap.note {
-        margin-top: -8px;
-    }
-
     .missing {
-        flex: 1 1 340px;
-        min-width: 0;
+        grid-area: missing;
     }
 
     h3 {
@@ -142,5 +120,20 @@ const missing = [
     .roadmap {
         margin: 16px 0 0;
         font: 400 14px/20px var(--font-sans);
+    }
+
+    /* One column, with the list 64px under the actions */
+    @media (max-width: 900px) {
+        .layout {
+            grid-template-columns: minmax(0, 1fr);
+            grid-template-areas:
+                "head"
+                "get"
+                "missing";
+        }
+
+        .missing {
+            margin-top: 44px;
+        }
     }
 </style>

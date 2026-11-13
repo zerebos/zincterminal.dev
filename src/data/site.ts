@@ -67,7 +67,7 @@ export const shown = <T extends {href: string | null;}>(items: T[]) => items.fil
 export const footerProduct: FooterColumn = {
     title: "Product",
     links: [
-        {label: "Features", href: "/#precision"},
+        {label: "Features", href: "/#workflow"},
         {label: "Themes", href: "/#themes"},
         {label: "Lit Cell", href: "/lit-cell"},
         {label: "Changelog", href: links.changelog},

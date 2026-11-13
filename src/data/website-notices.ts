@@ -3,6 +3,7 @@ import type {Notice} from "../lib/zinc/types";
 import astroLicense from "../../node_modules/astro/LICENSE?raw";
 import astroPackage from "../../node_modules/astro/package.json";
 import geistLicense from "../../public/fonts/OFL-GeistMono.txt?raw";
+import ghosttyIconLicense from "../assets/ghostty/LICENSE.txt?raw";
 import litCellLicense from "../../node_modules/lit-cell/LICENSE?raw";
 import {links} from "./site";
 import svelteLicense from "../../node_modules/svelte/LICENSE.md?raw";
@@ -24,6 +25,15 @@ export const websiteNotices: Notice[] = [
         license: "OFL-1.1",
         url: "https://github.com/vercel/geist-font",
         licenseText: geistLicense.trim()
+    },
+    {
+        // From the ghostty-org/website repo, whose license covers its images
+        name: "Ghostty icon",
+        version: null,
+        use: "Marks what Zinc takes from libghostty",
+        license: "MIT",
+        url: "https://github.com/ghostty-org/website",
+        licenseText: ghosttyIconLicense.trim()
     },
     {
         // Pinned to a commit, so its package version (0.0.0) means nothing

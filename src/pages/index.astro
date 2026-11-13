@@ -4,18 +4,17 @@ import CompactCta from "../components/site/CompactCta.svelte";
 import Footer from "../components/site/Footer.astro";
 import Header from "../components/site/Header.astro";
 import Hero from "../components/landing/Hero.astro";
-import PrecisionDraws from "../components/landing/PrecisionDraws.astro";
-import PrecisionTune from "../components/landing/PrecisionTune.astro";
-import Libghostty from "../components/landing/Libghostty.astro";
 import NativeWindows from "../components/landing/NativeWindows.astro";
+import Settings from "../components/landing/Settings.astro";
 import Themes from "../components/landing/Themes.astro";
 import TryAlpha from "../components/landing/TryAlpha.astro";
+import UnderTheHood from "../components/landing/UnderTheHood.astro";
 import Workflow from "../components/landing/Workflow.astro";
 import {footer, links, shown, type NavLink} from "../data/site";
 
 const nav: NavLink[] = shown([
-    {label: "Precision", href: "#precision"},
     {label: "Workflow", href: "#workflow"},
+    {label: "Settings", href: "#settings"},
     {label: "Themes", href: "#themes"},
     {label: "Docs", href: links.docs},
     {label: "GitHub", href: links.zincRepo}
@@ -23,19 +22,18 @@ const nav: NavLink[] = shown([
 ---
 <Base
     title="Zinc, a precise, native terminal for Windows"
-    description="Box lines, blocks and Powerline shapes meet without seams in any font. Every setting says what it does and applies the moment you change it."
+    description="Workspaces that reopen where you left them, a terminal that tells you when a command finishes or fails, and settings that explain themselves and apply as you change them."
 >
     <Header links={nav}>
         <CompactCta slot="actions" client:load />
     </Header>
     <main>
         <Hero />
-        <PrecisionDraws />
-        <PrecisionTune />
         <Workflow />
+        <Settings />
         <NativeWindows />
         <Themes />
-        <Libghostty />
+        <UnderTheHood />
         <TryAlpha />
     </main>
     <Footer columns={footer} />

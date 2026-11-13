@@ -1,11 +1,14 @@
 ---
-// Workflow... three points in a row, the sidebar and Cards screenshot, then the attention wording
+// Workflow... three points in a row, the sidebar and Cards screenshot, the attention wording, then the zn card
 import workflowDark from "../../assets/screenshots/workflow-dark.png";
 import workflowLight from "../../assets/screenshots/workflow-light.png";
+import CodeBlock, {type CodeLine} from "../site/CodeBlock.astro";
 import Points from "../site/Points.astro";
 import Screenshot from "../site/Screenshot.astro";
 import Section from "../site/Section.astro";
 import SectionIntro from "../site/SectionIntro.astro";
+import {links} from "../../data/site";
+import "../../styles/zn/code.css";
 import "../../styles/zn/dot.css";
 
 const points = [
@@ -13,10 +16,31 @@ const points = [
     {title: "Shell integration, set up for you", text: "Zinc marks each command in the gutter, so a failure stands out before you read a line. Works with PowerShell, bash, zsh, fish, nushell, elvish and osh, and with cmd (fullest through Clink)."},
     {title: "Attention, in words", text: "A dot on the tab or workspace, and a notification that says what happened."}
 ];
+
+// One `zn <thing> <verb>` line, with the verbs split by magenta pipes
+const thing = (name: string, verbs: string[]): CodeLine => [
+    ["k", "zn"],
+    ` ${name.padEnd(12)}`,
+    ...verbs.flatMap((verb, i) => (i === 0 ? [verb] : [" ", ["p", "|"] as ["p", string], ` ${verb}`]))
+];
+
+const help: CodeLine[] = [
+    [["c", "# zn controls the running Zinc from a script or a shell"]],
+    [["k", "zn"], " ", ["s", "<thing>"], " ", ["s", "<verb>"], " [options] [-- command]"],
+    [],
+    thing("window", ["list", "new", "focus", "close"]),
+    thing("workspace", ["list", "new", "focus", "close", "rename", "color", "icon", "move"]),
+    thing("pane", ["list", "split", "focus", "close"]),
+    thing("terminal", ["list", "new", "send", "read", "title", "focus", "move", "close"]),
+    [],
+    [["k", "zn"], " list         ", ["c", "# everything open"]],
+    [["k", "zn"], " action       ", ["c", "# runs any action by its name, as a key would"]],
+    [["k", "zn"], " version      ", ["c", "# zn's version and the running Zinc's"]]
+];
 ---
 <Section id="workflow" labelledby="flow-title">
-    <SectionIntro eyebrow="Workflow" title="A terminal that knows what your commands are doing" titleId="flow-title" titleWidth="23ch">
-        Workspaces reopen where you left them. Shell integration sets itself up. When a command finishes, fails or needs you out of view, Zinc says which, and where.
+    <SectionIntro eyebrow="Workflow" title="Every project in its place." titleId="flow-title" titleWidth="23ch">
+        A terminal that knows what your commands are doing: shell integration sets itself up, and when a command finishes, fails or needs you out of view, Zinc says which, and where. Workspaces reopen where you left them.
     </SectionIntro>
 
     <div class="layout">
@@ -38,6 +62,16 @@ const points = [
             <p class="cap">The same words appear in Windows notifications.</p>
         </div>
     </div>
+
+    <div class="zncard">
+        <div class="zn-text">
+            <h3>Script it with <code>zn</code></h3>
+            <p>Open, arrange and close windows, workspaces, panes and terminals in the running Zinc, type into a terminal and read it back. Set up a project's layout with one script. Turn it on in <b>Settings › Terminal › Command line</b>.</p>
+            <p>Inside a Zinc terminal, <code class="zn-inline">zn</code> acts on that terminal and its pane, workspace and window. Outside, it acts on the window you used last.</p>
+            <p class="docs-link"><a class="textlink" href={`${links.docs}#zn`}>The zn CLI in the docs</a></p>
+        </div>
+        <CodeBlock name="zn --help" lines={help} copy="zn --help" copyLabel="Copy command" copyDuration={1600} />
+    </div>
 </Section>
 
 <style>
@@ -56,8 +90,10 @@ const points = [
         margin: 0;
     }
 
+    /* In a column flex, a flex basis becomes a minimum height and leaves a tall gap under the screenshot */
     .layout :global(.flow-shot) {
         width: 100%;
+        flex: none;
     }
 
     /* Spread from edge to edge, with the middle one centered, so the row spans the screenshot and lines up with the note */
@@ -94,7 +130,62 @@ const points = [
         text-align: center;
     }
 
+    /* The zn card closes the section, on the page ground rather than raised.
+       The extra space keeps the notifications note with the attention row above it. */
+    .zncard {
+        margin-top: 64px;
+        display: grid;
+        grid-template-columns: minmax(0, 1fr) minmax(0, 1.35fr);
+        gap: 40px;
+        align-items: stretch;
+        padding: 28px;
+        border: 1px solid var(--line);
+        border-radius: 8px;
+        background: var(--ground);
+    }
+
+    /* A column flex, so the docs link can sit level with the bottom of the code block */
+    .zn-text {
+        display: flex;
+        flex-direction: column;
+    }
+
+    h3 {
+        margin: 0;
+        font: 600 20px/28px var(--font-display);
+    }
+
+    h3 code {
+        font: inherit;
+        font-family: var(--font-mono);
+    }
+
+    .zn-text p {
+        margin: 8px 0 0;
+        font: 400 15px/24px var(--font-sans);
+        color: var(--ink-muted);
+    }
+
+    /* The settings path stays on one line */
+    .zn-text b {
+        color: var(--ink);
+        white-space: nowrap;
+    }
+
+    .zn-text .docs-link {
+        margin-top: auto;
+        padding-top: 16px;
+    }
+
+    .zncard :global(.zn-code) {
+        min-width: 0;
+    }
+
     @media (max-width: 900px) {
+        .zncard {
+            grid-template-columns: minmax(0, 1fr);
+        }
+
         .layout :global(.flow-points) {
             grid-template-columns: 1fr;
         }
