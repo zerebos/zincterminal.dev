@@ -12,6 +12,10 @@ import {headingAnchors, settingsPaths, tableBoxes} from "./src/lib/markdown/plug
 export default defineConfig({
     site: "https://zincterminal.dev",
     output: "static",
+
+    // Pages live at `/docs`, not `/docs/`, which needs `html_handling` in `wrangler.jsonc` to match
+    trailingSlash: "never",
+
     integrations: [svelte(), mdx(), sitemap()],
     markdown: {
         // Heading ids first, because the anchors link to them

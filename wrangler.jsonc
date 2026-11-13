@@ -7,7 +7,9 @@
   },
   "assets": {
     "directory": "dist",
-    "not_found_handling": "404-page"
+    "not_found_handling": "404-page",
+    // Serves `docs/index.html` at `/docs` to match `trailingSlash` in `astro.config.mjs`
+    "html_handling": "drop-trailing-slash"
   },
   "compatibility_flags": [
     "nodejs_compat"
