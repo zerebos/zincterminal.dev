@@ -1,61 +1,41 @@
-// Runs the sync on a tiny fake repo shaped like Zinc's, written to a temp folder, and checks the
-// committed JSON with the guard. The parsing cases are in the parsers' own tests. None of it reads ../zinc.
+// Runs the sync on small sources shaped like Zinc's, writing to a temp folder, and checks the committed
+// files with the guard. The parsing cases are in the parsers' own tests. None of it reads ../zinc.
 
 import {afterEach, describe, expect, test} from "bun:test";
 import {existsSync} from "node:fs";
 import {mkdir, mkdtemp, readFile, rm, writeFile} from "node:fs/promises";
 import {tmpdir} from "node:os";
-import {dirname, join} from "node:path";
-import {changelogTexts, findBannedNames, hasUnclosedCode, noticeTexts, settingsTexts} from "./guard";
-import {outputs, sources, syncZinc} from "./sync";
-import type {ChangelogEntry, Notice, SettingsCatalog} from "./types";
+import {join} from "node:path";
+import {crlf, fakeChangelog, fakeReference, fakeSchema} from "./fixtures";
+import {actionTexts, changelogTexts, findBannedNames, hasUnclosedCode, noticeTexts, schemaTexts, settingsTexts} from "./guard";
+import {checkoutFiles, outputs, readCheckout, syncZinc, type ZincSources} from "./sync";
+import type {Action, ChangelogEntry, Notice, SettingsCatalog, ZincReference} from "./types";
 
 
-const generated = join(import.meta.dir, "../../data/generated");
-
-const files = {
-    [sources.changelog]: "# Changelog\n\n## Unreleased\n\n### New\n- Not yet.\n\n## 0.1.0-dev.12 (2026-02-03)\n\n### New\n- Panes as cards.\n",
-    [sources.project]: "<Project><PropertyGroup><TargetFramework>net10.0-windows</TargetFramework></PropertyGroup></Project>",
-    [sources.notices]: String.raw`class X {
-    public static IReadOnlyList<OpenSourceComponent> Components { get; } =
-    [
-        new(".NET", Environment.Version.ToString(), "The runtime", "MIT", "https://github.com/dotnet/runtime", @"Licenses\dotnet.txt", []),
-        new("Cascadia Mono NF", "2407.024", "The default font", "OFL-1.1", "https://github.com/microsoft/cascadia-code", @"Fonts\LICENSE-CascadiaCode.txt", []),
-    ];
-}`,
-    [sources.settings]: String.raw`public static class SettingsCatalog
-{
-    public static IReadOnlyList<SettingsSection> Sections { get; } = [new("terminal", "Terminal", "")];
-
-    public static IReadOnlyList<SettingDef> All { get; } =
-    [
-        new("terminal", "Scrollback", "terminal.scrollback-lines", "Scrollback lines", "How far back you can scroll.", SettingKind.Number, (long)Config.DefaultScrollbackLines)
-            { Maximum = Config.MaxScrollbackLines, Step = 1000 },
-    ];
-
-    public static IReadOnlyList<SettingDef> Discovery { get; } = [];
-
-    public static IReadOnlyDictionary<string, string> FileOnly { get; } = new Dictionary<string, string> { };
-}`,
-    [sources.config]: "public const int DefaultScrollbackLines = 10_000;\npublic const int MaxScrollbackLines = 100_000;\n",
-    "assets/licenses/dotnet.txt": "The MIT License (MIT)\r\n\r\n",
-    "assets/fonts/LICENSE-CascadiaCode.txt": "SIL OPEN FONT LICENSE\n",
-};
+const root = join(import.meta.dir, "../../..");
+const generated = join(root, "src/data/generated");
+const servedSchema = join(root, "public/schema/config.json");
 
 const temps: string[] = [];
 afterEach(async () => {
     await Promise.all(temps.splice(0).map(dir => rm(dir, {recursive: true, force: true})));
 });
 
-/** Writes the fake repo, with any file swapped out */
-async function fakeRepo(changes: Record<string, string> = {}) {
-    const repo = await mkdtemp(join(tmpdir(), "sync-zinc-"));
-    temps.push(repo);
-    for (const [path, text] of Object.entries({...files, ...changes})) {
-        await mkdir(dirname(join(repo, path)), {recursive: true});
-        await writeFile(join(repo, path), text);
-    }
-    return repo;
+async function tempDir() {
+    const dir = await mkdtemp(join(tmpdir(), "sync-zinc-"));
+    temps.push(dir);
+    return dir;
+}
+
+function sources(changeReference: (reference: ZincReference) => void = () => {}): ZincSources {
+    const reference = fakeReference();
+    changeReference(reference);
+    return {changelog: fakeChangelog, reference: crlf(reference), schema: crlf(fakeSchema())};
+}
+
+async function targets() {
+    const dir = await tempDir();
+    return {dataDir: join(dir, "data"), schemaFile: join(dir, "public/schema/config.json")};
 }
 
 async function failure(promise: Promise<unknown>) {
@@ -71,53 +51,96 @@ async function failure(promise: Promise<unknown>) {
 const readJson = async <T>(path: string) => JSON.parse(await readFile(path, "utf8")) as T;
 
 describe("syncZinc", () => {
-    test("writes the changelog, notices, release and settings", async () => {
-        const repo = await fakeRepo();
-        const out = join(repo, "out");
-        await syncZinc(repo, out);
+    test("writes the changelog, release, notices, settings, actions and schema", async () => {
+        const to = await targets();
+        await syncZinc(sources(), to);
 
-        expect(await readJson(join(out, outputs.release))).toEqual({version: "0.1.0-dev.12", date: "2026-02-03"});
-        const changelog = await readJson<ChangelogEntry[]>(join(out, outputs.changelog));
+        expect(await readJson(join(to.dataDir, outputs.release))).toEqual({version: "0.1.0-dev.12", date: "2026-02-03"});
+        const changelog = await readJson<ChangelogEntry[]>(join(to.dataDir, outputs.changelog));
         expect(changelog.map(e => e.version)).toEqual(["0.1.0-dev.12"]);
 
-        const notices = await readJson<Notice[]>(join(out, outputs.notices));
-        expect(notices.map(n => [n.name, n.version, n.licenseText])).toEqual([
-            [".NET", "10", "The MIT License (MIT)"],
-            ["Cascadia Mono NF", "2407.024", "SIL OPEN FONT LICENSE"],
-        ]);
+        const notices = await readJson<Notice[]>(join(to.dataDir, outputs.notices));
+        expect(notices.map(n => [n.name, n.version])).toEqual([["Zinc", null], [".NET", "10.0.13"]]);
 
-        const settings = await readJson<SettingsCatalog>(join(out, outputs.settings));
-        expect(settings.settings.map(s => [s.key, s.default, s.maximum])).toEqual([["terminal.scrollback-lines", 10000, 100000]]);
+        const actions = await readJson<Action[]>(join(to.dataDir, outputs.actions));
+        expect(actions.map(a => a.name)).toEqual(["split"]);
+
+        const schema = await readFile(to.schemaFile, "utf8");
+        expect(schema).not.toContain("\r");
+        expect(JSON.parse(schema)).toEqual(fakeSchema());
     });
 
-    test("writes nothing when a setting names Windows Terminal", async () => {
-        const catalog = files[sources.settings] ?? "";
-        const repo = await fakeRepo({[sources.settings]: catalog.replace("How far back you can scroll.", "As in Windows Terminal.")});
-        const out = join(repo, "out");
-        expect(await failure(syncZinc(repo, out))).toMatch(/terminal\.scrollback-lines: As in Windows Terminal\./);
-        expect(existsSync(out)).toBeFalse();
+    test("puts discovery after the settings and leaves out old names", async () => {
+        const to = await targets();
+        await syncZinc(sources(), to);
+
+        const catalog = await readJson<SettingsCatalog>(join(to.dataDir, outputs.settings));
+        expect(catalog.settings.map(s => s.key)).toEqual(["terminal.scrollback-lines", "discover.wsl"]);
+        expect(catalog.profileFields.map(s => s.key)).toEqual(["command"]);
+        expect(catalog.settings[0]).not.toHaveProperty("oldNames");
+        expect(catalog.settings[0]?.profileOverridable).toBeTrue();
     });
 
-    test("writes nothing when a text names Windows Terminal", async () => {
-        const notices = files[sources.notices] ?? "";
-        const repo = await fakeRepo({[sources.notices]: notices.replace("The default font", "The default font (from Windows Terminal)")});
-        const out = join(repo, "out");
-        expect(await failure(syncZinc(repo, out))).toMatch(/Cascadia Mono NF use: The default font \(from Windows Terminal\)/);
-        expect(existsSync(out)).toBeFalse();
+    test.each([
+        ["a setting", (r: ZincReference) => r.settings[0]!.description = "As in Windows Terminal.", /terminal\.scrollback-lines: As in Windows Terminal\./],
+        ["a profile field", (r: ZincReference) => r.profileFields[0]!.description = "Like Windows Terminal's.", /profile field command: Like Windows Terminal's\./],
+        ["an action", (r: ZincReference) => r.actions[0]!.title = "Split, as in Windows Terminal", /action split: Split, as in Windows Terminal/],
+        ["a notice", (r: ZincReference) => r.notices[1]!.use = "From windows  terminal", /\.NET use: From windows {2}terminal/],
+    ])("writes nothing when %s names Windows Terminal", async (_, change, message) => {
+        const to = await targets();
+        expect(await failure(syncZinc(sources(change), to))).toMatch(message);
+        expect(existsSync(to.dataDir)).toBeFalse();
+        expect(existsSync(to.schemaFile)).toBeFalse();
+    });
+
+    test("writes nothing when the schema names Windows Terminal", async () => {
+        const schema = fakeSchema();
+        schema.properties.terminal.properties["scrollback-lines"].description = "As in Windows Terminal.";
+        const to = await targets();
+        expect(await failure(syncZinc({...sources(), schema: JSON.stringify(schema)}, to))).toMatch(/schema\.properties\.terminal\.properties\.scrollback-lines\.description: As in Windows Terminal\./);
+        expect(existsSync(to.dataDir)).toBeFalse();
     });
 
     test("writes nothing when a changelog backtick doesn't close", async () => {
-        const changelog = files[sources.changelog] ?? "";
-        const repo = await fakeRepo({[sources.changelog]: changelog.replace("- Panes as cards.", "- The quick terminal (Win+`) in `Settings > Quick terminal`.")});
-        const out = join(repo, "out");
-        expect(await failure(syncZinc(repo, out))).toMatch(/backtick that doesn't close[\s\S]*0\.1\.0-dev\.12 New: The quick terminal/);
-        expect(existsSync(out)).toBeFalse();
+        const changelog = fakeChangelog.replace("- Panes as cards.", "- The quick terminal (Win+`) in `Settings > Quick terminal`.");
+        const to = await targets();
+        expect(await failure(syncZinc({...sources(), changelog}, to))).toMatch(/backtick that doesn't close[\s\S]*0\.1\.0-dev\.12 New: The quick terminal/);
+        expect(existsSync(to.dataDir)).toBeFalse();
     });
 
-    test("names the file it can't find", async () => {
-        const repo = await fakeRepo();
-        await rm(join(repo, "assets/fonts"), {recursive: true});
-        expect(await failure(syncZinc(repo, join(repo, "out")))).toMatch(/Can't read assets\/fonts\/LICENSE-CascadiaCode\.txt/);
+    test("writes nothing when the reference has a format it doesn't know", async () => {
+        const to = await targets();
+        expect(await failure(syncZinc(sources(r => r.format = 2), to))).toMatch(/format 2/);
+        expect(existsSync(to.dataDir)).toBeFalse();
+    });
+});
+
+describe("readCheckout", () => {
+    async function fakeCheckout(referenceDir = checkoutFiles.referenceDir) {
+        const repo = await tempDir();
+        await writeFile(join(repo, checkoutFiles.changelog), fakeChangelog);
+        await mkdir(join(repo, referenceDir), {recursive: true});
+        await writeFile(join(repo, referenceDir, checkoutFiles.reference), crlf(fakeReference()));
+        await writeFile(join(repo, referenceDir, checkoutFiles.schema), crlf(fakeSchema()));
+        return repo;
+    }
+
+    test("reads the export from dist/reference", async () => {
+        const read = await readCheckout(await fakeCheckout());
+        expect(read.changelog).toBe(fakeChangelog);
+        expect((JSON.parse(read.reference) as ZincReference).zinc.version).toBe("0.1.0-dev+abc1234");
+    });
+
+    test("reads the export from another folder when it's given", async () => {
+        const repo = await fakeCheckout("downloads");
+        const {schema} = await readCheckout(repo, join(repo, "downloads"));
+        expect((JSON.parse(schema) as {$id: string;}).$id).toBe(fakeSchema().$id);
+    });
+
+    test("says how to make the export when it's missing", async () => {
+        const repo = await fakeCheckout();
+        await rm(join(repo, checkoutFiles.referenceDir), {recursive: true});
+        expect(await failure(readCheckout(repo))).toMatch(/Can't read .*zinc-reference\.json\. Run `dotnet run scripts\/dev\/export-reference\.cs`/);
     });
 });
 
@@ -132,6 +155,11 @@ describe("the guard", () => {
         expect(findBannedNames(changelogTexts([entry]))).toHaveLength(4);
     });
 
+    test("skips the schema's ids, references and patterns", () => {
+        const schema = {$id: "windows terminal", $ref: "windows terminal", pattern: "windows terminal", enum: ["windows terminal"]};
+        expect(findBannedNames(schemaTexts(schema)).map(t => t.where)).toEqual(["schema.enum[0]"]);
+    });
+
     test.each([
         ["Plain text", false],
         ["One `code` and ``Win+` `` and `more`", false],
@@ -142,11 +170,14 @@ describe("the guard", () => {
         expect(hasUnclosedCode(text)).toBe(unclosed);
     });
 
-    test("passes on the committed JSON", async () => {
+    test("passes on the committed files", async () => {
         const changelog = await readJson<ChangelogEntry[]>(join(generated, outputs.changelog));
         const notices = await readJson<Notice[]>(join(generated, outputs.notices));
         const settings = await readJson<SettingsCatalog>(join(generated, outputs.settings));
-        expect(findBannedNames([...changelogTexts(changelog), ...noticeTexts(notices), ...settingsTexts(settings)])).toEqual([]);
+        const actions = await readJson<Action[]>(join(generated, outputs.actions));
+        const schema = await readJson<unknown>(servedSchema);
+        const texts = [...changelogTexts(changelog), ...noticeTexts(notices), ...settingsTexts(settings), ...actionTexts(actions), ...schemaTexts(schema)];
+        expect(findBannedNames(texts)).toEqual([]);
         expect(changelogTexts(changelog).filter(t => hasUnclosedCode(t.text)).map(t => t.where)).toEqual([]);
     });
 });

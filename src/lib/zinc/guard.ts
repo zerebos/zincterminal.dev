@@ -1,7 +1,7 @@
 // The site never names Windows Terminal in its own words. This checks the text we show as ours
-// (changelog items, use texts, docs), not URLs or license texts.
+// (changelog items, use texts, settings, actions, the schema), not URLs or license texts.
 
-import type {ChangelogEntry, Notice, SettingsCatalog} from "./types";
+import type {Action, ChangelogEntry, Notice, Setting, SettingsCatalog} from "./types";
 
 
 const banned = /windows\s+terminal/i;
@@ -31,14 +31,36 @@ export function noticeTexts(notices: Notice[]): GuardedText[] {
     ]);
 }
 
+function settingTexts(s: Setting, where: string): GuardedText[] {
+    return [s.group, s.label, s.description, s.placeholder ?? "", s.nullLabel ?? "", s.unit ?? ""]
+        .concat(s.choices.flatMap(c => [c.label, c.detail ?? ""]))
+        .map(text => ({where, text}));
+}
+
 export function settingsTexts(catalog: SettingsCatalog): GuardedText[] {
     return [
         ...catalog.sections.map(s => ({where: `section ${s.id}`, text: s.title})),
-        ...catalog.settings.flatMap(s => [s.group, s.label, s.description, s.placeholder ?? "", s.nullLabel ?? "", s.unit ?? ""]
-            .concat(s.choices.flatMap(c => [c.label, c.detail ?? ""]))
-            .map(text => ({where: s.key, text}))),
+        ...catalog.settings.flatMap(s => settingTexts(s, s.key)),
         ...catalog.fileOnly.map(f => ({where: f.key, text: f.text})),
+        ...catalog.profileFields.flatMap(s => settingTexts(s, `profile field ${s.key}`)),
     ];
+}
+
+export function actionTexts(actions: Action[]): GuardedText[] {
+    return actions.flatMap(a => [a.title, a.description, a.category].map(text => ({where: `action ${a.name}`, text})));
+}
+
+// Keys whose strings are names or patterns rather than text people read
+const schemaSkip = new Set(["$schema", "$id", "$ref", "pattern"]);
+
+/** Every string in the schema that an editor can show, such as titles, descriptions and enum values */
+export function schemaTexts(schema: unknown, where = "schema"): GuardedText[] {
+    if (typeof schema === "string") return [{where, text: schema}];
+    if (Array.isArray(schema)) return schema.flatMap((item, i) => schemaTexts(item, `${where}[${i}]`));
+    if (typeof schema !== "object" || schema === null) return [];
+    return Object.entries(schema)
+        .filter(([key]) => !schemaSkip.has(key))
+        .flatMap(([key, value]) => schemaTexts(value, `${where}.${key}`));
 }
 
 /** The texts that name it, empty when all is well */

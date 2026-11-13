@@ -1,0 +1,1225 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "$id": "https://zincterminal.dev/schema/config.json",
+  "title": "Zinc config.toml",
+  "type": "object",
+  "properties": {
+    "include": {
+      "anyOf": [
+        {
+          "type": "string"
+        },
+        {
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        }
+      ],
+      "description": "More config files to read first, by path or pattern. What this file says wins."
+    },
+    "default-profile": {
+      "type": "string",
+      "description": "The profile new tabs open with, by id."
+    },
+    "profile-order": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      },
+      "description": "Profile ids in the order the menus list them."
+    },
+    "font": {
+      "$ref": "#/definitions/font"
+    },
+    "colors": {
+      "$ref": "#/definitions/colors"
+    },
+    "terminal": {
+      "$ref": "#/definitions/terminal"
+    },
+    "window": {
+      "$ref": "#/definitions/window"
+    },
+    "shaders": {
+      "$ref": "#/definitions/shaders"
+    },
+    "cli": {
+      "$ref": "#/definitions/cli"
+    },
+    "notify": {
+      "$ref": "#/definitions/notify"
+    },
+    "quick-terminal": {
+      "$ref": "#/definitions/quick-terminal"
+    },
+    "updates": {
+      "$ref": "#/definitions/updates"
+    },
+    "debug": {
+      "$ref": "#/definitions/debug"
+    },
+    "keys": {
+      "type": "object",
+      "additionalProperties": {
+        "type": "string"
+      },
+      "description": "Key bindings: a chord or sequence (\"ctrl+shift+t\", \"ctrl+a > c\") and the action it runs, or \"none\"."
+    },
+    "discover": {
+      "type": "object",
+      "properties": {
+        "wsl": {
+          "type": "boolean",
+          "title": "WSL distributions",
+          "default": true
+        },
+        "powershell": {
+          "type": "boolean",
+          "title": "PowerShell 7 and Windows PowerShell",
+          "default": true
+        },
+        "cmd": {
+          "type": "boolean",
+          "title": "Command Prompt",
+          "default": true
+        },
+        "git-bash": {
+          "type": "boolean",
+          "title": "Git Bash",
+          "default": true
+        },
+        "msys2": {
+          "type": "boolean",
+          "title": "MSYS2",
+          "default": true
+        },
+        "visual-studio": {
+          "type": "boolean",
+          "title": "Visual Studio developer shells",
+          "default": true
+        },
+        "ssh": {
+          "type": "boolean",
+          "title": "SSH hosts",
+          "description": "From ~/.ssh/config.",
+          "default": true
+        }
+      },
+      "additionalProperties": false,
+      "description": "Where Zinc looks for shells."
+    },
+    "environment": {
+      "$ref": "#/definitions/environment"
+    },
+    "profile": {
+      "type": "object",
+      "additionalProperties": {
+        "$ref": "#/definitions/profile"
+      },
+      "description": "Profiles by id."
+    }
+  },
+  "additionalProperties": false,
+  "definitions": {
+    "font": {
+      "type": "object",
+      "properties": {
+        "family": {
+          "type": "string",
+          "title": "Font",
+          "description": "Any monospace font. Nerd Fonts also show prompt icons.",
+          "default": "Cascadia Mono NF"
+        },
+        "size": {
+          "type": "number",
+          "minimum": 4,
+          "maximum": 72,
+          "title": "Size",
+          "description": "Ctrl+0 returns to this size.",
+          "default": 10.5
+        },
+        "weight": {
+          "anyOf": [
+            {
+              "enum": [
+                "thin",
+                "extra-light",
+                "light",
+                "normal",
+                "medium",
+                "semibold",
+                "bold",
+                "extra-bold",
+                "black"
+              ]
+            },
+            {
+              "type": "integer",
+              "minimum": 1,
+              "maximum": 999
+            }
+          ],
+          "title": "Weight",
+          "description": "How heavy normal text is. A font without that weight shows its nearest one.",
+          "default": "normal"
+        },
+        "bold-weight": {
+          "anyOf": [
+            {
+              "enum": [
+                "thin",
+                "extra-light",
+                "light",
+                "normal",
+                "medium",
+                "semibold",
+                "bold",
+                "extra-bold",
+                "black"
+              ]
+            },
+            {
+              "type": "integer",
+              "minimum": 1,
+              "maximum": 999
+            }
+          ],
+          "title": "Bold weight",
+          "description": "How heavy bold text is.",
+          "default": "bold"
+        },
+        "ligatures": {
+          "type": "boolean",
+          "title": "Ligatures",
+          "description": "Fonts that have them (Cascadia Code, JetBrains Mono, Fira Code) join => != -> and the like into one shape. Each character keeps its own cell, and the character under the cursor isn't joined.",
+          "default": false
+        },
+        "fallback": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "array",
+              "items": {
+                "type": "string"
+              }
+            }
+          ],
+          "title": "Fallback fonts",
+          "description": "For characters your font lacks, tried in order before Windows picks one. Separate them with commas."
+        },
+        "adjust-cell-height": {
+          "anyOf": [
+            {
+              "type": "number"
+            },
+            {
+              "type": "string"
+            }
+          ],
+          "title": "Line height",
+          "description": "More room between lines, as a percentage (20%) or in pixels (2). A negative value gives less. Text stays centered."
+        },
+        "builtin-glyphs": {
+          "type": "boolean",
+          "title": "Built-in glyphs",
+          "description": "Zinc draws box lines, blocks and Powerline shapes itself, so they join up in any font.",
+          "default": true
+        },
+        "adjust-box-thickness": {
+          "anyOf": [
+            {
+              "type": "number"
+            },
+            {
+              "type": "string"
+            }
+          ],
+          "title": "Line thickness",
+          "description": "Thicker or thinner built-in lines, in pixels (1, -1) or as a percentage (20%)."
+        }
+      },
+      "additionalProperties": false
+    },
+    "colors": {
+      "type": "object",
+      "properties": {
+        "theme": {
+          "type": "string",
+          "title": "Color scheme",
+          "description": "About 650 are included. Add your own to the themes folder next to config.toml."
+        },
+        "palette-generate": {
+          "type": "boolean",
+          "title": "Match 256 colors to the scheme",
+          "description": "Programs that use the extended 256 colors (vim and htop themes) get shades made from the scheme's 16, not the standard ones.",
+          "default": false
+        },
+        "palette-harmonious": {
+          "type": "boolean",
+          "title": "Shades from background to text in light schemes",
+          "description": "When off, shades run from dark to light, which is what programs expect.",
+          "default": false
+        },
+        "background": {
+          "type": "string",
+          "pattern": "^#?[0-9a-fA-F]{6}$",
+          "title": "Background"
+        },
+        "foreground": {
+          "type": "string",
+          "pattern": "^#?[0-9a-fA-F]{6}$",
+          "title": "Text"
+        },
+        "cursor": {
+          "type": "string",
+          "pattern": "^#?[0-9a-fA-F]{6}$",
+          "title": "Cursor"
+        },
+        "cursor-text": {
+          "type": "string",
+          "pattern": "^#?[0-9a-fA-F]{6}$",
+          "title": "Cursor text",
+          "description": "The character under a block cursor. If the scheme doesn't set one either, it's the background color."
+        },
+        "selection-background": {
+          "type": "string",
+          "pattern": "^#?[0-9a-fA-F]{6}$",
+          "title": "Selection",
+          "description": "Behind selected text. If the scheme doesn't set one either, selection inverts the colors."
+        },
+        "selection-foreground": {
+          "type": "string",
+          "pattern": "^#?[0-9a-fA-F]{6}$",
+          "title": "Selected text",
+          "description": "If the scheme doesn't set one either, the text keeps its color, or inverts with the selection when \"Selection\" has no color either."
+        },
+        "pane-header": {
+          "anyOf": [
+            {
+              "enum": [
+                "terminal",
+                "subtle",
+                "strong"
+              ]
+            },
+            {
+              "type": "string",
+              "pattern": "^auto$"
+            },
+            {
+              "type": "string",
+              "pattern": "^#?[0-9a-fA-F]{6}$"
+            }
+          ],
+          "title": "Pane headers",
+          "description": "Behind pane titles and tabs. On cards, the border is a step stronger."
+        },
+        "minimum-contrast": {
+          "type": "number",
+          "minimum": 1,
+          "maximum": 21,
+          "title": "Minimum contrast",
+          "description": "Text that reads poorly against its background turns black or white. 1 turns it off, 4.5 is the usual accessibility level, and 21 makes all text black or white.",
+          "default": 1
+        },
+        "bold-is-bright": {
+          "type": "boolean",
+          "title": "Bold in bright colors",
+          "description": "Bold text in the first eight colors shows their bright versions, as older terminals did.",
+          "default": false
+        },
+        "bold": {
+          "type": "string",
+          "pattern": "^#?[0-9a-fA-F]{6}$",
+          "title": "Bold text color",
+          "description": "For bold text in the default text color."
+        },
+        "faint-opacity": {
+          "type": "number",
+          "minimum": 0.1,
+          "maximum": 1,
+          "title": "Faint text",
+          "description": "How bright dim text is (1: as bright as other text).",
+          "default": 0.5
+        },
+        "find-highlight": {
+          "type": "string",
+          "pattern": "^#?[0-9a-fA-F]{6}$",
+          "title": "Find highlight",
+          "description": "Behind each match of Find."
+        },
+        "find-highlight-current": {
+          "type": "string",
+          "pattern": "^#?[0-9a-fA-F]{6}$",
+          "title": "Current match",
+          "description": "Behind the match Find is on."
+        },
+        "cursor-opacity": {
+          "type": "number",
+          "minimum": 0.1,
+          "maximum": 1,
+          "title": "Cursor opacity",
+          "description": "1: solid. Lower lets the character under a block cursor show in its own color.",
+          "default": 1
+        },
+        "background-opacity": {
+          "type": "number",
+          "minimum": 0,
+          "maximum": 1,
+          "title": "Terminal background opacity",
+          "description": "Lower lets the window background show behind the text (1: solid). Colored cells stay solid.",
+          "default": 1
+        },
+        "palette": {
+          "anyOf": [
+            {
+              "type": "array",
+              "items": {
+                "type": "string",
+                "pattern": "^#?[0-9a-fA-F]{6}$"
+              },
+              "maxItems": 256
+            },
+            {
+              "type": "object",
+              "patternProperties": {
+                "^([0-9]{1,2}|1[0-9]{2}|2[0-4][0-9]|25[0-5])$": {
+                  "type": "string",
+                  "pattern": "^#?[0-9a-fA-F]{6}$"
+                }
+              },
+              "additionalProperties": false
+            }
+          ],
+          "description": "Palette colors by number (palette.1 = \"#AC4242\") are set in config.toml."
+        }
+      },
+      "additionalProperties": false
+    },
+    "terminal": {
+      "type": "object",
+      "properties": {
+        "cursor-style": {
+          "enum": [
+            "block",
+            "bar",
+            "underline",
+            "block-hollow"
+          ],
+          "title": "Cursor shape",
+          "description": "Until a program picks its own (vim's insert mode often does).",
+          "default": "block"
+        },
+        "cursor-blink": {
+          "type": "boolean",
+          "title": "Blinking cursor",
+          "description": "Until a program says otherwise.",
+          "default": false
+        },
+        "cursor-style-at-prompt": {
+          "enum": [
+            "same",
+            "bar",
+            "block",
+            "underline",
+            "block-hollow"
+          ],
+          "title": "Cursor at the prompt",
+          "description": "While the shell waits for a command. A program's own cursor still wins. Needs shell integration.",
+          "default": "same"
+        },
+        "padding-x": {
+          "anyOf": [
+            {
+              "type": "number",
+              "minimum": 0,
+              "maximum": 100
+            },
+            {
+              "type": "array",
+              "items": {
+                "type": "number",
+                "minimum": 0,
+                "maximum": 100
+              },
+              "minItems": 1,
+              "maxItems": 2
+            }
+          ],
+          "title": "Padding left and right",
+          "description": "Between the window's edge and the text.",
+          "default": 6
+        },
+        "padding-y": {
+          "anyOf": [
+            {
+              "type": "number",
+              "minimum": 0,
+              "maximum": 100
+            },
+            {
+              "type": "array",
+              "items": {
+                "type": "number",
+                "minimum": 0,
+                "maximum": 100
+              },
+              "minItems": 1,
+              "maxItems": 2
+            }
+          ],
+          "title": "Padding top and bottom",
+          "description": "Between the window's edge and the text.",
+          "default": 6
+        },
+        "padding-balance": {
+          "type": "boolean",
+          "title": "Even padding",
+          "description": "Splits the leftover space between both sides. When off, all of it goes to the right and bottom.",
+          "default": false
+        },
+        "shell-integration": {
+          "enum": [
+            "auto",
+            "off"
+          ],
+          "title": "Shell integration",
+          "description": "Marks prompts and commands in PowerShell, bash and zsh (WSL too), so you can jump between prompts, copy a command's output and see which commands failed.",
+          "default": "auto"
+        },
+        "command-marks": {
+          "enum": [
+            "failures",
+            "all",
+            "none"
+          ],
+          "title": "Command marks",
+          "description": "The bar beside a command's output.",
+          "default": "failures"
+        },
+        "close-on-exit": {
+          "enum": [
+            "success",
+            "always",
+            "never"
+          ],
+          "title": "When the program ends",
+          "default": "success"
+        },
+        "reload-environment": {
+          "type": "boolean",
+          "title": "Pick up environment changes",
+          "description": "New tabs read PATH and other variables from Windows as they start, so an installer's changes work without restarting Zinc.",
+          "default": true
+        },
+        "program-titles": {
+          "type": "boolean",
+          "title": "Program titles",
+          "description": "Shells and programs set the tab's title (often the folder or the running command). When off, tabs show the profile's name.",
+          "default": true
+        },
+        "shell-titles": {
+          "type": "boolean",
+          "title": "Folder and command as the title",
+          "description": "The folder at the prompt, the running command otherwise. A program's own title still wins. Needs shell integration.",
+          "default": true
+        },
+        "scrollback-lines": {
+          "type": "integer",
+          "minimum": 0,
+          "maximum": 100000,
+          "title": "Scrollback lines",
+          "description": "How far back you can scroll.",
+          "default": 10000
+        },
+        "mouse-pointer": {
+          "enum": [
+            "arrow",
+            "text"
+          ],
+          "title": "Pointer over text",
+          "default": "arrow"
+        },
+        "word-boundaries": {
+          "type": "string",
+          "title": "Word boundaries",
+          "description": "Characters that end a word when you double-click (space and tab always do). Empty: the ones shown."
+        },
+        "click-to-move": {
+          "type": "boolean",
+          "title": "Click to move the cursor",
+          "description": "At a shell prompt, clicking in the command you're typing moves the cursor there. Needs shell integration.",
+          "default": true
+        },
+        "right-click": {
+          "enum": [
+            "menu",
+            "copy-paste",
+            "paste"
+          ],
+          "title": "Right-click",
+          "description": "Shift+F10 or the Menu key opens the menu anywhere.",
+          "default": "menu"
+        },
+        "link-click": {
+          "enum": [
+            "ctrl",
+            "alt",
+            "click"
+          ],
+          "title": "Open links with",
+          "description": "Web links and files shown in the terminal.",
+          "default": "ctrl"
+        },
+        "middle-click-paste": {
+          "type": "boolean",
+          "title": "Middle-click pastes",
+          "description": "Unless the program uses the mouse.",
+          "default": false
+        },
+        "copy-on-select": {
+          "type": "boolean",
+          "title": "Copy on select",
+          "description": "Copies text as soon as you select it. The selection stays.",
+          "default": false
+        },
+        "copy-formatting": {
+          "type": "boolean",
+          "title": "Copy with formatting",
+          "description": "Copies colors and styles too, for documents and email. Apps that take plain text still get plain text.",
+          "default": false
+        },
+        "paste-warning": {
+          "enum": [
+            "auto",
+            "multiline",
+            "never"
+          ],
+          "title": "Paste warning",
+          "description": "Ask before pasting text with more than one line.",
+          "default": "auto"
+        },
+        "large-paste-warning": {
+          "type": "boolean",
+          "title": "Large pastes",
+          "description": "Ask before pasting more than 5 KB.",
+          "default": true
+        },
+        "clipboard-write": {
+          "type": "boolean",
+          "title": "Programs may copy",
+          "description": "Copying with OSC 52, as tmux, neovim and remote shells do.",
+          "default": true
+        },
+        "clipboard-read": {
+          "enum": [
+            "ask",
+            "allow",
+            "deny"
+          ],
+          "title": "Programs reading the clipboard",
+          "description": "Anything running, including a remote host, could read it.",
+          "default": "ask"
+        },
+        "bell": {
+          "enum": [
+            "attention",
+            "flash",
+            "none"
+          ],
+          "title": "Bell",
+          "description": "When a program rings it, e.g. at a failed tab completion.",
+          "default": "attention"
+        },
+        "bell-sound": {
+          "type": "boolean",
+          "title": "Bell sound",
+          "description": "Plays Windows' default sound too.",
+          "default": false
+        },
+        "screen-flash-bell": {
+          "type": "boolean",
+          "title": "Visual bell",
+          "description": "Programs that flash the screen instead of beeping (Git Bash does) ring Zinc's bell, as set in \"Bell\".",
+          "default": true
+        },
+        "input-method": {
+          "type": "boolean",
+          "title": "Input methods",
+          "description": "Type Japanese, Chinese, Korean and more with Windows' input methods (IME). Turn it off if keys behave oddly.",
+          "default": true
+        }
+      },
+      "additionalProperties": false
+    },
+    "window": {
+      "type": "object",
+      "properties": {
+        "appearance": {
+          "enum": [
+            "system",
+            "light",
+            "dark"
+          ],
+          "title": "Light or dark",
+          "description": "Windows, menus and dialogs. The terminal keeps its color scheme. Restart Zinc to apply.",
+          "default": "system"
+        },
+        "accent": {
+          "enum": [
+            "zinc",
+            "windows"
+          ],
+          "title": "Accent color",
+          "description": "Selections, focus lines, switches and buttons. Restart Zinc to apply.",
+          "default": "zinc"
+        },
+        "backdrop": {
+          "enum": [
+            "mica",
+            "acrylic",
+            "none"
+          ],
+          "title": "Window background",
+          "description": "What's behind everything in the window: tabs, sidebar and terminal.",
+          "default": "mica"
+        },
+        "backdrop-tint": {
+          "type": "number",
+          "minimum": 0,
+          "maximum": 1,
+          "title": "Window tint",
+          "description": "How much color an acrylic or clear background carries. Lower is more see-through.",
+          "default": 0.3
+        },
+        "backdrop-color": {
+          "type": "string",
+          "pattern": "^#?[0-9a-fA-F]{6}$",
+          "title": "Window tint color",
+          "description": "The color an acrylic or clear background is tinted with."
+        },
+        "workspace-tabs": {
+          "enum": [
+            "top",
+            "left"
+          ],
+          "title": "Workspaces",
+          "description": "Tabs along the top, or a list in a sidebar. Applies to windows opened from now on.",
+          "default": "top"
+        },
+        "sidebar": {
+          "enum": [
+            "full",
+            "rail",
+            "auto-hide"
+          ],
+          "title": "Sidebar",
+          "description": "Only when \"Workspaces\" is \"In a sidebar\".",
+          "default": "full"
+        },
+        "title-bar": {
+          "enum": [
+            "show",
+            "auto-hide"
+          ],
+          "title": "Title bar",
+          "description": "Only when \"Workspaces\" is \"In a sidebar\".",
+          "default": "show"
+        },
+        "new-workspace-page": {
+          "type": "boolean",
+          "title": "Start page for new workspaces",
+          "description": "Choose a profile, a folder and a name when you open a workspace. Enter starts the default profile.",
+          "default": true
+        },
+        "workspace-colors": {
+          "enum": [
+            "off",
+            "folder",
+            "cycle"
+          ],
+          "title": "Colors for new workspaces",
+          "description": "For the ones you don't color yourself.",
+          "default": "off"
+        },
+        "start-in": {
+          "enum": [
+            "current",
+            "profile"
+          ],
+          "title": "New tabs and splits start",
+          "description": "New tabs in a workspace with its own folder start there. Without \"Tabs inside panes\", this is for splits only, because a new tab is a new workspace.",
+          "default": "current"
+        },
+        "pane-tabs": {
+          "type": "boolean",
+          "title": "Tabs inside panes",
+          "description": "Each pane can hold several tabs.",
+          "default": true
+        },
+        "pane-tabs-as": {
+          "enum": [
+            "tabs",
+            "menu"
+          ],
+          "title": "Show pane tabs as",
+          "description": "Only with \"Tabs inside panes\" on.",
+          "default": "tabs"
+        },
+        "pane-headers": {
+          "enum": [
+            "auto",
+            "with-tabs",
+            "always",
+            "never"
+          ],
+          "title": "Pane headers",
+          "description": "The row above a pane. Its tabs, or its title when it has one tab.",
+          "default": "with-tabs"
+        },
+        "pane-header-buttons": {
+          "enum": [
+            "always",
+            "focused",
+            "hover",
+            "hide"
+          ],
+          "title": "Header buttons",
+          "description": "Split, maximize and more on the right of a pane's header, with a program's progress beside them.",
+          "default": "hide"
+        },
+        "pane-gap": {
+          "type": "integer",
+          "minimum": 0,
+          "maximum": 32,
+          "title": "Gap between panes",
+          "description": "Above 0, panes are rounded cards with space between them. At 0 they meet at a thin divider.",
+          "default": 0
+        },
+        "pane-gap-edges": {
+          "type": "boolean",
+          "title": "Gap at the workspace edges",
+          "description": "The same gap around the outside, split or not, so splitting never moves a pane's outer edges. Only with a \"Gap between panes\" above 0.",
+          "default": false
+        },
+        "pane-focus": {
+          "enum": [
+            "ring",
+            "tab-accent",
+            "none"
+          ],
+          "title": "Show focus with",
+          "description": "How the focused pane stands out from the others.",
+          "default": "tab-accent"
+        },
+        "pane-animations": {
+          "type": "boolean",
+          "title": "Pane animations",
+          "description": "Panes slide into place when you split, close, maximize or move them. They don't while \"Animation effects\" is off in Windows Settings.",
+          "default": true
+        },
+        "pane-resize-step": {
+          "type": "number",
+          "minimum": 1,
+          "maximum": 50,
+          "title": "Resize step",
+          "description": "How far a resize key moves the divider, as a share of the panes it splits.",
+          "default": 5
+        },
+        "unfocused-pane-opacity": {
+          "type": "number",
+          "title": "Unfocused panes",
+          "description": "How bright unfocused panes stay (1: not dimmed).",
+          "default": 0.7
+        },
+        "unfocused-pane-fill": {
+          "type": "string",
+          "pattern": "^#?[0-9a-fA-F]{6}$",
+          "title": "Dimming color",
+          "description": "What unfocused panes fade toward."
+        },
+        "divider-color": {
+          "type": "string",
+          "pattern": "^#?[0-9a-fA-F]{6}$",
+          "title": "Divider color",
+          "description": "The line between split panes, when \"Gap between panes\" is 0."
+        },
+        "save-state": {
+          "enum": [
+            "always",
+            "never"
+          ],
+          "title": "Reopen windows",
+          "description": "Windows, workspaces, splits and tabs come back in their folders.",
+          "default": "always"
+        },
+        "quit-after-last-window-closed": {
+          "type": "boolean",
+          "title": "When the last window closes"
+        },
+        "launch-at-login": {
+          "enum": [
+            "off",
+            "tray",
+            "windows"
+          ],
+          "title": "When you sign in to Windows",
+          "default": "off"
+        },
+        "explorer-menu": {
+          "type": "boolean",
+          "title": "Open in Zinc from File Explorer",
+          "description": "Adds \"Open in Zinc\" to the right-click menu of folders and drives. On Windows 11 it's under \"Show more options\".",
+          "default": false
+        },
+        "confirm-close": {
+          "type": "boolean",
+          "title": "Ask before closing",
+          "description": "When a tab, pane, workspace or window you close still runs a command, or holds two or more tabs. Zinc knows a command is running through shell integration.",
+          "default": true
+        },
+        "confirm-quit": {
+          "type": "boolean",
+          "title": "Ask before quitting with a running command",
+          "description": "When you quit Zinc (or restart it for an update) while a command still runs.",
+          "default": true
+        },
+        "focus-follows-mouse": {
+          "type": "boolean",
+          "title": "Focus follows mouse",
+          "description": "Moving the pointer into a pane focuses it.",
+          "default": false
+        },
+        "low-latency-drawing": {
+          "type": "boolean",
+          "title": "Low-latency drawing",
+          "description": "What you type shows up about one screen refresh sooner. Turn it off if a terminal draws wrong or stops drawing, and tell us. Applies to terminals opened from now on.",
+          "default": true
+        },
+        "free-hidden-memory": {
+          "type": "boolean",
+          "title": "Free memory of hidden tabs",
+          "description": "Background tabs, minimized windows and the dismissed quick terminal give back their graphics memory and rebuild it when you return. Turn it off if switching tabs flashes. Only with \"Low-latency drawing\".",
+          "default": true
+        },
+        "free-hidden-after": {
+          "anyOf": [
+            {
+              "type": "number",
+              "minimum": 1
+            },
+            {
+              "type": "string"
+            }
+          ],
+          "title": "Free it after",
+          "description": "Seconds, or with a unit: 45s, 2m.",
+          "default": 60
+        },
+        "software-rendering": {
+          "type": "boolean",
+          "title": "Software rendering",
+          "description": "Draws with the processor instead of the graphics card, which is slower. Use it for broken graphics drivers, some virtual machines and remote desktop glitches. Applies to terminals opened from now on.",
+          "default": false
+        },
+        "tab-groups": {
+          "description": "An old name for pane-tabs. It still works.",
+          "deprecated": true
+        },
+        "pane-tab-strip": {
+          "description": "An old name for pane-headers. It still works.",
+          "deprecated": true
+        },
+        "group-tab-strip": {
+          "description": "An old name for pane-headers. It still works.",
+          "deprecated": true
+        },
+        "unfocused-split-opacity": {
+          "description": "An old name for unfocused-pane-opacity. It still works.",
+          "deprecated": true
+        },
+        "unfocused-split-fill": {
+          "description": "An old name for unfocused-pane-fill. It still works.",
+          "deprecated": true
+        }
+      },
+      "additionalProperties": false
+    },
+    "shaders": {
+      "type": "object",
+      "properties": {
+        "files": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "array",
+              "items": {
+                "type": "string"
+              }
+            }
+          ],
+          "title": "Custom shaders",
+          "description": "Effects drawn over the terminal, such as CRT screens, glow and cursor trails. They're GLSL files written for Ghostty or Shadertoy, and they run in order."
+        },
+        "animation": {
+          "enum": [
+            true,
+            "always",
+            false
+          ],
+          "title": "Animation",
+          "description": "For animated shaders. The others redraw only when the terminal changes.",
+          "default": true
+        },
+        "folders": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "array",
+              "items": {
+                "type": "string"
+              }
+            }
+          ],
+          "description": "Folders of shaders to choose from. Add and remove them on the shaders page (the library's … menu)."
+        }
+      },
+      "additionalProperties": false
+    },
+    "cli": {
+      "type": "object",
+      "properties": {
+        "remote-control": {
+          "type": "boolean",
+          "title": "Remote control",
+          "description": "Lets zn, Zinc's command-line tool, open, arrange and close tabs, type into them and read them. Any program running as you could use it.",
+          "default": false
+        },
+        "path": {
+          "type": "boolean",
+          "title": "Use zn in other terminals",
+          "description": "Adds zn to your PATH, so other terminals find it too (Zinc's own terminals always do). Shells started from now on see it.",
+          "default": false
+        }
+      },
+      "additionalProperties": false
+    },
+    "notify": {
+      "type": "object",
+      "properties": {
+        "command-finished": {
+          "enum": [
+            "badge",
+            "toast",
+            "toast-always",
+            "never"
+          ],
+          "title": "Long command finishes",
+          "description": "In a pane you weren't looking at.",
+          "default": "badge"
+        },
+        "command-finished-after": {
+          "anyOf": [
+            {
+              "type": "number",
+              "minimum": 0
+            },
+            {
+              "type": "string"
+            }
+          ],
+          "title": "Counts as long after",
+          "description": "Seconds, or with a unit: 45s, 2m.",
+          "default": 10
+        },
+        "command-finished-sound": {
+          "enum": [
+            "off",
+            "notification",
+            "beep"
+          ],
+          "title": "Sound",
+          "description": "Plays when a long command finishes out of view (a Windows notification has its own).",
+          "default": "off"
+        },
+        "programs": {
+          "enum": [
+            "badge",
+            "toast",
+            "toast-always",
+            "never"
+          ],
+          "title": "Program notifications",
+          "description": "When a program asks for one, e.g. a build script finishing (OSC 9 or 777).",
+          "default": "badge"
+        },
+        "finished-color": {
+          "type": "string",
+          "pattern": "^#?[0-9a-fA-F]{6}$",
+          "title": "Finished",
+          "description": "A command finished, or a program sent a notification."
+        },
+        "bell-color": {
+          "type": "string",
+          "pattern": "^#?[0-9a-fA-F]{6}$",
+          "title": "Bell",
+          "description": "A program rang the bell."
+        },
+        "failed-color": {
+          "type": "string",
+          "pattern": "^#?[0-9a-fA-F]{6}$",
+          "title": "Failed",
+          "description": "A command failed, or a program exited with an error."
+        }
+      },
+      "additionalProperties": false
+    },
+    "quick-terminal": {
+      "type": "object",
+      "properties": {
+        "hotkey": {
+          "type": "string",
+          "title": "Hotkey",
+          "description": "Shows and hides the quick terminal from anywhere, e.g. win+grave or ctrl+alt+t.",
+          "default": "win+grave"
+        },
+        "position": {
+          "enum": [
+            "top",
+            "bottom",
+            "left",
+            "right",
+            "center"
+          ],
+          "title": "Position",
+          "default": "center"
+        },
+        "screen": {
+          "enum": [
+            "mouse",
+            "main"
+          ],
+          "title": "Screen",
+          "default": "mouse"
+        },
+        "size": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "array",
+              "items": {
+                "type": "string"
+              },
+              "minItems": 1,
+              "maxItems": 2
+            }
+          ],
+          "title": "Size",
+          "description": "A percentage or pixels (50%, 600px) along its edge. Empty: 50%, or 70% by 60% at \"Center\"."
+        },
+        "autohide": {
+          "type": "boolean",
+          "title": "Hide when it loses focus",
+          "default": true
+        },
+        "animation-duration": {
+          "type": "number",
+          "minimum": 0,
+          "maximum": 2,
+          "title": "Animation",
+          "description": "How long the quick terminal takes to fade in and out. At 0 it appears at once.",
+          "default": 0.2
+        }
+      },
+      "additionalProperties": false
+    },
+    "updates": {
+      "type": "object",
+      "properties": {
+        "check": {
+          "type": "boolean",
+          "title": "Check for updates automatically",
+          "description": "Once a day. New versions download in the background, and you choose when to restart. Only for Zinc installed with its installer.",
+          "default": true
+        }
+      },
+      "additionalProperties": false
+    },
+    "debug": {
+      "type": "object",
+      "properties": {
+        "logging": {
+          "type": "boolean",
+          "title": "Debug log",
+          "description": "Keeps a record of what Zinc does, to send with a bug report. Turn it on, make the problem happen, then copy the log.",
+          "default": false
+        }
+      },
+      "additionalProperties": false
+    },
+    "environment": {
+      "type": "object",
+      "additionalProperties": {
+        "type": "string"
+      },
+      "description": "Environment variables for the programs Zinc starts. An empty value removes one."
+    },
+    "profile": {
+      "type": "object",
+      "properties": {
+        "name": {
+          "type": "string",
+          "title": "Name",
+          "description": "Shown in menus and tabs."
+        },
+        "command": {
+          "type": "string",
+          "title": "Command",
+          "description": "What runs in its tabs: a shell, or any program."
+        },
+        "working-directory": {
+          "type": "string",
+          "title": "Starting folder",
+          "description": "~ (your home), a path, or %VARIABLES%."
+        },
+        "icon": {
+          "type": "string",
+          "title": "Icon",
+          "description": "An image file for its tabs (default: the program's own icon)."
+        },
+        "hidden": {
+          "type": "boolean",
+          "title": "Hidden",
+          "description": "Kept out of the menus (its tabs still reopen).",
+          "default": false
+        },
+        "font": {
+          "$ref": "#/definitions/font"
+        },
+        "colors": {
+          "$ref": "#/definitions/colors"
+        },
+        "terminal": {
+          "$ref": "#/definitions/terminal"
+        },
+        "shaders": {
+          "$ref": "#/definitions/shaders"
+        },
+        "environment": {
+          "$ref": "#/definitions/environment"
+        }
+      },
+      "additionalProperties": false,
+      "description": "A profile: a shell or program, and settings of its own."
+    }
+  }
+}

@@ -1,73 +1,111 @@
-// Reads a Zinc checkout and writes the JSON the site builds from. Nothing is written unless every
-// source parses and passes the guard.
+// Turns Zinc's changelog, reference export and config schema into the files the site builds from.
+// Nothing is written unless every source parses and passes the guard.
 
 import {mkdir, readFile, writeFile} from "node:fs/promises";
-import {join} from "node:path";
-import {parseCatalog, parseConstants} from "./catalog";
+import {dirname, join} from "node:path";
 import {latestRelease, parseChangelog} from "./changelog";
-import {changelogTexts, findBannedNames, hasUnclosedCode, noticeTexts, settingsTexts} from "./guard";
-import {cleanLicenseText, dotnetMajor, licenseSourcePath, parseNotices} from "./notices";
-import type {Notice} from "./types";
+import {actionTexts, changelogTexts, findBannedNames, hasUnclosedCode, noticeTexts, schemaTexts, settingsTexts} from "./guard";
+import {parseReference, parseSchema, schemaFileText} from "./reference";
+import type {SettingsCatalog} from "./types";
 
 
-export const sources = {
+/** The text of each source the sync reads */
+export interface ZincSources {
+    changelog: string;
+    reference: string;
+    schema: string;
+}
+
+/** Where the sources sit in a Zinc checkout. The export script writes the last two. */
+export const checkoutFiles = {
     changelog: "CHANGELOG.md",
-    notices: "src/Zinc.Core/OpenSourceNotices.cs",
-    project: "src/Zinc/Zinc.csproj",
-    settings: "src/Zinc.Core/Settings/SettingsCatalog.cs",
-
-    // The constants the catalog uses, such as `Config.MaxScrollbackLines`
-    config: "src/Zinc.Core/Config.cs",
+    referenceDir: "dist/reference",
+    reference: "zinc-reference.json",
+    schema: "config.schema.json",
 };
 
 export const outputs = {
+    actions: "zinc-actions.json",
     changelog: "zinc-changelog.json",
     notices: "zinc-notices.json",
     release: "zinc-release.json",
     settings: "zinc-settings.json",
 };
 
-async function read(repo: string, path: string) {
+export interface SyncTargets {
+
+    /** The folder for the JSON the pages import */
+    dataDir: string;
+
+    /** The schema file the site serves */
+    schemaFile: string;
+}
+
+async function read(path: string, hint = "") {
     try {
-        return await readFile(join(repo, path), "utf8");
+        return await readFile(path, "utf8");
     }
     catch {
-        throw new Error(`Can't read ${path} in ${repo}`);
+        throw new Error(`Can't read ${path}${hint}`);
     }
 }
 
-export async function syncZinc(repo: string, outDir: string) {
-    const changelog = parseChangelog(await read(repo, sources.changelog));
+/** Reads the sources from a Zinc checkout, with the reference from `referenceDir` when it's given */
+export async function readCheckout(repo: string, referenceDir = join(repo, checkoutFiles.referenceDir)): Promise<ZincSources> {
+    const hint = ". Run `dotnet run scripts/dev/export-reference.cs` in the Zinc repo, or set ZINC_REFERENCE to a folder that has it.";
+    return {
+        changelog: await read(join(repo, checkoutFiles.changelog)),
+        reference: await read(join(referenceDir, checkoutFiles.reference), hint),
+        schema: await read(join(referenceDir, checkoutFiles.schema), hint),
+    };
+}
+
+function listed(texts: Array<{where: string, text: string}>) {
+    return texts.map(t => `  ${t.where}: ${t.text}`).join("\n");
+}
+
+export async function syncZinc(sources: ZincSources, targets: SyncTargets) {
+    const changelog = parseChangelog(sources.changelog);
     const release = latestRelease(changelog);
-    const dotnet = dotnetMajor(await read(repo, sources.project));
+    const reference = parseReference(sources.reference);
+    const schema = parseSchema(sources.schema);
 
-    const records = parseNotices(await read(repo, sources.notices), dotnet);
-    const notices: Notice[] = await Promise.all(records.map(async ({licenseFile, ...record}) => ({
-        ...record,
-        licenseText: cleanLicenseText(await read(repo, licenseSourcePath(licenseFile))),
-    })));
+    // The site doesn't show old names, so they stay out of the committed JSON
+    const strip = <T extends {oldNames: string[]}>({oldNames: _, ...rest}: T) => rest;
+    const settings: SettingsCatalog = {
+        sections: reference.sections,
+        settings: [...reference.settings, ...reference.discovery].map(strip),
+        fileOnly: reference.fileOnly,
+        profileFields: reference.profileFields.map(strip),
+    };
+    const {actions, notices} = reference;
 
-    const constants = parseConstants(await read(repo, sources.config), "Config");
-    const settings = parseCatalog(await read(repo, sources.settings), constants);
-
-    const named = findBannedNames([...changelogTexts(changelog), ...noticeTexts(notices), ...settingsTexts(settings)]);
+    const named = findBannedNames([
+        ...changelogTexts(changelog),
+        ...noticeTexts(notices),
+        ...settingsTexts(settings),
+        ...actionTexts(actions),
+        ...schemaTexts(schema),
+    ]);
     if (named.length) {
-        const list = named.map(t => `  ${t.where}: ${t.text}`).join("\n");
-        throw new Error(`These texts name Windows Terminal. Change them in the Zinc repo, then sync again.\n${list}`);
+        throw new Error(`These texts name Windows Terminal. Change them in the Zinc repo, then sync again.\n${listed(named)}`);
     }
 
     const unclosed = changelogTexts(changelog).filter(t => hasUnclosedCode(t.text));
     if (unclosed.length) {
-        const list = unclosed.map(t => `  ${t.where}: ${t.text}`).join("\n");
-        throw new Error(`These changelog texts have a backtick that doesn't close, so their code spans pair up wrongly. Write a literal backtick inside a double-backtick span (\`\`Win+\` \`\`) in the Zinc repo, then sync again.\n${list}`);
+        throw new Error(`These changelog texts have a backtick that doesn't close, so their code spans pair up wrongly. Write a literal backtick inside a double-backtick span (\`\`Win+\` \`\`) in the Zinc repo, then sync again.\n${listed(unclosed)}`);
     }
 
-    await mkdir(outDir, {recursive: true});
-    const write = (file: string, data: unknown) => writeFile(join(outDir, file), `${JSON.stringify(data, null, 4)}\n`);
+    await mkdir(targets.dataDir, {recursive: true});
+    const write = (file: string, data: unknown) => writeFile(join(targets.dataDir, file), `${JSON.stringify(data, null, 4)}\n`);
+    await write(outputs.actions, actions);
     await write(outputs.changelog, changelog);
     await write(outputs.notices, notices);
     await write(outputs.release, release);
     await write(outputs.settings, settings);
 
-    return {changelog, notices, release, settings};
+    await mkdir(dirname(targets.schemaFile), {recursive: true});
+    await writeFile(targets.schemaFile, schemaFileText(sources.schema));
+
+    return {actions, changelog, notices, reference, release, settings};
 }

@@ -1,17 +1,24 @@
-// `bun run sync:zinc` ... refreshes src/data/generated from a Zinc checkout (ZINC_REPO, default ../zinc).
-// Run it after each Zinc release and commit the JSON. The build reads only the JSON.
+// `bun run sync:zinc` refreshes src/data/generated and public/schema from a Zinc checkout (ZINC_REPO,
+// default ../zinc). The reference export comes from the checkout's dist/reference, or from the folder in
+// ZINC_REFERENCE. Run it after each Zinc release and commit what it writes. The build reads only those files.
 
 import {resolve} from "node:path";
-import {syncZinc} from "../src/lib/zinc/sync";
+import {readCheckout, syncZinc} from "../src/lib/zinc/sync";
 
 
 const repo = resolve(process.env.ZINC_REPO ?? "../zinc");
-const outDir = resolve(import.meta.dir, "../src/data/generated");
+const referenceDir = process.env.ZINC_REFERENCE ? resolve(process.env.ZINC_REFERENCE) : undefined;
+const root = resolve(import.meta.dir, "..");
 
 try {
-    const {changelog, notices, release, settings} = await syncZinc(repo, outDir);
+    const sources = await readCheckout(repo, referenceDir);
+    const {actions, changelog, notices, reference, release, settings} = await syncZinc(sources, {
+        dataDir: resolve(root, "src/data/generated"),
+        schemaFile: resolve(root, "public/schema/config.json"),
+    });
     console.log(`Synced ${release.version} (${release.date}) from ${repo}`);
-    console.log(`  ${changelog.length} builds, ${notices.length} components, ${settings.settings.length} settings`);
+    console.log(`  The reference export is from Zinc ${reference.zinc.version}`);
+    console.log(`  ${changelog.length} builds, ${notices.length} notices, ${settings.settings.length} settings, ${settings.profileFields.length} profile fields, ${actions.length} actions`);
 }
 catch (error) {
     console.error(error instanceof Error ? error.message : error);

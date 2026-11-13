@@ -35,9 +35,9 @@
     ],
     "settings": [
         {
+            "key": "font.family",
             "section": "appearance",
             "group": "Font",
-            "key": "font.family",
             "label": "Font",
             "description": "Any monospace font. Nerd Fonts also show prompt icons.",
             "kind": "font",
@@ -49,12 +49,13 @@
             "step": 1,
             "placeholder": null,
             "nullLabel": null,
-            "numbersAsNumbers": false
+            "numbersAsNumbers": false,
+            "profileOverridable": true
         },
         {
+            "key": "font.size",
             "section": "appearance",
             "group": "Font",
-            "key": "font.size",
             "label": "Size",
             "description": "Ctrl+0 returns to this size.",
             "kind": "number",
@@ -66,12 +67,13 @@
             "step": 0.5,
             "placeholder": null,
             "nullLabel": null,
-            "numbersAsNumbers": false
+            "numbersAsNumbers": false,
+            "profileOverridable": true
         },
         {
+            "key": "font.weight",
             "section": "appearance",
             "group": "Font",
-            "key": "font.weight",
             "label": "Weight",
             "description": "How heavy normal text is. A font without that weight shows its nearest one.",
             "kind": "choice",
@@ -129,12 +131,13 @@
             "step": 1,
             "placeholder": null,
             "nullLabel": null,
-            "numbersAsNumbers": false
+            "numbersAsNumbers": false,
+            "profileOverridable": true
         },
         {
+            "key": "font.bold-weight",
             "section": "appearance",
             "group": "Font",
-            "key": "font.bold-weight",
             "label": "Bold weight",
             "description": "How heavy bold text is.",
             "kind": "choice",
@@ -192,12 +195,13 @@
             "step": 1,
             "placeholder": null,
             "nullLabel": null,
-            "numbersAsNumbers": false
+            "numbersAsNumbers": false,
+            "profileOverridable": true
         },
         {
+            "key": "font.ligatures",
             "section": "appearance",
             "group": "Font",
-            "key": "font.ligatures",
             "label": "Ligatures",
             "description": "Fonts that have them (Cascadia Code, JetBrains Mono, Fira Code) join => != -> and the like into one shape. Each character keeps its own cell, and the character under the cursor isn't joined.",
             "kind": "toggle",
@@ -209,12 +213,13 @@
             "step": 1,
             "placeholder": null,
             "nullLabel": null,
-            "numbersAsNumbers": false
+            "numbersAsNumbers": false,
+            "profileOverridable": true
         },
         {
+            "key": "font.fallback",
             "section": "appearance",
             "group": "Font",
-            "key": "font.fallback",
             "label": "Fallback fonts",
             "description": "For characters your font lacks, tried in order before Windows picks one. Separate them with commas.",
             "kind": "text",
@@ -226,12 +231,13 @@
             "step": 1,
             "placeholder": "Symbols Nerd Font, Noto Sans JP",
             "nullLabel": null,
-            "numbersAsNumbers": false
+            "numbersAsNumbers": false,
+            "profileOverridable": true
         },
         {
+            "key": "font.adjust-cell-height",
             "section": "appearance",
             "group": "Font",
-            "key": "font.adjust-cell-height",
             "label": "Line height",
             "description": "More room between lines, as a percentage (20%) or in pixels (2). A negative value gives less. Text stays centered.",
             "kind": "text",
@@ -243,12 +249,13 @@
             "step": 1,
             "placeholder": "0",
             "nullLabel": null,
-            "numbersAsNumbers": true
+            "numbersAsNumbers": true,
+            "profileOverridable": true
         },
         {
+            "key": "font.builtin-glyphs",
             "section": "appearance",
             "group": "Font",
-            "key": "font.builtin-glyphs",
             "label": "Built-in glyphs",
             "description": "Zinc draws box lines, blocks and Powerline shapes itself, so they join up in any font.",
             "kind": "toggle",
@@ -260,12 +267,13 @@
             "step": 1,
             "placeholder": null,
             "nullLabel": null,
-            "numbersAsNumbers": false
+            "numbersAsNumbers": false,
+            "profileOverridable": true
         },
         {
+            "key": "font.adjust-box-thickness",
             "section": "appearance",
             "group": "Font",
-            "key": "font.adjust-box-thickness",
             "label": "Line thickness",
             "description": "Thicker or thinner built-in lines, in pixels (1, -1) or as a percentage (20%).",
             "kind": "text",
@@ -277,12 +285,13 @@
             "step": 1,
             "placeholder": "0",
             "nullLabel": null,
-            "numbersAsNumbers": true
+            "numbersAsNumbers": true,
+            "profileOverridable": true
         },
         {
+            "key": "colors.theme",
             "section": "appearance",
             "group": "Colors",
-            "key": "colors.theme",
             "label": "Color scheme",
             "description": "About 650 are included. Add your own to the themes folder next to config.toml.",
             "kind": "scheme",
@@ -294,12 +303,13 @@
             "step": 1,
             "placeholder": null,
             "nullLabel": null,
-            "numbersAsNumbers": false
+            "numbersAsNumbers": false,
+            "profileOverridable": true
         },
         {
+            "key": "colors.palette-generate",
             "section": "appearance",
             "group": "Colors",
-            "key": "colors.palette-generate",
             "label": "Match 256 colors to the scheme",
             "description": "Programs that use the extended 256 colors (vim and htop themes) get shades made from the scheme's 16, not the standard ones.",
             "kind": "toggle",
@@ -311,12 +321,13 @@
             "step": 1,
             "placeholder": null,
             "nullLabel": null,
-            "numbersAsNumbers": false
+            "numbersAsNumbers": false,
+            "profileOverridable": true
         },
         {
+            "key": "colors.palette-harmonious",
             "section": "appearance",
             "group": "Colors",
-            "key": "colors.palette-harmonious",
             "label": "Shades from background to text in light schemes",
             "description": "When off, shades run from dark to light, which is what programs expect.",
             "kind": "toggle",
@@ -328,12 +339,13 @@
             "step": 1,
             "placeholder": null,
             "nullLabel": null,
-            "numbersAsNumbers": false
+            "numbersAsNumbers": false,
+            "profileOverridable": true
         },
         {
+            "key": "colors.background",
             "section": "appearance",
             "group": "Colors",
-            "key": "colors.background",
             "label": "Background",
             "description": "",
             "kind": "color",
@@ -345,12 +357,13 @@
             "step": 1,
             "placeholder": null,
             "nullLabel": null,
-            "numbersAsNumbers": false
+            "numbersAsNumbers": false,
+            "profileOverridable": true
         },
         {
+            "key": "colors.foreground",
             "section": "appearance",
             "group": "Colors",
-            "key": "colors.foreground",
             "label": "Text",
             "description": "",
             "kind": "color",
@@ -362,12 +375,13 @@
             "step": 1,
             "placeholder": null,
             "nullLabel": null,
-            "numbersAsNumbers": false
+            "numbersAsNumbers": false,
+            "profileOverridable": true
         },
         {
+            "key": "colors.cursor",
             "section": "appearance",
             "group": "Colors",
-            "key": "colors.cursor",
             "label": "Cursor",
             "description": "",
             "kind": "color",
@@ -379,12 +393,13 @@
             "step": 1,
             "placeholder": null,
             "nullLabel": null,
-            "numbersAsNumbers": false
+            "numbersAsNumbers": false,
+            "profileOverridable": true
         },
         {
+            "key": "colors.cursor-text",
             "section": "appearance",
             "group": "Colors",
-            "key": "colors.cursor-text",
             "label": "Cursor text",
             "description": "The character under a block cursor. If the scheme doesn't set one either, it's the background color.",
             "kind": "color",
@@ -396,12 +411,13 @@
             "step": 1,
             "placeholder": null,
             "nullLabel": null,
-            "numbersAsNumbers": false
+            "numbersAsNumbers": false,
+            "profileOverridable": true
         },
         {
+            "key": "colors.selection-background",
             "section": "appearance",
             "group": "Colors",
-            "key": "colors.selection-background",
             "label": "Selection",
             "description": "Behind selected text. If the scheme doesn't set one either, selection inverts the colors.",
             "kind": "color",
@@ -413,12 +429,13 @@
             "step": 1,
             "placeholder": null,
             "nullLabel": null,
-            "numbersAsNumbers": false
+            "numbersAsNumbers": false,
+            "profileOverridable": true
         },
         {
+            "key": "colors.selection-foreground",
             "section": "appearance",
             "group": "Colors",
-            "key": "colors.selection-foreground",
             "label": "Selected text",
             "description": "If the scheme doesn't set one either, the text keeps its color, or inverts with the selection when \"Selection\" has no color either.",
             "kind": "color",
@@ -430,12 +447,13 @@
             "step": 1,
             "placeholder": null,
             "nullLabel": null,
-            "numbersAsNumbers": false
+            "numbersAsNumbers": false,
+            "profileOverridable": true
         },
         {
+            "key": "colors.pane-header",
             "section": "appearance",
             "group": "Colors",
-            "key": "colors.pane-header",
             "label": "Pane headers",
             "description": "Behind pane titles and tabs. On cards, the border is a step stronger.",
             "kind": "color",
@@ -468,12 +486,13 @@
             "step": 1,
             "placeholder": "From the background",
             "nullLabel": "Standard",
-            "numbersAsNumbers": false
+            "numbersAsNumbers": false,
+            "profileOverridable": true
         },
         {
+            "key": "colors.minimum-contrast",
             "section": "appearance",
             "group": "Readability",
-            "key": "colors.minimum-contrast",
             "label": "Minimum contrast",
             "description": "Text that reads poorly against its background turns black or white. 1 turns it off, 4.5 is the usual accessibility level, and 21 makes all text black or white.",
             "kind": "number",
@@ -485,12 +504,13 @@
             "step": 0.5,
             "placeholder": null,
             "nullLabel": null,
-            "numbersAsNumbers": false
+            "numbersAsNumbers": false,
+            "profileOverridable": true
         },
         {
+            "key": "colors.bold-is-bright",
             "section": "appearance",
             "group": "Readability",
-            "key": "colors.bold-is-bright",
             "label": "Bold in bright colors",
             "description": "Bold text in the first eight colors shows their bright versions, as older terminals did.",
             "kind": "toggle",
@@ -502,12 +522,13 @@
             "step": 1,
             "placeholder": null,
             "nullLabel": null,
-            "numbersAsNumbers": false
+            "numbersAsNumbers": false,
+            "profileOverridable": true
         },
         {
+            "key": "colors.bold",
             "section": "appearance",
             "group": "Readability",
-            "key": "colors.bold",
             "label": "Bold text color",
             "description": "For bold text in the default text color.",
             "kind": "color",
@@ -519,12 +540,13 @@
             "step": 1,
             "placeholder": "Same as the text",
             "nullLabel": null,
-            "numbersAsNumbers": false
+            "numbersAsNumbers": false,
+            "profileOverridable": true
         },
         {
+            "key": "colors.faint-opacity",
             "section": "appearance",
             "group": "Readability",
-            "key": "colors.faint-opacity",
             "label": "Faint text",
             "description": "How bright dim text is (1: as bright as other text).",
             "kind": "number",
@@ -536,12 +558,13 @@
             "step": 0.05,
             "placeholder": null,
             "nullLabel": null,
-            "numbersAsNumbers": false
+            "numbersAsNumbers": false,
+            "profileOverridable": true
         },
         {
+            "key": "colors.find-highlight",
             "section": "appearance",
             "group": "Readability",
-            "key": "colors.find-highlight",
             "label": "Find highlight",
             "description": "Behind each match of Find.",
             "kind": "color",
@@ -553,12 +576,13 @@
             "step": 1,
             "placeholder": "Zinc's yellow",
             "nullLabel": null,
-            "numbersAsNumbers": false
+            "numbersAsNumbers": false,
+            "profileOverridable": true
         },
         {
+            "key": "colors.find-highlight-current",
             "section": "appearance",
             "group": "Readability",
-            "key": "colors.find-highlight-current",
             "label": "Current match",
             "description": "Behind the match Find is on.",
             "kind": "color",
@@ -570,12 +594,13 @@
             "step": 1,
             "placeholder": "Zinc's orange",
             "nullLabel": null,
-            "numbersAsNumbers": false
+            "numbersAsNumbers": false,
+            "profileOverridable": true
         },
         {
+            "key": "terminal.cursor-style",
             "section": "appearance",
             "group": "Cursor",
-            "key": "terminal.cursor-style",
             "label": "Cursor shape",
             "description": "Until a program picks its own (vim's insert mode often does).",
             "kind": "choice",
@@ -608,12 +633,13 @@
             "step": 1,
             "placeholder": null,
             "nullLabel": null,
-            "numbersAsNumbers": false
+            "numbersAsNumbers": false,
+            "profileOverridable": true
         },
         {
+            "key": "terminal.cursor-blink",
             "section": "appearance",
             "group": "Cursor",
-            "key": "terminal.cursor-blink",
             "label": "Blinking cursor",
             "description": "Until a program says otherwise.",
             "kind": "toggle",
@@ -625,12 +651,13 @@
             "step": 1,
             "placeholder": null,
             "nullLabel": null,
-            "numbersAsNumbers": false
+            "numbersAsNumbers": false,
+            "profileOverridable": true
         },
         {
+            "key": "colors.cursor-opacity",
             "section": "appearance",
             "group": "Cursor",
-            "key": "colors.cursor-opacity",
             "label": "Cursor opacity",
             "description": "1: solid. Lower lets the character under a block cursor show in its own color.",
             "kind": "number",
@@ -642,12 +669,13 @@
             "step": 0.05,
             "placeholder": null,
             "nullLabel": null,
-            "numbersAsNumbers": false
+            "numbersAsNumbers": false,
+            "profileOverridable": true
         },
         {
+            "key": "terminal.cursor-style-at-prompt",
             "section": "appearance",
             "group": "Cursor",
-            "key": "terminal.cursor-style-at-prompt",
             "label": "Cursor at the prompt",
             "description": "While the shell waits for a command. A program's own cursor still wins. Needs shell integration.",
             "kind": "choice",
@@ -685,12 +713,13 @@
             "step": 1,
             "placeholder": null,
             "nullLabel": null,
-            "numbersAsNumbers": false
+            "numbersAsNumbers": false,
+            "profileOverridable": true
         },
         {
+            "key": "window.appearance",
             "section": "appearance",
             "group": "Window",
-            "key": "window.appearance",
             "label": "Light or dark",
             "description": "Windows, menus and dialogs. The terminal keeps its color scheme. Restart Zinc to apply.",
             "kind": "choice",
@@ -718,12 +747,13 @@
             "step": 1,
             "placeholder": null,
             "nullLabel": null,
-            "numbersAsNumbers": false
+            "numbersAsNumbers": false,
+            "profileOverridable": false
         },
         {
+            "key": "window.accent",
             "section": "appearance",
             "group": "Window",
-            "key": "window.accent",
             "label": "Accent color",
             "description": "Selections, focus lines, switches and buttons. Restart Zinc to apply.",
             "kind": "choice",
@@ -746,12 +776,13 @@
             "step": 1,
             "placeholder": null,
             "nullLabel": null,
-            "numbersAsNumbers": false
+            "numbersAsNumbers": false,
+            "profileOverridable": false
         },
         {
+            "key": "window.backdrop",
             "section": "appearance",
             "group": "Background",
-            "key": "window.backdrop",
             "label": "Window background",
             "description": "What's behind everything in the window: tabs, sidebar and terminal.",
             "kind": "choice",
@@ -779,12 +810,13 @@
             "step": 1,
             "placeholder": null,
             "nullLabel": null,
-            "numbersAsNumbers": false
+            "numbersAsNumbers": false,
+            "profileOverridable": false
         },
         {
+            "key": "window.backdrop-tint",
             "section": "appearance",
             "group": "Background",
-            "key": "window.backdrop-tint",
             "label": "Window tint",
             "description": "How much color an acrylic or clear background carries. Lower is more see-through.",
             "kind": "number",
@@ -796,12 +828,13 @@
             "step": 0.05,
             "placeholder": null,
             "nullLabel": null,
-            "numbersAsNumbers": false
+            "numbersAsNumbers": false,
+            "profileOverridable": false
         },
         {
+            "key": "window.backdrop-color",
             "section": "appearance",
             "group": "Background",
-            "key": "window.backdrop-color",
             "label": "Window tint color",
             "description": "The color an acrylic or clear background is tinted with.",
             "kind": "color",
@@ -813,12 +846,13 @@
             "step": 1,
             "placeholder": "The terminal's background",
             "nullLabel": "Use the terminal's background",
-            "numbersAsNumbers": false
+            "numbersAsNumbers": false,
+            "profileOverridable": false
         },
         {
+            "key": "colors.background-opacity",
             "section": "appearance",
             "group": "Background",
-            "key": "colors.background-opacity",
             "label": "Terminal background opacity",
             "description": "Lower lets the window background show behind the text (1: solid). Colored cells stay solid.",
             "kind": "number",
@@ -830,12 +864,13 @@
             "step": 0.05,
             "placeholder": null,
             "nullLabel": null,
-            "numbersAsNumbers": false
+            "numbersAsNumbers": false,
+            "profileOverridable": true
         },
         {
+            "key": "shaders.files",
             "section": "appearance",
             "group": "Shaders",
-            "key": "shaders.files",
             "label": "Custom shaders",
             "description": "Effects drawn over the terminal, such as CRT screens, glow and cursor trails. They're GLSL files written for Ghostty or Shadertoy, and they run in order.",
             "kind": "files",
@@ -847,12 +882,13 @@
             "step": 1,
             "placeholder": null,
             "nullLabel": null,
-            "numbersAsNumbers": false
+            "numbersAsNumbers": false,
+            "profileOverridable": true
         },
         {
+            "key": "shaders.animation",
             "section": "appearance",
             "group": "Shaders",
-            "key": "shaders.animation",
             "label": "Animation",
             "description": "For animated shaders. The others redraw only when the terminal changes.",
             "kind": "choice",
@@ -880,12 +916,13 @@
             "step": 1,
             "placeholder": null,
             "nullLabel": null,
-            "numbersAsNumbers": false
+            "numbersAsNumbers": false,
+            "profileOverridable": true
         },
         {
+            "key": "terminal.padding-x",
             "section": "appearance",
             "group": "Spacing",
-            "key": "terminal.padding-x",
             "label": "Padding left and right",
             "description": "Between the window's edge and the text.",
             "kind": "number",
@@ -897,12 +934,13 @@
             "step": 1,
             "placeholder": null,
             "nullLabel": null,
-            "numbersAsNumbers": false
+            "numbersAsNumbers": false,
+            "profileOverridable": true
         },
         {
+            "key": "terminal.padding-y",
             "section": "appearance",
             "group": "Spacing",
-            "key": "terminal.padding-y",
             "label": "Padding top and bottom",
             "description": "Between the window's edge and the text.",
             "kind": "number",
@@ -914,12 +952,13 @@
             "step": 1,
             "placeholder": null,
             "nullLabel": null,
-            "numbersAsNumbers": false
+            "numbersAsNumbers": false,
+            "profileOverridable": true
         },
         {
+            "key": "terminal.padding-balance",
             "section": "appearance",
             "group": "Spacing",
-            "key": "terminal.padding-balance",
             "label": "Even padding",
             "description": "Splits the leftover space between both sides. When off, all of it goes to the right and bottom.",
             "kind": "toggle",
@@ -931,12 +970,13 @@
             "step": 1,
             "placeholder": null,
             "nullLabel": null,
-            "numbersAsNumbers": false
+            "numbersAsNumbers": false,
+            "profileOverridable": true
         },
         {
+            "key": "window.workspace-tabs",
             "section": "layout",
             "group": "Workspaces",
-            "key": "window.workspace-tabs",
             "label": "Workspaces",
             "description": "Tabs along the top, or a list in a sidebar. Applies to windows opened from now on.",
             "kind": "choice",
@@ -959,12 +999,13 @@
             "step": 1,
             "placeholder": null,
             "nullLabel": null,
-            "numbersAsNumbers": false
+            "numbersAsNumbers": false,
+            "profileOverridable": false
         },
         {
+            "key": "window.sidebar",
             "section": "layout",
             "group": "Workspaces",
-            "key": "window.sidebar",
             "label": "Sidebar",
             "description": "Only when \"Workspaces\" is \"In a sidebar\".",
             "kind": "choice",
@@ -992,12 +1033,13 @@
             "step": 1,
             "placeholder": null,
             "nullLabel": null,
-            "numbersAsNumbers": false
+            "numbersAsNumbers": false,
+            "profileOverridable": false
         },
         {
+            "key": "window.title-bar",
             "section": "layout",
             "group": "Workspaces",
-            "key": "window.title-bar",
             "label": "Title bar",
             "description": "Only when \"Workspaces\" is \"In a sidebar\".",
             "kind": "choice",
@@ -1020,12 +1062,13 @@
             "step": 1,
             "placeholder": null,
             "nullLabel": null,
-            "numbersAsNumbers": false
+            "numbersAsNumbers": false,
+            "profileOverridable": false
         },
         {
+            "key": "window.new-workspace-page",
             "section": "layout",
             "group": "Workspaces",
-            "key": "window.new-workspace-page",
             "label": "Start page for new workspaces",
             "description": "Choose a profile, a folder and a name when you open a workspace. Enter starts the default profile.",
             "kind": "toggle",
@@ -1037,12 +1080,13 @@
             "step": 1,
             "placeholder": null,
             "nullLabel": null,
-            "numbersAsNumbers": false
+            "numbersAsNumbers": false,
+            "profileOverridable": false
         },
         {
+            "key": "window.workspace-colors",
             "section": "layout",
             "group": "Workspaces",
-            "key": "window.workspace-colors",
             "label": "Colors for new workspaces",
             "description": "For the ones you don't color yourself.",
             "kind": "choice",
@@ -1070,12 +1114,13 @@
             "step": 1,
             "placeholder": null,
             "nullLabel": null,
-            "numbersAsNumbers": false
+            "numbersAsNumbers": false,
+            "profileOverridable": false
         },
         {
+            "key": "window.start-in",
             "section": "layout",
             "group": "Panes",
-            "key": "window.start-in",
             "label": "New tabs and splits start",
             "description": "New tabs in a workspace with its own folder start there. Without \"Tabs inside panes\", this is for splits only, because a new tab is a new workspace.",
             "kind": "choice",
@@ -1098,12 +1143,13 @@
             "step": 1,
             "placeholder": null,
             "nullLabel": null,
-            "numbersAsNumbers": false
+            "numbersAsNumbers": false,
+            "profileOverridable": false
         },
         {
+            "key": "window.pane-tabs",
             "section": "layout",
             "group": "Panes",
-            "key": "window.pane-tabs",
             "label": "Tabs inside panes",
             "description": "Each pane can hold several tabs.",
             "kind": "toggle",
@@ -1115,12 +1161,13 @@
             "step": 1,
             "placeholder": null,
             "nullLabel": null,
-            "numbersAsNumbers": false
+            "numbersAsNumbers": false,
+            "profileOverridable": false
         },
         {
+            "key": "window.pane-tabs-as",
             "section": "layout",
             "group": "Panes",
-            "key": "window.pane-tabs-as",
             "label": "Show pane tabs as",
             "description": "Only with \"Tabs inside panes\" on.",
             "kind": "choice",
@@ -1143,12 +1190,13 @@
             "step": 1,
             "placeholder": null,
             "nullLabel": null,
-            "numbersAsNumbers": false
+            "numbersAsNumbers": false,
+            "profileOverridable": false
         },
         {
+            "key": "window.pane-headers",
             "section": "layout",
             "group": "Panes",
-            "key": "window.pane-headers",
             "label": "Pane headers",
             "description": "The row above a pane. Its tabs, or its title when it has one tab.",
             "kind": "choice",
@@ -1181,12 +1229,13 @@
             "step": 1,
             "placeholder": null,
             "nullLabel": null,
-            "numbersAsNumbers": false
+            "numbersAsNumbers": false,
+            "profileOverridable": false
         },
         {
+            "key": "window.pane-header-buttons",
             "section": "layout",
             "group": "Panes",
-            "key": "window.pane-header-buttons",
             "label": "Header buttons",
             "description": "Split, maximize and more on the right of a pane's header, with a program's progress beside them.",
             "kind": "choice",
@@ -1219,12 +1268,13 @@
             "step": 1,
             "placeholder": null,
             "nullLabel": null,
-            "numbersAsNumbers": false
+            "numbersAsNumbers": false,
+            "profileOverridable": false
         },
         {
+            "key": "window.pane-gap",
             "section": "layout",
             "group": "Panes",
-            "key": "window.pane-gap",
             "label": "Gap between panes",
             "description": "Above 0, panes are rounded cards with space between them. At 0 they meet at a thin divider.",
             "kind": "number",
@@ -1236,12 +1286,13 @@
             "step": 1,
             "placeholder": null,
             "nullLabel": null,
-            "numbersAsNumbers": false
+            "numbersAsNumbers": false,
+            "profileOverridable": false
         },
         {
+            "key": "window.pane-gap-edges",
             "section": "layout",
             "group": "Panes",
-            "key": "window.pane-gap-edges",
             "label": "Gap at the workspace edges",
             "description": "The same gap around the outside, split or not, so splitting never moves a pane's outer edges. Only with a \"Gap between panes\" above 0.",
             "kind": "toggle",
@@ -1253,12 +1304,13 @@
             "step": 1,
             "placeholder": null,
             "nullLabel": null,
-            "numbersAsNumbers": false
+            "numbersAsNumbers": false,
+            "profileOverridable": false
         },
         {
+            "key": "window.pane-focus",
             "section": "layout",
             "group": "Panes",
-            "key": "window.pane-focus",
             "label": "Show focus with",
             "description": "How the focused pane stands out from the others.",
             "kind": "choice",
@@ -1286,12 +1338,13 @@
             "step": 1,
             "placeholder": null,
             "nullLabel": null,
-            "numbersAsNumbers": false
+            "numbersAsNumbers": false,
+            "profileOverridable": false
         },
         {
+            "key": "window.pane-animations",
             "section": "layout",
             "group": "Panes",
-            "key": "window.pane-animations",
             "label": "Pane animations",
             "description": "Panes slide into place when you split, close, maximize or move them. They don't while \"Animation effects\" is off in Windows Settings.",
             "kind": "toggle",
@@ -1303,12 +1356,13 @@
             "step": 1,
             "placeholder": null,
             "nullLabel": null,
-            "numbersAsNumbers": false
+            "numbersAsNumbers": false,
+            "profileOverridable": false
         },
         {
+            "key": "window.pane-resize-step",
             "section": "layout",
             "group": "Panes",
-            "key": "window.pane-resize-step",
             "label": "Resize step",
             "description": "How far a resize key moves the divider, as a share of the panes it splits.",
             "kind": "number",
@@ -1320,12 +1374,13 @@
             "step": 1,
             "placeholder": null,
             "nullLabel": null,
-            "numbersAsNumbers": false
+            "numbersAsNumbers": false,
+            "profileOverridable": false
         },
         {
+            "key": "window.unfocused-pane-opacity",
             "section": "layout",
             "group": "Panes",
-            "key": "window.unfocused-pane-opacity",
             "label": "Unfocused panes",
             "description": "How bright unfocused panes stay (1: not dimmed).",
             "kind": "number",
@@ -1337,12 +1392,13 @@
             "step": 0.05,
             "placeholder": null,
             "nullLabel": null,
-            "numbersAsNumbers": false
+            "numbersAsNumbers": false,
+            "profileOverridable": false
         },
         {
+            "key": "window.unfocused-pane-fill",
             "section": "layout",
             "group": "Panes",
-            "key": "window.unfocused-pane-fill",
             "label": "Dimming color",
             "description": "What unfocused panes fade toward.",
             "kind": "color",
@@ -1354,12 +1410,13 @@
             "step": 1,
             "placeholder": "The pane's background",
             "nullLabel": null,
-            "numbersAsNumbers": false
+            "numbersAsNumbers": false,
+            "profileOverridable": false
         },
         {
+            "key": "window.divider-color",
             "section": "layout",
             "group": "Panes",
-            "key": "window.divider-color",
             "label": "Divider color",
             "description": "The line between split panes, when \"Gap between panes\" is 0.",
             "kind": "color",
@@ -1371,12 +1428,13 @@
             "step": 1,
             "placeholder": "Zinc's grey",
             "nullLabel": null,
-            "numbersAsNumbers": false
+            "numbersAsNumbers": false,
+            "profileOverridable": false
         },
         {
+            "key": "window.save-state",
             "section": "layout",
             "group": "When you come back",
-            "key": "window.save-state",
             "label": "Reopen windows",
             "description": "Windows, workspaces, splits and tabs come back in their folders.",
             "kind": "choice",
@@ -1399,12 +1457,13 @@
             "step": 1,
             "placeholder": null,
             "nullLabel": null,
-            "numbersAsNumbers": false
+            "numbersAsNumbers": false,
+            "profileOverridable": false
         },
         {
+            "key": "window.quit-after-last-window-closed",
             "section": "layout",
             "group": "When you come back",
-            "key": "window.quit-after-last-window-closed",
             "label": "When the last window closes",
             "description": "",
             "kind": "choice",
@@ -1432,12 +1491,13 @@
             "step": 1,
             "placeholder": null,
             "nullLabel": null,
-            "numbersAsNumbers": false
+            "numbersAsNumbers": false,
+            "profileOverridable": false
         },
         {
+            "key": "window.launch-at-login",
             "section": "layout",
             "group": "When you come back",
-            "key": "window.launch-at-login",
             "label": "When you sign in to Windows",
             "description": "",
             "kind": "choice",
@@ -1465,12 +1525,13 @@
             "step": 1,
             "placeholder": null,
             "nullLabel": null,
-            "numbersAsNumbers": false
+            "numbersAsNumbers": false,
+            "profileOverridable": false
         },
         {
+            "key": "window.explorer-menu",
             "section": "layout",
             "group": "When you come back",
-            "key": "window.explorer-menu",
             "label": "Open in Zinc from File Explorer",
             "description": "Adds \"Open in Zinc\" to the right-click menu of folders and drives. On Windows 11 it's under \"Show more options\".",
             "kind": "toggle",
@@ -1482,12 +1543,13 @@
             "step": 1,
             "placeholder": null,
             "nullLabel": null,
-            "numbersAsNumbers": false
+            "numbersAsNumbers": false,
+            "profileOverridable": false
         },
         {
+            "key": "window.confirm-close",
             "section": "layout",
             "group": "Closing",
-            "key": "window.confirm-close",
             "label": "Ask before closing",
             "description": "When a tab, pane, workspace or window you close still runs a command, or holds two or more tabs. Zinc knows a command is running through shell integration.",
             "kind": "toggle",
@@ -1499,12 +1561,13 @@
             "step": 1,
             "placeholder": null,
             "nullLabel": null,
-            "numbersAsNumbers": false
+            "numbersAsNumbers": false,
+            "profileOverridable": false
         },
         {
+            "key": "window.confirm-quit",
             "section": "layout",
             "group": "Closing",
-            "key": "window.confirm-quit",
             "label": "Ask before quitting with a running command",
             "description": "When you quit Zinc (or restart it for an update) while a command still runs.",
             "kind": "toggle",
@@ -1516,12 +1579,13 @@
             "step": 1,
             "placeholder": null,
             "nullLabel": null,
-            "numbersAsNumbers": false
+            "numbersAsNumbers": false,
+            "profileOverridable": false
         },
         {
+            "key": "terminal.shell-integration",
             "section": "terminal",
             "group": "Shell",
-            "key": "terminal.shell-integration",
             "label": "Shell integration",
             "description": "Marks prompts and commands in PowerShell, bash and zsh (WSL too), so you can jump between prompts, copy a command's output and see which commands failed.",
             "kind": "choice",
@@ -1544,12 +1608,13 @@
             "step": 1,
             "placeholder": null,
             "nullLabel": null,
-            "numbersAsNumbers": false
+            "numbersAsNumbers": false,
+            "profileOverridable": true
         },
         {
+            "key": "terminal.command-marks",
             "section": "terminal",
             "group": "Shell",
-            "key": "terminal.command-marks",
             "label": "Command marks",
             "description": "The bar beside a command's output.",
             "kind": "choice",
@@ -1577,12 +1642,13 @@
             "step": 1,
             "placeholder": null,
             "nullLabel": null,
-            "numbersAsNumbers": false
+            "numbersAsNumbers": false,
+            "profileOverridable": true
         },
         {
+            "key": "terminal.close-on-exit",
             "section": "terminal",
             "group": "Shell",
-            "key": "terminal.close-on-exit",
             "label": "When the program ends",
             "description": "",
             "kind": "choice",
@@ -1610,12 +1676,13 @@
             "step": 1,
             "placeholder": null,
             "nullLabel": null,
-            "numbersAsNumbers": false
+            "numbersAsNumbers": false,
+            "profileOverridable": true
         },
         {
+            "key": "terminal.reload-environment",
             "section": "terminal",
             "group": "Shell",
-            "key": "terminal.reload-environment",
             "label": "Pick up environment changes",
             "description": "New tabs read PATH and other variables from Windows as they start, so an installer's changes work without restarting Zinc.",
             "kind": "toggle",
@@ -1627,12 +1694,13 @@
             "step": 1,
             "placeholder": null,
             "nullLabel": null,
-            "numbersAsNumbers": false
+            "numbersAsNumbers": false,
+            "profileOverridable": true
         },
         {
+            "key": "terminal.program-titles",
             "section": "terminal",
             "group": "Shell",
-            "key": "terminal.program-titles",
             "label": "Program titles",
             "description": "Shells and programs set the tab's title (often the folder or the running command). When off, tabs show the profile's name.",
             "kind": "toggle",
@@ -1644,12 +1712,13 @@
             "step": 1,
             "placeholder": null,
             "nullLabel": null,
-            "numbersAsNumbers": false
+            "numbersAsNumbers": false,
+            "profileOverridable": true
         },
         {
+            "key": "terminal.shell-titles",
             "section": "terminal",
             "group": "Shell",
-            "key": "terminal.shell-titles",
             "label": "Folder and command as the title",
             "description": "The folder at the prompt, the running command otherwise. A program's own title still wins. Needs shell integration.",
             "kind": "toggle",
@@ -1661,12 +1730,13 @@
             "step": 1,
             "placeholder": null,
             "nullLabel": null,
-            "numbersAsNumbers": false
+            "numbersAsNumbers": false,
+            "profileOverridable": true
         },
         {
+            "key": "terminal.scrollback-lines",
             "section": "terminal",
             "group": "Scrollback",
-            "key": "terminal.scrollback-lines",
             "label": "Scrollback lines",
             "description": "How far back you can scroll.",
             "kind": "number",
@@ -1678,12 +1748,13 @@
             "step": 1000,
             "placeholder": null,
             "nullLabel": null,
-            "numbersAsNumbers": false
+            "numbersAsNumbers": false,
+            "profileOverridable": true
         },
         {
+            "key": "terminal.mouse-pointer",
             "section": "terminal",
             "group": "Mouse",
-            "key": "terminal.mouse-pointer",
             "label": "Pointer over text",
             "description": "",
             "kind": "choice",
@@ -1706,12 +1777,13 @@
             "step": 1,
             "placeholder": null,
             "nullLabel": null,
-            "numbersAsNumbers": false
+            "numbersAsNumbers": false,
+            "profileOverridable": true
         },
         {
+            "key": "terminal.word-boundaries",
             "section": "terminal",
             "group": "Mouse",
-            "key": "terminal.word-boundaries",
             "label": "Word boundaries",
             "description": "Characters that end a word when you double-click (space and tab always do). Empty: the ones shown.",
             "kind": "text",
@@ -1723,12 +1795,13 @@
             "step": 1,
             "placeholder": "'\"│`|:;,()[]{}<>$",
             "nullLabel": null,
-            "numbersAsNumbers": false
+            "numbersAsNumbers": false,
+            "profileOverridable": true
         },
         {
+            "key": "terminal.click-to-move",
             "section": "terminal",
             "group": "Mouse",
-            "key": "terminal.click-to-move",
             "label": "Click to move the cursor",
             "description": "At a shell prompt, clicking in the command you're typing moves the cursor there. Needs shell integration.",
             "kind": "toggle",
@@ -1740,12 +1813,13 @@
             "step": 1,
             "placeholder": null,
             "nullLabel": null,
-            "numbersAsNumbers": false
+            "numbersAsNumbers": false,
+            "profileOverridable": true
         },
         {
+            "key": "terminal.right-click",
             "section": "terminal",
             "group": "Mouse",
-            "key": "terminal.right-click",
             "label": "Right-click",
             "description": "Shift+F10 or the Menu key opens the menu anywhere.",
             "kind": "choice",
@@ -1773,12 +1847,13 @@
             "step": 1,
             "placeholder": null,
             "nullLabel": null,
-            "numbersAsNumbers": false
+            "numbersAsNumbers": false,
+            "profileOverridable": true
         },
         {
+            "key": "terminal.link-click",
             "section": "terminal",
             "group": "Mouse",
-            "key": "terminal.link-click",
             "label": "Open links with",
             "description": "Web links and files shown in the terminal.",
             "kind": "choice",
@@ -1806,12 +1881,13 @@
             "step": 1,
             "placeholder": null,
             "nullLabel": null,
-            "numbersAsNumbers": false
+            "numbersAsNumbers": false,
+            "profileOverridable": true
         },
         {
+            "key": "terminal.middle-click-paste",
             "section": "terminal",
             "group": "Mouse",
-            "key": "terminal.middle-click-paste",
             "label": "Middle-click pastes",
             "description": "Unless the program uses the mouse.",
             "kind": "toggle",
@@ -1823,12 +1899,13 @@
             "step": 1,
             "placeholder": null,
             "nullLabel": null,
-            "numbersAsNumbers": false
+            "numbersAsNumbers": false,
+            "profileOverridable": true
         },
         {
+            "key": "window.focus-follows-mouse",
             "section": "terminal",
             "group": "Mouse",
-            "key": "window.focus-follows-mouse",
             "label": "Focus follows mouse",
             "description": "Moving the pointer into a pane focuses it.",
             "kind": "toggle",
@@ -1840,12 +1917,13 @@
             "step": 1,
             "placeholder": null,
             "nullLabel": null,
-            "numbersAsNumbers": false
+            "numbersAsNumbers": false,
+            "profileOverridable": false
         },
         {
+            "key": "terminal.copy-on-select",
             "section": "terminal",
             "group": "Clipboard",
-            "key": "terminal.copy-on-select",
             "label": "Copy on select",
             "description": "Copies text as soon as you select it. The selection stays.",
             "kind": "toggle",
@@ -1857,12 +1935,13 @@
             "step": 1,
             "placeholder": null,
             "nullLabel": null,
-            "numbersAsNumbers": false
+            "numbersAsNumbers": false,
+            "profileOverridable": true
         },
         {
+            "key": "terminal.copy-formatting",
             "section": "terminal",
             "group": "Clipboard",
-            "key": "terminal.copy-formatting",
             "label": "Copy with formatting",
             "description": "Copies colors and styles too, for documents and email. Apps that take plain text still get plain text.",
             "kind": "toggle",
@@ -1874,12 +1953,13 @@
             "step": 1,
             "placeholder": null,
             "nullLabel": null,
-            "numbersAsNumbers": false
+            "numbersAsNumbers": false,
+            "profileOverridable": true
         },
         {
+            "key": "terminal.paste-warning",
             "section": "terminal",
             "group": "Clipboard",
-            "key": "terminal.paste-warning",
             "label": "Paste warning",
             "description": "Ask before pasting text with more than one line.",
             "kind": "choice",
@@ -1907,12 +1987,13 @@
             "step": 1,
             "placeholder": null,
             "nullLabel": null,
-            "numbersAsNumbers": false
+            "numbersAsNumbers": false,
+            "profileOverridable": true
         },
         {
+            "key": "terminal.large-paste-warning",
             "section": "terminal",
             "group": "Clipboard",
-            "key": "terminal.large-paste-warning",
             "label": "Large pastes",
             "description": "Ask before pasting more than 5 KB.",
             "kind": "toggle",
@@ -1924,12 +2005,13 @@
             "step": 1,
             "placeholder": null,
             "nullLabel": null,
-            "numbersAsNumbers": false
+            "numbersAsNumbers": false,
+            "profileOverridable": true
         },
         {
+            "key": "terminal.clipboard-write",
             "section": "terminal",
             "group": "Clipboard",
-            "key": "terminal.clipboard-write",
             "label": "Programs may copy",
             "description": "Copying with OSC 52, as tmux, neovim and remote shells do.",
             "kind": "toggle",
@@ -1941,12 +2023,13 @@
             "step": 1,
             "placeholder": null,
             "nullLabel": null,
-            "numbersAsNumbers": false
+            "numbersAsNumbers": false,
+            "profileOverridable": true
         },
         {
+            "key": "terminal.clipboard-read",
             "section": "terminal",
             "group": "Clipboard",
-            "key": "terminal.clipboard-read",
             "label": "Programs reading the clipboard",
             "description": "Anything running, including a remote host, could read it.",
             "kind": "choice",
@@ -1974,12 +2057,13 @@
             "step": 1,
             "placeholder": null,
             "nullLabel": null,
-            "numbersAsNumbers": false
+            "numbersAsNumbers": false,
+            "profileOverridable": true
         },
         {
+            "key": "terminal.bell",
             "section": "terminal",
             "group": "Bell",
-            "key": "terminal.bell",
             "label": "Bell",
             "description": "When a program rings it, e.g. at a failed tab completion.",
             "kind": "choice",
@@ -2007,12 +2091,13 @@
             "step": 1,
             "placeholder": null,
             "nullLabel": null,
-            "numbersAsNumbers": false
+            "numbersAsNumbers": false,
+            "profileOverridable": true
         },
         {
+            "key": "terminal.bell-sound",
             "section": "terminal",
             "group": "Bell",
-            "key": "terminal.bell-sound",
             "label": "Bell sound",
             "description": "Plays Windows' default sound too.",
             "kind": "toggle",
@@ -2024,12 +2109,13 @@
             "step": 1,
             "placeholder": null,
             "nullLabel": null,
-            "numbersAsNumbers": false
+            "numbersAsNumbers": false,
+            "profileOverridable": true
         },
         {
+            "key": "terminal.screen-flash-bell",
             "section": "terminal",
             "group": "Bell",
-            "key": "terminal.screen-flash-bell",
             "label": "Visual bell",
             "description": "Programs that flash the screen instead of beeping (Git Bash does) ring Zinc's bell, as set in \"Bell\".",
             "kind": "toggle",
@@ -2041,12 +2127,13 @@
             "step": 1,
             "placeholder": null,
             "nullLabel": null,
-            "numbersAsNumbers": false
+            "numbersAsNumbers": false,
+            "profileOverridable": true
         },
         {
+            "key": "cli.remote-control",
             "section": "terminal",
             "group": "Command line",
-            "key": "cli.remote-control",
             "label": "Remote control",
             "description": "Lets zn, Zinc's command-line tool, open, arrange and close tabs, type into them and read them. Any program running as you could use it.",
             "kind": "toggle",
@@ -2058,12 +2145,13 @@
             "step": 1,
             "placeholder": null,
             "nullLabel": null,
-            "numbersAsNumbers": false
+            "numbersAsNumbers": false,
+            "profileOverridable": false
         },
         {
+            "key": "cli.path",
             "section": "terminal",
             "group": "Command line",
-            "key": "cli.path",
             "label": "Use zn in other terminals",
             "description": "Adds zn to your PATH, so other terminals find it too (Zinc's own terminals always do). Shells started from now on see it.",
             "kind": "toggle",
@@ -2075,12 +2163,13 @@
             "step": 1,
             "placeholder": null,
             "nullLabel": null,
-            "numbersAsNumbers": false
+            "numbersAsNumbers": false,
+            "profileOverridable": false
         },
         {
+            "key": "terminal.input-method",
             "section": "terminal",
             "group": "Troubleshooting",
-            "key": "terminal.input-method",
             "label": "Input methods",
             "description": "Type Japanese, Chinese, Korean and more with Windows' input methods (IME). Turn it off if keys behave oddly.",
             "kind": "toggle",
@@ -2092,46 +2181,13 @@
             "step": 1,
             "placeholder": null,
             "nullLabel": null,
-            "numbersAsNumbers": false
+            "numbersAsNumbers": false,
+            "profileOverridable": true
         },
         {
-            "section": "about",
-            "group": "Updates",
-            "key": "updates.check",
-            "label": "Check for updates automatically",
-            "description": "Once a day. New versions download in the background, and you choose when to restart. Only for Zinc installed with its installer.",
-            "kind": "toggle",
-            "default": true,
-            "choices": [],
-            "unit": null,
-            "minimum": 0,
-            "maximum": null,
-            "step": 1,
-            "placeholder": null,
-            "nullLabel": null,
-            "numbersAsNumbers": false
-        },
-        {
-            "section": "about",
-            "group": "Troubleshooting",
-            "key": "debug.logging",
-            "label": "Debug log",
-            "description": "Keeps a record of what Zinc does, to send with a bug report. Turn it on, make the problem happen, then copy the log.",
-            "kind": "toggle",
-            "default": false,
-            "choices": [],
-            "unit": null,
-            "minimum": 0,
-            "maximum": null,
-            "step": 1,
-            "placeholder": null,
-            "nullLabel": null,
-            "numbersAsNumbers": false
-        },
-        {
+            "key": "window.low-latency-drawing",
             "section": "terminal",
             "group": "Troubleshooting",
-            "key": "window.low-latency-drawing",
             "label": "Low-latency drawing",
             "description": "What you type shows up about one screen refresh sooner. Turn it off if a terminal draws wrong or stops drawing, and tell us. Applies to terminals opened from now on.",
             "kind": "toggle",
@@ -2143,12 +2199,13 @@
             "step": 1,
             "placeholder": null,
             "nullLabel": null,
-            "numbersAsNumbers": false
+            "numbersAsNumbers": false,
+            "profileOverridable": false
         },
         {
+            "key": "window.free-hidden-memory",
             "section": "terminal",
             "group": "Troubleshooting",
-            "key": "window.free-hidden-memory",
             "label": "Free memory of hidden tabs",
             "description": "Background tabs, minimized windows and the dismissed quick terminal give back their graphics memory and rebuild it when you return. Turn it off if switching tabs flashes. Only with \"Low-latency drawing\".",
             "kind": "toggle",
@@ -2160,12 +2217,13 @@
             "step": 1,
             "placeholder": null,
             "nullLabel": null,
-            "numbersAsNumbers": false
+            "numbersAsNumbers": false,
+            "profileOverridable": false
         },
         {
+            "key": "window.free-hidden-after",
             "section": "terminal",
             "group": "Troubleshooting",
-            "key": "window.free-hidden-after",
             "label": "Free it after",
             "description": "Seconds, or with a unit: 45s, 2m.",
             "kind": "text",
@@ -2177,12 +2235,13 @@
             "step": 1,
             "placeholder": "60",
             "nullLabel": null,
-            "numbersAsNumbers": true
+            "numbersAsNumbers": true,
+            "profileOverridable": false
         },
         {
+            "key": "window.software-rendering",
             "section": "terminal",
             "group": "Troubleshooting",
-            "key": "window.software-rendering",
             "label": "Software rendering",
             "description": "Draws with the processor instead of the graphics card, which is slower. Use it for broken graphics drivers, some virtual machines and remote desktop glitches. Applies to terminals opened from now on.",
             "kind": "toggle",
@@ -2194,12 +2253,13 @@
             "step": 1,
             "placeholder": null,
             "nullLabel": null,
-            "numbersAsNumbers": false
+            "numbersAsNumbers": false,
+            "profileOverridable": false
         },
         {
+            "key": "notify.command-finished",
             "section": "notifications",
             "group": "Long commands",
-            "key": "notify.command-finished",
             "label": "Long command finishes",
             "description": "In a pane you weren't looking at.",
             "kind": "choice",
@@ -2232,12 +2292,13 @@
             "step": 1,
             "placeholder": null,
             "nullLabel": null,
-            "numbersAsNumbers": false
+            "numbersAsNumbers": false,
+            "profileOverridable": false
         },
         {
+            "key": "notify.command-finished-after",
             "section": "notifications",
             "group": "Long commands",
-            "key": "notify.command-finished-after",
             "label": "Counts as long after",
             "description": "Seconds, or with a unit: 45s, 2m.",
             "kind": "text",
@@ -2249,12 +2310,13 @@
             "step": 1,
             "placeholder": "10",
             "nullLabel": null,
-            "numbersAsNumbers": true
+            "numbersAsNumbers": true,
+            "profileOverridable": false
         },
         {
+            "key": "notify.command-finished-sound",
             "section": "notifications",
             "group": "Long commands",
-            "key": "notify.command-finished-sound",
             "label": "Sound",
             "description": "Plays when a long command finishes out of view (a Windows notification has its own).",
             "kind": "choice",
@@ -2282,12 +2344,13 @@
             "step": 1,
             "placeholder": null,
             "nullLabel": null,
-            "numbersAsNumbers": false
+            "numbersAsNumbers": false,
+            "profileOverridable": false
         },
         {
+            "key": "notify.programs",
             "section": "notifications",
             "group": "Programs",
-            "key": "notify.programs",
             "label": "Program notifications",
             "description": "When a program asks for one, e.g. a build script finishing (OSC 9 or 777).",
             "kind": "choice",
@@ -2320,12 +2383,13 @@
             "step": 1,
             "placeholder": null,
             "nullLabel": null,
-            "numbersAsNumbers": false
+            "numbersAsNumbers": false,
+            "profileOverridable": false
         },
         {
+            "key": "notify.finished-color",
             "section": "notifications",
             "group": "Dot colors",
-            "key": "notify.finished-color",
             "label": "Finished",
             "description": "A command finished, or a program sent a notification.",
             "kind": "color",
@@ -2337,12 +2401,13 @@
             "step": 1,
             "placeholder": "Zinc's green",
             "nullLabel": "Use Zinc's green",
-            "numbersAsNumbers": false
+            "numbersAsNumbers": false,
+            "profileOverridable": false
         },
         {
+            "key": "notify.bell-color",
             "section": "notifications",
             "group": "Dot colors",
-            "key": "notify.bell-color",
             "label": "Bell",
             "description": "A program rang the bell.",
             "kind": "color",
@@ -2354,12 +2419,13 @@
             "step": 1,
             "placeholder": "Zinc's amber",
             "nullLabel": "Use Zinc's amber",
-            "numbersAsNumbers": false
+            "numbersAsNumbers": false,
+            "profileOverridable": false
         },
         {
+            "key": "notify.failed-color",
             "section": "notifications",
             "group": "Dot colors",
-            "key": "notify.failed-color",
             "label": "Failed",
             "description": "A command failed, or a program exited with an error.",
             "kind": "color",
@@ -2371,12 +2437,13 @@
             "step": 1,
             "placeholder": "Zinc's red",
             "nullLabel": "Use Zinc's red",
-            "numbersAsNumbers": false
+            "numbersAsNumbers": false,
+            "profileOverridable": false
         },
         {
+            "key": "quick-terminal.hotkey",
             "section": "quick",
             "group": "Summon",
-            "key": "quick-terminal.hotkey",
             "label": "Hotkey",
             "description": "Shows and hides the quick terminal from anywhere, e.g. win+grave or ctrl+alt+t.",
             "kind": "text",
@@ -2388,12 +2455,13 @@
             "step": 1,
             "placeholder": null,
             "nullLabel": null,
-            "numbersAsNumbers": false
+            "numbersAsNumbers": false,
+            "profileOverridable": false
         },
         {
+            "key": "quick-terminal.position",
             "section": "quick",
             "group": "Placement",
-            "key": "quick-terminal.position",
             "label": "Position",
             "description": "",
             "kind": "choice",
@@ -2431,12 +2499,13 @@
             "step": 1,
             "placeholder": null,
             "nullLabel": null,
-            "numbersAsNumbers": false
+            "numbersAsNumbers": false,
+            "profileOverridable": false
         },
         {
+            "key": "quick-terminal.screen",
             "section": "quick",
             "group": "Placement",
-            "key": "quick-terminal.screen",
             "label": "Screen",
             "description": "",
             "kind": "choice",
@@ -2459,12 +2528,13 @@
             "step": 1,
             "placeholder": null,
             "nullLabel": null,
-            "numbersAsNumbers": false
+            "numbersAsNumbers": false,
+            "profileOverridable": false
         },
         {
+            "key": "quick-terminal.size",
             "section": "quick",
             "group": "Placement",
-            "key": "quick-terminal.size",
             "label": "Size",
             "description": "A percentage or pixels (50%, 600px) along its edge. Empty: 50%, or 70% by 60% at \"Center\".",
             "kind": "text",
@@ -2476,12 +2546,13 @@
             "step": 1,
             "placeholder": "50%",
             "nullLabel": null,
-            "numbersAsNumbers": false
+            "numbersAsNumbers": false,
+            "profileOverridable": false
         },
         {
+            "key": "quick-terminal.autohide",
             "section": "quick",
             "group": "Behavior",
-            "key": "quick-terminal.autohide",
             "label": "Hide when it loses focus",
             "description": "",
             "kind": "toggle",
@@ -2493,12 +2564,13 @@
             "step": 1,
             "placeholder": null,
             "nullLabel": null,
-            "numbersAsNumbers": false
+            "numbersAsNumbers": false,
+            "profileOverridable": false
         },
         {
+            "key": "quick-terminal.animation-duration",
             "section": "quick",
             "group": "Behavior",
-            "key": "quick-terminal.animation-duration",
             "label": "Animation",
             "description": "How long the quick terminal takes to fade in and out. At 0 it appears at once.",
             "kind": "number",
@@ -2510,12 +2582,49 @@
             "step": 0.05,
             "placeholder": null,
             "nullLabel": null,
-            "numbersAsNumbers": false
+            "numbersAsNumbers": false,
+            "profileOverridable": false
         },
         {
+            "key": "updates.check",
+            "section": "about",
+            "group": "Updates",
+            "label": "Check for updates automatically",
+            "description": "Once a day. New versions download in the background, and you choose when to restart. Only for Zinc installed with its installer.",
+            "kind": "toggle",
+            "default": true,
+            "choices": [],
+            "unit": null,
+            "minimum": 0,
+            "maximum": null,
+            "step": 1,
+            "placeholder": null,
+            "nullLabel": null,
+            "numbersAsNumbers": false,
+            "profileOverridable": false
+        },
+        {
+            "key": "debug.logging",
+            "section": "about",
+            "group": "Troubleshooting",
+            "label": "Debug log",
+            "description": "Keeps a record of what Zinc does, to send with a bug report. Turn it on, make the problem happen, then copy the log.",
+            "kind": "toggle",
+            "default": false,
+            "choices": [],
+            "unit": null,
+            "minimum": 0,
+            "maximum": null,
+            "step": 1,
+            "placeholder": null,
+            "nullLabel": null,
+            "numbersAsNumbers": false,
+            "profileOverridable": false
+        },
+        {
+            "key": "discover.wsl",
             "section": "profiles",
             "group": "Find shells on this PC",
-            "key": "discover.wsl",
             "label": "WSL distributions",
             "description": "",
             "kind": "toggle",
@@ -2527,12 +2636,13 @@
             "step": 1,
             "placeholder": null,
             "nullLabel": null,
-            "numbersAsNumbers": false
+            "numbersAsNumbers": false,
+            "profileOverridable": false
         },
         {
+            "key": "discover.powershell",
             "section": "profiles",
             "group": "Find shells on this PC",
-            "key": "discover.powershell",
             "label": "PowerShell 7 and Windows PowerShell",
             "description": "",
             "kind": "toggle",
@@ -2544,12 +2654,13 @@
             "step": 1,
             "placeholder": null,
             "nullLabel": null,
-            "numbersAsNumbers": false
+            "numbersAsNumbers": false,
+            "profileOverridable": false
         },
         {
+            "key": "discover.cmd",
             "section": "profiles",
             "group": "Find shells on this PC",
-            "key": "discover.cmd",
             "label": "Command Prompt",
             "description": "",
             "kind": "toggle",
@@ -2561,12 +2672,13 @@
             "step": 1,
             "placeholder": null,
             "nullLabel": null,
-            "numbersAsNumbers": false
+            "numbersAsNumbers": false,
+            "profileOverridable": false
         },
         {
+            "key": "discover.git-bash",
             "section": "profiles",
             "group": "Find shells on this PC",
-            "key": "discover.git-bash",
             "label": "Git Bash",
             "description": "",
             "kind": "toggle",
@@ -2578,12 +2690,13 @@
             "step": 1,
             "placeholder": null,
             "nullLabel": null,
-            "numbersAsNumbers": false
+            "numbersAsNumbers": false,
+            "profileOverridable": false
         },
         {
+            "key": "discover.msys2",
             "section": "profiles",
             "group": "Find shells on this PC",
-            "key": "discover.msys2",
             "label": "MSYS2",
             "description": "",
             "kind": "toggle",
@@ -2595,12 +2708,13 @@
             "step": 1,
             "placeholder": null,
             "nullLabel": null,
-            "numbersAsNumbers": false
+            "numbersAsNumbers": false,
+            "profileOverridable": false
         },
         {
+            "key": "discover.visual-studio",
             "section": "profiles",
             "group": "Find shells on this PC",
-            "key": "discover.visual-studio",
             "label": "Visual Studio developer shells",
             "description": "",
             "kind": "toggle",
@@ -2612,12 +2726,13 @@
             "step": 1,
             "placeholder": null,
             "nullLabel": null,
-            "numbersAsNumbers": false
+            "numbersAsNumbers": false,
+            "profileOverridable": false
         },
         {
+            "key": "discover.ssh",
             "section": "profiles",
             "group": "Find shells on this PC",
-            "key": "discover.ssh",
             "label": "SSH hosts",
             "description": "From ~/.ssh/config.",
             "kind": "toggle",
@@ -2629,7 +2744,8 @@
             "step": 1,
             "placeholder": null,
             "nullLabel": null,
-            "numbersAsNumbers": false
+            "numbersAsNumbers": false,
+            "profileOverridable": false
         }
     ],
     "fileOnly": [
@@ -2640,6 +2756,98 @@
         {
             "key": "shaders.folders",
             "text": "Folders of shaders to choose from. Add and remove them on the shaders page (the library's … menu)."
+        }
+    ],
+    "profileFields": [
+        {
+            "key": "name",
+            "section": "profiles",
+            "group": "General",
+            "label": "Name",
+            "description": "Shown in menus and tabs.",
+            "kind": "text",
+            "default": null,
+            "choices": [],
+            "unit": null,
+            "minimum": 0,
+            "maximum": null,
+            "step": 1,
+            "placeholder": null,
+            "nullLabel": null,
+            "numbersAsNumbers": false,
+            "profileOverridable": false
+        },
+        {
+            "key": "command",
+            "section": "profiles",
+            "group": "General",
+            "label": "Command",
+            "description": "What runs in its tabs: a shell, or any program.",
+            "kind": "text",
+            "default": null,
+            "choices": [],
+            "unit": null,
+            "minimum": 0,
+            "maximum": null,
+            "step": 1,
+            "placeholder": null,
+            "nullLabel": null,
+            "numbersAsNumbers": false,
+            "profileOverridable": false
+        },
+        {
+            "key": "working-directory",
+            "section": "profiles",
+            "group": "General",
+            "label": "Starting folder",
+            "description": "~ (your home), a path, or %VARIABLES%.",
+            "kind": "text",
+            "default": null,
+            "choices": [],
+            "unit": null,
+            "minimum": 0,
+            "maximum": null,
+            "step": 1,
+            "placeholder": "~",
+            "nullLabel": null,
+            "numbersAsNumbers": false,
+            "profileOverridable": false
+        },
+        {
+            "key": "icon",
+            "section": "profiles",
+            "group": "General",
+            "label": "Icon",
+            "description": "An image file for its tabs (default: the program's own icon).",
+            "kind": "text",
+            "default": null,
+            "choices": [],
+            "unit": null,
+            "minimum": 0,
+            "maximum": null,
+            "step": 1,
+            "placeholder": null,
+            "nullLabel": null,
+            "numbersAsNumbers": false,
+            "profileOverridable": false
+        },
+        {
+            "key": "hidden",
+            "section": "profiles",
+            "group": "General",
+            "label": "Hidden",
+            "description": "Kept out of the menus (its tabs still reopen).",
+            "kind": "toggle",
+            "default": false,
+            "choices": [],
+            "unit": null,
+            "minimum": 0,
+            "maximum": null,
+            "step": 1,
+            "placeholder": null,
+            "nullLabel": null,
+            "numbersAsNumbers": false,
+            "profileOverridable": false
         }
     ]
 }

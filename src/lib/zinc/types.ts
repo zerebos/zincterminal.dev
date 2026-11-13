@@ -1,4 +1,4 @@
-// The shapes of the JSON that `bun run sync:zinc` writes to src/data/generated
+// The shapes of the JSON that `bun run sync:zinc` reads from Zinc and writes to src/data/generated
 
 /** One build in Zinc's changelog */
 export interface ChangelogEntry {
@@ -45,10 +45,15 @@ export interface Notice {
 /** Zinc's settings catalog: what the Settings window edits, by section */
 export interface SettingsCatalog {
     sections: SettingsSection[];
+
+    /** The settings, then the shells Zinc looks for (`discover.*`) */
     settings: Setting[];
 
     /** Keys that only config.toml sets, with what Zinc tells people about them */
     fileOnly: Array<{key: string, text: string}>;
+
+    /** The keys of a `[profile.<id>]` table that aren't settings, such as `command` */
+    profileFields: Setting[];
 }
 
 export interface SettingsSection {
@@ -95,6 +100,9 @@ export interface Setting {
 
     /** For text settings: `10` is written as a number, `30s` as a string */
     numbersAsNumbers: boolean;
+
+    /** Whether a `[profile.<id>]` table can set its own value */
+    profileOverridable: boolean;
 }
 
 export interface SettingChoice {
@@ -103,4 +111,53 @@ export interface SettingChoice {
     /** `null` is the default, which writes nothing */
     value: SettingValue;
     detail: string | null;
+}
+
+/** Something a key can be bound to, as Settings › Keyboard lists it */
+export interface Action {
+
+    /** What `[keys]` and `zn action` use, such as `split` */
+    name: string;
+
+    /** The command palette's name for it, such as `Copy with formatting` */
+    title: string;
+    description: string;
+
+    /** The kind of argument it takes, such as `direction`, or `null` for none */
+    argument: string | null;
+    category: string;
+    defaultKeys: ActionKey[];
+}
+
+export interface ActionKey {
+
+    /** A chord or sequence, such as `alt+shift+plus` */
+    keys: string;
+
+    /** The action with its argument, such as `split right` */
+    action: string;
+}
+
+/** Zinc's `zinc-reference.json`, as far as the site reads it */
+export interface ZincReference {
+    format: number;
+
+    /** The build that wrote it, such as `0.1.0-dev+294b6a4` */
+    zinc: {version: string;};
+    sections: SettingsSection[];
+    settings: ReferenceSetting[];
+    fileOnly: SettingsCatalog["fileOnly"];
+    profileFields: ReferenceSetting[];
+    discovery: ReferenceSetting[];
+    actions: Action[];
+
+    /** Zinc's own entry comes first, then the components it ships */
+    notices: Notice[];
+}
+
+/** A setting as the reference gives it */
+export interface ReferenceSetting extends Setting {
+
+    /** Keys it used to have, which Zinc still reads */
+    oldNames: string[];
 }
