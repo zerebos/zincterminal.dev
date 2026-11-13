@@ -1,8 +1,9 @@
 import type {Release} from "../lib/zinc/types";
 import zincRelease from "./generated/zinc-release.json";
 
-// Zinc's GitHub links are null, and left out wherever they appear, until the Zinc repo is public
+// Zinc's roadmap link is null, and left out wherever it appears, until it has an address
 
+const zincRepo = "https://github.com/zerebos/zinc";
 const feedbackEmail = "feedback@zincterminal.dev";
 
 export const links = {
@@ -25,10 +26,12 @@ export const links = {
     changelog: "/changelog",
     thirdPartyNotices: "/notices",
 
-    // Hidden until the Zinc repo is public
-    zincRepo: null as string | null,
-    zincReleases: null as string | null,
-    zincIssues: null as string | null,
+    zincRepo,
+    zincIssues: `${zincRepo}/issues`,
+    zincReleases: `${zincRepo}/releases`,
+    zincLicense: `${zincRepo}/blob/main/LICENSE`,
+
+    // Hidden until it has an address
     zincRoadmap: null as string | null
 };
 
@@ -86,12 +89,12 @@ export const footerDocs: FooterColumn = {
 
 export const footerProject: FooterColumn = {
     title: "Project",
-    links: shown([
+    links: [
         {label: "Source on GitHub", href: links.zincRepo},
-        {label: "Releases", href: links.zincReleases},
+        {label: "Report an issue", href: links.zincIssues},
         {label: "Send feedback", href: links.feedback},
         {label: "Discord", href: links.discord}
-    ])
+    ]
 };
 
 export const footer: FooterColumn[] = [footerProduct, footerDocs, footerProject];

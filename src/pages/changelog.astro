@@ -69,8 +69,8 @@ const toc: TocEntry[] = builds.map(build => ({
         </>
     )}
     <Fragment slot="endnote">
-        <p><b>Found a bug in a build?</b> Email <a href={links.feedback}>{links.feedbackEmail}</a> with the version from Settings › About, or tell us in the Discord.</p>
-        <Button href={links.feedback}>Send feedback</Button>
+        <p><b>Found a bug in a build?</b> <a href={links.zincIssues}>Open an issue on GitHub</a> with the version from Settings › About, or email <a href={links.feedback}>{links.feedbackEmail}</a>.</p>
+        <Button href={links.zincIssues}>Report an issue</Button>
     </Fragment>
 </ReadingLayout>
 

@@ -104,7 +104,7 @@ The docs are one MDX file, `src/content/docs/using-zinc.mdx`, in the `docs` cont
 ## Layout
 
 - `src/pages/` holds the seven pages. `src/layouts/Base.astro` holds the shared document shell and the no-flash theme script, and `src/layouts/ReadingLayout.astro` holds the sidebar layout for docs, changelog and notices.
-- `src/data/site.ts` holds the links (the downloads, the feedback address and the Discord among them), the release info and the shared footer. Zinc's GitHub links are `null` and left out until the repo is public.
+- `src/data/site.ts` holds the links (the downloads, the feedback address and the Discord among them), the release info and the shared footer. Zinc's roadmap link is `null` and left out until it has an address.
 - `src/components/site/` holds the shared pieces: header, footer, theme switch, buttons, sections and copy buttons.
 - `src/components/landing/` and `src/components/lit-cell/` hold each page's sections.
 - `src/components/reading/` holds the reading pages' pieces (the docs list, contents list, section spy, filters, setting entries, and changelog and notice rows), and `src/components/prose/` holds the docs' MDX components. Their styles are `src/styles/reading.css` and `src/styles/prose.css`.

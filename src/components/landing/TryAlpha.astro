@@ -42,12 +42,12 @@ const missing = [
             <div class="buttons">
                 <Button href={links.download} primary large>Download for Windows</Button>
                 <Button href={links.downloadPortable} large>Portable zip</Button>
-                {links.zincRepo && <Button href={links.zincRepo} large>View source on GitHub</Button>}
+                <a class="textlink" href={links.zincRepo}>Source on GitHub</a>
             </div>
             <p class="cap">Zinc is in public alpha and free. The installer sets it up for your account only, with no administrator prompt, and keeps it up to date. Current build: <span class="version">{release.version}</span> · {release.requirements}</p>
             <p class="cap">Alpha builds aren't signed yet, so Windows SmartScreen may ask first: choose <b>More info</b>, then <b>Run anyway</b>.</p>
             <InstallCommand command="winget" comment="# coming soon" />
-            <p class="cap">Found a bug or have an idea? Email <a class="textlink" href={links.feedback}>{links.feedbackEmail}</a> or join the <a class="textlink" href={links.discord}>Discord</a>.</p>
+            <p class="cap">Found a bug or have an idea? <a class="textlink" href={links.zincIssues}>Open an issue on GitHub</a>, email <a class="textlink" href={links.feedback}>{links.feedbackEmail}</a> or join the <a class="textlink" href={links.discord}>Discord</a>.</p>
             <CodeBlock name="zn --help" lines={help} copy="zn --help" copyLabel="Copy command" copyDuration={1600} />
             <p class="cap note">Inside a Zinc terminal, <code class="zn-inline">zn</code> acts on that terminal and its pane, workspace and window. Outside, it acts on the window you used last.</p>
         </div>
