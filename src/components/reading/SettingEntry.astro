@@ -47,6 +47,8 @@ const text = [table ? `${table}.${name}` : name, setting.label, setting.descript
         {isPerProfile && <span class="cfg-tag" title="A profile can set its own">Per profile</span>}
     </div>
     {setting.description && <p class="cfg-desc">{setting.description}</p>}
+    <slot />
+
     <dl class="cfg-meta">
         <div><dt>Type</dt><dd>{type}{range && <span class="dim">, {range}</span>}</dd></div>
         <div><dt>Default</dt><dd>{"code" in fallback ? <code>{fallback.code}</code> : fallback.words}</dd></div>

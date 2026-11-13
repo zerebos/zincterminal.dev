@@ -1,0 +1,245 @@
+---
+// Every action and its default keys, generated from Zinc's action list
+import CodeBlock, {type CodeLine} from "../../components/site/CodeBlock.astro";
+import Note from "../../components/prose/Note.astro";
+import ReadingLayout from "../../layouts/ReadingLayout.astro";
+import type {TocEntry} from "../../components/reading/toc";
+import actionsFile from "../../data/generated/zinc-actions.json";
+import {release} from "../../data/site";
+import {actionGroups, parseKeys} from "../../lib/zinc/keys";
+import type {ActionsFile} from "../../lib/zinc/types";
+
+const file = actionsFile as ActionsFile;
+const {keys: syntax} = file;
+const groups = actionGroups(file);
+const total = file.actions.length;
+const sequence = (first: string, then: string) => `${first} ${syntax.sequenceSeparator} ${then}`;
+
+// The `[keys]` example, as keys, actions and comments. The build stops if Zinc stops accepting one of them.
+const example: Array<[keys: string, action: string, comment?: string]> = [
+    ["ctrl+shift+w", syntax.unbind, "free a default"],
+    ["ctrl+w", "close-tab"],
+    ["alt+shift+plus", "split down"],
+    ["ctrl+shift+1", "new-tab wsl:Fedora", "a profile by id"],
+    [sequence("ctrl+a", "c"), "new-tab", "a sequence, like a tmux prefix"],
+];
+for (const [keys, action] of example) {
+    parseKeys(keys, syntax);
+    const name = action.split(" ")[0];
+    if (action !== syntax.unbind && !file.actions.some(a => a.name === name)) throw new Error(`The [keys] example on /docs/keys binds "${action}", which isn't an action. Change the example.`);
+}
+
+// Comments line up two spaces after the longest commented line
+const written = (keys: string, action: string) => `"${keys}" = "${action}"`;
+const commentAt = Math.max(...example.filter(e => e[2]).map(([keys, action]) => written(keys, action).length)) + 2;
+const exampleLines: CodeLine[] = [
+    [["t", "[keys]"]],
+    ...example.map(([keys, action, comment]): CodeLine => [
+        ["k", `"${keys}"`],
+        " = ",
+        ["s", `"${action}"`],
+        ...(comment ? [" ".repeat(commentAt - written(keys, action).length), ["c", `# ${comment}`]] satisfies CodeLine : []),
+    ]),
+];
+const exampleText = ["[keys]", ...example.map(([keys, action]) => written(keys, action))].join("\n");
+
+const toc: TocEntry[] = groups.map(group => ({
+    label: group.title,
+    href: `#${group.id}`,
+    detail: String(group.rows.length),
+}));
+---
+
+<ReadingLayout
+    title="Zinc keys and actions"
+    description="Every action in Zinc and the keys it starts with, and how to bind them in config.toml."
+    current="docs"
+    kicker="Docs"
+    heading="Keys and actions"
+    toc={toc}
+    docs="keys"
+>
+    <Fragment slot="intro">
+        <p class="lead">Every action Zinc has, and the keys it starts with. Change any of them in <span class="ui">Settings<span class="sep">›</span>Keyboard</span> or in <code>[keys]</code>, run them from the command palette, or from a script with <code>zn action</code>.</p>
+        <p class="meta"><span>For <code>{release.version}</code></span><span>{total} actions, from the same list the Settings window uses</span></p>
+        <CodeBlock name="config.toml" lines={exampleLines} copy={exampleText} copyLabel="Copy" />
+        <p class="keys-note">Keys are modifiers ({syntax.modifiers.map((m, i) => <>{i > 0 && ", "}<code>{m}</code></>)}) plus one key. <code>"{syntax.unbind}"</code> takes a default away. An action with an argument takes it after a space: <code>"split down"</code>.</p>
+    </Fragment>
+    {groups.map(group => (
+        <section class="kgroup" aria-labelledby={`h-${group.id}`}>
+            <h2 id={group.id}>
+                <span id={`h-${group.id}`}>{group.title}</span>
+                <a class="anchor" href={`#${group.id}`} aria-label={`Link to ${group.title}`}></a>
+            </h2>
+            <div class="acts">
+                <div class="act act-head" aria-hidden="true">
+                    <span>Action</span>
+                    <span>What it does</span>
+                    <span>Default keys</span>
+                </div>
+                {group.rows.map(row => (
+                    <div class="act" id={row.name} data-text={row.text} data-keys={row.match.join("|")}>
+                        <div class="act-name">
+                            <a href={`#${row.name}`}><code>{row.name}</code></a>
+                            <span class="act-title">{row.title}</span>
+                        </div>
+                        <div class="act-what">
+                            <p>{row.description}</p>
+                            {row.takes && <p class="act-arg"><span class="lbl">Takes</span> {row.takes}</p>}
+                        </div>
+                        <div class="act-keys">
+                            {row.keys.length > 0
+                                ? <ul>{row.keys.map(cap => <li><kbd>{cap.label}</kbd>{cap.argument && <span class="karg">{cap.argument}</span>}</li>)}</ul>
+                                : <span class="nokey">No key by default</span>}
+                        </div>
+                    </div>
+                ))}
+            </div>
+        </section>
+    ))}
+    <Note title="Key sequences">
+        Join keys with <code>{syntax.sequenceSeparator}</code> to press them one after another, like a tmux prefix: <code>"{sequence("ctrl+a", "c")}" = "new-tab"</code>. The first key then only starts sequences and doesn't reach the shell.
+    </Note>
+</ReadingLayout>
+
+<style>
+    /* Element and class together, to outrank prose.css without naming the layout's elements, which this page's scope can't match */
+    /* Lands below the header and the sticky filter */
+    h2[id] {
+        scroll-margin-top: 136px;
+    }
+
+    p.keys-note {
+        font-size: 14px;
+        line-height: 22px;
+        color: var(--ink-muted);
+    }
+
+    .acts {
+        margin: 16px 0 0;
+    }
+
+    .act {
+        display: grid;
+        grid-template-columns: minmax(0, 1.05fr) minmax(0, 1.6fr) minmax(0, 1fr);
+        gap: 20px;
+        padding: 14px 0;
+        border-top: 1px solid var(--line);
+        scroll-margin-top: 136px;
+    }
+
+    .act-head {
+        padding: 0 0 8px;
+        border-top: 0;
+        font: 500 11px/16px var(--font-mono);
+        color: var(--ink-muted);
+    }
+
+    .act-name {
+        display: flex;
+        flex-direction: column;
+        gap: 2px;
+        min-width: 0;
+    }
+
+    .act-name a {
+        text-decoration: none;
+    }
+
+    .act-name code {
+        padding: 0;
+        background: none;
+        font: 600 14px/20px var(--font-mono);
+        color: var(--ink);
+    }
+
+    .act-name a:hover code {
+        color: var(--accent-text);
+        text-decoration: underline;
+        text-underline-offset: 3px;
+    }
+
+    .act-name a:focus-visible {
+        outline: 2px solid var(--focus-ring);
+        outline-offset: 2px;
+        border-radius: 2px;
+    }
+
+    .act-title {
+        font: 400 13px/18px var(--font-sans);
+        color: var(--ink-muted);
+    }
+
+    .act-what p {
+        margin: 0;
+        font-size: 14px;
+        line-height: 21px;
+    }
+
+    .act-what p.act-arg {
+        margin-top: 6px;
+        font: 400 13px/18px var(--font-mono);
+        color: var(--ink-muted);
+    }
+
+    .lbl {
+        margin-right: 4px;
+        font-family: var(--font-sans);
+    }
+
+    /* The lead is outside the prose body, which styles Settings paths */
+    .ui {
+        font-weight: 600;
+    }
+
+    .ui .sep {
+        margin: 0 3px;
+        font-weight: 400;
+        color: var(--ink-muted);
+    }
+
+    /* With `.acts`, to outrank the prose body's list bullets */
+    .acts .act-keys ul {
+        display: flex;
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 6px;
+        margin: 0;
+        padding: 0;
+        list-style: none;
+    }
+
+    .acts .act-keys li {
+        display: flex;
+        flex-wrap: wrap;
+        align-items: baseline;
+        gap: 8px;
+        margin: 0;
+        padding: 0;
+    }
+
+    .acts .act-keys li::before {
+        content: none;
+    }
+
+    .karg {
+        font: 400 12px/16px var(--font-mono);
+        color: var(--ink-muted);
+    }
+
+    .nokey {
+        font: 400 13px/20px var(--font-sans);
+        color: var(--ink-muted);
+    }
+
+    @media (max-width: 640px) {
+        .act {
+            grid-template-columns: minmax(0, 1fr);
+            gap: 8px;
+        }
+
+        .act-head {
+            display: none;
+        }
+    }
+</style>

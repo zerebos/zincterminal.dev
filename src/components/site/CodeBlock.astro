@@ -4,7 +4,7 @@ import CopyButton from "./CopyButton.svelte";
 import "../../styles/zn/code.css";
 
 /** A line of code... plain text, or text in one of the bundle's syntax classes */
-export type CodeLine = Array<string | [cls: "c" | "k" | "s" | "n" | "p", text: string]>;
+export type CodeLine = Array<string | [cls: "c" | "k" | "s" | "n" | "p" | "t", text: string]>;
 
 interface Props {
     name: string;

@@ -55,6 +55,11 @@
     color: var(--term-magenta);
 }
 
+/* A TOML table header, such as `[keys]` */
+.zn-code .t {
+    color: var(--term-cyan);
+}
+
 code.zn-inline {
     font: 400 0.93em/1 var(--font-mono);
     padding: 1px 4px;
