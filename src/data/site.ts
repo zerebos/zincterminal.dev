@@ -21,6 +21,7 @@ export const links = {
 
     docs: "/docs",
     config: "/docs/config",
+    keys: "/docs/keys",
     changelog: "/changelog",
     thirdPartyNotices: "/notices",
 
@@ -78,7 +79,8 @@ export const footerDocs: FooterColumn = {
         {label: "Configuration", href: `${links.docs}#configuration`},
         {label: "Shell integration", href: `${links.docs}#shell-integration`},
         {label: "The zn CLI", href: `${links.docs}#zn`},
-        {label: "Config reference", href: links.config}
+        {label: "Config reference", href: links.config},
+        {label: "Keys and actions", href: links.keys}
     ]
 };
 

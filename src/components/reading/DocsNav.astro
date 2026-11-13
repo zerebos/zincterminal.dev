@@ -1,0 +1,104 @@
+---
+// The docs pages as a list of links: a column at the top of the sidebar, or a compact row of three
+// above the title on narrow screens
+import {links} from "../../data/site";
+
+export type DocsPage = "guide" | "config" | "keys";
+
+interface Props {
+    current: DocsPage;
+
+    /** `compact` is the row of three with short labels */
+    variant: "side" | "compact";
+}
+
+const {current, variant} = Astro.props;
+
+const pages: Array<{page: DocsPage, href: string, label: string, short: string, icon: string;}> = [
+    {page: "guide", href: links.docs, label: "Guide", short: "Guide", icon: "guide"},
+    {page: "config", href: links.config, label: "Config reference", short: "Config", icon: "config"},
+    {page: "keys", href: links.keys, label: "Keys and actions", short: "Keys", icon: "keys"},
+];
+const isCompact = variant === "compact";
+---
+
+<nav class:list={["docsnav", variant]} aria-label={isCompact ? "Docs, compact" : "Docs"}>
+    {!isCompact && <p class="side-label">Docs</p>}
+    <ul>
+        {pages.map(p => (
+            <li>
+                <a href={p.href} aria-current={p.page === current ? "page" : undefined}>
+                    {p.icon === "guide" && <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.2" aria-hidden="true"><path d="M2.5 3.5h4a1.5 1.5 0 0 1 1.5 1.5v8a1.5 1.5 0 0 0-1.5-1.5h-4zM13.5 3.5h-4A1.5 1.5 0 0 0 8 5v8a1.5 1.5 0 0 1 1.5-1.5h4z" /></svg>}
+                    {p.icon === "config" && <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.2" aria-hidden="true"><path d="M3 4h10M3 8h10M3 12h6" /><path d="M11.5 10.5l1.5 1.5-1.5 1.5" /></svg>}
+                    {p.icon === "keys" && <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.2" stroke-linejoin="round" aria-hidden="true"><rect x="1.5" y="4" width="13" height="8" rx="1.5" /><path d="M4 6.5h1M7.5 6.5h1M11 6.5h1M5 9.5h6" /></svg>}
+                    <span>{isCompact ? p.short : p.label}</span>
+                </a>
+            </li>
+        ))}
+    </ul>
+</nav>
+
+<style>
+    ul {
+        display: flex;
+        flex-direction: column;
+        gap: 2px;
+        margin: 0;
+        padding: 0;
+        list-style: none;
+    }
+
+    .side {
+        margin: 0 0 24px;
+        padding: 0 0 20px;
+        border-bottom: 1px solid var(--line);
+    }
+
+    a {
+        display: flex;
+        align-items: center;
+        gap: 10px;
+        min-height: 36px;
+        padding: 0 10px;
+        border-radius: 6px;
+        font: 500 14px/20px var(--font-sans);
+        color: var(--ink-muted);
+        text-decoration: none;
+    }
+
+    a:hover,
+    a[aria-current="page"] {
+        color: var(--ink);
+        background: var(--accent-subtle);
+    }
+
+    a:focus-visible {
+        outline: 2px solid var(--focus-ring);
+        outline-offset: 2px;
+    }
+
+    svg {
+        width: 16px;
+        height: 16px;
+        flex: none;
+    }
+
+    .compact {
+        padding: 3px;
+        border: 1px solid var(--line);
+        border-radius: 8px;
+        background: var(--surface-raised);
+    }
+
+    .compact ul {
+        display: grid;
+        grid-template-columns: repeat(3, minmax(0, 1fr));
+    }
+
+    .compact a {
+        justify-content: center;
+        gap: 8px;
+        min-height: 40px;
+        font: 500 13px/18px var(--font-sans);
+    }
+</style>

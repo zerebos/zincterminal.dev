@@ -2,7 +2,7 @@
 // The layout for docs, changelog and notices... a sticky contents sidebar beside a 720px text column
 // Below 900px the sidebar becomes a collapsible card under the intro
 import Base from "./Base.astro";
-import DocSwitch from "../components/reading/DocSwitch.astro";
+import DocsNav, {type DocsPage} from "../components/reading/DocsNav.astro";
 import Footer from "../components/site/Footer.astro";
 import DocsHeader from "../components/site/DocsHeader.astro";
 import LitCell from "../components/site/LitCell.astro";
@@ -29,8 +29,8 @@ interface Props {
     /** The mobile card's summary, `tocLabel` by default */
     tocSummary?: string;
 
-    /** Shows the Guide / Config reference switch on the docs pages, marking this half */
-    docs?: "guide" | "config";
+    /** Shows the list of docs pages on the docs pages, marking this one */
+    docs?: DocsPage;
 }
 
 const {title, description, current, kicker, heading, toc, tocLabel = "On this page", tocSummary = tocLabel, docs} = Astro.props;
@@ -40,14 +40,14 @@ const {title, description, current, kicker, heading, toc, tocLabel = "On this pa
     <DocsHeader current={current} />
     <main class="doc">
         <div class="doc-side">
-            {docs && <DocSwitch current={docs} label="Docs" />}
+            {docs && <DocsNav current={docs} variant="side" />}
             <p class="side-label" aria-hidden="true">{tocLabel}</p>
             <nav aria-label={tocLabel}>
                 <Toc entries={toc} />
             </nav>
         </div>
         <article class="prose">
-            {docs && <div class="docswitch-m"><DocSwitch current={docs} label="Docs, compact" /></div>}
+            {docs && <div class="docsnav-m"><DocsNav current={docs} variant="compact" /></div>}
             <p class="kicker"><LitCell pitch={12} />{kicker}</p>
             <h1>{heading}</h1>
             <div class="intro">

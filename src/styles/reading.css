@@ -33,10 +33,10 @@
     color: var(--ink-muted);
 }
 
-/* The docs switch above the kicker, in place of the sidebar's on narrow screens */
-.docswitch-m {
+/* The docs list above the kicker, in place of the sidebar's on narrow screens */
+.docsnav-m {
     display: none;
-    max-width: 320px;
+    margin: 0 0 28px;
 }
 
 /* The contents card that replaces the sidebar on narrow screens */
@@ -136,7 +136,7 @@
     }
 
     .toc-m,
-    .docswitch-m {
+    .docsnav-m {
         display: block;
     }
 }
