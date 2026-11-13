@@ -2,12 +2,13 @@
 
 The website for [Zinc](https://zincterminal.dev), a native Windows terminal built on libghostty.
 
-It has six pages:
+It has seven pages:
 
 - `/`: the Zinc landing page.
 - `/lit-cell`: the page for Lit Cell, Zinc's default color scheme (dark and light).
 - `/docs`: using Zinc, from installing to the `zn` command line.
 - `/docs/config`: every setting in `config.toml`, generated from Zinc's settings catalog.
+- `/docs/keys`: every action a key can run, with its default keys, generated from Zinc's action list.
 - `/changelog`: what changed in each build, generated from Zinc's changelog.
 - `/notices`: the third-party notices for Zinc and for this site.
 
@@ -45,13 +46,16 @@ The changelog, the settings, the actions, the third-party notices, the config sc
 - **`bun run sync:zinc`** reads a Zinc checkout (`../zinc`, or the path in `ZINC_REPO`). The changelog comes from `CHANGELOG.md`. Everything else comes from Zinc's reference export in `dist/reference/`, which `dotnet run scripts/dev/export-reference.cs` writes in the Zinc repo. To read the export from another folder, such as a release's downloaded `zinc-reference.json` and `config.schema.json`, set `ZINC_REFERENCE`. The sync writes JSON to `src/data/generated/`:
   - `zinc-changelog.json` holds every released build from `CHANGELOG.md`, skipping `## Unreleased`.
   - `zinc-release.json` holds the newest build's version and date, which the hero, "Try the alpha", the docs and the notices show.
-  - `zinc-settings.json` holds the Settings window's sections, its settings followed by the shells it looks for, the keys only `config.toml` sets, and the profile fields.
-  - `zinc-actions.json` holds every action a key can be bound to, with its default keys.
+  - `zinc-settings.json` holds the Settings window's sections, its settings followed by the shells it looks for, the keys only `config.toml` sets, the profile fields, the keys at the top of the file, and what Settings calls a custom color. Each setting carries its default in words when its value can't say it, and an example when its placeholder is only one.
+  - `zinc-actions.json` holds every action a key can be bound to with its default keys, the categories in Settings › Keyboard's order, what each kind of argument takes, and how `[keys]` writes keys. Zinc gives each key name a Windows virtual-key code, and the sync turns it into the browser's `KeyboardEvent.code` with the table in `src/lib/zinc/keys.ts`.
   - `zinc-notices.json` holds the notices with their license texts. Zinc's own notice is among them, and the notices page leaves it out because the page lists third-party software.
 - **It also writes `public/schema/config.json`**, the config's JSON Schema, which editors fetch from `/schema/config.json`. That URL is the schema's `$id`, and the guide gives it in a `#:schema` line. `public/_headers` lets other sites fetch it too.
 - **Run it after each Zinc release, and commit what it writes.** The build reads only those files.
 - **The sync stops and writes nothing** in these cases. Fix the source in Zinc, then sync again.
   - The export's `format` isn't one the sync reads, or a field it reads is missing or has the wrong type.
+  - An action's category or argument isn't listed, or a default key uses a key name, modifier or argument value that `[keys]` doesn't accept.
+  - A key name's virtual-key code isn't in the table in `src/lib/zinc/keys.ts`. Add it there.
+  - The export is from a release that isn't the changelog's newest build. A dev build's export has no release, so it's never checked.
   - The schema's `$id` isn't the URL the site serves it at.
   - Text the site shows as its own names a terminal the brand rules keep off the site (see `src/lib/zinc/guard.ts`).
   - A changelog backtick doesn't close.
@@ -63,10 +67,22 @@ The changelog, the settings, the actions, the third-party notices, the config sc
 `/docs/config` is drawn entirely from `zinc-settings.json`, so a Zinc release that changes a setting only needs a sync. A few things live on the site instead:
 
 - **Each table's title and opening line** are in `src/data/config-tables.ts`, in page order. When Zinc adds a table, the build stops and names it, so add its entry there. A listed table with no settings stops the build too.
-- **The profile table**, `[profile.<id>]`, comes after `[discover]`. Its title and opening line are in `src/data/config-tables.ts`, with the profile fields' defaults in words, because Zinc gives those defaults as `null`.
-- **The wording rules** are in `src/lib/zinc/settings.ts`, with tests: the type in words, ranges, defaults as TOML values or in words, examples from a text setting's placeholder, and which settings share another's values.
+- **The sentence about profiles** ("A profile can set its own, under `[profile.<id>.font]`") is added to a table whose settings are all per profile. A table where only some are stops the build, so give it its own wording.
+- **The top-level keys** (`include`, `default-profile` and the rest) come first, under "Top level", and **the profile table**, `[profile.<id>]`, comes after `[discover]`. Their titles and opening lines are in `src/data/config-tables.ts` too.
+- **The wording rules** are in `src/lib/zinc/settings.ts`, with tests: the type in words, ranges, and which settings share another's values. A default is Zinc's words when it gives them, then the value as TOML, then a text setting's placeholder unless Zinc marks it as an example. Examples come only from Zinc.
 
 The filter is `src/components/reading/ConfigFilter.svelte`. Each setting carries its searchable text in `data-text`, and the island only hides what doesn't match.
+
+## The keys page
+
+`/docs/keys` is drawn entirely from `zinc-actions.json`. `actionGroups` in `src/lib/zinc/keys.ts` shapes the rows at build time, with tests:
+
+- **Groups** follow Settings › Keyboard's order, and a category with no actions is left out.
+- **"Takes"** lists an argument's fixed values joined with ` · `, or Zinc's words for it, and adds "(optional)".
+- **Key caps** use Windows' names (Ctrl+Shift+C, PgUp, ↑, Numpad +). An action whose keys all come again with Shift, as zoom's do, shows them once. A run of three or more digits that each pass their own digit is one cap (Ctrl+Shift+1–9), and the four arrows, each passing its direction, are one cap (Alt+Arrows).
+- **The `[keys]` example** at the top is written in the page, and the build stops if Zinc stops accepting one of its keys or actions.
+
+The filter is `src/components/reading/KeysFilter.svelte`. Each action carries its searchable text in `data-text` and every default key in `data-keys`, including the Shift keys the page doesn't show. Typing matches the text, and typing a whole combination with a modifier, or pressing one in Press keys mode, matches the keys.
 
 ## Writing the docs
 
@@ -87,11 +103,11 @@ The docs are one MDX file, `src/content/docs/using-zinc.mdx`, in the `docs` cont
 
 ## Layout
 
-- `src/pages/` holds the six pages. `src/layouts/Base.astro` holds the shared document shell and the no-flash theme script, and `src/layouts/ReadingLayout.astro` holds the sidebar layout for docs, changelog and notices.
+- `src/pages/` holds the seven pages. `src/layouts/Base.astro` holds the shared document shell and the no-flash theme script, and `src/layouts/ReadingLayout.astro` holds the sidebar layout for docs, changelog and notices.
 - `src/data/site.ts` holds the links (the downloads, the feedback address and the Discord among them), the release info and the shared footer. Zinc's GitHub links are `null` and left out until the repo is public.
 - `src/components/site/` holds the shared pieces: header, footer, theme switch, buttons, sections and copy buttons.
 - `src/components/landing/` and `src/components/lit-cell/` hold each page's sections.
-- `src/components/reading/` holds the reading pages' pieces (contents list, section spy, changelog and notice rows), and `src/components/prose/` holds the docs' MDX components. Their styles are `src/styles/reading.css` and `src/styles/prose.css`.
+- `src/components/reading/` holds the reading pages' pieces (the docs list, contents list, section spy, filters, setting entries, and changelog and notice rows), and `src/components/prose/` holds the docs' MDX components. Their styles are `src/styles/reading.css` and `src/styles/prose.css`.
 - `src/assets/screenshots/` holds the screenshots of Zinc. In `src/components/site/`, `Screenshot.astro` shows one in a window frame and swaps in its light twin when the site is light, and `Shot.astro` puts a gallery screenshot on its dotted stage with a caption.
 - The precision close-ups keep their terminal content as data in `src/components/landing/term.ts`, drawn by `Lines.astro` and `CellZoom.astro` beside it.
 - `src/styles/zn/` holds the design system's component styles, ported as they were needed.
