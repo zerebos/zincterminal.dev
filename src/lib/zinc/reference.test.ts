@@ -1,6 +1,8 @@
 import {describe, expect, test} from "bun:test";
+import {readFile} from "node:fs/promises";
+import {join} from "node:path";
 import {crlf, fakeReference, fakeSchema, fakeSetting} from "./fixtures";
-import {parseReference, parseSchema, schemaFileText} from "./reference";
+import {parseReference, parseSchema, schemaFileText, schemaUrl} from "./reference";
 import type {ZincReference} from "./types";
 
 
@@ -66,6 +68,11 @@ describe("parseSchema", () => {
 
     test("refuses another $id", () => {
         expect(() => parseSchema(JSON.stringify({...fakeSchema(), $id: "https://example.com/zinc.json"}))).toThrow(/\$id "https:\/\/example\.com\/zinc\.json", but the site serves it at https:\/\/zincterminal\.dev\/schema\/config\.json/);
+    });
+
+    test("is the URL the guide gives", async () => {
+        const guide = await readFile(join(import.meta.dir, "../../content/docs/using-zinc.mdx"), "utf8");
+        expect(guide).toContain(`#:schema ${schemaUrl}`);
     });
 
     test("serves Zinc's text with LF line ends and a final newline", () => {

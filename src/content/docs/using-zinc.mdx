@@ -96,6 +96,12 @@ colors.theme = "0x96f"
 Zinc shows a bar with the file and line of anything it can't read, and applies everything else. Single-quoted strings are literal, so Windows paths need no escaping: `'C:\msys64\ucrt64.ico'`.
 </Note>
 
+Your editor can complete keys and catch mistakes as you type, from the file's JSON Schema. Make sure the first line of `config.toml` looks like this, and editors that read schema lines (e.g. VS Code with Even Better TOML) pick it up:
+
+```toml title="config.toml"
+#:schema https://zincterminal.dev/schema/config.json
+```
+
 ### Profiles
 
 A profile is a shell with its own name, folder, font and colors. Zinc finds the shells on your PC each time it reads your settings, and lists them after your own.

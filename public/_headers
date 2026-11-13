@@ -1,0 +1,3 @@
+# The config schema, which editors and browser-based tools on other sites fetch
+/schema/*
+  Access-Control-Allow-Origin: *
