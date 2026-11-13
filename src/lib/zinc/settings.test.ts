@@ -1,5 +1,5 @@
 import {describe, expect, test} from "bun:test";
-import {byTable, choiceRows, defaultText, exampleText, kindText, rangeText, sameValuesAs, settingsPath, tableOf} from "./settings";
+import {byTable, choiceRows, defaultText, exampleText, kindText, perProfileText, rangeText, sameValuesAs, settingsPath, tableOf} from "./settings";
 import type {Setting} from "./types";
 
 
@@ -60,7 +60,13 @@ describe("defaultText", () => {
         [{default: null, kind: "color", nullLabel: "Use the terminal's background"}, {words: "The terminal's background"}],
         [{default: null, kind: "color", placeholder: "Same as the text"}, {words: "Same as the text"}],
         [{default: null, kind: "color"}, {words: "The scheme's"}],
-        [{default: null, kind: "text", placeholder: "50%"}, {words: "Not set"}],
+        [{default: null, kind: "text", placeholder: "50%"}, {code: "\"50%\""}],
+        [{default: null, kind: "text", placeholder: "0", numbersAsNumbers: true}, {code: "0"}],
+        [{default: null, kind: "text", placeholder: "Symbols Nerd Font", example: "Symbols Nerd Font"}, {words: "Not set"}],
+        [{default: null, kind: "text"}, {words: "Not set"}],
+        [{default: null, kind: "scheme", defaultText: "Lit Cell"}, {words: "Lit Cell"}],
+        [{default: null, kind: "text", placeholder: "~", defaultText: "Your home folder"}, {words: "Your home folder"}],
+        [{default: 10, kind: "text", defaultText: "10 seconds"}, {words: "10 seconds"}],
     ])("%o", (more, text) => {
         expect(defaultText(setting("a.b", more))).toEqual(text);
     });
@@ -68,13 +74,27 @@ describe("defaultText", () => {
 
 describe("exampleText", () => {
     test.each<[Partial<Setting>, string]>([
-        [{kind: "text", placeholder: "50%"}, "\"50%\""],
-        [{kind: "text", placeholder: "0", numbersAsNumbers: true}, "0"],
-        [{kind: "text", placeholder: "60", numbersAsNumbers: true, default: 60}, ""],
+        [{kind: "text", placeholder: "Symbols Nerd Font, Noto Sans JP", example: "Symbols Nerd Font, Noto Sans JP"}, "\"Symbols Nerd Font, Noto Sans JP\""],
+        [{kind: "text", placeholder: "4", example: "4", numbersAsNumbers: true}, "4"],
+        [{kind: "text", placeholder: "50%"}, ""],
         [{kind: "color", placeholder: "Zinc's grey"}, ""],
         [{kind: "text"}, ""],
     ])("%o", (more, example) => {
         expect(exampleText(setting("a.b", more))).toBe(example);
+    });
+});
+
+describe("perProfileText", () => {
+    test("says where a profile sets the table's settings when they're all per profile", () => {
+        expect(perProfileText("font", [setting("font.size", {profileOverridable: true}), setting("font.family", {profileOverridable: true})])).toBe("A profile can set its own, under `[profile.<id>.font]`.");
+    });
+
+    test("says nothing when none are", () => {
+        expect(perProfileText("window", [setting("window.backdrop")])).toBe("");
+    });
+
+    test("throws when only some are", () => {
+        expect(() => perProfileText("font", [setting("font.size", {profileOverridable: true}), setting("font.family")])).toThrow(/Only some of \[font\]'s settings are per profile/);
     });
 });
 
@@ -90,7 +110,7 @@ describe("settingsPath, sameValuesAs and choiceRows", () => {
     });
 
     test("marks the default, keeps the choice that writes nothing, and adds a custom color", () => {
-        const rows = choiceRows(setting("colors.x", {kind: "color", default: null, choices: [{label: "Subtle", value: "subtle", detail: "Quiet"}, {label: "Standard", value: null, detail: null}]}));
+        const rows = choiceRows(setting("colors.x", {kind: "color", default: null, choices: [{label: "Subtle", value: "subtle", detail: "Quiet"}, {label: "Standard", value: null, detail: null}]}), "Custom color");
         expect(rows).toEqual([
             {value: "\"subtle\"", label: "Subtle", detail: "Quiet", isDefault: false},
             {value: null, label: "Standard", detail: "", isDefault: true},

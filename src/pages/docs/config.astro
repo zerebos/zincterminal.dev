@@ -5,26 +5,43 @@ import Note from "../../components/prose/Note.astro";
 import ReadingLayout from "../../layouts/ReadingLayout.astro";
 import SettingEntry from "../../components/reading/SettingEntry.astro";
 import type {TocEntry} from "../../components/reading/toc";
-import {configTables, profileFieldDefaults, profileTable} from "../../data/config-tables";
+import {configTables, profileTable, topLevelTable} from "../../data/config-tables";
 import catalog from "../../data/generated/zinc-settings.json";
 import {links, release} from "../../data/site";
 import {inlineMarkdown} from "../../lib/markdown/inline";
-import {byTable, sameValuesAs} from "../../lib/zinc/settings";
-import type {SettingsCatalog} from "../../lib/zinc/types";
+import {byTable, perProfileText, sameValuesAs} from "../../lib/zinc/settings";
+import type {Setting, SettingsCatalog, TopLevelKey} from "../../lib/zinc/types";
 
-const {sections, settings, fileOnly, profileFields} = catalog as SettingsCatalog;
+const {sections, settings, fileOnly, profileFields, topLevel, customColorLabel} = catalog as SettingsCatalog;
 const sameAs = sameValuesAs(settings);
 
-// The profile table goes after the shells Zinc finds, which become profiles too
-const tables = byTable(settings, configTables).flatMap(table => table.table === "discover"
-    ? [table, {...profileTable, settings: profileFields}]
-    : [table]);
-const anchor = (table: {table: string, id?: string;}) => table.id ?? table.table;
+interface PageTable {
+
+    /** Its name in config.toml, or "" for the top level */
+    table: string;
+    id?: string;
+    title: string;
+    about: string;
+    settings: Array<Setting | TopLevelKey>;
+}
+
+// The top-level keys come first. The profile table goes after the shells Zinc finds, which become profiles too.
+const tables: PageTable[] = [
+    {...topLevelTable, settings: topLevel},
+    ...byTable(settings, configTables).flatMap(table => {
+        const about = [table.about, perProfileText(table.table, table.settings)].filter(Boolean).join(" ");
+        return table.table === "discover"
+            ? [{...table, about}, {...profileTable, settings: profileFields}]
+            : [{...table, about}];
+    }),
+];
+const anchor = (table: PageTable) => table.id ?? table.table;
+const isProfileTable = (table: PageTable) => table.table === profileTable.table;
 
 const toc: TocEntry[] = tables.map(table => ({
-    label: `[${table.table}]`,
+    label: table.table ? `[${table.table}]` : table.title,
     href: `#${anchor(table)}`,
-    mono: true,
+    mono: Boolean(table.table),
     detail: String(table.settings.length)
 }));
 ---
@@ -44,21 +61,28 @@ const toc: TocEntry[] = tables.map(table => ({
         <p class="lead">Every setting in <code>config.toml</code>. Its key, its values, its default and where to find it in Settings. For how the file works, see <a href={`${links.docs}#config-file`}>the guide</a>.</p>
         <p class="meta"><span>For <code>{release.version}</code></span><span>Made from the same list the Settings window uses</span></p>
     </Fragment>
-    <ConfigFilter client:load total={settings.length + profileFields.length} guide={links.docs} />
+    <ConfigFilter client:load total={tables.reduce((sum, table) => sum + table.settings.length, 0)} guide={links.docs} />
     {tables.map(table => (
         <section class="cfg-table" aria-labelledby={`h-${anchor(table)}`}>
             <h2 id={anchor(table)}>
-                <span id={`h-${anchor(table)}`}><code class="tbl">[{table.table}]</code> {table.title}</span>
+                <span id={`h-${anchor(table)}`}>{table.table && <><code class="tbl">[{table.table}]</code> </>}{table.title}</span>
                 <a class="anchor" href={`#${anchor(table)}`} aria-label={`Link to ${table.title}`}></a>
             </h2>
             <p class="cfg-about" set:html={inlineMarkdown(table.about)} />
-            {table.table === profileTable.table
-                ?table.settings.map(field => <SettingEntry setting={field} sections={sections} table={profileTable.table} id={`${profileTable.id}.${field.key}`} defaultWords={profileFieldDefaults[field.key]} />)
-                : table.settings.map(setting => <SettingEntry setting={setting} sections={sections} sameAs={sameAs.get(setting.key)} />)}
+            {table.settings.map(setting => (
+                <SettingEntry
+                    setting={setting}
+                    sections={sections}
+                    customColorLabel={customColorLabel}
+                    sameAs={sameAs.get(setting.key)}
+                    table={table.table === "" || isProfileTable(table) ? table.table : undefined}
+                    id={isProfileTable(table) ? `${profileTable.id}.${setting.key}` : undefined}
+                />
+            ))}
         </section>
     ))}
     <Note title="Only in the file">
-        <p>A few things have no place in Settings: <code>include</code> at the top and <code>[keys]</code>. The guide covers <a href={`${links.docs}#profiles`}>profiles</a> and <a href={`${links.docs}#config-file`}>the file itself</a>.</p>
+        <p>A few things have no place in Settings. The guide covers <a href={`${links.docs}#profiles`}>profiles</a> and <a href={`${links.docs}#config-file`}>the file itself</a>.</p>
         {fileOnly.map(entry => <p><code>{entry.key}</code> {entry.text}</p>)}
     </Note>
 </ReadingLayout>

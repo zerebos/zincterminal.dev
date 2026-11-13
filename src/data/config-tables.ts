@@ -1,5 +1,6 @@
 // The config reference's tables, in page order, with the title and line that open each one. Zinc's
 // catalog has nothing per table, so these are ours. A table Zinc adds stops the build until it's here.
+// The page adds the sentence about profiles to tables whose settings are per profile.
 
 export interface ConfigTable {
 
@@ -19,20 +20,19 @@ export const profileTable: ConfigTable & {id: string;} = {
     about: "Each `[profile.<id>]` table is a profile. Besides these keys, it can set its own value for any setting marked \"Per profile\".",
 };
 
-// TODO: Zinc's reference gives these defaults as `null`. Drop this once it exports them in words.
-/** The profile fields' defaults in words, for the ones whose default Zinc gives as `null` */
-export const profileFieldDefaults: Record<string, string> = {
-    "name": "The profile's id",
-    "command": "Your default WSL distribution, else PowerShell 7, else Windows PowerShell",
-    "working-directory": "Your home folder",
-    "icon": "The program's own icon",
+/** The keys before the first table, which the page shows first */
+export const topLevelTable: ConfigTable & {id: string;} = {
+    table: "",
+    id: "top-level",
+    title: "Top level",
+    about: "Keys at the top of the file, before any table.",
 };
 
 export const configTables: ConfigTable[] = [
-    {table: "font", title: "Font", about: "The terminal's font. A profile can set its own, under `[profile.<id>.font]`."},
-    {table: "colors", title: "Colors", about: "The color scheme, and colors that override it. A profile can set its own, under `[profile.<id>.colors]`."},
-    {table: "terminal", title: "Terminal", about: "How the terminal behaves. A profile can set its own, under `[profile.<id>.terminal]`."},
-    {table: "shaders", title: "Shaders", about: "Effects drawn over the terminal. A profile can set its own, under `[profile.<id>.shaders]`."},
+    {table: "font", title: "Font", about: "The terminal's font."},
+    {table: "colors", title: "Colors", about: "The color scheme, and colors that override it."},
+    {table: "terminal", title: "Terminal", about: "How the terminal behaves."},
+    {table: "shaders", title: "Shaders", about: "Effects drawn over the terminal."},
     {table: "window", title: "Window", about: "The window, its workspaces and panes. These apply to every profile."},
     {table: "notify", title: "Notifications", about: "What Zinc does when a command finishes, fails or rings the bell in a pane you aren't looking at."},
     {table: "quick-terminal", title: "Quick terminal", about: "The terminal a hotkey brings in from the edge of the screen, wherever you are."},

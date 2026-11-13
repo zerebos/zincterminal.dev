@@ -1,54 +1,57 @@
 ---
 // One setting in the config reference... its key, label and description, what it takes, its default,
-// where it is in Settings, and its values when it's a choice
+// where it is in Settings, and its values when it's a choice. A top-level key shows only the first four.
 import {choiceRows, defaultText, exampleText, kindText, rangeText, settingsPath, tableOf} from "../../lib/zinc/settings";
-import type {Setting, SettingsSection} from "../../lib/zinc/types";
+import type {Setting, SettingsSection, TopLevelKey} from "../../lib/zinc/types";
 
 interface Props {
-    setting: Setting;
+    setting: Setting | TopLevelKey;
     sections: SettingsSection[];
+
+    /** What Settings calls a color setting's custom option */
+    customColorLabel: string;
 
     /** The key of an earlier setting with the same values, shown instead of the values table */
     sameAs?: string;
 
-    /** The table it's under when its key doesn't start with one, such as `profile.<id>` for `command` */
+    /** The table it's under when its key doesn't start with one: `profile.<id>` for `command`, or "" at the top level */
     table?: string;
 
     /** Its anchor, when its key alone doesn't make a good one */
     id?: string;
-
-    /** Its default in words, which replaces the default and the example worked out from the catalog */
-    defaultWords?: string;
 }
 
-const {setting, sections, sameAs, defaultWords} = Astro.props;
+const {setting, sections, customColorLabel, sameAs} = Astro.props;
 
 const table = Astro.props.table ?? tableOf(setting.key);
-const name = Astro.props.table ? setting.key : setting.key.slice(table.length + 1);
+const name = Astro.props.table === undefined ? setting.key.slice(table.length + 1) : setting.key;
 const id = Astro.props.id ?? setting.key;
-const range = rangeText(setting);
-const fallback = defaultWords ? {words: defaultWords} : defaultText(setting);
-const example = defaultWords ? "" : exampleText(setting);
-const rows = sameAs ? [] : choiceRows(setting);
+const isSetting = "kind" in setting;
+const type = isSetting ? kindText(setting) : setting.takes;
+const range = isSetting ? rangeText(setting) : "";
+const fallback = isSetting ? defaultText(setting) : {words: setting.defaultText ?? "Not set"};
+const example = isSetting ? exampleText(setting) : "";
+const rows = isSetting && !sameAs ? choiceRows(setting, customColorLabel) : [];
 const details = rows.some(row => row.detail);
-const path = settingsPath(setting, sections);
+const path = isSetting ? settingsPath(setting, sections) : [];
+const isPerProfile = isSetting && setting.profileOverridable;
 
 // What the filter matches against
-const text = [`${table}.${name}`, setting.label, setting.description, kindText(setting)].join(" ").toLowerCase();
+const text = [table ? `${table}.${name}` : name, setting.label, setting.description, type].join(" ").toLowerCase();
 ---
 
 <div class="cfg" id={id} data-text={text}>
     <div class="cfg-head">
-        <h3 class="cfg-key"><a class="cfg-link" href={`#${id}`}><span class="cfg-sec">{table}.</span>{name}</a></h3>
+        <h3 class="cfg-key"><a class="cfg-link" href={`#${id}`}>{table && <span class="cfg-sec">{table}.</span>}{name}</a></h3>
         <span class="cfg-label">{setting.label}</span>
-        {setting.profileOverridable && <span class="cfg-tag" title="A profile can set its own">Per profile</span>}
+        {isPerProfile && <span class="cfg-tag" title="A profile can set its own">Per profile</span>}
     </div>
     {setting.description && <p class="cfg-desc">{setting.description}</p>}
     <dl class="cfg-meta">
-        <div><dt>Type</dt><dd>{kindText(setting)}{range && <span class="dim">, {range}</span>}</dd></div>
+        <div><dt>Type</dt><dd>{type}{range && <span class="dim">, {range}</span>}</dd></div>
         <div><dt>Default</dt><dd>{"code" in fallback ? <code>{fallback.code}</code> : fallback.words}</dd></div>
         {example && <div><dt>Example</dt><dd><code>{name} = {example}</code></dd></div>}
-        <div><dt>In Settings</dt><dd><span class="ui">{path.map((step, i) => <>{i > 0 && <span class="sep">›</span>}{step}</>)}</span></dd></div>
+        {path.length > 0 && <div><dt>In Settings</dt><dd><span class="ui">{path.map((step, i) => <>{i > 0 && <span class="sep">›</span>}{step}</>)}</span></dd></div>}
     </dl>
     {sameAs && <p class="cfg-same">Takes the same values as <a href={`#${sameAs}`}>{sameAs}</a>.</p>}
     {rows.length > 0 && (
