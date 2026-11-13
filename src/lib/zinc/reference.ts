@@ -2,7 +2,8 @@
 // A field Zinc adds is fine. A missing or mistyped field, or a format this code doesn't know, throws,
 // so the sync stops instead of the site showing something wrong.
 
-import type {SettingKind, ZincReference} from "./types";
+import {parseKeys} from "./keys";
+import type {ActionArgument, SettingKind, ZincReference} from "./types";
 
 
 /** The `format` this code reads. Zinc raises it when a field changes meaning or goes away. */
@@ -70,17 +71,23 @@ const setting = object({
     placeholder: nullable(string),
     nullLabel: nullable(string),
     numbersAsNumbers: boolean,
+    example: nullable(string),
+    defaultText: nullable(string),
     profileOverridable: boolean,
     oldNames: array(string),
 });
 
 const reference = object({
-    zinc: object({version: string}),
+    zinc: object({version: string, release: nullable(string), date: nullable(string)}),
     sections: array(object({id: string, title: string})),
+    topLevel: array(object({key: string, label: string, description: string, takes: string, defaultText: nullable(string)})),
+    customColorLabel: string,
     settings: array(setting),
     fileOnly: array(object({key: string, text: string})),
     profileFields: array(setting),
     discovery: array(setting),
+    actionCategories: array(string),
+    actionArguments: array(object({name: string, values: array(string), optional: boolean, text: nullable(string)})),
     actions: array(object({
         name: string,
         title: string,
@@ -89,6 +96,13 @@ const reference = object({
         category: string,
         defaultKeys: array(object({keys: string, action: string})),
     })),
+    keys: object({
+        chordSeparator: string,
+        sequenceSeparator: string,
+        unbind: string,
+        modifiers: array(string),
+        names: array(object({name: string, aliases: array(string), virtualKey: number})),
+    }),
     notices: array(object({name: string, version: nullable(string), use: string, license: string, url: string, licenseText: string})),
 });
 
@@ -134,9 +148,52 @@ export function parseReference(text: string): ZincReference {
     for (const key of duplicates(keys)) problems.push(`the setting key ${key} appears more than once`);
     for (const key of duplicates(parsed.profileFields.map(s => s.key))) problems.push(`the profile field ${key} appears more than once`);
     for (const name of duplicates(parsed.actions.map(a => a.name))) problems.push(`the action ${name} appears more than once`);
+    for (const key of duplicates(parsed.topLevel.map(k => k.key))) problems.push(`the top-level key ${key} appears more than once`);
+    for (const name of duplicates(parsed.actionCategories)) problems.push(`the action category ${name} appears more than once`);
+    for (const name of duplicates(parsed.actionArguments.map(a => a.name))) problems.push(`the action argument ${name} appears more than once`);
+    const keyNames = parsed.keys.names.flatMap(n => [n.name, ...n.aliases]);
+    for (const name of duplicates(keyNames)) problems.push(`the key name ${name} appears more than once`);
+    problems.push(...actionProblems(parsed));
+
+    if (parsed.zinc.date !== null && parsed.zinc.release === null) problems.push(`zinc.date is ${parsed.zinc.date}, but zinc.release is null`);
 
     if (problems.length) throw new Error(`${file} doesn't add up:\n${problems.map(p => `  ${p}`).join("\n")}`);
     return parsed;
+}
+
+/** What doesn't add up between the actions, their categories and arguments, and the key names */
+function actionProblems(parsed: ZincReference) {
+    const problems: string[] = [];
+    const argumentsByName = new Map(parsed.actionArguments.map(a => [a.name, a]));
+    for (const action of parsed.actions) {
+        const where = `the action ${action.name}`;
+        if (!parsed.actionCategories.includes(action.category)) problems.push(`${where} is in the category "${action.category}", which isn't in actionCategories`);
+        const argument = action.argument === null ? null : argumentsByName.get(action.argument);
+        if (argument === undefined) problems.push(`${where} takes the argument "${action.argument}", which isn't in actionArguments`);
+
+        for (const binding of action.defaultKeys) {
+            try {
+                parseKeys(binding.keys, parsed.keys);
+            }
+            catch (error) {
+                problems.push(`${where}: ${error instanceof Error ? error.message : String(error)}`);
+            }
+            const problem = boundArgumentProblem(binding.action, action.name, argument);
+            if (problem) problems.push(`${where} ${problem}`);
+        }
+    }
+    return problems;
+}
+
+/** Why a default key's action text doesn't fit its action, or `null` when it fits */
+function boundArgumentProblem(bound: string, name: string, argument: ActionArgument | null | undefined) {
+    const [boundName, ...rest] = bound.split(" ");
+    const value = rest.join(" ");
+    if (boundName !== name) return `has a default key for "${bound}"`;
+    if (!value || argument === undefined) return null;
+    if (argument === null) return `binds "${bound}", but it takes no argument`;
+    if (!argument.values.includes(value) && argument.text === null) return `binds "${bound}", but ${argument.name} takes only ${argument.values.join(", ")}`;
+    return null;
 }
 
 /** The parsed schema. Only its `$id` and the texts the guard reads matter to the site. */

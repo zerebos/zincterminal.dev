@@ -5,8 +5,9 @@ import {mkdir, readFile, writeFile} from "node:fs/promises";
 import {dirname, join} from "node:path";
 import {latestRelease, parseChangelog} from "./changelog";
 import {actionTexts, changelogTexts, findBannedNames, hasUnclosedCode, noticeTexts, schemaTexts, settingsTexts} from "./guard";
+import {keyNamesWithCodes} from "./keys";
 import {parseReference, parseSchema, schemaFileText} from "./reference";
-import type {SettingsCatalog} from "./types";
+import type {ActionsFile, SettingsCatalog} from "./types";
 
 
 /** The text of each source the sync reads */
@@ -70,6 +71,12 @@ export async function syncZinc(sources: ZincSources, targets: SyncTargets) {
     const reference = parseReference(sources.reference);
     const schema = parseSchema(sources.schema);
 
+    // A dev build has no release. A release's reference has to be the build the changelog shows.
+    const {zinc} = reference;
+    if (zinc.release !== null && (zinc.release !== release.version || (zinc.date !== null && zinc.date !== release.date))) {
+        throw new Error(`The reference export is from Zinc ${zinc.release} (${zinc.date ?? "no date"}), but the changelog's newest build is ${release.version} (${release.date}). Sync from the same release.`);
+    }
+
     // The site doesn't show old names, so they stay out of the committed JSON
     const strip = <T extends {oldNames: string[]}>({oldNames: _, ...rest}: T) => rest;
     const settings: SettingsCatalog = {
@@ -77,8 +84,16 @@ export async function syncZinc(sources: ZincSources, targets: SyncTargets) {
         settings: [...reference.settings, ...reference.discovery].map(strip),
         fileOnly: reference.fileOnly,
         profileFields: reference.profileFields.map(strip),
+        topLevel: reference.topLevel,
+        customColorLabel: reference.customColorLabel,
     };
-    const {actions, notices} = reference;
+    const actions: ActionsFile = {
+        categories: reference.actionCategories,
+        arguments: reference.actionArguments,
+        keys: {...reference.keys, names: keyNamesWithCodes(reference.keys.names)},
+        actions: reference.actions,
+    };
+    const {notices} = reference;
 
     const named = findBannedNames([
         ...changelogTexts(changelog),

@@ -3,7 +3,7 @@ import {byTable, choiceRows, defaultText, exampleText, kindText, rangeText, same
 import type {Setting} from "./types";
 
 
-const setting = (key: string, more: Partial<Setting> = {}): Setting => ({section: "appearance", group: "Font", key, label: key, description: "", kind: "toggle", default: false, choices: [], unit: null, minimum: 0, maximum: null, step: 1, placeholder: null, nullLabel: null, numbersAsNumbers: false, profileOverridable: false, ...more});
+const setting = (key: string, more: Partial<Setting> = {}): Setting => ({section: "appearance", group: "Font", key, label: key, description: "", kind: "toggle", default: false, choices: [], unit: null, minimum: 0, maximum: null, step: 1, placeholder: null, nullLabel: null, numbersAsNumbers: false, example: null, defaultText: null, profileOverridable: false, ...more});
 
 describe("tableOf", () => {
     test.each([

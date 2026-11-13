@@ -9,7 +9,7 @@ import {join} from "node:path";
 import {crlf, fakeChangelog, fakeReference, fakeSchema} from "./fixtures";
 import {actionTexts, changelogTexts, findBannedNames, hasUnclosedCode, noticeTexts, schemaTexts, settingsTexts} from "./guard";
 import {checkoutFiles, outputs, readCheckout, syncZinc, type ZincSources} from "./sync";
-import type {Action, ChangelogEntry, Notice, SettingsCatalog, ZincReference} from "./types";
+import type {ActionsFile, ChangelogEntry, Notice, SettingsCatalog, ZincReference} from "./types";
 
 
 const root = join(import.meta.dir, "../../..");
@@ -62,8 +62,8 @@ describe("syncZinc", () => {
         const notices = await readJson<Notice[]>(join(to.dataDir, outputs.notices));
         expect(notices.map(n => [n.name, n.version])).toEqual([["Zinc", null], [".NET", "10.0.13"]]);
 
-        const actions = await readJson<Action[]>(join(to.dataDir, outputs.actions));
-        expect(actions.map(a => a.name)).toEqual(["split"]);
+        const actions = await readJson<ActionsFile>(join(to.dataDir, outputs.actions));
+        expect(actions.actions.map(a => a.name)).toEqual(["split", "paste"]);
 
         const schema = await readFile(to.schemaFile, "utf8");
         expect(schema).not.toContain("\r");
@@ -79,12 +79,46 @@ describe("syncZinc", () => {
         expect(catalog.profileFields.map(s => s.key)).toEqual(["command"]);
         expect(catalog.settings[0]).not.toHaveProperty("oldNames");
         expect(catalog.settings[0]?.profileOverridable).toBeTrue();
+        expect(catalog.profileFields[0]?.defaultText).toBe("The found shell's own command");
+        expect(catalog.topLevel.map(k => k.key)).toEqual(["include"]);
+        expect(catalog.customColorLabel).toBe("Custom color");
+    });
+
+    test("writes the actions with their categories, arguments and key names as browser codes", async () => {
+        const to = await targets();
+        await syncZinc(sources(), to);
+
+        const file = await readJson<ActionsFile>(join(to.dataDir, outputs.actions));
+        expect(file.categories).toEqual(["Clipboard", "Panes"]);
+        expect(file.arguments.map(a => a.name)).toEqual(["direction"]);
+        expect(file.keys.sequenceSeparator).toBe(">");
+        expect(file.keys.names.map(n => [n.name, n.code])).toEqual([["a", "KeyA"], ["p", "KeyP"], ["plus", "Equal"], ["insert", "Insert"], ["pgup", "PageUp"]]);
+        expect(file.keys.names[4]).toEqual({name: "pgup", aliases: ["pageup"], code: "PageUp"});
+    });
+
+    test("writes nothing when a key name's virtual key has no browser code", async () => {
+        const to = await targets();
+        expect(await failure(syncZinc(sources(r => r.keys.names.push({name: "oem8", aliases: [], virtualKey: 223})), to))).toMatch(/codeForVirtualKey[\s\S]*oem8: 223/);
+        expect(existsSync(to.dataDir)).toBeFalse();
+    });
+
+    test("takes a release's reference only with the changelog of that release", async () => {
+        const matching = await targets();
+        await syncZinc(sources(r => r.zinc = {version: "0.1.0-dev.12+abc1234", release: "0.1.0-dev.12", date: "2026-02-03"}), matching);
+        expect(existsSync(matching.dataDir)).toBeTrue();
+
+        const other = await targets();
+        expect(await failure(syncZinc(sources(r => r.zinc = {version: "0.1.0+abc1234", release: "0.1.0", date: "2026-03-01"}), other))).toMatch(/from Zinc 0\.1\.0 \(2026-03-01\), but the changelog's newest build is 0\.1\.0-dev\.12 \(2026-02-03\)/);
+        expect(existsSync(other.dataDir)).toBeFalse();
     });
 
     test.each([
         ["a setting", (r: ZincReference) => r.settings[0]!.description = "As in Windows Terminal.", /terminal\.scrollback-lines: As in Windows Terminal\./],
         ["a profile field", (r: ZincReference) => r.profileFields[0]!.description = "Like Windows Terminal's.", /profile field command: Like Windows Terminal's\./],
         ["an action", (r: ZincReference) => r.actions[0]!.title = "Split, as in Windows Terminal", /action split: Split, as in Windows Terminal/],
+        ["an action argument", (r: ZincReference) => r.actionArguments[0]!.text = "Any Windows Terminal direction", /action argument direction: Any Windows Terminal direction/],
+        ["a top-level key", (r: ZincReference) => r.topLevel[0]!.takes = "A Windows Terminal file", /include: A Windows Terminal file/],
+        ["a default in words", (r: ZincReference) => r.settings[0]!.defaultText = "What Windows Terminal does", /terminal\.scrollback-lines: What Windows Terminal does/],
         ["a notice", (r: ZincReference) => r.notices[1]!.use = "From windows  terminal", /\.NET use: From windows {2}terminal/],
     ])("writes nothing when %s names Windows Terminal", async (_, change, message) => {
         const to = await targets();
@@ -174,7 +208,7 @@ describe("the guard", () => {
         const changelog = await readJson<ChangelogEntry[]>(join(generated, outputs.changelog));
         const notices = await readJson<Notice[]>(join(generated, outputs.notices));
         const settings = await readJson<SettingsCatalog>(join(generated, outputs.settings));
-        const actions = await readJson<Action[]>(join(generated, outputs.actions));
+        const actions = await readJson<ActionsFile>(join(generated, outputs.actions));
         const schema = await readJson<unknown>(servedSchema);
         const texts = [...changelogTexts(changelog), ...noticeTexts(notices), ...settingsTexts(settings), ...actionTexts(actions), ...schemaTexts(schema)];
         expect(findBannedNames(texts)).toEqual([]);

@@ -23,7 +23,8 @@ describe("parseReference", () => {
     test("reads Zinc's file as it is", () => {
         const reference = parseReference(crlf(fakeReference()));
         expect(reference.settings.map(s => s.key)).toEqual(["terminal.scrollback-lines"]);
-        expect(reference.actions.map(a => a.name)).toEqual(["split"]);
+        expect(reference.actions.map(a => a.name)).toEqual(["split", "paste"]);
+        expect(reference.keys.names.map(n => n.name)).toContain("pgup");
     });
 
     test("ignores fields it doesn't read", () => {
@@ -50,6 +51,52 @@ describe("parseReference", () => {
         expect(message).toContain("discover.wsl is in section \"shells\"");
         expect(message).toContain("the setting key terminal.scrollback-lines appears more than once");
         expect(message).toContain("the action split appears more than once");
+    });
+
+    test("refuses actions whose category, argument or default keys aren't listed", () => {
+        const message = refusal(r => {
+            r.actions[0]!.category = "Splits";
+            r.actions[1]!.argument = "paste-mode";
+            r.actions[1]!.defaultKeys.push({keys: "ctrl+shift+pageup", action: "paste"}, {keys: "win+p", action: "paste"}, {keys: "ctrl+a", action: "quit"});
+        });
+        expect(message).toContain(`the action split is in the category "Splits", which isn't in actionCategories`);
+        expect(message).toContain(`the action paste takes the argument "paste-mode", which isn't in actionArguments`);
+        expect(message).not.toContain("ctrl+shift+pageup");
+        expect(message).toContain(`the action paste: "win+p" has the modifier "win", which isn't a modifier`);
+        expect(message).toContain(`the action paste has a default key for "quit"`);
+    });
+
+    test("refuses a default key with a key name it doesn't know", () => {
+        expect(refusal(r => r.actions[0]!.defaultKeys[0]!.keys = "alt+shift+equal")).toContain(`"alt+shift+equal" has the key "equal", which isn't a key name`);
+    });
+
+    test("refuses a bound argument the action doesn't take", () => {
+        const message = refusal(r => {
+            r.actions[0]!.defaultKeys[0]!.action = "split sideways";
+            r.actions[1]!.defaultKeys[0]!.action = "paste plain";
+        });
+        expect(message).toContain(`the action split binds "split sideways", but direction takes only right, down, left, up`);
+        expect(message).toContain(`the action paste binds "paste plain", but it takes no argument`);
+    });
+
+    test("takes any bound value when the argument also takes free text", () => {
+        expect(() => parseReference(JSON.stringify({
+            ...fakeReference(),
+            actionArguments: [{name: "direction", values: ["last"], optional: false, text: "A number from 1, or last"}],
+        }))).not.toThrow();
+    });
+
+    test("refuses repeated categories, arguments, top-level keys and key names", () => {
+        const message = refusal(r => {
+            r.actionCategories.push("Panes");
+            r.actionArguments.push(r.actionArguments[0]!);
+            r.topLevel.push(r.topLevel[0]!);
+            r.keys.names.push({name: "page_up", aliases: ["pageup"], virtualKey: 33});
+        });
+        expect(message).toContain("the action category Panes appears more than once");
+        expect(message).toContain("the action argument direction appears more than once");
+        expect(message).toContain("the top-level key include appears more than once");
+        expect(message).toContain("the key name pageup appears more than once");
     });
 
     test("lets a profile field share a setting's key", () => {

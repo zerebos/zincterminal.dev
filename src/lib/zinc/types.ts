@@ -54,6 +54,24 @@ export interface SettingsCatalog {
 
     /** The keys of a `[profile.<id>]` table that aren't settings, such as `command` */
     profileFields: Setting[];
+
+    /** The keys at the top of config.toml that aren't in a table, such as `include` */
+    topLevel: TopLevelKey[];
+
+    /** What Settings calls the custom option of a color setting that also has choices */
+    customColorLabel: string;
+}
+
+export interface TopLevelKey {
+    key: string;
+    label: string;
+    description: string;
+
+    /** The value's type in words, such as `A list of profile ids` */
+    takes: string;
+
+    /** The default in words, or `null` when there's nothing to say */
+    defaultText: string | null;
 }
 
 export interface SettingsSection {
@@ -101,6 +119,12 @@ export interface Setting {
     /** For text settings: `10` is written as a number, `30s` as a string */
     numbersAsNumbers: boolean;
 
+    /** The placeholder again when it's only an example, not the default. `null` otherwise. */
+    example: string | null;
+
+    /** The default in words, where `default` can't say it. `null` otherwise. */
+    defaultText: string | null;
+
     /** Whether a `[profile.<id>]` table can set its own value */
     profileOverridable: boolean;
 }
@@ -138,21 +162,90 @@ export interface ActionKey {
     action: string;
 }
 
+/** A kind of argument an action takes, such as `direction` */
+export interface ActionArgument {
+    name: string;
+
+    /** The fixed words it takes, such as `left` */
+    values: string[];
+
+    /** Whether the action works without it */
+    optional: boolean;
+
+    /** What it takes besides `values`, in words, or `null` when `values` is all */
+    text: string | null;
+}
+
+/** How `[keys]` writes keys */
+export interface KeySyntax<Name = KeyName> {
+
+    /** Between the parts of a chord: `ctrl+shift+t` */
+    chordSeparator: string;
+
+    /** Between the chords of a sequence: `ctrl+a > c` */
+    sequenceSeparator: string;
+
+    /** The action that unbinds a key */
+    unbind: string;
+    modifiers: string[];
+    names: Name[];
+}
+
+/** A key `[keys]` names, with the browser's `KeyboardEvent.code` for it */
+export interface KeyName {
+    name: string;
+    aliases: string[];
+    code: string;
+}
+
+/** The site's `zinc-actions.json` */
+export interface ActionsFile {
+
+    /** In the order Settings › Keyboard lists them */
+    categories: string[];
+    arguments: ActionArgument[];
+    keys: KeySyntax;
+    actions: Action[];
+}
+
 /** Zinc's `zinc-reference.json`, as far as the site reads it */
 export interface ZincReference {
     format: number;
 
-    /** The build that wrote it, such as `0.1.0-dev+294b6a4` */
-    zinc: {version: string;};
+    zinc: {
+
+        /** The build that wrote it, such as `0.1.0-dev+294b6a4` */
+        version: string;
+
+        /** The release it belongs to, such as `0.1.0`, or `null` for a dev build */
+        release: string | null;
+
+        /** The release's date from the changelog, `YYYY-MM-DD`, or `null` */
+        date: string | null;
+    };
     sections: SettingsSection[];
+    topLevel: TopLevelKey[];
+    customColorLabel: string;
     settings: ReferenceSetting[];
     fileOnly: SettingsCatalog["fileOnly"];
     profileFields: ReferenceSetting[];
     discovery: ReferenceSetting[];
+
+    /** In the order Settings › Keyboard lists them */
+    actionCategories: string[];
+    actionArguments: ActionArgument[];
     actions: Action[];
+    keys: KeySyntax<ReferenceKeyName>;
 
     /** Zinc's own entry comes first, then the components it ships */
     notices: Notice[];
+}
+
+/** A key name as the reference gives it, with its Windows virtual-key code */
+export interface ReferenceKeyName {
+    name: string;
+    aliases: string[];
+    virtualKey: number;
 }
 
 /** A setting as the reference gives it */

@@ -8,7 +8,7 @@
                 "name": "New",
                 "items": [
                     {
-                        "text": "Panes now move instead of jumping! They slide into place when you split, close, maximize or restore them, and when you drop one beside another, into its tabs, or into another window. Turn the animations off with `Settings > Layout > Panes > Pane animations` (`pane-animations` in `[window]`). While Windows' Animation effects are off, panes jump into place as before.",
+                        "text": "Panes now move instead of jumping. They slide into place when you split, close, maximize or restore them, and when you drop one beside another, into its tabs, or into another window. Turn the animations off with `Settings > Layout > Panes > Pane animations` (`pane-animations` in `[window]`). While Windows' Animation effects are off, panes jump into place as before.",
                         "children": []
                     }
                 ]
@@ -90,7 +90,7 @@
                 "name": "New",
                 "items": [
                     {
-                        "text": "Panes as cards (`Settings > Layout > Panes > Pane style`)! Pick Cards and each pane becomes a rounded card with a header, a gap between them, header buttons on the focused pane and a ring around it. Compact, the default, keeps panes edge to edge. The welcome page asks which you'd like. Change any of the settings under it to make your own mix:",
+                        "text": "Panes as cards (`Settings > Layout > Panes > Pane style`). Pick Cards and each pane becomes a rounded card with a header, a gap between them, header buttons on the focused pane and a ring around it. Compact, the default, keeps panes edge to edge. The welcome page asks which you'd like. Change any of the settings under it to make your own mix:",
                         "children": [
                             "`Gap between panes` (`pane-gap`): the space between panes. You drag the gap to resize them, as you dragged the divider.",
                             "`Gap at the workspace edges` (`pane-gap-edges`): the same gap around the outside, so splitting never moves a pane's outer edges.",
@@ -102,7 +102,7 @@
                         "children": []
                     },
                     {
-                        "text": "Pane header buttons (`Settings > Layout > Panes > Header buttons`, `pane-header-buttons` in `[window]`)! Split, Maximize pane and a menu with the pane's other commands (including Close pane), on the right of a pane's header. Show them on every pane, on the focused pane, only while the pointer is over a header, or not at all (the default). With them, the header also shows a program's progress. With `Tabs inside panes` off, the buttons end with ×, which closes the pane, and the title no longer has its own. Without buttons, middle-click the title or use its right-click menu.",
+                        "text": "Pane header buttons (`Settings > Layout > Panes > Header buttons`, `pane-header-buttons` in `[window]`). Split, Maximize pane and a menu with the pane's other commands (including Close pane), on the right of a pane's header. Show them on every pane, on the focused pane, only while the pointer is over a header, or not at all (the default). With them, the header also shows a program's progress. With `Tabs inside panes` off, the buttons end with ×, which closes the pane, and the title no longer has its own. Without buttons, middle-click the title or use its right-click menu.",
                         "children": []
                     },
                     {
@@ -773,7 +773,7 @@
         "date": "2026-10-02",
         "notes": [
             "The first release with an installer: Zinc installs per user, keeps itself up to date (it checks once a day, downloads in the background, and installs on restart or when you quit), and appears in `Settings > Apps`.",
-            "Before this, testers got zip builds."
+            "Builds before this one came as zip files."
         ],
         "groups": []
     }

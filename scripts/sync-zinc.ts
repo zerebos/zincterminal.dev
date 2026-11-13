@@ -18,7 +18,8 @@ try {
     });
     console.log(`Synced ${release.version} (${release.date}) from ${repo}`);
     console.log(`  The reference export is from Zinc ${reference.zinc.version}`);
-    console.log(`  ${changelog.length} builds, ${notices.length} notices, ${settings.settings.length} settings, ${settings.profileFields.length} profile fields, ${actions.length} actions`);
+    console.log(`  ${changelog.length} builds, ${notices.length} notices, ${settings.settings.length} settings, ${settings.profileFields.length} profile fields, ${settings.topLevel.length} top-level keys`);
+    console.log(`  ${actions.actions.length} actions in ${actions.categories.length} categories, ${actions.keys.names.length} key names`);
 }
 catch (error) {
     console.error(error instanceof Error ? error.message : error);

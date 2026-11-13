@@ -1,7 +1,7 @@
 // The site never names Windows Terminal in its own words. This checks the text we show as ours
 // (changelog items, use texts, settings, actions, the schema), not URLs or license texts.
 
-import type {Action, ChangelogEntry, Notice, Setting, SettingsCatalog} from "./types";
+import type {ActionsFile, ChangelogEntry, Notice, Setting, SettingsCatalog} from "./types";
 
 
 const banned = /windows\s+terminal/i;
@@ -32,7 +32,7 @@ export function noticeTexts(notices: Notice[]): GuardedText[] {
 }
 
 function settingTexts(s: Setting, where: string): GuardedText[] {
-    return [s.group, s.label, s.description, s.placeholder ?? "", s.nullLabel ?? "", s.unit ?? ""]
+    return [s.group, s.label, s.description, s.placeholder ?? "", s.nullLabel ?? "", s.unit ?? "", s.example ?? "", s.defaultText ?? ""]
         .concat(s.choices.flatMap(c => [c.label, c.detail ?? ""]))
         .map(text => ({where, text}));
 }
@@ -43,11 +43,17 @@ export function settingsTexts(catalog: SettingsCatalog): GuardedText[] {
         ...catalog.settings.flatMap(s => settingTexts(s, s.key)),
         ...catalog.fileOnly.map(f => ({where: f.key, text: f.text})),
         ...catalog.profileFields.flatMap(s => settingTexts(s, `profile field ${s.key}`)),
+        ...catalog.topLevel.flatMap(k => [k.label, k.description, k.takes, k.defaultText ?? ""].map(text => ({where: k.key, text}))),
+        {where: "customColorLabel", text: catalog.customColorLabel},
     ];
 }
 
-export function actionTexts(actions: Action[]): GuardedText[] {
-    return actions.flatMap(a => [a.title, a.description, a.category].map(text => ({where: `action ${a.name}`, text})));
+export function actionTexts(file: ActionsFile): GuardedText[] {
+    return [
+        ...file.categories.map(text => ({where: "action category", text})),
+        ...file.arguments.flatMap(a => [...a.values, a.text ?? ""].map(text => ({where: `action argument ${a.name}`, text}))),
+        ...file.actions.flatMap(a => [a.title, a.description].map(text => ({where: `action ${a.name}`, text}))),
+    ];
 }
 
 // Keys whose strings are names or patterns rather than text people read

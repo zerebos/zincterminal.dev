@@ -1,618 +1,1161 @@
-[
-    {
-        "name": "copy",
-        "title": "Copy",
-        "description": "Copy the selection. \"copy if-selection\" lets the key through to the app when nothing is selected.",
-        "argument": "copy-mode",
-        "category": "Clipboard",
-        "defaultKeys": [
+{
+    "categories": [
+        "Clipboard",
+        "Find and scroll",
+        "Zoom",
+        "Tabs",
+        "Panes",
+        "Workspaces and windows",
+        "Sidebar and title bar",
+        "Zinc"
+    ],
+    "arguments": [
+        {
+            "name": "direction",
+            "values": [
+                "right",
+                "down",
+                "left",
+                "up"
+            ],
+            "optional": false,
+            "text": null
+        },
+        {
+            "name": "workspace",
+            "values": [
+                "last"
+            ],
+            "optional": false,
+            "text": "A workspace number from 1, or last"
+        },
+        {
+            "name": "optional-profile",
+            "values": [],
+            "optional": true,
+            "text": "A profile's id, or its position in the profile menu from 1"
+        },
+        {
+            "name": "copy-mode",
+            "values": [
+                "if-selection"
+            ],
+            "optional": true,
+            "text": null
+        },
+        {
+            "name": "optional-sidebar-mode",
+            "values": [
+                "rail",
+                "auto-hide"
+            ],
+            "optional": true,
+            "text": null
+        },
+        {
+            "name": "prompt-direction",
+            "values": [
+                "previous",
+                "next"
+            ],
+            "optional": false,
+            "text": null
+        }
+    ],
+    "keys": {
+        "chordSeparator": "+",
+        "sequenceSeparator": ">",
+        "unbind": "none",
+        "modifiers": [
+            "ctrl",
+            "alt",
+            "shift"
+        ],
+        "names": [
             {
-                "keys": "ctrl+shift+c",
-                "action": "copy"
+                "name": "a",
+                "aliases": [],
+                "code": "KeyA"
             },
             {
-                "keys": "ctrl+c",
-                "action": "copy if-selection"
+                "name": "b",
+                "aliases": [],
+                "code": "KeyB"
+            },
+            {
+                "name": "c",
+                "aliases": [],
+                "code": "KeyC"
+            },
+            {
+                "name": "d",
+                "aliases": [],
+                "code": "KeyD"
+            },
+            {
+                "name": "e",
+                "aliases": [],
+                "code": "KeyE"
+            },
+            {
+                "name": "f",
+                "aliases": [],
+                "code": "KeyF"
+            },
+            {
+                "name": "g",
+                "aliases": [],
+                "code": "KeyG"
+            },
+            {
+                "name": "h",
+                "aliases": [],
+                "code": "KeyH"
+            },
+            {
+                "name": "i",
+                "aliases": [],
+                "code": "KeyI"
+            },
+            {
+                "name": "j",
+                "aliases": [],
+                "code": "KeyJ"
+            },
+            {
+                "name": "k",
+                "aliases": [],
+                "code": "KeyK"
+            },
+            {
+                "name": "l",
+                "aliases": [],
+                "code": "KeyL"
+            },
+            {
+                "name": "m",
+                "aliases": [],
+                "code": "KeyM"
+            },
+            {
+                "name": "n",
+                "aliases": [],
+                "code": "KeyN"
+            },
+            {
+                "name": "o",
+                "aliases": [],
+                "code": "KeyO"
+            },
+            {
+                "name": "p",
+                "aliases": [],
+                "code": "KeyP"
+            },
+            {
+                "name": "q",
+                "aliases": [],
+                "code": "KeyQ"
+            },
+            {
+                "name": "r",
+                "aliases": [],
+                "code": "KeyR"
+            },
+            {
+                "name": "s",
+                "aliases": [],
+                "code": "KeyS"
+            },
+            {
+                "name": "t",
+                "aliases": [],
+                "code": "KeyT"
+            },
+            {
+                "name": "u",
+                "aliases": [],
+                "code": "KeyU"
+            },
+            {
+                "name": "v",
+                "aliases": [],
+                "code": "KeyV"
+            },
+            {
+                "name": "w",
+                "aliases": [],
+                "code": "KeyW"
+            },
+            {
+                "name": "x",
+                "aliases": [],
+                "code": "KeyX"
+            },
+            {
+                "name": "y",
+                "aliases": [],
+                "code": "KeyY"
+            },
+            {
+                "name": "z",
+                "aliases": [],
+                "code": "KeyZ"
+            },
+            {
+                "name": "0",
+                "aliases": [],
+                "code": "Digit0"
+            },
+            {
+                "name": "1",
+                "aliases": [],
+                "code": "Digit1"
+            },
+            {
+                "name": "2",
+                "aliases": [],
+                "code": "Digit2"
+            },
+            {
+                "name": "3",
+                "aliases": [],
+                "code": "Digit3"
+            },
+            {
+                "name": "4",
+                "aliases": [],
+                "code": "Digit4"
+            },
+            {
+                "name": "5",
+                "aliases": [],
+                "code": "Digit5"
+            },
+            {
+                "name": "6",
+                "aliases": [],
+                "code": "Digit6"
+            },
+            {
+                "name": "7",
+                "aliases": [],
+                "code": "Digit7"
+            },
+            {
+                "name": "8",
+                "aliases": [],
+                "code": "Digit8"
+            },
+            {
+                "name": "9",
+                "aliases": [],
+                "code": "Digit9"
+            },
+            {
+                "name": "numpad0",
+                "aliases": [],
+                "code": "Numpad0"
+            },
+            {
+                "name": "numpad1",
+                "aliases": [],
+                "code": "Numpad1"
+            },
+            {
+                "name": "numpad2",
+                "aliases": [],
+                "code": "Numpad2"
+            },
+            {
+                "name": "numpad3",
+                "aliases": [],
+                "code": "Numpad3"
+            },
+            {
+                "name": "numpad4",
+                "aliases": [],
+                "code": "Numpad4"
+            },
+            {
+                "name": "numpad5",
+                "aliases": [],
+                "code": "Numpad5"
+            },
+            {
+                "name": "numpad6",
+                "aliases": [],
+                "code": "Numpad6"
+            },
+            {
+                "name": "numpad7",
+                "aliases": [],
+                "code": "Numpad7"
+            },
+            {
+                "name": "numpad8",
+                "aliases": [],
+                "code": "Numpad8"
+            },
+            {
+                "name": "numpad9",
+                "aliases": [],
+                "code": "Numpad9"
+            },
+            {
+                "name": "f1",
+                "aliases": [],
+                "code": "F1"
+            },
+            {
+                "name": "f2",
+                "aliases": [],
+                "code": "F2"
+            },
+            {
+                "name": "f3",
+                "aliases": [],
+                "code": "F3"
+            },
+            {
+                "name": "f4",
+                "aliases": [],
+                "code": "F4"
+            },
+            {
+                "name": "f5",
+                "aliases": [],
+                "code": "F5"
+            },
+            {
+                "name": "f6",
+                "aliases": [],
+                "code": "F6"
+            },
+            {
+                "name": "f7",
+                "aliases": [],
+                "code": "F7"
+            },
+            {
+                "name": "f8",
+                "aliases": [],
+                "code": "F8"
+            },
+            {
+                "name": "f9",
+                "aliases": [],
+                "code": "F9"
+            },
+            {
+                "name": "f10",
+                "aliases": [],
+                "code": "F10"
+            },
+            {
+                "name": "f11",
+                "aliases": [],
+                "code": "F11"
+            },
+            {
+                "name": "f12",
+                "aliases": [],
+                "code": "F12"
+            },
+            {
+                "name": "f13",
+                "aliases": [],
+                "code": "F13"
+            },
+            {
+                "name": "f14",
+                "aliases": [],
+                "code": "F14"
+            },
+            {
+                "name": "f15",
+                "aliases": [],
+                "code": "F15"
+            },
+            {
+                "name": "f16",
+                "aliases": [],
+                "code": "F16"
+            },
+            {
+                "name": "f17",
+                "aliases": [],
+                "code": "F17"
+            },
+            {
+                "name": "f18",
+                "aliases": [],
+                "code": "F18"
+            },
+            {
+                "name": "f19",
+                "aliases": [],
+                "code": "F19"
+            },
+            {
+                "name": "f20",
+                "aliases": [],
+                "code": "F20"
+            },
+            {
+                "name": "f21",
+                "aliases": [],
+                "code": "F21"
+            },
+            {
+                "name": "f22",
+                "aliases": [],
+                "code": "F22"
+            },
+            {
+                "name": "f23",
+                "aliases": [],
+                "code": "F23"
+            },
+            {
+                "name": "f24",
+                "aliases": [],
+                "code": "F24"
+            },
+            {
+                "name": "plus",
+                "aliases": [],
+                "code": "Equal"
+            },
+            {
+                "name": "minus",
+                "aliases": [],
+                "code": "Minus"
+            },
+            {
+                "name": "comma",
+                "aliases": [
+                    ","
+                ],
+                "code": "Comma"
+            },
+            {
+                "name": "grave",
+                "aliases": [
+                    "grave_accent",
+                    "`"
+                ],
+                "code": "Backquote"
+            },
+            {
+                "name": "numpad_plus",
+                "aliases": [],
+                "code": "NumpadAdd"
+            },
+            {
+                "name": "numpad_minus",
+                "aliases": [],
+                "code": "NumpadSubtract"
+            },
+            {
+                "name": "tab",
+                "aliases": [],
+                "code": "Tab"
+            },
+            {
+                "name": "enter",
+                "aliases": [],
+                "code": "Enter"
+            },
+            {
+                "name": "space",
+                "aliases": [],
+                "code": "Space"
+            },
+            {
+                "name": "esc",
+                "aliases": [
+                    "escape"
+                ],
+                "code": "Escape"
+            },
+            {
+                "name": "backspace",
+                "aliases": [],
+                "code": "Backspace"
+            },
+            {
+                "name": "insert",
+                "aliases": [],
+                "code": "Insert"
+            },
+            {
+                "name": "delete",
+                "aliases": [],
+                "code": "Delete"
+            },
+            {
+                "name": "home",
+                "aliases": [],
+                "code": "Home"
+            },
+            {
+                "name": "end",
+                "aliases": [],
+                "code": "End"
+            },
+            {
+                "name": "pgup",
+                "aliases": [
+                    "pageup"
+                ],
+                "code": "PageUp"
+            },
+            {
+                "name": "pgdn",
+                "aliases": [
+                    "pagedown"
+                ],
+                "code": "PageDown"
+            },
+            {
+                "name": "up",
+                "aliases": [],
+                "code": "ArrowUp"
+            },
+            {
+                "name": "down",
+                "aliases": [],
+                "code": "ArrowDown"
+            },
+            {
+                "name": "left",
+                "aliases": [],
+                "code": "ArrowLeft"
+            },
+            {
+                "name": "right",
+                "aliases": [],
+                "code": "ArrowRight"
             }
         ]
     },
-    {
-        "name": "copy-formatted",
-        "title": "Copy with formatting",
-        "description": "Copy the selection with its colors and styles, for pasting into a document or an email.",
-        "argument": null,
-        "category": "Clipboard",
-        "defaultKeys": []
-    },
-    {
-        "name": "paste",
-        "title": "Paste",
-        "description": "Paste the clipboard.",
-        "argument": null,
-        "category": "Clipboard",
-        "defaultKeys": [
-            {
-                "keys": "ctrl+v",
-                "action": "paste"
-            },
-            {
-                "keys": "ctrl+shift+v",
-                "action": "paste"
-            },
-            {
-                "keys": "shift+insert",
-                "action": "paste"
-            }
-        ]
-    },
-    {
-        "name": "find",
-        "title": "Find",
-        "description": "Open the find box.",
-        "argument": null,
-        "category": "Find and scroll",
-        "defaultKeys": [
-            {
-                "keys": "ctrl+shift+f",
-                "action": "find"
-            }
-        ]
-    },
-    {
-        "name": "zoom-in",
-        "title": "Zoom in",
-        "description": "Make the text 10% bigger.",
-        "argument": null,
-        "category": "Zoom",
-        "defaultKeys": [
-            {
-                "keys": "ctrl+plus",
-                "action": "zoom-in"
-            },
-            {
-                "keys": "ctrl+numpad_plus",
-                "action": "zoom-in"
-            },
-            {
-                "keys": "ctrl+shift+plus",
-                "action": "zoom-in"
-            },
-            {
-                "keys": "ctrl+shift+numpad_plus",
-                "action": "zoom-in"
-            }
-        ]
-    },
-    {
-        "name": "zoom-out",
-        "title": "Zoom out",
-        "description": "Make the text 10% smaller.",
-        "argument": null,
-        "category": "Zoom",
-        "defaultKeys": [
-            {
-                "keys": "ctrl+minus",
-                "action": "zoom-out"
-            },
-            {
-                "keys": "ctrl+numpad_minus",
-                "action": "zoom-out"
-            },
-            {
-                "keys": "ctrl+shift+minus",
-                "action": "zoom-out"
-            },
-            {
-                "keys": "ctrl+shift+numpad_minus",
-                "action": "zoom-out"
-            }
-        ]
-    },
-    {
-        "name": "reset-zoom",
-        "title": "Reset zoom",
-        "description": "Back to 100%: the configured font size.",
-        "argument": null,
-        "category": "Zoom",
-        "defaultKeys": [
-            {
-                "keys": "ctrl+0",
-                "action": "reset-zoom"
-            },
-            {
-                "keys": "ctrl+numpad0",
-                "action": "reset-zoom"
-            },
-            {
-                "keys": "ctrl+shift+0",
-                "action": "reset-zoom"
-            },
-            {
-                "keys": "ctrl+shift+numpad0",
-                "action": "reset-zoom"
-            }
-        ]
-    },
-    {
-        "name": "scroll-page-up",
-        "title": "Scroll page up",
-        "description": "Scroll back a page.",
-        "argument": null,
-        "category": "Find and scroll",
-        "defaultKeys": [
-            {
-                "keys": "shift+pgup",
-                "action": "scroll-page-up"
-            }
-        ]
-    },
-    {
-        "name": "scroll-page-down",
-        "title": "Scroll page down",
-        "description": "Scroll forward a page.",
-        "argument": null,
-        "category": "Find and scroll",
-        "defaultKeys": [
-            {
-                "keys": "shift+pgdn",
-                "action": "scroll-page-down"
-            }
-        ]
-    },
-    {
-        "name": "scroll-to-top",
-        "title": "Scroll to top",
-        "description": "Scroll to the start of the scrollback.",
-        "argument": null,
-        "category": "Find and scroll",
-        "defaultKeys": [
-            {
-                "keys": "ctrl+shift+home",
-                "action": "scroll-to-top"
-            }
-        ]
-    },
-    {
-        "name": "scroll-to-bottom",
-        "title": "Scroll to bottom",
-        "description": "Scroll to the prompt.",
-        "argument": null,
-        "category": "Find and scroll",
-        "defaultKeys": [
-            {
-                "keys": "ctrl+shift+end",
-                "action": "scroll-to-bottom"
-            }
-        ]
-    },
-    {
-        "name": "jump-to-prompt",
-        "title": "Jump to prompt",
-        "description": "Scroll to the previous or next prompt: \"jump-to-prompt previous\" / \"next\". Without prompt marks, it scrolls a line. Needs shell integration.",
-        "argument": "prompt-direction",
-        "category": "Find and scroll",
-        "defaultKeys": [
-            {
-                "keys": "ctrl+shift+up",
-                "action": "jump-to-prompt previous"
-            },
-            {
-                "keys": "ctrl+shift+down",
-                "action": "jump-to-prompt next"
-            }
-        ]
-    },
-    {
-        "name": "select-output",
-        "title": "Select command output",
-        "description": "Select the output of the command at the top of the view (or the last command). Needs shell integration.",
-        "argument": null,
-        "category": "Find and scroll",
-        "defaultKeys": []
-    },
-    {
-        "name": "copy-output",
-        "title": "Copy command output",
-        "description": "Copy the output of the command at the top of the view (or the last command). Needs shell integration.",
-        "argument": null,
-        "category": "Clipboard",
-        "defaultKeys": []
-    },
-    {
-        "name": "new-tab",
-        "title": "New tab",
-        "description": "Open a tab (in the focused pane, with tab groups). With a profile: that profile, by id or menu position.",
-        "argument": "optional-profile",
-        "category": "Tabs",
-        "defaultKeys": [
-            {
-                "keys": "ctrl+shift+t",
-                "action": "new-tab"
-            },
-            {
-                "keys": "ctrl+shift+1",
-                "action": "new-tab 1"
-            },
-            {
-                "keys": "ctrl+shift+2",
-                "action": "new-tab 2"
-            },
-            {
-                "keys": "ctrl+shift+3",
-                "action": "new-tab 3"
-            },
-            {
-                "keys": "ctrl+shift+4",
-                "action": "new-tab 4"
-            },
-            {
-                "keys": "ctrl+shift+5",
-                "action": "new-tab 5"
-            },
-            {
-                "keys": "ctrl+shift+6",
-                "action": "new-tab 6"
-            },
-            {
-                "keys": "ctrl+shift+7",
-                "action": "new-tab 7"
-            },
-            {
-                "keys": "ctrl+shift+8",
-                "action": "new-tab 8"
-            },
-            {
-                "keys": "ctrl+shift+9",
-                "action": "new-tab 9"
-            }
-        ]
-    },
-    {
-        "name": "new-workspace",
-        "title": "New workspace",
-        "description": "Open a workspace with the default profile.",
-        "argument": null,
-        "category": "Workspaces and windows",
-        "defaultKeys": [
-            {
-                "keys": "ctrl+alt+t",
-                "action": "new-workspace"
-            }
-        ]
-    },
-    {
-        "name": "new-window",
-        "title": "New window",
-        "description": "Open a window with the default profile.",
-        "argument": null,
-        "category": "Workspaces and windows",
-        "defaultKeys": [
-            {
-                "keys": "ctrl+shift+n",
-                "action": "new-window"
-            }
-        ]
-    },
-    {
-        "name": "reopen-workspace",
-        "title": "Reopen closed workspace",
-        "description": "Bring back the workspace closed last: its tabs, splits and folders.",
-        "argument": null,
-        "category": "Workspaces and windows",
-        "defaultKeys": []
-    },
-    {
-        "name": "reopen-window",
-        "title": "Reopen closed window",
-        "description": "Bring back the window closed last, where it was: its workspaces, tabs, splits and folders.",
-        "argument": null,
-        "category": "Workspaces and windows",
-        "defaultKeys": []
-    },
-    {
-        "name": "duplicate-tab",
-        "title": "Duplicate tab",
-        "description": "Open the focused tab's command again, next to it.",
-        "argument": null,
-        "category": "Tabs",
-        "defaultKeys": [
-            {
-                "keys": "ctrl+shift+d",
-                "action": "duplicate-tab"
-            }
-        ]
-    },
-    {
-        "name": "close-tab",
-        "title": "Close tab",
-        "description": "Close the focused tab (its pane goes with its last tab).",
-        "argument": null,
-        "category": "Tabs",
-        "defaultKeys": [
-            {
-                "keys": "ctrl+shift+w",
-                "action": "close-tab"
-            }
-        ]
-    },
-    {
-        "name": "next-tab",
-        "title": "Next tab",
-        "description": "The pane's next tab, or the next workspace.",
-        "argument": null,
-        "category": "Tabs",
-        "defaultKeys": [
-            {
-                "keys": "ctrl+tab",
-                "action": "next-tab"
-            }
-        ]
-    },
-    {
-        "name": "previous-tab",
-        "title": "Previous tab",
-        "description": "The pane's previous tab, or the previous workspace.",
-        "argument": null,
-        "category": "Tabs",
-        "defaultKeys": [
-            {
-                "keys": "ctrl+shift+tab",
-                "action": "previous-tab"
-            }
-        ]
-    },
-    {
-        "name": "go-to-workspace",
-        "title": "Go to workspace",
-        "description": "Show workspace N (from 1), or \"last\".",
-        "argument": "workspace",
-        "category": "Workspaces and windows",
-        "defaultKeys": [
-            {
-                "keys": "ctrl+alt+1",
-                "action": "go-to-workspace 1"
-            },
-            {
-                "keys": "ctrl+alt+2",
-                "action": "go-to-workspace 2"
-            },
-            {
-                "keys": "ctrl+alt+3",
-                "action": "go-to-workspace 3"
-            },
-            {
-                "keys": "ctrl+alt+4",
-                "action": "go-to-workspace 4"
-            },
-            {
-                "keys": "ctrl+alt+5",
-                "action": "go-to-workspace 5"
-            },
-            {
-                "keys": "ctrl+alt+6",
-                "action": "go-to-workspace 6"
-            },
-            {
-                "keys": "ctrl+alt+7",
-                "action": "go-to-workspace 7"
-            },
-            {
-                "keys": "ctrl+alt+8",
-                "action": "go-to-workspace 8"
-            },
-            {
-                "keys": "ctrl+alt+9",
-                "action": "go-to-workspace last"
-            }
-        ]
-    },
-    {
-        "name": "split",
-        "title": "Split",
-        "description": "Split the focused pane: right, down, left or up.",
-        "argument": "direction",
-        "category": "Panes",
-        "defaultKeys": [
-            {
-                "keys": "alt+shift+plus",
-                "action": "split right"
-            },
-            {
-                "keys": "alt+shift+minus",
-                "action": "split down"
-            }
-        ]
-    },
-    {
-        "name": "duplicate-pane",
-        "title": "Duplicate pane",
-        "description": "Split, running the focused tab's command again.",
-        "argument": null,
-        "category": "Panes",
-        "defaultKeys": [
-            {
-                "keys": "alt+shift+d",
-                "action": "duplicate-pane"
-            }
-        ]
-    },
-    {
-        "name": "focus",
-        "title": "Focus pane",
-        "description": "Focus the neighboring pane: left, right, up or down.",
-        "argument": "direction",
-        "category": "Panes",
-        "defaultKeys": [
-            {
-                "keys": "alt+left",
-                "action": "focus left"
-            },
-            {
-                "keys": "alt+right",
-                "action": "focus right"
-            },
-            {
-                "keys": "alt+up",
-                "action": "focus up"
-            },
-            {
-                "keys": "alt+down",
-                "action": "focus down"
-            }
-        ]
-    },
-    {
-        "name": "resize",
-        "title": "Resize pane",
-        "description": "Move the focused pane's divider: left, right, up or down.",
-        "argument": "direction",
-        "category": "Panes",
-        "defaultKeys": [
-            {
-                "keys": "alt+shift+left",
-                "action": "resize left"
-            },
-            {
-                "keys": "alt+shift+right",
-                "action": "resize right"
-            },
-            {
-                "keys": "alt+shift+up",
-                "action": "resize up"
-            },
-            {
-                "keys": "alt+shift+down",
-                "action": "resize down"
-            }
-        ]
-    },
-    {
-        "name": "maximize-pane",
-        "title": "Maximize pane",
-        "description": "Fill the workspace with the focused pane, hiding the others. Trigger again to show them. Focusing another pane shows them too.",
-        "argument": null,
-        "category": "Panes",
-        "defaultKeys": []
-    },
-    {
-        "name": "close-pane",
-        "title": "Close pane",
-        "description": "Close the focused pane and every tab in it, asking first if a command is running in any of them.",
-        "argument": null,
-        "category": "Panes",
-        "defaultKeys": []
-    },
-    {
-        "name": "profile-menu",
-        "title": "Profile menu",
-        "description": "The ▾ menu of profiles.",
-        "argument": null,
-        "category": "Tabs",
-        "defaultKeys": [
-            {
-                "keys": "ctrl+shift+space",
-                "action": "profile-menu"
-            }
-        ]
-    },
-    {
-        "name": "command-palette",
-        "title": "Command palette",
-        "description": "Search every command.",
-        "argument": null,
-        "category": "Zinc",
-        "defaultKeys": [
-            {
-                "keys": "ctrl+shift+p",
-                "action": "command-palette"
-            }
-        ]
-    },
-    {
-        "name": "tab-switcher",
-        "title": "Go to tab…",
-        "description": "Search this window's tabs by title, folder or running command (the palette's \"@\"); tabs with a dot come first.",
-        "argument": null,
-        "category": "Tabs",
-        "defaultKeys": [
-            {
-                "keys": "ctrl+shift+o",
-                "action": "tab-switcher"
-            }
-        ]
-    },
-    {
-        "name": "next-attention",
-        "title": "Next tab needing attention",
-        "description": "Go to the next tab with a dot: programs that exited with an error first, then failed commands, the bell, programs' notifications and finished commands.",
-        "argument": null,
-        "category": "Tabs",
-        "defaultKeys": []
-    },
-    {
-        "name": "toggle-sidebar",
-        "title": "Toggle sidebar",
-        "description": "With workspace-tabs = \"left\": cycle the workspace list through full, rail and auto-hide. \"toggle-sidebar rail\" (or auto-hide) switches between that and full.",
-        "argument": "optional-sidebar-mode",
-        "category": "Sidebar and title bar",
-        "defaultKeys": [
-            {
-                "keys": "ctrl+shift+b",
-                "action": "toggle-sidebar"
-            }
-        ]
-    },
-    {
-        "name": "toggle-title-bar",
-        "title": "Toggle title bar",
-        "description": "With workspace-tabs = \"left\": auto-hide the title bar, or show it again.",
-        "argument": null,
-        "category": "Sidebar and title bar",
-        "defaultKeys": []
-    },
-    {
-        "name": "focus-mode",
-        "title": "Focus mode",
-        "description": "With workspace-tabs = \"left\": auto-hide the title bar and the workspace list; again to bring them back.",
-        "argument": null,
-        "category": "Sidebar and title bar",
-        "defaultKeys": []
-    },
-    {
-        "name": "reload-config",
-        "title": "Reload config",
-        "description": "Read config.toml again.",
-        "argument": null,
-        "category": "Zinc",
-        "defaultKeys": []
-    },
-    {
-        "name": "open-settings",
-        "title": "Settings",
-        "description": "Open the settings window.",
-        "argument": null,
-        "category": "Zinc",
-        "defaultKeys": [
-            {
-                "keys": "ctrl+comma",
-                "action": "open-settings"
-            }
-        ]
-    },
-    {
-        "name": "quit",
-        "title": "Quit Zinc",
-        "description": "Close every window and exit.",
-        "argument": null,
-        "category": "Zinc",
-        "defaultKeys": []
-    },
-    {
-        "name": "quit-fresh",
-        "title": "Quit without saving windows",
-        "description": "Close every window and exit without saving them: next time opens a new window.",
-        "argument": null,
-        "category": "Zinc",
-        "defaultKeys": []
-    }
-]
+    "actions": [
+        {
+            "name": "copy",
+            "title": "Copy",
+            "description": "Copy the selection. \"copy if-selection\" lets the key through to the app when nothing is selected.",
+            "argument": "copy-mode",
+            "category": "Clipboard",
+            "defaultKeys": [
+                {
+                    "keys": "ctrl+shift+c",
+                    "action": "copy"
+                },
+                {
+                    "keys": "ctrl+c",
+                    "action": "copy if-selection"
+                }
+            ]
+        },
+        {
+            "name": "copy-formatted",
+            "title": "Copy with formatting",
+            "description": "Copy the selection with its colors and styles, for pasting into a document or an email.",
+            "argument": null,
+            "category": "Clipboard",
+            "defaultKeys": []
+        },
+        {
+            "name": "paste",
+            "title": "Paste",
+            "description": "Paste the clipboard.",
+            "argument": null,
+            "category": "Clipboard",
+            "defaultKeys": [
+                {
+                    "keys": "ctrl+v",
+                    "action": "paste"
+                },
+                {
+                    "keys": "ctrl+shift+v",
+                    "action": "paste"
+                },
+                {
+                    "keys": "shift+insert",
+                    "action": "paste"
+                }
+            ]
+        },
+        {
+            "name": "find",
+            "title": "Find",
+            "description": "Open the find box.",
+            "argument": null,
+            "category": "Find and scroll",
+            "defaultKeys": [
+                {
+                    "keys": "ctrl+shift+f",
+                    "action": "find"
+                }
+            ]
+        },
+        {
+            "name": "zoom-in",
+            "title": "Zoom in",
+            "description": "Make the text 10% bigger.",
+            "argument": null,
+            "category": "Zoom",
+            "defaultKeys": [
+                {
+                    "keys": "ctrl+plus",
+                    "action": "zoom-in"
+                },
+                {
+                    "keys": "ctrl+numpad_plus",
+                    "action": "zoom-in"
+                },
+                {
+                    "keys": "ctrl+shift+plus",
+                    "action": "zoom-in"
+                },
+                {
+                    "keys": "ctrl+shift+numpad_plus",
+                    "action": "zoom-in"
+                }
+            ]
+        },
+        {
+            "name": "zoom-out",
+            "title": "Zoom out",
+            "description": "Make the text 10% smaller.",
+            "argument": null,
+            "category": "Zoom",
+            "defaultKeys": [
+                {
+                    "keys": "ctrl+minus",
+                    "action": "zoom-out"
+                },
+                {
+                    "keys": "ctrl+numpad_minus",
+                    "action": "zoom-out"
+                },
+                {
+                    "keys": "ctrl+shift+minus",
+                    "action": "zoom-out"
+                },
+                {
+                    "keys": "ctrl+shift+numpad_minus",
+                    "action": "zoom-out"
+                }
+            ]
+        },
+        {
+            "name": "reset-zoom",
+            "title": "Reset zoom",
+            "description": "Back to 100%: the configured font size.",
+            "argument": null,
+            "category": "Zoom",
+            "defaultKeys": [
+                {
+                    "keys": "ctrl+0",
+                    "action": "reset-zoom"
+                },
+                {
+                    "keys": "ctrl+numpad0",
+                    "action": "reset-zoom"
+                },
+                {
+                    "keys": "ctrl+shift+0",
+                    "action": "reset-zoom"
+                },
+                {
+                    "keys": "ctrl+shift+numpad0",
+                    "action": "reset-zoom"
+                }
+            ]
+        },
+        {
+            "name": "scroll-page-up",
+            "title": "Scroll page up",
+            "description": "Scroll back a page.",
+            "argument": null,
+            "category": "Find and scroll",
+            "defaultKeys": [
+                {
+                    "keys": "shift+pgup",
+                    "action": "scroll-page-up"
+                }
+            ]
+        },
+        {
+            "name": "scroll-page-down",
+            "title": "Scroll page down",
+            "description": "Scroll forward a page.",
+            "argument": null,
+            "category": "Find and scroll",
+            "defaultKeys": [
+                {
+                    "keys": "shift+pgdn",
+                    "action": "scroll-page-down"
+                }
+            ]
+        },
+        {
+            "name": "scroll-to-top",
+            "title": "Scroll to top",
+            "description": "Scroll to the start of the scrollback.",
+            "argument": null,
+            "category": "Find and scroll",
+            "defaultKeys": [
+                {
+                    "keys": "ctrl+shift+home",
+                    "action": "scroll-to-top"
+                }
+            ]
+        },
+        {
+            "name": "scroll-to-bottom",
+            "title": "Scroll to bottom",
+            "description": "Scroll to the prompt.",
+            "argument": null,
+            "category": "Find and scroll",
+            "defaultKeys": [
+                {
+                    "keys": "ctrl+shift+end",
+                    "action": "scroll-to-bottom"
+                }
+            ]
+        },
+        {
+            "name": "jump-to-prompt",
+            "title": "Jump to prompt",
+            "description": "Scroll to the previous or next prompt: \"jump-to-prompt previous\" / \"next\". Without prompt marks, it scrolls a line. Needs shell integration.",
+            "argument": "prompt-direction",
+            "category": "Find and scroll",
+            "defaultKeys": [
+                {
+                    "keys": "ctrl+shift+up",
+                    "action": "jump-to-prompt previous"
+                },
+                {
+                    "keys": "ctrl+shift+down",
+                    "action": "jump-to-prompt next"
+                }
+            ]
+        },
+        {
+            "name": "select-output",
+            "title": "Select command output",
+            "description": "Select the output of the command at the top of the view (or the last command). Needs shell integration.",
+            "argument": null,
+            "category": "Find and scroll",
+            "defaultKeys": []
+        },
+        {
+            "name": "copy-output",
+            "title": "Copy command output",
+            "description": "Copy the output of the command at the top of the view (or the last command). Needs shell integration.",
+            "argument": null,
+            "category": "Clipboard",
+            "defaultKeys": []
+        },
+        {
+            "name": "new-tab",
+            "title": "New tab",
+            "description": "Open a tab (in the focused pane, with tab groups). With a profile: that profile, by id or menu position.",
+            "argument": "optional-profile",
+            "category": "Tabs",
+            "defaultKeys": [
+                {
+                    "keys": "ctrl+shift+t",
+                    "action": "new-tab"
+                },
+                {
+                    "keys": "ctrl+shift+1",
+                    "action": "new-tab 1"
+                },
+                {
+                    "keys": "ctrl+shift+2",
+                    "action": "new-tab 2"
+                },
+                {
+                    "keys": "ctrl+shift+3",
+                    "action": "new-tab 3"
+                },
+                {
+                    "keys": "ctrl+shift+4",
+                    "action": "new-tab 4"
+                },
+                {
+                    "keys": "ctrl+shift+5",
+                    "action": "new-tab 5"
+                },
+                {
+                    "keys": "ctrl+shift+6",
+                    "action": "new-tab 6"
+                },
+                {
+                    "keys": "ctrl+shift+7",
+                    "action": "new-tab 7"
+                },
+                {
+                    "keys": "ctrl+shift+8",
+                    "action": "new-tab 8"
+                },
+                {
+                    "keys": "ctrl+shift+9",
+                    "action": "new-tab 9"
+                }
+            ]
+        },
+        {
+            "name": "new-workspace",
+            "title": "New workspace",
+            "description": "Open a workspace with the default profile.",
+            "argument": null,
+            "category": "Workspaces and windows",
+            "defaultKeys": [
+                {
+                    "keys": "ctrl+alt+t",
+                    "action": "new-workspace"
+                }
+            ]
+        },
+        {
+            "name": "new-window",
+            "title": "New window",
+            "description": "Open a window with the default profile.",
+            "argument": null,
+            "category": "Workspaces and windows",
+            "defaultKeys": [
+                {
+                    "keys": "ctrl+shift+n",
+                    "action": "new-window"
+                }
+            ]
+        },
+        {
+            "name": "reopen-workspace",
+            "title": "Reopen closed workspace",
+            "description": "Bring back the workspace closed last: its tabs, splits and folders.",
+            "argument": null,
+            "category": "Workspaces and windows",
+            "defaultKeys": []
+        },
+        {
+            "name": "reopen-window",
+            "title": "Reopen closed window",
+            "description": "Bring back the window closed last, where it was: its workspaces, tabs, splits and folders.",
+            "argument": null,
+            "category": "Workspaces and windows",
+            "defaultKeys": []
+        },
+        {
+            "name": "duplicate-tab",
+            "title": "Duplicate tab",
+            "description": "Open the focused tab's command again, next to it.",
+            "argument": null,
+            "category": "Tabs",
+            "defaultKeys": [
+                {
+                    "keys": "ctrl+shift+d",
+                    "action": "duplicate-tab"
+                }
+            ]
+        },
+        {
+            "name": "close-tab",
+            "title": "Close tab",
+            "description": "Close the focused tab (its pane goes with its last tab).",
+            "argument": null,
+            "category": "Tabs",
+            "defaultKeys": [
+                {
+                    "keys": "ctrl+shift+w",
+                    "action": "close-tab"
+                }
+            ]
+        },
+        {
+            "name": "next-tab",
+            "title": "Next tab",
+            "description": "The pane's next tab, or the next workspace.",
+            "argument": null,
+            "category": "Tabs",
+            "defaultKeys": [
+                {
+                    "keys": "ctrl+tab",
+                    "action": "next-tab"
+                }
+            ]
+        },
+        {
+            "name": "previous-tab",
+            "title": "Previous tab",
+            "description": "The pane's previous tab, or the previous workspace.",
+            "argument": null,
+            "category": "Tabs",
+            "defaultKeys": [
+                {
+                    "keys": "ctrl+shift+tab",
+                    "action": "previous-tab"
+                }
+            ]
+        },
+        {
+            "name": "go-to-workspace",
+            "title": "Go to workspace",
+            "description": "Show workspace N (from 1), or \"last\".",
+            "argument": "workspace",
+            "category": "Workspaces and windows",
+            "defaultKeys": [
+                {
+                    "keys": "ctrl+alt+1",
+                    "action": "go-to-workspace 1"
+                },
+                {
+                    "keys": "ctrl+alt+2",
+                    "action": "go-to-workspace 2"
+                },
+                {
+                    "keys": "ctrl+alt+3",
+                    "action": "go-to-workspace 3"
+                },
+                {
+                    "keys": "ctrl+alt+4",
+                    "action": "go-to-workspace 4"
+                },
+                {
+                    "keys": "ctrl+alt+5",
+                    "action": "go-to-workspace 5"
+                },
+                {
+                    "keys": "ctrl+alt+6",
+                    "action": "go-to-workspace 6"
+                },
+                {
+                    "keys": "ctrl+alt+7",
+                    "action": "go-to-workspace 7"
+                },
+                {
+                    "keys": "ctrl+alt+8",
+                    "action": "go-to-workspace 8"
+                },
+                {
+                    "keys": "ctrl+alt+9",
+                    "action": "go-to-workspace last"
+                }
+            ]
+        },
+        {
+            "name": "split",
+            "title": "Split",
+            "description": "Split the focused pane: right, down, left or up.",
+            "argument": "direction",
+            "category": "Panes",
+            "defaultKeys": [
+                {
+                    "keys": "alt+shift+plus",
+                    "action": "split right"
+                },
+                {
+                    "keys": "alt+shift+minus",
+                    "action": "split down"
+                }
+            ]
+        },
+        {
+            "name": "duplicate-pane",
+            "title": "Duplicate pane",
+            "description": "Split, running the focused tab's command again.",
+            "argument": null,
+            "category": "Panes",
+            "defaultKeys": [
+                {
+                    "keys": "alt+shift+d",
+                    "action": "duplicate-pane"
+                }
+            ]
+        },
+        {
+            "name": "focus",
+            "title": "Focus pane",
+            "description": "Focus the neighboring pane: left, right, up or down.",
+            "argument": "direction",
+            "category": "Panes",
+            "defaultKeys": [
+                {
+                    "keys": "alt+left",
+                    "action": "focus left"
+                },
+                {
+                    "keys": "alt+right",
+                    "action": "focus right"
+                },
+                {
+                    "keys": "alt+up",
+                    "action": "focus up"
+                },
+                {
+                    "keys": "alt+down",
+                    "action": "focus down"
+                }
+            ]
+        },
+        {
+            "name": "resize",
+            "title": "Resize pane",
+            "description": "Move the focused pane's divider: left, right, up or down.",
+            "argument": "direction",
+            "category": "Panes",
+            "defaultKeys": [
+                {
+                    "keys": "alt+shift+left",
+                    "action": "resize left"
+                },
+                {
+                    "keys": "alt+shift+right",
+                    "action": "resize right"
+                },
+                {
+                    "keys": "alt+shift+up",
+                    "action": "resize up"
+                },
+                {
+                    "keys": "alt+shift+down",
+                    "action": "resize down"
+                }
+            ]
+        },
+        {
+            "name": "maximize-pane",
+            "title": "Maximize pane",
+            "description": "Fill the workspace with the focused pane, hiding the others. Trigger again to show them. Focusing another pane shows them too.",
+            "argument": null,
+            "category": "Panes",
+            "defaultKeys": []
+        },
+        {
+            "name": "close-pane",
+            "title": "Close pane",
+            "description": "Close the focused pane and every tab in it, asking first if a command is running in any of them.",
+            "argument": null,
+            "category": "Panes",
+            "defaultKeys": []
+        },
+        {
+            "name": "profile-menu",
+            "title": "Profile menu",
+            "description": "The ▾ menu of profiles.",
+            "argument": null,
+            "category": "Tabs",
+            "defaultKeys": [
+                {
+                    "keys": "ctrl+shift+space",
+                    "action": "profile-menu"
+                }
+            ]
+        },
+        {
+            "name": "command-palette",
+            "title": "Command palette",
+            "description": "Search every command.",
+            "argument": null,
+            "category": "Zinc",
+            "defaultKeys": [
+                {
+                    "keys": "ctrl+shift+p",
+                    "action": "command-palette"
+                }
+            ]
+        },
+        {
+            "name": "tab-switcher",
+            "title": "Go to tab…",
+            "description": "Search this window's tabs by title, folder or running command (the palette's \"@\"); tabs with a dot come first.",
+            "argument": null,
+            "category": "Tabs",
+            "defaultKeys": [
+                {
+                    "keys": "ctrl+shift+o",
+                    "action": "tab-switcher"
+                }
+            ]
+        },
+        {
+            "name": "next-attention",
+            "title": "Next tab needing attention",
+            "description": "Go to the next tab with a dot: programs that exited with an error first, then failed commands, the bell, programs' notifications and finished commands.",
+            "argument": null,
+            "category": "Tabs",
+            "defaultKeys": []
+        },
+        {
+            "name": "toggle-sidebar",
+            "title": "Toggle sidebar",
+            "description": "With workspace-tabs = \"left\": cycle the workspace list through full, rail and auto-hide. \"toggle-sidebar rail\" (or auto-hide) switches between that and full.",
+            "argument": "optional-sidebar-mode",
+            "category": "Sidebar and title bar",
+            "defaultKeys": [
+                {
+                    "keys": "ctrl+shift+b",
+                    "action": "toggle-sidebar"
+                }
+            ]
+        },
+        {
+            "name": "toggle-title-bar",
+            "title": "Toggle title bar",
+            "description": "With workspace-tabs = \"left\": auto-hide the title bar, or show it again.",
+            "argument": null,
+            "category": "Sidebar and title bar",
+            "defaultKeys": []
+        },
+        {
+            "name": "focus-mode",
+            "title": "Focus mode",
+            "description": "With workspace-tabs = \"left\": auto-hide the title bar and the workspace list; again to bring them back.",
+            "argument": null,
+            "category": "Sidebar and title bar",
+            "defaultKeys": []
+        },
+        {
+            "name": "reload-config",
+            "title": "Reload config",
+            "description": "Read config.toml again.",
+            "argument": null,
+            "category": "Zinc",
+            "defaultKeys": []
+        },
+        {
+            "name": "open-settings",
+            "title": "Settings",
+            "description": "Open the settings window.",
+            "argument": null,
+            "category": "Zinc",
+            "defaultKeys": [
+                {
+                    "keys": "ctrl+comma",
+                    "action": "open-settings"
+                }
+            ]
+        },
+        {
+            "name": "quit",
+            "title": "Quit Zinc",
+            "description": "Close every window and exit.",
+            "argument": null,
+            "category": "Zinc",
+            "defaultKeys": []
+        },
+        {
+            "name": "quit-fresh",
+            "title": "Quit without saving windows",
+            "description": "Close every window and exit without saving them: next time opens a new window.",
+            "argument": null,
+            "category": "Zinc",
+            "defaultKeys": []
+        }
+    ]
+}
