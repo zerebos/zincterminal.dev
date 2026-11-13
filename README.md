@@ -28,7 +28,7 @@ The site is static Astro with a few Svelte islands, built with Bun.
 | `bun run lint` | Lints the TypeScript and Svelte files |
 | `bun test` | Runs the tests |
 | `bun run deploy` | Builds and deploys to Cloudflare with wrangler |
-| `bun run sync:zinc` | Refreshes the changelog, notices and release info from a Zinc checkout |
+| `bun run sync:zinc` | Refreshes the changelog, settings, actions, notices, release info and config schema from a Zinc checkout |
 
 ## Downloads and short links
 
@@ -40,22 +40,30 @@ A path with nothing behind it answers 404 with the built `404.html`, because `wr
 
 ## Content from Zinc
 
-The changelog, the third-party notices, the settings and the site-wide version come from the Zinc repository. It's private for now, so the build can't read it, and a committed snapshot stands in.
+The changelog, the settings, the actions, the third-party notices, the config schema and the site-wide version come from the Zinc repository. It's private for now, so the build can't read it, and a committed snapshot stands in.
 
-- **`bun run sync:zinc`** reads a Zinc checkout (`../zinc`, or the path in `ZINC_REPO`) and writes JSON to `src/data/generated/`:
+- **`bun run sync:zinc`** reads a Zinc checkout (`../zinc`, or the path in `ZINC_REPO`). The changelog comes from `CHANGELOG.md`. Everything else comes from Zinc's reference export in `dist/reference/`, which `dotnet run scripts/dev/export-reference.cs` writes in the Zinc repo. To read the export from another folder, such as a release's downloaded `zinc-reference.json` and `config.schema.json`, set `ZINC_REFERENCE`. The sync writes JSON to `src/data/generated/`:
   - `zinc-changelog.json` holds every released build from `CHANGELOG.md`, skipping `## Unreleased`.
-  - `zinc-notices.json` holds the components in `src/Zinc.Core/OpenSourceNotices.cs`, with their license texts from `assets/`. The .NET version comes from `<TargetFramework>` in `src/Zinc/Zinc.csproj`.
   - `zinc-release.json` holds the newest build's version and date, which the hero, "Try the alpha", the docs and the notices show.
-  - `zinc-settings.json` holds the settings in `src/Zinc.Core/Settings/SettingsCatalog.cs` (the ones the Settings window edits, plus the shells it looks for), with the constants they use from `src/Zinc.Core/Config.cs`. Settings marked `Unfinished` are left out.
-- **Run it after each Zinc release, and commit the JSON.** The build reads only the JSON.
-- **The sync stops and writes nothing** when a source has a shape it doesn't know (a new setting kind or property, say), when text the site shows as its own names a terminal the brand rules keep off the site (see `src/lib/zinc/guard.ts`), or when a changelog backtick doesn't close. Fix the text in Zinc, then sync again. The parsers live in `src/lib/zinc/`, with tests that use small inline inputs, never `../zinc`.
+  - `zinc-settings.json` holds the Settings window's sections, its settings followed by the shells it looks for, the keys only `config.toml` sets, and the profile fields.
+  - `zinc-actions.json` holds every action a key can be bound to, with its default keys.
+  - `zinc-notices.json` holds the notices with their license texts. Zinc's own notice is among them, and the notices page leaves it out because the page lists third-party software.
+- **It also writes `public/schema/config.json`**, the config's JSON Schema, which editors fetch from `/schema/config.json`. That URL is the schema's `$id`, and the guide gives it in a `#:schema` line. `public/_headers` lets other sites fetch it too.
+- **Run it after each Zinc release, and commit what it writes.** The build reads only those files.
+- **The sync stops and writes nothing** in these cases. Fix the source in Zinc, then sync again.
+  - The export's `format` isn't one the sync reads, or a field it reads is missing or has the wrong type.
+  - The schema's `$id` isn't the URL the site serves it at.
+  - Text the site shows as its own names a terminal the brand rules keep off the site (see `src/lib/zinc/guard.ts`).
+  - A changelog backtick doesn't close.
+- **The sync's code** lives in `src/lib/zinc/`, with tests that use small inline inputs, never `../zinc`.
 - **"On this website"** on the notices page lists what reaches visitors' browsers: Astro, Geist Mono, Lit Cell and Svelte. That list is `src/data/website-notices.ts`, and its texts and versions are read from the packages at build time.
 
 ## The config reference
 
-`/docs/config` is drawn entirely from `zinc-settings.json`, so a Zinc release that changes a setting only needs a sync. Two things live on the site instead:
+`/docs/config` is drawn entirely from `zinc-settings.json`, so a Zinc release that changes a setting only needs a sync. A few things live on the site instead:
 
 - **Each table's title and opening line** are in `src/data/config-tables.ts`, in page order. When Zinc adds a table, the build stops and names it, so add its entry there. A listed table with no settings stops the build too.
+- **The profile table**, `[profile.<id>]`, comes after `[discover]`. Its title and opening line are in `src/data/config-tables.ts`, with the profile fields' defaults in words, because Zinc gives those defaults as `null`.
 - **The wording rules** are in `src/lib/zinc/settings.ts`, with tests: the type in words, ranges, defaults as TOML values or in words, examples from a text setting's placeholder, and which settings share another's values.
 
 The filter is `src/components/reading/ConfigFilter.svelte`. Each setting carries its searchable text in `data-text`, and the island only hides what doesn't match.
