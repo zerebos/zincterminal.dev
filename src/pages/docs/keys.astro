@@ -1,6 +1,7 @@
 ---
 // Every action and its default keys, generated from Zinc's action list
 import CodeBlock, {type CodeLine} from "../../components/site/CodeBlock.astro";
+import KeysFilter from "../../components/reading/KeysFilter.svelte";
 import Note from "../../components/prose/Note.astro";
 import ReadingLayout from "../../layouts/ReadingLayout.astro";
 import type {TocEntry} from "../../components/reading/toc";
@@ -65,6 +66,7 @@ const toc: TocEntry[] = groups.map(group => ({
         <CodeBlock name="config.toml" lines={exampleLines} copy={exampleText} copyLabel="Copy" />
         <p class="keys-note">Keys are modifiers ({syntax.modifiers.map((m, i) => <>{i > 0 && ", "}<code>{m}</code></>)}) plus one key. <code>"{syntax.unbind}"</code> takes a default away. An action with an argument takes it after a space: <code>"split down"</code>.</p>
     </Fragment>
+    <KeysFilter client:load total={total} syntax={syntax} />
     {groups.map(group => (
         <section class="kgroup" aria-labelledby={`h-${group.id}`}>
             <h2 id={group.id}>
@@ -126,6 +128,11 @@ const toc: TocEntry[] = groups.map(group => ({
         padding: 14px 0;
         border-top: 1px solid var(--line);
         scroll-margin-top: 136px;
+    }
+
+    /* The filter hides rows with `hidden`, which `display: grid` would override */
+    .act[hidden] {
+        display: none;
     }
 
     .act-head {

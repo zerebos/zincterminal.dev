@@ -265,7 +265,7 @@
     font-weight: 600;
 }
 
-.prose-body .zn-code {
+.prose :is(.intro, .prose-body) .zn-code {
     margin: 20px 0 0;
 }
 
