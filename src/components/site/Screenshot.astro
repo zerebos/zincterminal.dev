@@ -10,6 +10,9 @@ export interface Mark {
     y: number;
     width: number;
     height: number;
+
+    /** The color around the mark in both shots, as CSS, when it isn't `mica` */
+    behind?: string;
 }
 
 interface Props {
@@ -26,8 +29,8 @@ interface Props {
     sizes: string;
 
     /**
-     * Attention marks in the shot that should pulse as they do in the app. Each box should hold the mark with a pixel
-     * of plain `mica` around it.
+     * Attention marks in the shot that should pulse as they do in the app. Each box should hold the mark with a few
+     * pixels of plain background around it, which covers the blur around the mark when the shot is scaled down.
      */
     marks?: Mark[];
     class?: string;
@@ -42,7 +45,8 @@ const widths = (image: ImageMetadata) => [...new Set([Math.round(width / 2), wid
 const percent = (value: number, of: number) => `${(value / of) * 100}%`;
 const box = (mark: Mark) =>
     `left: ${percent(mark.x, src.width)}; top: ${percent(mark.y, src.height)}; ` +
-    `width: ${percent(mark.width, src.width)}; height: ${percent(mark.height, src.height)};`;
+    `width: ${percent(mark.width, src.width)}; height: ${percent(mark.height, src.height)};` +
+    (mark.behind ? ` background: ${mark.behind};` : "");
 ---
 
 <div class:list={["screenshot", className]}>
@@ -79,7 +83,7 @@ const box = (mark: Mark) =>
     }
 
     /*
-     * The mark is part of the image, so a patch of the tab's color fades over it instead.
+     * The mark is part of the image, so a patch of the color behind it fades over it instead.
      * At 65% the patch leaves the mark at 35%, the low point of the app's pulse.
      * With reduced motion the patch stays clear and the mark is steady.
      */

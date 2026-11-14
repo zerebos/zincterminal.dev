@@ -4,7 +4,7 @@ import workflowDark from "../../assets/screenshots/workflow-dark.png";
 import workflowLight from "../../assets/screenshots/workflow-light.png";
 import CodeBlock, {type CodeLine} from "../site/CodeBlock.astro";
 import Points from "../site/Points.astro";
-import Screenshot from "../site/Screenshot.astro";
+import Screenshot, {type Mark} from "../site/Screenshot.astro";
 import Section from "../site/Section.astro";
 import SectionIntro from "../site/SectionIntro.astro";
 import {links} from "../../data/site";
@@ -15,6 +15,14 @@ const points = [
     {title: "Workspaces, tabs and splits", text: "Group a project's tabs into a workspace, split them as you like, and find them where you left them next time."},
     {title: "Shell integration, set up for you", text: "Zinc marks each command in the gutter, so a failure stands out before you read a line. Works with PowerShell, bash, zsh, fish, nushell, elvish and osh, and with cmd (fullest through Clink)."},
     {title: "Attention, in words", text: "A dot on the tab or workspace, and a notification that says what happened."}
+];
+
+// The api, docs and prod workspaces' marks in the sidebar.
+// The app draws prod, a colored workspace that isn't selected, as its color at half strength over mica.
+const marks: Mark[] = [
+    {x: 335, y: 153, width: 26, height: 26},
+    {x: 335, y: 220, width: 26, height: 26},
+    {x: 335, y: 286, width: 26, height: 26, behind: "color-mix(in srgb, #D45400 50%, var(--mica))"}
 ];
 
 // One `zn <thing> <verb>` line, with the verbs split by magenta pipes
@@ -51,6 +59,7 @@ const help: CodeLine[] = [
             light={workflowLight}
             width={1100}
             sizes="(max-width: 640px) calc(100vw - 32px), (max-width: 1240px) calc(100vw - 80px), 1160px"
+            marks={marks}
             alt="Zinc with four workspaces in a sidebar, as cards. The api workspace has a red mark because a command failed, docs a green mark because one finished, and prod an amber mark because it needs you. The focused card has three tabs and shows a build, then a test run that failed with exit code 8, with a red bar beside it in the gutter. A second card beside it shows a git log."
         />
         <div>
