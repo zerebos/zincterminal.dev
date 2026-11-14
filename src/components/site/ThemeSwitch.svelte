@@ -33,9 +33,59 @@
         return "system";
     }
 
+    // The longest a theme change waits for images to load before it fades anyway
+    const imageWait = 400;
+
+    // The `theme-change` class on <html> gives this cross-fade its timing in global.css, apart from any other view
+    // transition. A newer change skips the running one, so only the latest removes the class.
+    let fade: ViewTransition | undefined;
+
+    const inView = (element: Element) => {
+        const rect = element.getBoundingClientRect();
+        return rect.width > 0 && rect.bottom > 0 && rect.top < innerHeight;
+    };
+
+    // The other theme's screenshots and lockup are `display: none` and lazy, so the browser hasn't fetched them.
+    // Opening the menu starts loading the ones whose container is in view, so they're ready by the time a theme is picked.
+    function preloadOtherTheme() {
+        for (const image of document.images) {
+            const hidden = image.getClientRects().length === 0;
+            if (!image.complete && hidden && image.parentElement && inView(image.parentElement)) image.loading = "eager";
+        }
+    }
+
+    // Resolves once every image in view has loaded, or after `imageWait`, so the fade doesn't end on an empty box.
+    // The browser pauses rendering during the update, and lazy images only start loading as the page renders, so the
+    // pending ones are switched to eager first.
+    function imagesInView() {
+        const pending = [...document.images].filter(image => !image.complete && inView(image));
+        if (pending.length === 0) return Promise.resolve();
+        for (const image of pending) image.loading = "eager";
+        const loaded = Promise.all(pending.map(image => image.decode().catch(() => undefined)));
+        return Promise.race([loaded, new Promise(resolve => setTimeout(resolve, imageWait))]);
+    }
+
+    // Cross-fades the page into the new theme, or switches at once with reduced motion or without view transitions
     function apply(value: Choice) {
         const resolved = value === "system" ? (systemQuery().matches ? "light" : "dark") : value;
-        document.documentElement.dataset.theme = resolved;
+        const root = document.documentElement;
+        if (root.dataset.theme === resolved) return;
+
+        const instant = !document.startViewTransition || matchMedia("(prefers-reduced-motion: reduce)").matches;
+        if (instant) {
+            root.dataset.theme = resolved;
+            return;
+        }
+
+        root.classList.add("theme-change");
+        const transition = document.startViewTransition(async () => {
+            root.dataset.theme = resolved;
+            await imagesInView();
+        });
+        fade = transition;
+        void transition.finished.finally(() => {
+            if (fade === transition) root.classList.remove("theme-change");
+        });
     }
 
     function pick(value: Choice) {
@@ -53,6 +103,7 @@
 
     async function show() {
         open = true;
+        preloadOtherTheme();
         await tick();
         items[options.findIndex(o => o.value === choice)]?.focus();
     }

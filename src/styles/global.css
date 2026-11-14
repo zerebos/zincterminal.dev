@@ -95,6 +95,13 @@ a {
     border: 0;
 }
 
+/* Picking a theme cross-fades the whole page. ThemeSwitch skips it with reduced motion. */
+.theme-change::view-transition-group(root),
+.theme-change::view-transition-old(root),
+.theme-change::view-transition-new(root) {
+    animation-duration: 200ms;
+}
+
 /* No pulsing attention marks, no nav fades and no theme cross-fade. */
 @media (prefers-reduced-motion: reduce) {
     *,
