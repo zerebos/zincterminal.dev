@@ -8,7 +8,7 @@
                 "name": "New",
                 "items": [
                     {
-                        "text": "Panes now move instead of jumping. They slide into place when you split, close, maximize or restore them, and when you drop one beside another, into its tabs, or into another window. Turn the animations off with `Settings > Layout > Panes > Pane animations` (`pane-animations` in `[window]`). While Windows' Animation effects are off, panes jump into place as before.",
+                        "text": "Panes now move instead of jumping. They slide into place when you split, close, maximize, or restore them, and when you drop one beside another, into its tabs, or into another window. Turn the animations off with `Settings > Layout > Panes > Pane animations` (`pane-animations` in `[window]`). While \"Animation effects\" is off in Windows Settings, panes jump into place as before.",
                         "children": []
                     }
                 ]
@@ -17,7 +17,7 @@
                 "name": "Changed",
                 "items": [
                     {
-                        "text": "Clearer wording in setting descriptions.",
+                        "text": "Setting descriptions are worded more clearly.",
                         "children": []
                     },
                     {
@@ -38,7 +38,7 @@
                         "children": []
                     },
                     {
-                        "text": "Choosing a split or a new tab from a menu (a pane's ⋯ menu, a tab's or workspace's right-click menu, the terminal's right-click menu) no longer flickers focus back to the old pane for a moment before the new one takes it.",
+                        "text": "Choosing a split or a new tab from a menu (a pane's ⋯ menu, a tab's or workspace's right-click menu, or the terminal's right-click menu) no longer flickers focus back to the old pane for a moment before the new one takes it.",
                         "children": []
                     },
                     {
@@ -50,7 +50,7 @@
                         "children": []
                     },
                     {
-                        "text": "A prompt that spans the window, like powerlevel10k's frame, no longer leaves copies of itself above the new one when a pane or window gets narrower. Zinc now clears the old prompt for your shell to draw again. It clears the whole prompt in zsh, fish, nushell and elvish, and only the last line in bash, since bash draws only that line again.",
+                        "text": "A prompt that spans the window, like powerlevel10k's frame, no longer leaves copies of itself above the new one when a pane or window gets narrower. Zinc now clears the old prompt for your shell to draw again. It clears the whole prompt in zsh, fish, nushell, and elvish, and only the last line in bash, because bash draws only that line again.",
                         "children": []
                     },
                     {
@@ -58,11 +58,11 @@
                         "children": []
                     },
                     {
-                        "text": "Searching settings now finds \"Pane style\", \"Programs using the clipboard\", and \"Background, text, cursor and selection\", which group several settings under a title of their own.",
+                        "text": "Searching settings now finds \"Pane style\", \"Programs using the clipboard\", and \"Background, text, cursor, and selection\", which group several settings under a title of their own.",
                         "children": []
                     },
                     {
-                        "text": "Apps that draw their whole screen as one image, like `terminal-browser`, no longer flash while you move the pointer over them. Zinc showed the screen without the image while each new one arrived.",
+                        "text": "Apps that draw their whole screen as one image, like `terminal-browser`, no longer flash while you move the pointer over them.",
                         "children": []
                     },
                     {
@@ -90,7 +90,7 @@
                 "name": "New",
                 "items": [
                     {
-                        "text": "Panes as cards (`Settings > Layout > Panes > Pane style`). Pick Cards and each pane becomes a rounded card with a header, a gap between them, header buttons on the focused pane and a ring around it. Compact, the default, keeps panes edge to edge. The welcome page asks which you'd like. Change any of the settings under it to make your own mix:",
+                        "text": "Panes can now be cards (`Settings > Layout > Panes > Pane style`). Pick Cards and each pane becomes a rounded card with a header, with a gap between the cards, header buttons on the focused pane, and a ring around it. Compact, the default, keeps panes edge to edge. The welcome page asks which you'd like. Change any of the settings under Pane style to make your own mix:",
                         "children": [
                             "`Gap between panes` (`pane-gap`): the space between panes. You drag the gap to resize them, as you dragged the divider.",
                             "`Gap at the workspace edges` (`pane-gap-edges`): the same gap around the outside, so splitting never moves a pane's outer edges.",
@@ -98,31 +98,31 @@
                         ]
                     },
                     {
-                        "text": "Pane headers now have a background of their own, a shade off the terminal's, so they don't look like empty space between split panes. Dimming an unfocused pane dims its header too. Make it subtler or stronger, the same as the terminal, or a color of your own with `Settings > Appearance > Colors > Pane headers` (`pane-header` in `[colors]`, per profile if you like, to suit each scheme). With \"Same as the terminal\", the other tabs take the shade instead, so the one you're on still stands out. A card's border is a step stronger than its header, so cards stand clear of the window, and has none when the header is the same as the terminal.",
+                        "text": "Pane headers now have a background of their own, a shade off the terminal's, so they don't look like empty space between split panes. Dimming an unfocused pane dims its header too. Make the header subtler or stronger, the same as the terminal, or a color of your own with `Settings > Appearance > Colors > Pane headers` (`pane-header` in `[colors]`, per profile if you like, to suit each scheme). With \"Same as the terminal\", the other tabs take the shade instead, so the one you're on still stands out. A card's border is a step stronger than its header, so cards stand clear of the window. A card has no border when its header is the same as the terminal.",
                         "children": []
                     },
                     {
-                        "text": "Pane header buttons (`Settings > Layout > Panes > Header buttons`, `pane-header-buttons` in `[window]`). Split, Maximize pane and a menu with the pane's other commands (including Close pane), on the right of a pane's header. Show them on every pane, on the focused pane, only while the pointer is over a header, or not at all (the default). With them, the header also shows a program's progress. With `Tabs inside panes` off, the buttons end with ×, which closes the pane, and the title no longer has its own. Without buttons, middle-click the title or use its right-click menu.",
+                        "text": "Panes can now have header buttons (`Settings > Layout > Panes > Header buttons`, `pane-header-buttons` in `[window]`). Split, Maximize pane, and a menu with the pane's other commands (including Close pane) sit on the right of a pane's header. Show them on every pane, on the focused pane, only while the pointer is over a header, or not at all (the default). With the buttons, the header also shows a program's progress. With `Tabs inside panes` off, the buttons end with ×, which closes the pane, and the title no longer has its own. Without buttons, middle-click the title or use its right-click menu.",
                         "children": []
                     },
                     {
-                        "text": "A tab whose program exits with an error and stays open (a dropped `ssh` session, a command profile that crashed, WSL shut down) now gets a red dot when you weren't looking, and the taskbar button flashes if Zinc is in the background. It comes first for Next tab needing attention, and a pane header with buttons shows \"Exited (code N)\".",
+                        "text": "A tab whose program exits with an error and stays open (a dropped `ssh` session, a command profile that crashed, or WSL shutting down) now gets a red dot when you weren't looking, and the taskbar button flashes if Zinc is in the background. The tab comes first for Next tab needing attention, and a pane header with buttons shows \"Exited (code N)\".",
                         "children": []
                     },
                     {
-                        "text": "Move a pane like a tab by dragging the empty part of its header, beside its tabs. Drop it on another pane's edge to put it there, or on its header or middle to add its tabs to that pane, in any workspace or window. Drop it on the title bar for a workspace of its own, or outside Zinc for a window of its own. A workspace's only pane takes the workspace with it. Dragging from a maximized pane shows the other panes until you let go, so you can drop it on them.",
+                        "text": "You can move a pane like a tab by dragging the empty part of its header, beside its tabs. Drop it on another pane's edge to put it there, or on its header or middle to add its tabs to that pane, in any workspace or window. Drop it on the title bar for a workspace of its own, or outside Zinc for a window of its own. A workspace's only pane takes the workspace with it. Dragging from a maximized pane shows the other panes until you let go, so you can drop it on them.",
                         "children": []
                     },
                     {
-                        "text": "Rename tab. Give one tab in a pane its own name, from its right-click menu, the pane's menu or the command palette.",
+                        "text": "You can give one tab in a pane its own name with \"Rename tab…\" in the tab's right-click menu, the pane's menu, or the command palette.",
                         "children": []
                     },
                     {
-                        "text": "Added \"Maximize pane\". It fills the workspace with the focused pane and hides the others. Trigger it again, or move focus to another pane, to bring them back. Double-click the pane's header, use the command palette, or bind `maximize-pane` to a key. The other panes keep running and keep their size.",
+                        "text": "\"Maximize pane\" fills the workspace with the focused pane and hides the others. Run it again, or move focus to another pane, to bring them back. Double-click the pane's header, use the command palette, or bind `maximize-pane` to a key. The other panes keep running and keep their size.",
                         "children": []
                     },
                     {
-                        "text": "Added \"Close pane\". It closes the focused pane and every tab in it, asking once first if a command is still running in any of them. From the command palette, or bind `close-pane` to a key.",
+                        "text": "\"Close pane\" closes the focused pane and every tab in it, asking once first if a command is still running in any of them. Run it from the command palette, or bind `close-pane` to a key.",
                         "children": []
                     }
                 ]
@@ -131,11 +131,11 @@
                 "name": "Changed",
                 "items": [
                     {
-                        "text": "A pane's tabs no longer scroll out of sight when they don't fit. The inactive tabs get shorter and show only their icon and dot. Any shorter and they fold into a count (\"4 of 5\") that opens a dropdown menu of all of them. To keep a pane's header that calm at every width, set `Settings > Layout > Panes > Show pane tabs as` to \"A menu\" (`pane-tabs-as = \"menu\"` in `[window]`).",
+                        "text": "A pane's tabs no longer scroll out of sight when they don't fit. The inactive tabs get shorter and show only their icon and dot. When even that doesn't fit, they fold into a count (\"4 of 5\") that opens a dropdown menu of all of them. To keep a pane's header that calm at every width, set `Settings > Layout > Panes > Show pane tabs as` to \"A menu\" (`pane-tabs-as = \"menu\"` in `[window]`).",
                         "children": []
                     },
                     {
-                        "text": "`Pane tab strip` is now `Pane headers` (`Settings > Layout > Panes`, `pane-headers` in `[window]`), with two new choices. `Automatic` gives every pane a header once a workspace is split, and `Never` hides them. A pane with one tab shows its title there instead of a single tab, also with `Always`, and with `Tabs inside panes` off: its folder and profile at the prompt, or a command once it has run for a moment. A long folder is shortened from its start, so you still see where you are (in a pane's tabs too). The old setting (`pane-tab-strip`) still works and keeps its original meaning.",
+                        "text": "`Pane tab strip` is now `Pane headers` (`Settings > Layout > Panes`, `pane-headers` in `[window]`), with two new choices. `Automatic` gives every pane a header once a workspace is split, and `Never` hides them. A pane with one tab shows its title there instead of a single tab, also with `Always` and with `Tabs inside panes` off. The title is its folder and profile at the prompt, or a command once it has run for a moment. A long folder is shortened from its start, in a pane's tabs too, so you still see where you are. The old setting (`pane-tab-strip`) still works and keeps its original meaning.",
                         "children": []
                     },
                     {
@@ -143,7 +143,7 @@
                         "children": []
                     },
                     {
-                        "text": "Closing two or more tabs at once (a pane, a workspace, a window, or Close other tabs and Close other workspaces) now asks first, even when no command is running. Turn it off with `Settings > Layout > Closing > Ask before closing`, which also stops the question about running commands.",
+                        "text": "Closing two or more tabs at once (a pane, a workspace, a window, or Close other tabs and Close other workspaces) now asks first, even when no command is running. Turn the question off with `Settings > Layout > Closing > Ask before closing`, which also stops the question about running commands.",
                         "children": []
                     }
                 ]
@@ -152,7 +152,7 @@
                 "name": "Fixed",
                 "items": [
                     {
-                        "text": "Closing a workspace's last tab or pane (the tab's ×, `close-tab` or `close-pane`) closed the workspace for good: Reopen closed workspace couldn't bring it back as it does after Close workspace. Now it can.",
+                        "text": "Closing a workspace's last tab or pane (the tab's ×, `close-tab`, or `close-pane`) closed the workspace for good, so Reopen closed workspace couldn't bring it back as it does after Close workspace. Now it can.",
                         "children": []
                     },
                     {
@@ -176,15 +176,15 @@
                 "name": "New",
                 "items": [
                     {
-                        "text": "Copy with formatting: the selection's colors and styles go on the clipboard too, for pasting into a document (e.g. Word) or an email, in your terminal's colors and font. From the right-click menu or the command palette, or for every copy with `Terminal > Clipboard > Copy with formatting`.",
+                        "text": "Copy with formatting puts the selection's colors and styles on the clipboard too, for pasting into a document (Word, for example) or an email, in your terminal's colors and font. Run it from the right-click menu or the command palette, or turn on `Terminal > Clipboard > Copy with formatting` for every copy.",
                         "children": []
                     },
                     {
-                        "text": "With Clink, `cmd` tabs now get exit codes and the exact command text from shell integration. i.e. failed commands get their red bar, as in other shells. It keeps working with prompt themes like `oh-my-posh` or `starship`.",
+                        "text": "With Clink, `cmd` tabs now get exit codes and the exact command text from shell integration, so failed commands get their red bar, as in other shells. Shell integration keeps working with prompt themes like `oh-my-posh` or `starship`.",
                         "children": []
                     },
                     {
-                        "text": "Settings backup (`Settings > About`): Export settings saves your settings, color schemes, shaders and open windows in one zip file. Import settings brings them back, on this PC or another. Your current settings are saved first, so an import can be undone.",
+                        "text": "You can now back up your settings from `Settings > About`. Export settings saves your settings, color schemes, shaders, and open windows in one zip file. Import settings brings them back, on this PC or another. Your current settings are saved first, so an import can be undone.",
                         "children": []
                     }
                 ]
@@ -202,7 +202,7 @@
                 "name": "Fixed",
                 "items": [
                     {
-                        "text": "A `cmd` tab or split opened from a WSL tab accidentally started in `C:\\Windows` because `cmd` can't use the distro's network-style folder. In a Windows folder (`/mnt/c/...`) it now starts in that folder (`C:\\...`). in a folder only Linux has (`/home/...`), it starts in its profile's folder.",
+                        "text": "A `cmd` tab or split opened from a WSL tab started in `C:\\Windows`, because `cmd` can't use the distro's network-style folder. In a Windows folder (`/mnt/c/...`), it now starts in that folder (`C:\\...`). In a folder only Linux has (`/home/...`), it starts in its profile's folder.",
                         "children": []
                     },
                     {
@@ -210,7 +210,7 @@
                         "children": []
                     },
                     {
-                        "text": "A WSL distro with its own `hostname` in `/etc/wsl.conf` had its folder ignored (as if it were another machine) when it wasn't started with `wsl.exe` from the tab itself, e.g. with `ubuntu.exe` or from a PowerShell tab. Zinc now recognizes running distros by their own names.",
+                        "text": "A WSL distro with its own `hostname` in `/etc/wsl.conf` had its folder ignored (as if it were another machine) when it wasn't started with `wsl.exe` from the tab itself, such as with `ubuntu.exe` or from a PowerShell tab. Zinc now recognizes running distros by their own names.",
                         "children": []
                     },
                     {
@@ -230,11 +230,11 @@
                 "name": "New",
                 "items": [
                     {
-                        "text": "Ligatures, for fonts that have them (Cascadia Code, JetBrains Mono, Fira Code): `=>` `!=` `->` `===` and the like drawn as one shape, each character still in its own cell. Turn them on in `Appearance > Font > Ligatures`.",
+                        "text": "Zinc now draws ligatures for fonts that have them (Cascadia Code, JetBrains Mono, Fira Code). `=>` `!=` `->` `===` and the like are drawn as one shape, with each character still in its own cell. Turn them on in `Appearance > Font > Ligatures`.",
                         "children": []
                     },
                     {
-                        "text": "Duplicate workspace (the workspace's menu) copies the whole workspace now: its splits and tabs, each where its shell is, with its folder, icon, color and name.",
+                        "text": "Duplicate workspace (the workspace's menu) copies the whole workspace now: its splits and tabs, each where its shell is, with its folder, icon, color, and name.",
                         "children": []
                     }
                 ]
@@ -251,11 +251,11 @@
                         "children": []
                     },
                     {
-                        "text": "With Tabs inside panes off, \"New tab\" is called \"New workspace\" in menus, the command palette and Settings, since that's what it opens.",
+                        "text": "With Tabs inside panes off, \"New tab\" is called \"New workspace\" in menus, the command palette, and Settings, because that's what it opens.",
                         "children": []
                     },
                     {
-                        "text": "Some settings have clearer names in config.toml: `[window] pane-tabs`, `pane-tab-strip`, `unfocused-pane-opacity` and `unfocused-pane-fill` (were `tab-groups`, `group-tab-strip`, `unfocused-split-opacity`, `unfocused-split-fill`). The old names still work.",
+                        "text": "Some settings have clearer names in config.toml: `[window] pane-tabs`, `pane-tab-strip`, `unfocused-pane-opacity`, and `unfocused-pane-fill`. They were `tab-groups`, `group-tab-strip`, `unfocused-split-opacity`, and `unfocused-split-fill`, and the old names still work.",
                         "children": []
                     }
                 ]
@@ -264,7 +264,7 @@
                 "name": "Fixed",
                 "items": [
                     {
-                        "text": "A shell on another machine (over ssh) that reports its folder is no longer taken for a folder of the same name on this PC. New tabs, splits and reopened tabs start in the folder you ran ssh from, and the tab shows the title the remote shell sets.",
+                        "text": "A shell on another machine (over ssh) that reports its folder is no longer taken for a folder of the same name on this PC. New tabs, splits, and reopened tabs start in the folder you ran ssh from, and the tab shows the title the remote shell sets.",
                         "children": []
                     }
                 ]
@@ -280,23 +280,23 @@
                 "name": "New",
                 "items": [
                     {
-                        "text": "A menu on right-click in a terminal: copy, paste and find; open or copy the link you clicked; copy the command you clicked, or select or copy its output (with shell integration); split, new tab, close. Each item shows its key. Shift+F10 or the Menu key opens it at the cursor.",
+                        "text": "Right-clicking in a terminal opens a menu. It can copy, paste, and find, open or copy the link you clicked, copy the command you clicked or select or copy its output (with shell integration), split, open a new tab, and close. Each item shows its key. Shift+F10 or the Menu key opens the menu at the cursor.",
                         "children": []
                     },
                     {
-                        "text": "Shell integration for cmd: jump between its prompts, select or copy a command's output, see its commands in the command center and tabs follow its folder. (cmd can't report exit codes, so failed commands get no red bar.)",
+                        "text": "cmd now has shell integration. You can jump between its prompts, select or copy a command's output, and see its commands in the command center, and tabs follow its folder. cmd can't report exit codes, so failed commands get no red bar.",
                         "children": []
                     },
                     {
-                        "text": "Shell integration for elvish (your `rc.elv` still runs first) and OSH (Oils) in WSL: prompts, commands with their exit codes, folders.",
+                        "text": "Shell integration now covers elvish (your `rc.elv` still runs first) and OSH (Oils) in WSL, with prompts, commands with their exit codes, and folders.",
                         "children": []
                     },
                     {
-                        "text": "Font weight and bold weight, from thin to black (`Appearance > Font`). A font without that weight shows its nearest.",
+                        "text": "You can set the font weight and the bold weight, from thin to black (`Appearance > Font`). A font without that weight shows its nearest.",
                         "children": []
                     },
                     {
-                        "text": "Fallback fonts: pick the fonts for characters yours lacks (Japanese, symbols, icons), tried in order before Windows chooses (`Appearance > Font`).",
+                        "text": "You can pick fallback fonts for the characters yours lacks (Japanese, symbols, icons). Zinc tries them in order before Windows chooses (`Appearance > Font`).",
                         "children": []
                     }
                 ]
@@ -314,7 +314,7 @@
                 "name": "Fixed",
                 "items": [
                     {
-                        "text": "Developer PowerShell for Visual Studio (and any PowerShell profile that runs a command and stays open) gets shell integration now: command marks, failed-command bars, the command center's folder.",
+                        "text": "Developer PowerShell for Visual Studio (and any PowerShell profile that runs a command and stays open) gets shell integration now, with command marks, failed-command bars, and the command center's folder.",
                         "children": []
                     },
                     {
@@ -334,43 +334,43 @@
                 "name": "New",
                 "items": [
                     {
-                        "text": "New tabs pick up environment changes: a PATH an installer changed works without restarting Zinc (`Terminal > Shell > Pick up environment changes`).",
+                        "text": "New tabs pick up environment changes, so a PATH that an installer changed works without restarting Zinc (`Terminal > Shell > Pick up environment changes`).",
                         "children": []
                     },
                     {
-                        "text": "Environment variables of your own, for every program (`Terminal > Shell`) or per profile (on its page), in config.toml's `[environment]`. `%PATH%` and the like work in values; an empty value removes a variable.",
+                        "text": "You can set environment variables of your own, for every program (`Terminal > Shell`) or per profile (on its page), in config.toml's `[environment]`. `%PATH%` and the like work in values, and an empty value removes a variable.",
                         "children": []
                     },
                     {
-                        "text": "Open links with Alt+click, or a plain click, instead of Ctrl+click (`Terminal > Mouse > Open links with`).",
+                        "text": "You can open links with Alt+click, or a plain click, instead of Ctrl+click (`Terminal > Mouse > Open links with`).",
                         "children": []
                     },
                     {
-                        "text": "Middle-click pastes, if you turn it on (`Terminal > Mouse`).",
+                        "text": "Middle-click can paste, if you turn on `Middle-click pastes` (`Terminal > Mouse`).",
                         "children": []
                     },
                     {
-                        "text": "A sound when a long command finishes out of view: Windows' notification sound or its beep (Notifications).",
+                        "text": "A long command that finishes out of view can play a sound, either Windows' notification sound or its beep (`Notifications > Sound`).",
                         "children": []
                     },
                     {
-                        "text": "Turn off the question before closing or quitting while a command runs (`Layout > Closing`).",
+                        "text": "You can turn off the question before closing or quitting while a command runs (`Layout > Closing`).",
                         "children": []
                     },
                     {
-                        "text": "How far a resize key moves a pane's divider (`Layout > Panes > Resize step`).",
+                        "text": "You can set how far a resize key moves a pane's divider (`Layout > Panes > Resize step`).",
                         "children": []
                     },
                     {
-                        "text": "Line height: more room between lines, as a percentage or in pixels (`Appearance > Font`). Box drawing still joins up.",
+                        "text": "Line height adds room between lines, as a percentage or in pixels (`Appearance > Font`). Box drawing still joins up.",
                         "children": []
                     },
                     {
-                        "text": "Match 256 colors to the scheme: programs using the extended palette get shades made from your scheme's colors (`Appearance > Colors`).",
+                        "text": "With `Match 256 colors to the scheme` (`Appearance > Colors`), programs using the extended palette get shades made from your scheme's colors.",
                         "children": []
                     },
                     {
-                        "text": "Open in Zinc from File Explorer: right-click a folder or a drive (`Layout > When you come back`; off by default).",
+                        "text": "You can open a folder or a drive in Zinc from File Explorer's right-click menu. The menu entry is off by default (`Layout > When you come back`).",
                         "children": []
                     }
                 ]
@@ -379,15 +379,15 @@
                 "name": "Changed",
                 "items": [
                     {
-                        "text": "Settings: pages inside a page (a profile, color schemes, shaders, the scheme editor) show where you are in their heading (`Profiles > PowerShell`); click any part to go back up, or use the back arrow in the title bar.",
+                        "text": "Pages inside a Settings page (a profile, color schemes, shaders, and the scheme editor) show where you are in their heading (`Profiles > PowerShell`). Click any part to go back up, or use the back arrow in the title bar.",
                         "children": []
                     },
                     {
-                        "text": "Settings: in a narrower window the sidebar folds to icons, and to a menu button when narrower still.",
+                        "text": "In a narrower window, the Settings sidebar folds to icons, and to a menu button when narrower still.",
                         "children": []
                     },
                     {
-                        "text": "Settings: headings and text use Windows' own text styles.",
+                        "text": "Settings headings and text use Windows' own text styles.",
                         "children": []
                     },
                     {
@@ -395,19 +395,19 @@
                         "children": []
                     },
                     {
-                        "text": "Workspace colors are a grid like the icons: arrow keys move between them, and screen readers name the chosen one.",
+                        "text": "Workspace colors are a grid now, like the icons. Arrow keys move between them, and screen readers name the chosen one.",
                         "children": []
                     },
                     {
-                        "text": "Wording: buttons say what they do (\"Delete profile\", \"Close workspace\", \"Quit Zinc\", \"Don't allow\"), key sequences show as Ctrl+A > C everywhere, and settings refer to each other by their exact names in quotes.",
+                        "text": "Buttons say what they do (\"Delete profile\", \"Close workspace\", \"Quit Zinc\", \"Don't allow\"), key sequences show as Ctrl+A > C everywhere, and settings refer to each other by their exact names in quotes.",
                         "children": []
                     },
                     {
-                        "text": "An update that's ready offers \"Restart Zinc\" or \"Install when I quit\" (it always installs when you quit).",
+                        "text": "An update that's ready offers \"Restart Zinc\" or \"Install when I quit\". A ready update always installs when you quit.",
                         "children": []
                     },
                     {
-                        "text": "A dot's meaning is in words: tab tooltips, screen readers and the tab switcher (\"@\") say \"finished\", \"failed (exit 1)\" or \"needs you\". The command-finished notification reads \"npm test failed (exit 1)\", then where and how long.",
+                        "text": "Tab tooltips, screen readers, and the tab switcher (\"@\") now say what a dot means: \"finished\", \"failed (exit 1)\", or \"needs you\". The command-finished notification reads \"npm test failed (exit 1)\", followed by where the command ran and how long it took.",
                         "children": []
                     }
                 ]
@@ -420,11 +420,11 @@
                         "children": []
                     },
                     {
-                        "text": "Arrow keys in the workspace icon and color choosers picked the next one and closed the menu. They move between choices now; Enter, Space or a click picks.",
+                        "text": "Arrow keys in the workspace icon and color choosers picked the next one and closed the menu. They move between choices now, and Enter, Space, or a click picks one.",
                         "children": []
                     },
                     {
-                        "text": "Settings: the preview at the top of Appearance and profile pages lost its first lines for good when its rows got taller (line height) or the window narrower. It grows to fit now, and lays itself out again at each size.",
+                        "text": "The preview at the top of the Appearance and profile pages in Settings lost its first lines for good when its rows got taller (line height) or the window narrower. The preview grows to fit now, and lays itself out again at each size.",
                         "children": []
                     }
                 ]
@@ -440,15 +440,15 @@
                 "name": "New",
                 "items": [
                     {
-                        "text": "A jump list: right-click Zinc's taskbar button for your recent profiles and folders, a new window, the quick terminal, Settings, and reopening what you closed. Each item opens in the window you used last. The same things work from the command line: `zinc --profile <id>`, `--folder <path>`, `--new-window`, `--quick-terminal`, `--settings`, `--reopen-workspace`, `--reopen-window`.",
+                        "text": "Zinc has a jump list. Right-click Zinc's taskbar button for your recent profiles and folders, a new window, the quick terminal, Settings, and reopening what you closed. Each item opens in the window you used last. The same things work from the command line: `zinc --profile <id>`, `--folder <path>`, `--new-window`, `--quick-terminal`, `--settings`, `--reopen-workspace`, `--reopen-window`.",
                         "children": []
                     },
                     {
-                        "text": "Shaders have their own settings page (`Appearance > Shaders > Edit shaders`): your list, and a library of Zinc's shaders, yours and the folders you add (a collection you cloned, say), each with a line about it. Click one to see it in the preview (and whether it compiles), again to take it back; Add puts it in your list.",
+                        "text": "Shaders have their own settings page (`Appearance > Shaders > Edit shaders`), with your list and a library of Zinc's shaders, yours, and the folders you add (a collection you cloned, say), each with a line about it. Click one to see it in the preview (and whether it compiles), and click it again to take it back. Add puts it in your list.",
                         "children": []
                     },
                     {
-                        "text": "Color schemes have their own page too (`Appearance > Color scheme`): the scheme in use (or your light and dark pair) with Edit and New scheme, and all ~650 schemes as cards you can filter by Dark, Light or Yours and search. Click one to see it in the preview, again to take it back; Use puts it in place.",
+                        "text": "Color schemes have their own page too (`Appearance > Color scheme`). The page shows the scheme in use (or your light and dark pair) with Edit and New scheme, and about 650 schemes as cards you can filter by Dark, Light, or Yours and search. Click one to see it in the preview, and click it again to take it back. Use puts it in place.",
                         "children": []
                     }
                 ]
@@ -457,18 +457,18 @@
                 "name": "Changed",
                 "items": [
                     {
-                        "text": "Settings: the search box is in the title bar now (Ctrl+F or F3 goes there, Esc clears it), and pages use more of a wide window (up to 1000 px, as Windows Settings).",
+                        "text": "The Settings search box is in the title bar now (Ctrl+F or F3 goes there, and Esc clears it), and pages use more of a wide window (up to 1000 px, as Windows Settings does).",
                         "children": []
                     },
                     {
-                        "text": "Input methods (IME: Japanese, Chinese, Korean…) work by default. If keys ever behave oddly, `Terminal > Troubleshooting > Input methods` turns it off.",
+                        "text": "Input methods (IMEs for Japanese, Chinese, Korean, and other languages) work by default. If keys ever behave oddly, `Terminal > Troubleshooting > Input methods` turns them off.",
                         "children": []
                     },
                     {
-                        "text": "Clearer wording across the app (settings, menus, notices, the palette). Some names changed:",
+                        "text": "Wording is clearer across the app (settings, menus, notices, and the palette). Some names changed:",
                         "children": [
-                            "\"Window glass\" is now Window background (Mica, Acrylic, Clear), with Window tint and Window tint color.",
-                            "Palette: \"Color scheme for this tab…\", \"Default color scheme…\", \"Workspace folder…\", \"Save tab text…\", \"Go to workspace: …\".",
+                            "\"Window glass\" is now Window background (Mica, Acrylic, or Clear), with Window tint and Window tint color.",
+                            "Palette entries are now \"Color scheme for this tab…\", \"Default color scheme…\", \"Workspace folder…\", \"Save tab text…\", and \"Go to workspace: …\".",
                             "Tooltips show your own shortcuts."
                         ]
                     }
@@ -478,7 +478,7 @@
                 "name": "Fixed",
                 "items": [
                     {
-                        "text": "Settings: while searching (or editing a profile or a scheme), clicking the section that was open before did nothing; it goes back to that section now. Search results no longer show a section as selected.",
+                        "text": "While you searched Settings (or edited a profile or a scheme), clicking the section that was open before did nothing. Clicking it goes back to that section now. Search results no longer show a section as selected.",
                         "children": []
                     }
                 ]
@@ -494,11 +494,11 @@
                 "name": "New",
                 "items": [
                     {
-                        "text": "Zinc comes with six shaders of its own: `scanlines`, `crt`, `glow`, `phosphor` (in Lit Cell's green), `cursor-glow` and `cursor-trail`. Use them by name (`[shaders] files = [\"crt\", \"glow\"]`), or pick them from `Settings > Appearance > Shaders > Add`. Only `crt` and `cursor-trail` move on their own; the others cost nothing while the terminal is idle.",
+                        "text": "Zinc comes with six shaders of its own: `scanlines`, `crt`, `glow`, `phosphor` (in Lit Cell's green), `cursor-glow`, and `cursor-trail`. Use them by name (`[shaders] files = [\"crt\", \"glow\"]`), or pick them from `Settings > Appearance > Shaders > Add`. Only `crt` and `cursor-trail` move on their own, so the others cost nothing while the terminal is idle.",
                         "children": []
                     },
                     {
-                        "text": "A downloaded update says what's new in it: `Settings > About > \"What's new in …\"` (this file's entry for it).",
+                        "text": "A downloaded update shows what's new in it under `Settings > About > \"What's new in …\"`, which is this file's entry for that version.",
                         "children": []
                     }
                 ]
@@ -507,11 +507,11 @@
                 "name": "Changed",
                 "items": [
                     {
-                        "text": "The quick terminal (``Win+` ``) is just the terminal now: no title bar, frame or tab strip, centered on the screen, fading and growing into place (`Settings > Quick terminal > Animation`). It's one terminal: splits yes, tabs and workspaces no. Dismissing it gives the foreground back to the window you came from, and closing it only hides it, so its shells and scrollback are still there next time.",
+                        "text": "The quick terminal (``Win+` ``) is just the terminal now, with no title bar, frame, or tab strip. It's centered on the screen and fades and grows into place (`Settings > Quick terminal > Animation`). It's one terminal, which can split but has no tabs or workspaces. Dismissing it gives the foreground back to the window you came from, and closing it only hides it, so its shells and scrollback are still there next time.",
                         "children": []
                     },
                     {
-                        "text": "Resize the quick terminal by dragging its edges. Each monitor remembers its size; double-click an edge (or run \"Reset quick terminal size\") to go back to the configured one.",
+                        "text": "Resize the quick terminal by dragging its edges. Each monitor remembers its size. Double-click an edge (or run \"Reset quick terminal size\") to go back to the configured one.",
                         "children": []
                     }
                 ]
@@ -532,11 +532,11 @@
                         "children": []
                     },
                     {
-                        "text": "Settings: a short page (a search with few results) slid off the right side of a window wider than about 1230 px.",
+                        "text": "A short Settings page (a search with few results) slid off the right side of a window wider than about 1230 px.",
                         "children": []
                     },
                     {
-                        "text": "Zinc could close without a word while a window was being resized, most likely when dragging fast. Resizing is also lighter now: most sizes made Zinc draw every character's shape again.",
+                        "text": "Zinc could close without a word while a window was being resized, most likely when dragging fast. Resizing is also lighter now, because Zinc no longer draws every character's shape again at most sizes.",
                         "children": []
                     }
                 ]
@@ -552,7 +552,7 @@
                 "name": "Faster",
                 "items": [
                     {
-                        "text": "Japanese, Chinese, Korean and emoji draw as fast as other text: a screen full of them took ~200 ms a frame (5 frames a second), now ~1 ms.",
+                        "text": "Japanese, Chinese, Korean, and emoji draw as fast as other text. A screen full of them took about 200 ms a frame (5 frames a second), and now takes about 1 ms.",
                         "children": []
                     }
                 ]
@@ -610,7 +610,7 @@
                 "name": "New",
                 "items": [
                     {
-                        "text": "Custom shaders, as in Ghostty: effects drawn over the terminal (CRT screens, glow, cursor trails), from GLSL files written for Ghostty or Shadertoy. `Settings > Appearance > Shaders`, or `[shaders]` in config.toml; a profile can have its own. A shader that doesn't compile is left out and a notice says why; saving a shader file applies it at once.",
+                        "text": "Zinc supports custom shaders, as Ghostty does. They're effects drawn over the terminal (CRT screens, glow, and cursor trails), from GLSL files written for Ghostty or Shadertoy. Set them in `Settings > Appearance > Shaders` or `[shaders]` in config.toml, and a profile can have its own. A shader that doesn't compile is left out, and a notice says why. Saving a shader file applies it at once.",
                         "children": []
                     }
                 ]
@@ -623,7 +623,7 @@
                         "children": []
                     },
                     {
-                        "text": "`zn list` cuts long names, titles and folders to fit a terminal.",
+                        "text": "`zn list` cuts long names, titles, and folders to fit a terminal.",
                         "children": []
                     },
                     {
@@ -683,7 +683,7 @@
                 "name": "New",
                 "items": [
                     {
-                        "text": "`zn`, a command-line tool for controlling Zinc from its terminals and scripts (off until you turn on `Settings > Terminal > Command line`).",
+                        "text": "`zn` is a new command-line tool for controlling Zinc from its terminals and scripts. It's off until you turn on `Settings > Terminal > Command line`.",
                         "children": []
                     },
                     {
@@ -696,7 +696,7 @@
                 "name": "Changed",
                 "items": [
                     {
-                        "text": "Low-latency drawing is on for everyone: what you type shows up about a screen refresh sooner.",
+                        "text": "Low-latency drawing is on for everyone, so what you type shows up about a screen refresh sooner.",
                         "children": []
                     }
                 ]
@@ -709,7 +709,7 @@
                         "children": []
                     },
                     {
-                        "text": "zsh's prompt marks could go astray; fish and nushell were handed bash and zsh settings.",
+                        "text": "zsh's prompt marks could go astray, and fish and nushell were handed bash and zsh settings.",
                         "children": []
                     },
                     {
@@ -729,7 +729,7 @@
                 "name": "New",
                 "items": [
                     {
-                        "text": "Experimental low-latency drawing (`[window] low-latency-drawing`): each terminal presents its frames as soon as they're drawn.",
+                        "text": "Experimental low-latency drawing (`[window] low-latency-drawing`) makes each terminal show each frame as soon as it's drawn.",
                         "children": []
                     }
                 ]
@@ -761,7 +761,7 @@
                 "name": "Fixed",
                 "items": [
                     {
-                        "text": "Zinc wouldn't start on a fresh Windows install (\"Unable to load DLL 'ghostty-vt'\"): it now brings the Visual C++ runtime it needs.",
+                        "text": "Zinc wouldn't start on a fresh Windows install (\"Unable to load DLL 'ghostty-vt'\"). It starts now, because it brings the Visual C++ runtime it needs.",
                         "children": []
                     }
                 ]
@@ -772,7 +772,7 @@
         "version": "0.1.0-dev.198",
         "date": "2026-10-02",
         "notes": [
-            "The first release with an installer: Zinc installs per user, keeps itself up to date (it checks once a day, downloads in the background, and installs on restart or when you quit), and appears in `Settings > Apps`.",
+            "This is the first release with an installer. Zinc installs per user, keeps itself up to date (it checks once a day, downloads in the background, and installs on restart or when you quit), and appears in `Settings > Apps`.",
             "Builds before this one came as zip files."
         ],
         "groups": []

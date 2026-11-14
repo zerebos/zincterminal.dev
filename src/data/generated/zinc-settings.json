@@ -211,7 +211,7 @@
             "section": "appearance",
             "group": "Font",
             "label": "Ligatures",
-            "description": "Fonts that have them (Cascadia Code, JetBrains Mono, Fira Code) join => != -> and the like into one shape. Each character keeps its own cell, and the character under the cursor isn't joined.",
+            "description": "Fonts that have them (Cascadia Code, JetBrains Mono, Fira Code) join `=>`, `!=`, `->`, and the like into one shape. Each character keeps its own cell, and the character under the cursor isn't joined.",
             "kind": "toggle",
             "default": false,
             "choices": [],
@@ -231,7 +231,7 @@
             "section": "appearance",
             "group": "Font",
             "label": "Fallback fonts",
-            "description": "For characters your font lacks, tried in order before Windows picks one. Separate them with commas.",
+            "description": "Zinc tries these fonts in order for characters your font lacks, before Windows picks one. Separate them with commas.",
             "kind": "text",
             "default": null,
             "choices": [],
@@ -251,7 +251,7 @@
             "section": "appearance",
             "group": "Font",
             "label": "Line height",
-            "description": "More room between lines, as a percentage (20%) or in pixels (2). A negative value gives less. Text stays centered.",
+            "description": "Adds room between lines, as a percentage (20%) or in pixels (2). A negative value gives less room. Text stays centered.",
             "kind": "text",
             "default": null,
             "choices": [],
@@ -271,7 +271,7 @@
             "section": "appearance",
             "group": "Font",
             "label": "Built-in glyphs",
-            "description": "Zinc draws box lines, blocks and Powerline shapes itself, so they join up in any font.",
+            "description": "Zinc draws box lines, blocks, and Powerline shapes itself, so they join up in any font.",
             "kind": "toggle",
             "default": true,
             "choices": [],
@@ -291,7 +291,7 @@
             "section": "appearance",
             "group": "Font",
             "label": "Line thickness",
-            "description": "Thicker or thinner built-in lines, in pixels (1, -1) or as a percentage (20%).",
+            "description": "Makes built-in lines thicker or thinner, in pixels (1, -1) or as a percentage (20%).",
             "kind": "text",
             "default": null,
             "choices": [],
@@ -311,7 +311,7 @@
             "section": "appearance",
             "group": "Colors",
             "label": "Color scheme",
-            "description": "About 650 are included. Add your own to the themes folder next to config.toml.",
+            "description": "About 650 schemes are included. Add your own to the themes folder next to config.toml.",
             "kind": "scheme",
             "default": null,
             "choices": [],
@@ -331,7 +331,7 @@
             "section": "appearance",
             "group": "Colors",
             "label": "Match 256 colors to the scheme",
-            "description": "Programs that use the extended 256 colors (vim and htop themes) get shades made from the scheme's 16, not the standard ones.",
+            "description": "Programs that use the extended 256 colors (vim and htop themes) get shades made from the scheme's 16 colors instead of the standard ones.",
             "kind": "toggle",
             "default": false,
             "choices": [],
@@ -431,7 +431,7 @@
             "section": "appearance",
             "group": "Colors",
             "label": "Cursor text",
-            "description": "The character under a block cursor. If the scheme doesn't set one either, it's the background color.",
+            "description": "Colors the character under a block cursor. If the scheme doesn't set one either, it's the background color.",
             "kind": "color",
             "default": null,
             "choices": [],
@@ -451,7 +451,7 @@
             "section": "appearance",
             "group": "Colors",
             "label": "Selection",
-            "description": "Behind selected text. If the scheme doesn't set one either, selection inverts the colors.",
+            "description": "Colors the background of selected text. If the scheme doesn't set one either, selection inverts the colors.",
             "kind": "color",
             "default": null,
             "choices": [],
@@ -491,14 +491,14 @@
             "section": "appearance",
             "group": "Colors",
             "label": "Pane headers",
-            "description": "Behind pane titles and tabs. On cards, the border is a step stronger.",
+            "description": "Colors the row behind pane titles and tabs. On cards, the border is a step stronger.",
             "kind": "color",
             "default": null,
             "choices": [
                 {
                     "label": "Same as the terminal",
                     "value": "terminal",
-                    "detail": "Hidden tabs get a shade instead, so the shown tab still stands out. Cards have no border."
+                    "detail": "The row matches the terminal's background, and hidden tabs get a shade so the shown tab still stands out. Cards then have no border."
                 },
                 {
                     "label": "Subtle",
@@ -572,7 +572,7 @@
             "section": "appearance",
             "group": "Readability",
             "label": "Bold text color",
-            "description": "For bold text in the default text color.",
+            "description": "Colors bold text that's in the default text color.",
             "kind": "color",
             "default": null,
             "choices": [],
@@ -592,7 +592,7 @@
             "section": "appearance",
             "group": "Readability",
             "label": "Faint text",
-            "description": "How bright dim text is (1: as bright as other text).",
+            "description": "How bright dim text is. At 1, dim text is as bright as other text.",
             "kind": "number",
             "default": 0.5,
             "choices": [],
@@ -612,7 +612,7 @@
             "section": "appearance",
             "group": "Readability",
             "label": "Find highlight",
-            "description": "Behind each match of Find.",
+            "description": "Colors the background of each match of Find.",
             "kind": "color",
             "default": null,
             "choices": [],
@@ -632,7 +632,7 @@
             "section": "appearance",
             "group": "Readability",
             "label": "Current match",
-            "description": "Behind the match Find is on.",
+            "description": "Colors the background of the match Find is on.",
             "kind": "color",
             "default": null,
             "choices": [],
@@ -652,7 +652,7 @@
             "section": "appearance",
             "group": "Cursor",
             "label": "Cursor shape",
-            "description": "Until a program picks its own (vim's insert mode often does).",
+            "description": "A program can pick its own shape, as vim's insert mode often does.",
             "kind": "choice",
             "default": "block",
             "choices": [
@@ -693,7 +693,7 @@
             "section": "appearance",
             "group": "Cursor",
             "label": "Blinking cursor",
-            "description": "Until a program says otherwise.",
+            "description": "A program can turn blinking on or off for itself.",
             "kind": "toggle",
             "default": false,
             "choices": [],
@@ -713,7 +713,7 @@
             "section": "appearance",
             "group": "Cursor",
             "label": "Cursor opacity",
-            "description": "1: solid. Lower lets the character under a block cursor show in its own color.",
+            "description": "At 1, the cursor is solid. Lower values let the character under a block cursor show in its own color.",
             "kind": "number",
             "default": 1,
             "choices": [],
@@ -733,7 +733,7 @@
             "section": "appearance",
             "group": "Cursor",
             "label": "Cursor at the prompt",
-            "description": "While the shell waits for a command. A program's own cursor still wins. Needs shell integration.",
+            "description": "The cursor takes this shape while the shell waits for a command. A program's own cursor still wins. Needs shell integration.",
             "kind": "choice",
             "default": "same",
             "choices": [
@@ -745,7 +745,7 @@
                 {
                     "label": "Bar",
                     "value": "bar",
-                    "detail": "Like a text box."
+                    "detail": "A bar looks like the cursor in a text box."
                 },
                 {
                     "label": "Block",
@@ -779,14 +779,14 @@
             "section": "appearance",
             "group": "Window",
             "label": "Light or dark",
-            "description": "Windows, menus and dialogs. The terminal keeps its color scheme. Restart Zinc to apply.",
+            "description": "Sets the look of Zinc's windows, menus, and dialogs. The terminal keeps its color scheme. Restart Zinc to apply.",
             "kind": "choice",
             "default": "system",
             "choices": [
                 {
                     "label": "Same as Windows",
                     "value": "system",
-                    "detail": "Windows Settings > Personalization > Colors > Choose your mode."
+                    "detail": "Zinc follows \"Choose your mode\" in Windows Settings > Personalization > Colors."
                 },
                 {
                     "label": "Light",
@@ -815,7 +815,7 @@
             "section": "appearance",
             "group": "Window",
             "label": "Accent color",
-            "description": "Selections, focus lines, switches and buttons. Restart Zinc to apply.",
+            "description": "Colors selections, focus lines, switches, and buttons. Restart Zinc to apply.",
             "kind": "choice",
             "default": "zinc",
             "choices": [
@@ -827,7 +827,7 @@
                 {
                     "label": "Windows' accent",
                     "value": "windows",
-                    "detail": "The one in Windows Settings > Personalization > Colors."
+                    "detail": "Zinc uses the accent color from Windows Settings > Personalization > Colors."
                 }
             ],
             "unit": null,
@@ -846,14 +846,14 @@
             "section": "appearance",
             "group": "Background",
             "label": "Window background",
-            "description": "What's behind everything in the window: tabs, sidebar and terminal.",
+            "description": "What's behind everything in the window: tabs, sidebar, and terminal.",
             "kind": "choice",
             "default": "mica",
             "choices": [
                 {
                     "label": "Mica",
                     "value": "mica",
-                    "detail": "Not see-through. It takes a tint from your wallpaper, as Windows apps do."
+                    "detail": "Mica isn't see-through. It takes a tint from your wallpaper, as Windows apps do."
                 },
                 {
                     "label": "Acrylic (frosted)",
@@ -922,7 +922,7 @@
             "section": "appearance",
             "group": "Background",
             "label": "Terminal background opacity",
-            "description": "Lower lets the window background show behind the text (1: solid). Colored cells stay solid.",
+            "description": "At 1, the background is solid. Lower values let the window background show behind the text. Colored cells stay solid.",
             "kind": "number",
             "default": 1,
             "choices": [],
@@ -942,7 +942,7 @@
             "section": "appearance",
             "group": "Shaders",
             "label": "Custom shaders",
-            "description": "Effects drawn over the terminal, such as CRT screens, glow and cursor trails. They're GLSL files written for Ghostty or Shadertoy, and they run in order.",
+            "description": "Effects drawn over the terminal, such as CRT screens, glow, and cursor trails. They're GLSL files written for Ghostty or Shadertoy, and they run in order.",
             "kind": "files",
             "default": null,
             "choices": [],
@@ -962,14 +962,14 @@
             "section": "appearance",
             "group": "Shaders",
             "label": "Animation",
-            "description": "For animated shaders. The others redraw only when the terminal changes.",
+            "description": "Says when animated shaders move. The others redraw only when the terminal changes.",
             "kind": "choice",
             "default": true,
             "choices": [
                 {
                     "label": "While focused",
                     "value": true,
-                    "detail": "Unfocused, they pause where they are. The text under them still updates."
+                    "detail": "Shaders in unfocused terminals pause where they are. The text under them still updates."
                 },
                 {
                     "label": "Always",
@@ -979,7 +979,7 @@
                 {
                     "label": "Never",
                     "value": false,
-                    "detail": "They hold still, cursor effects included, and are drawn only when the terminal changes."
+                    "detail": "Animated shaders hold still too, cursor effects included, and redraw only when the terminal changes."
                 }
             ],
             "unit": null,
@@ -998,7 +998,7 @@
             "section": "appearance",
             "group": "Spacing",
             "label": "Padding left and right",
-            "description": "Between the window's edge and the text.",
+            "description": "Adds space between the window's edge and the text.",
             "kind": "number",
             "default": 6,
             "choices": [],
@@ -1018,7 +1018,7 @@
             "section": "appearance",
             "group": "Spacing",
             "label": "Padding top and bottom",
-            "description": "Between the window's edge and the text.",
+            "description": "Adds space between the window's edge and the text.",
             "kind": "number",
             "default": 6,
             "choices": [],
@@ -1058,7 +1058,7 @@
             "section": "layout",
             "group": "Workspaces",
             "label": "Workspaces",
-            "description": "Tabs along the top, or a list in a sidebar. Applies to windows opened from now on.",
+            "description": "Shows workspaces as tabs along the top, or as a list in a sidebar. Applies to windows opened from now on.",
             "kind": "choice",
             "default": "top",
             "choices": [
@@ -1089,7 +1089,7 @@
             "section": "layout",
             "group": "Workspaces",
             "label": "Sidebar",
-            "description": "Only when \"Workspaces\" is \"In a sidebar\".",
+            "description": "Applies only when \"Workspaces\" is \"In a sidebar\".",
             "kind": "choice",
             "default": "full",
             "choices": [
@@ -1106,7 +1106,7 @@
                 {
                     "label": "Auto-hide",
                     "value": "auto-hide",
-                    "detail": "Slides out when the pointer reaches the window's left edge."
+                    "detail": "The sidebar slides out when the pointer reaches the window's left edge."
                 }
             ],
             "unit": null,
@@ -1125,7 +1125,7 @@
             "section": "layout",
             "group": "Workspaces",
             "label": "Title bar",
-            "description": "Only when \"Workspaces\" is \"In a sidebar\".",
+            "description": "Applies only when \"Workspaces\" is \"In a sidebar\".",
             "kind": "choice",
             "default": "show",
             "choices": [
@@ -1137,7 +1137,7 @@
                 {
                     "label": "Auto-hide",
                     "value": "auto-hide",
-                    "detail": "Slides down when the pointer reaches the window's top edge."
+                    "detail": "The title bar slides down when the pointer reaches the window's top edge."
                 }
             ],
             "unit": null,
@@ -1156,7 +1156,7 @@
             "section": "layout",
             "group": "Workspaces",
             "label": "Start page for new workspaces",
-            "description": "Choose a profile, a folder and a name when you open a workspace. Enter starts the default profile.",
+            "description": "Lets you choose a profile, a folder, and a name when you open a workspace. Enter starts the default profile.",
             "kind": "toggle",
             "default": true,
             "choices": [],
@@ -1176,7 +1176,7 @@
             "section": "layout",
             "group": "Workspaces",
             "label": "Colors for new workspaces",
-            "description": "For the ones you don't color yourself.",
+            "description": "New workspaces you don't color yourself take their colors from this.",
             "kind": "choice",
             "default": "off",
             "choices": [
@@ -1219,12 +1219,12 @@
                 {
                     "label": "Where you are",
                     "value": "current",
-                    "detail": "In the focused terminal's current folder."
+                    "detail": "Otherwise, a new tab or split starts in the focused terminal's current folder."
                 },
                 {
                     "label": "In the profile's folder",
                     "value": "profile",
-                    "detail": "Or in the workspace's folder, when it has one."
+                    "detail": "Otherwise, a new tab or split starts in its profile's folder."
                 }
             ],
             "unit": null,
@@ -1263,19 +1263,19 @@
             "section": "layout",
             "group": "Panes",
             "label": "Show pane tabs as",
-            "description": "Only with \"Tabs inside panes\" on.",
+            "description": "Applies only while \"Tabs inside panes\" is on.",
             "kind": "choice",
             "default": "tabs",
             "choices": [
                 {
                     "label": "Tabs",
                     "value": "tabs",
-                    "detail": "A row of tabs. When they don't fit, they shorten, then show only their icons, then fold into a menu."
+                    "detail": "A pane's header shows a row of tabs. When the tabs don't fit, they shorten, then show only their icons, then fold into a menu."
                 },
                 {
                     "label": "A menu",
                     "value": "menu",
-                    "detail": "The shown tab, then a count (\"2 of 5\") that opens a menu of every tab. Switch tabs with the menu or with keys."
+                    "detail": "A pane's header shows the current tab, then a count (\"2 of 5\") that opens a menu of every tab. Switch tabs with the menu or with keys."
                 }
             ],
             "unit": null,
@@ -1294,19 +1294,19 @@
             "section": "layout",
             "group": "Panes",
             "label": "Pane headers",
-            "description": "The row above a pane. Its tabs, or its title when it has one tab.",
+            "description": "The row above a pane shows its tabs, or its title when it has one tab.",
             "kind": "choice",
             "default": "with-tabs",
             "choices": [
                 {
                     "label": "Automatic",
                     "value": "auto",
-                    "detail": "On every pane once a workspace is split, and on any pane with two or more tabs."
+                    "detail": "Every pane gets a header once its workspace is split, and so does any pane with two or more tabs."
                 },
                 {
                     "label": "With several tabs",
                     "value": "with-tabs",
-                    "detail": "On panes with two or more tabs."
+                    "detail": "Only panes with two or more tabs get a header."
                 },
                 {
                     "label": "Always",
@@ -1335,24 +1335,24 @@
             "section": "layout",
             "group": "Panes",
             "label": "Header buttons",
-            "description": "Split, maximize and more on the right of a pane's header, with a program's progress beside them.",
+            "description": "Shows split, maximize, and other buttons on the right of a pane's header, with a program's progress beside them.",
             "kind": "choice",
             "default": "hide",
             "choices": [
                 {
                     "label": "Always",
                     "value": "always",
-                    "detail": "On every pane."
+                    "detail": "Every pane shows the buttons."
                 },
                 {
                     "label": "Focused pane",
                     "value": "focused",
-                    "detail": "On the focused pane, and on the others while the pointer is over their header."
+                    "detail": "The focused pane shows the buttons, and the other panes show them while the pointer is over their header."
                 },
                 {
                     "label": "On hover",
                     "value": "hover",
-                    "detail": "On a pane while the pointer is over its header. Touch and pen have no hover. The command palette and a pane's right-click menu have every action."
+                    "detail": "A pane shows the buttons only while the pointer is over its header. Touch and pen have no hover. The command palette and a pane's right-click menu have every action."
                 },
                 {
                     "label": "Hide",
@@ -1396,7 +1396,7 @@
             "section": "layout",
             "group": "Panes",
             "label": "Gap at the workspace edges",
-            "description": "The same gap around the outside, split or not, so splitting never moves a pane's outer edges. Only with a \"Gap between panes\" above 0.",
+            "description": "Puts the same gap around the outside, split or not, so splitting never moves a pane's outer edges. Applies only when \"Gap between panes\" is above 0.",
             "kind": "toggle",
             "default": false,
             "choices": [],
@@ -1423,12 +1423,12 @@
                 {
                     "label": "Ring",
                     "value": "ring",
-                    "detail": "An accent-colored outline around the focused pane."
+                    "detail": "The focused pane gets an accent-colored outline."
                 },
                 {
                     "label": "Tab accent",
                     "value": "tab-accent",
-                    "detail": "An accent-colored line along the top of the focused pane."
+                    "detail": "The focused pane gets an accent-colored line along its top."
                 },
                 {
                     "label": "None",
@@ -1452,7 +1452,7 @@
             "section": "layout",
             "group": "Panes",
             "label": "Pane animations",
-            "description": "Panes slide into place when you split, close, maximize or move them. They don't while \"Animation effects\" is off in Windows Settings.",
+            "description": "Panes slide into place when you split, close, maximize, or move them. They don't while \"Animation effects\" is off in Windows Settings.",
             "kind": "toggle",
             "default": true,
             "choices": [],
@@ -1492,7 +1492,7 @@
             "section": "layout",
             "group": "Panes",
             "label": "Unfocused panes",
-            "description": "How bright unfocused panes stay (1: not dimmed).",
+            "description": "How bright unfocused panes stay. At 1, they aren't dimmed.",
             "kind": "number",
             "default": 0.7,
             "choices": [],
@@ -1512,7 +1512,7 @@
             "section": "layout",
             "group": "Panes",
             "label": "Dimming color",
-            "description": "What unfocused panes fade toward.",
+            "description": "Unfocused panes fade toward this color.",
             "kind": "color",
             "default": null,
             "choices": [],
@@ -1532,7 +1532,7 @@
             "section": "layout",
             "group": "Panes",
             "label": "Divider color",
-            "description": "The line between split panes, when \"Gap between panes\" is 0.",
+            "description": "Colors the line between split panes when \"Gap between panes\" is 0.",
             "kind": "color",
             "default": null,
             "choices": [],
@@ -1552,7 +1552,7 @@
             "section": "layout",
             "group": "When you come back",
             "label": "Reopen windows",
-            "description": "Windows, workspaces, splits and tabs come back in their folders.",
+            "description": "Windows, workspaces, splits, and tabs come back in their folders.",
             "kind": "choice",
             "default": "always",
             "choices": [
@@ -1590,7 +1590,7 @@
                 {
                     "label": "Automatic",
                     "value": null,
-                    "detail": "While the quick terminal's hotkey is set, it stays in the tray so the hotkey keeps working. Otherwise it quits."
+                    "detail": "While the quick terminal's hotkey is set, Zinc stays in the tray so the hotkey keeps working. Otherwise it quits."
                 },
                 {
                     "label": "Quit",
@@ -1636,7 +1636,7 @@
                 {
                     "label": "Open my windows",
                     "value": "windows",
-                    "detail": "As they were when you left, or a new one."
+                    "detail": "Your windows open as you left them, or a new window opens."
                 }
             ],
             "unit": null,
@@ -1675,7 +1675,7 @@
             "section": "layout",
             "group": "Closing",
             "label": "Ask before closing",
-            "description": "When a tab, pane, workspace or window you close still runs a command, or holds two or more tabs. Zinc knows a command is running through shell integration.",
+            "description": "Asks when a tab, pane, workspace, or window you close still runs a command or holds two or more tabs. Zinc knows a command is running through shell integration.",
             "kind": "toggle",
             "default": true,
             "choices": [],
@@ -1695,7 +1695,7 @@
             "section": "layout",
             "group": "Closing",
             "label": "Ask before quitting with a running command",
-            "description": "When you quit Zinc (or restart it for an update) while a command still runs.",
+            "description": "Asks when you quit Zinc, or restart it for an update, while a command still runs.",
             "kind": "toggle",
             "default": true,
             "choices": [],
@@ -1715,7 +1715,7 @@
             "section": "terminal",
             "group": "Shell",
             "label": "Shell integration",
-            "description": "Marks prompts and commands in PowerShell, bash and zsh (WSL too), so you can jump between prompts, copy a command's output and see which commands failed.",
+            "description": "Marks prompts and commands in PowerShell, bash, and zsh (WSL too), so you can jump between prompts, copy a command's output, and see which commands failed.",
             "kind": "choice",
             "default": "auto",
             "choices": [
@@ -1746,7 +1746,7 @@
             "section": "terminal",
             "group": "Shell",
             "label": "Command marks",
-            "description": "The bar beside a command's output.",
+            "description": "Shows a bar beside the output of these commands.",
             "kind": "choice",
             "default": "failures",
             "choices": [
@@ -1789,7 +1789,7 @@
                 {
                     "label": "Close if it succeeded",
                     "value": "success",
-                    "detail": "A failure stays on screen so you can read why. Any key closes it."
+                    "detail": "When the program fails, the pane stays open so you can read why. Any key then closes the pane."
                 },
                 {
                     "label": "Always close",
@@ -1799,7 +1799,7 @@
                 {
                     "label": "Keep it open",
                     "value": "never",
-                    "detail": "Any key closes it."
+                    "detail": "Any key closes the pane."
                 }
             ],
             "unit": null,
@@ -1858,7 +1858,7 @@
             "section": "terminal",
             "group": "Shell",
             "label": "Folder and command as the title",
-            "description": "The folder at the prompt, the running command otherwise. A program's own title still wins. Needs shell integration.",
+            "description": "Shows the folder at the prompt, and the running command otherwise. A program's own title still wins. Needs shell integration.",
             "kind": "toggle",
             "default": true,
             "choices": [],
@@ -1929,7 +1929,7 @@
             "section": "terminal",
             "group": "Mouse",
             "label": "Word boundaries",
-            "description": "Characters that end a word when you double-click (space and tab always do). Empty: the ones shown.",
+            "description": "These characters end a word when you double-click. Space and tab always do. When this is empty, Zinc uses the characters shown.",
             "kind": "text",
             "default": null,
             "choices": [],
@@ -1941,7 +1941,7 @@
             "nullLabel": null,
             "numbersAsNumbers": false,
             "example": null,
-            "defaultText": null,
+            "defaultText": "Zinc's own set",
             "profileOverridable": true
         },
         {
@@ -1976,12 +1976,12 @@
                 {
                     "label": "Menu",
                     "value": "menu",
-                    "detail": "Copy, paste, find, the link or command you clicked, split and close."
+                    "detail": "A right-click opens the menu too. It has copy, paste, find, the link or command you clicked, split, and close."
                 },
                 {
                     "label": "Copy or paste",
                     "value": "copy-paste",
-                    "detail": "Copies a selection, or pastes when there's none."
+                    "detail": "A right-click copies the selection, or pastes when nothing is selected."
                 },
                 {
                     "label": "Paste",
@@ -2005,7 +2005,7 @@
             "section": "terminal",
             "group": "Mouse",
             "label": "Open links with",
-            "description": "Web links and files shown in the terminal.",
+            "description": "Web links and files in the terminal open with this.",
             "kind": "choice",
             "default": "ctrl",
             "choices": [
@@ -2041,7 +2041,7 @@
             "section": "terminal",
             "group": "Mouse",
             "label": "Middle-click pastes",
-            "description": "Unless the program uses the mouse.",
+            "description": "Pastes the clipboard unless the program uses the mouse.",
             "kind": "toggle",
             "default": false,
             "choices": [],
@@ -2121,19 +2121,19 @@
             "section": "terminal",
             "group": "Clipboard",
             "label": "Paste warning",
-            "description": "Ask before pasting text with more than one line.",
+            "description": "Asks before pasting text with more than one line.",
             "kind": "choice",
             "default": "auto",
             "choices": [
                 {
                     "label": "Automatic",
                     "value": "auto",
-                    "detail": "When the program would take each line as Enter and run it. A program that marks pastes (bracketed paste) gets no warning."
+                    "detail": "Zinc asks only when the program would take each line as Enter and run it. A program that marks pastes (bracketed paste) gets no warning."
                 },
                 {
                     "label": "Always",
                     "value": "multiline",
-                    "detail": "Whenever a paste has more than one line."
+                    "detail": "Zinc asks even when the program marks pastes (bracketed paste)."
                 },
                 {
                     "label": "Never",
@@ -2157,7 +2157,7 @@
             "section": "terminal",
             "group": "Clipboard",
             "label": "Large pastes",
-            "description": "Ask before pasting more than 5 KB.",
+            "description": "Asks before pasting more than 5 KB.",
             "kind": "toggle",
             "default": true,
             "choices": [],
@@ -2177,7 +2177,7 @@
             "section": "terminal",
             "group": "Clipboard",
             "label": "Programs may copy",
-            "description": "Copying with OSC 52, as tmux, neovim and remote shells do.",
+            "description": "Copying with OSC 52, as tmux, Neovim, and remote shells do.",
             "kind": "toggle",
             "default": true,
             "choices": [],
@@ -2197,14 +2197,14 @@
             "section": "terminal",
             "group": "Clipboard",
             "label": "Programs reading the clipboard",
-            "description": "Anything running, including a remote host, could read it.",
+            "description": "Anything running, including a remote host, could read the clipboard.",
             "kind": "choice",
             "default": "ask",
             "choices": [
                 {
                     "label": "Ask each time",
                     "value": "ask",
-                    "detail": "Allow once, for the tab, or not."
+                    "detail": "Zinc asks whether to let the program read the clipboard once, for the tab, or not at all."
                 },
                 {
                     "label": "Allow",
@@ -2233,19 +2233,19 @@
             "section": "terminal",
             "group": "Bell",
             "label": "Bell",
-            "description": "When a program rings it, e.g. at a failed tab completion.",
+            "description": "Says what happens when a program rings the bell, for example at a failed tab completion.",
             "kind": "choice",
             "default": "attention",
             "choices": [
                 {
                     "label": "Tab dot",
                     "value": "attention",
-                    "detail": "A dot on its tab, and the taskbar button flashes, when you aren't looking at that pane."
+                    "detail": "When you aren't looking at the program's pane, a dot shows on the pane's tab and the taskbar button flashes."
                 },
                 {
                     "label": "Flash the pane",
                     "value": "flash",
-                    "detail": "Marks the tab too."
+                    "detail": "The program's pane flashes, and its tab also gets a dot, as with \"Tab dot\"."
                 },
                 {
                     "label": "None",
@@ -2309,7 +2309,7 @@
             "section": "terminal",
             "group": "Command line",
             "label": "Remote control",
-            "description": "Lets zn, Zinc's command-line tool, open, arrange and close tabs, type into them and read them. Any program running as you could use it.",
+            "description": "Lets zn, Zinc's command-line tool, open, arrange, and close tabs, type into them, and read them. Any program running as you could use zn.",
             "kind": "toggle",
             "default": false,
             "choices": [],
@@ -2329,7 +2329,7 @@
             "section": "terminal",
             "group": "Command line",
             "label": "Use zn in other terminals",
-            "description": "Adds zn to your PATH, so other terminals find it too (Zinc's own terminals always do). Shells started from now on see it.",
+            "description": "Adds zn to your PATH, so other terminals find zn too. Zinc's own terminals always do. Shells started from now on see the change.",
             "kind": "toggle",
             "default": false,
             "choices": [],
@@ -2349,7 +2349,7 @@
             "section": "terminal",
             "group": "Troubleshooting",
             "label": "Input methods",
-            "description": "Type Japanese, Chinese, Korean and more with Windows' input methods (IME). Turn it off if keys behave oddly.",
+            "description": "Type Japanese, Chinese, Korean, and more with Windows' input methods (IME). Turn it off if keys behave oddly.",
             "kind": "toggle",
             "default": true,
             "choices": [],
@@ -2369,7 +2369,7 @@
             "section": "terminal",
             "group": "Troubleshooting",
             "label": "Low-latency drawing",
-            "description": "What you type shows up about one screen refresh sooner. Turn it off if a terminal draws wrong or stops drawing, and tell us. Applies to terminals opened from now on.",
+            "description": "What you type shows up about one screen refresh sooner. Turn it off if a terminal draws wrong or stops drawing, and open an issue. Applies to terminals opened from now on.",
             "kind": "toggle",
             "default": true,
             "choices": [],
@@ -2389,7 +2389,7 @@
             "section": "terminal",
             "group": "Troubleshooting",
             "label": "Free memory of hidden tabs",
-            "description": "Background tabs, minimized windows and the dismissed quick terminal give back their graphics memory and rebuild it when you return. Turn it off if switching tabs flashes. Only with \"Low-latency drawing\".",
+            "description": "Background tabs, minimized windows, and the dismissed quick terminal give back their graphics memory and rebuild it when you return. Turn it off if switching tabs flashes. Applies only while \"Low-latency drawing\" is on.",
             "kind": "toggle",
             "default": true,
             "choices": [],
@@ -2408,8 +2408,8 @@
             "key": "window.free-hidden-after",
             "section": "terminal",
             "group": "Troubleshooting",
-            "label": "Free it after",
-            "description": "Seconds, or with a unit: 45s, 2m.",
+            "label": "Free memory after",
+            "description": "This is in seconds unless you add a unit, like `45s` or `2m`.",
             "kind": "text",
             "default": 60,
             "choices": [],
@@ -2429,7 +2429,7 @@
             "section": "terminal",
             "group": "Troubleshooting",
             "label": "Software rendering",
-            "description": "Draws with the processor instead of the graphics card, which is slower. Use it for broken graphics drivers, some virtual machines and remote desktop glitches. Applies to terminals opened from now on.",
+            "description": "Draws with the processor instead of the graphics card, which is slower. Use it for broken graphics drivers, some virtual machines, and remote desktop glitches. Applies to terminals opened from now on.",
             "kind": "toggle",
             "default": false,
             "choices": [],
@@ -2449,29 +2449,29 @@
             "section": "notifications",
             "group": "Long commands",
             "label": "Long command finishes",
-            "description": "In a pane you weren't looking at.",
+            "description": "Says what happens when a long command finishes in a pane you weren't looking at.",
             "kind": "choice",
             "default": "badge",
             "choices": [
                 {
                     "label": "Tab dot",
                     "value": "badge",
-                    "detail": "A dot on its tab. The taskbar button also flashes if Zinc is in the background."
+                    "detail": "Zinc shows a dot on the pane's tab. The taskbar button also flashes if Zinc is in the background."
                 },
                 {
                     "label": "Notification",
                     "value": "toast",
-                    "detail": "A dot on its tab, and a Windows notification if Zinc is in the background."
+                    "detail": "Zinc shows a dot on the pane's tab, and a Windows notification if Zinc is in the background."
                 },
                 {
                     "label": "Always notify",
                     "value": "toast-always",
-                    "detail": "A Windows notification whenever you aren't looking at that pane, even in Zinc."
+                    "detail": "Zinc shows a Windows notification whenever you aren't looking at the pane, even while you're using Zinc."
                 },
                 {
                     "label": "None",
                     "value": "never",
-                    "detail": "No dot, no notification."
+                    "detail": "Zinc shows neither a dot nor a notification."
                 }
             ],
             "unit": null,
@@ -2490,7 +2490,7 @@
             "section": "notifications",
             "group": "Long commands",
             "label": "Counts as long after",
-            "description": "Seconds, or with a unit: 45s, 2m.",
+            "description": "This is in seconds unless you add a unit, like `45s` or `2m`.",
             "kind": "text",
             "default": 10,
             "choices": [],
@@ -2510,7 +2510,7 @@
             "section": "notifications",
             "group": "Long commands",
             "label": "Sound",
-            "description": "Plays when a long command finishes out of view (a Windows notification has its own).",
+            "description": "Plays when a long command finishes out of view. A Windows notification has its own sound.",
             "kind": "choice",
             "default": "off",
             "choices": [
@@ -2546,29 +2546,29 @@
             "section": "notifications",
             "group": "Programs",
             "label": "Program notifications",
-            "description": "When a program asks for one, e.g. a build script finishing (OSC 9 or 777).",
+            "description": "Says what happens when a program asks for a notification with OSC 9 or 777, for example when a build script finishes.",
             "kind": "choice",
             "default": "badge",
             "choices": [
                 {
                     "label": "Tab dot",
                     "value": "badge",
-                    "detail": "A dot on its tab. The taskbar button also flashes if Zinc is in the background."
+                    "detail": "Zinc shows a dot on the pane's tab. The taskbar button also flashes if Zinc is in the background."
                 },
                 {
                     "label": "Notification",
                     "value": "toast",
-                    "detail": "A dot on its tab, and a Windows notification if Zinc is in the background."
+                    "detail": "Zinc shows a dot on the pane's tab, and a Windows notification if Zinc is in the background."
                 },
                 {
                     "label": "Always notify",
                     "value": "toast-always",
-                    "detail": "A Windows notification whenever you aren't looking at that pane, even in Zinc."
+                    "detail": "Zinc shows a Windows notification whenever you aren't looking at the pane, even while you're using Zinc."
                 },
                 {
                     "label": "None",
                     "value": "never",
-                    "detail": "No dot, no notification."
+                    "detail": "Zinc shows neither a dot nor a notification."
                 }
             ],
             "unit": null,
@@ -2647,7 +2647,7 @@
             "section": "quick",
             "group": "Summon",
             "label": "Hotkey",
-            "description": "Shows and hides the quick terminal from anywhere, e.g. win+grave or ctrl+alt+t.",
+            "description": "Shows and hides the quick terminal from anywhere, for example `win+grave` or `ctrl+alt+t`.",
             "kind": "text",
             "default": "win+grave",
             "choices": [],
@@ -2720,12 +2720,12 @@
                 {
                     "label": "With the pointer",
                     "value": "mouse",
-                    "detail": "Opens on the screen the pointer is on."
+                    "detail": "The quick terminal opens on the screen the pointer is on."
                 },
                 {
                     "label": "Main",
                     "value": "main",
-                    "detail": "Always opens on the main screen."
+                    "detail": "The quick terminal always opens on the main screen."
                 }
             ],
             "unit": null,
@@ -2744,7 +2744,7 @@
             "section": "quick",
             "group": "Placement",
             "label": "Size",
-            "description": "A percentage or pixels (50%, 600px) along its edge. Empty: 50%, or 70% by 60% at \"Center\".",
+            "description": "Sets the quick terminal's size along its edge, as a percentage or in pixels (`50%`, `600px`). When empty, the size is 50%, or 70% by 60% at \"Center\".",
             "kind": "text",
             "default": null,
             "choices": [],
@@ -2804,7 +2804,7 @@
             "section": "about",
             "group": "Updates",
             "label": "Check for updates automatically",
-            "description": "Once a day. New versions download in the background, and you choose when to restart. Only for Zinc installed with its installer.",
+            "description": "Zinc checks once a day. New versions download in the background, and you choose when to restart. Only a copy installed with Zinc's installer updates itself.",
             "kind": "toggle",
             "default": true,
             "choices": [],
@@ -2964,7 +2964,7 @@
             "section": "profiles",
             "group": "Find shells on this PC",
             "label": "SSH hosts",
-            "description": "From ~/.ssh/config.",
+            "description": "Reads hosts from `~/.ssh/config`.",
             "kind": "toggle",
             "default": true,
             "choices": [],
@@ -2987,7 +2987,7 @@
         },
         {
             "key": "shaders.folders",
-            "text": "Folders of shaders to choose from. Add and remove them on the shaders page (the library's … menu)."
+            "text": "Zinc offers the shaders in these folders to choose from. Add and remove folders on the shaders page, in the library's … menu."
         }
     ],
     "profileFields": [
@@ -2996,7 +2996,7 @@
             "section": "profiles",
             "group": "General",
             "label": "Name",
-            "description": "Shown in menus and tabs.",
+            "description": "Menus and tabs show this name.",
             "kind": "text",
             "default": null,
             "choices": [],
@@ -3016,7 +3016,7 @@
             "section": "profiles",
             "group": "General",
             "label": "Command",
-            "description": "What runs in its tabs: a shell, or any program.",
+            "description": "The profile's tabs run this shell or other program.",
             "kind": "text",
             "default": null,
             "choices": [],
@@ -3036,7 +3036,7 @@
             "section": "profiles",
             "group": "General",
             "label": "Starting folder",
-            "description": "~ (your home), a path, or %VARIABLES%.",
+            "description": "The profile's tabs start in this folder. Write `~` for your home folder, or a path, which can use `%VARIABLES%`.",
             "kind": "text",
             "default": null,
             "choices": [],
@@ -3056,7 +3056,7 @@
             "section": "profiles",
             "group": "General",
             "label": "Icon",
-            "description": "An image file for its tabs (default: the program's own icon).",
+            "description": "The profile's tabs show this image file. Without one, they show the program's own icon.",
             "kind": "text",
             "default": null,
             "choices": [],
@@ -3076,7 +3076,7 @@
             "section": "profiles",
             "group": "General",
             "label": "Hidden",
-            "description": "Kept out of the menus (its tabs still reopen).",
+            "description": "Keeps the profile out of the menus. Its tabs still reopen.",
             "kind": "toggle",
             "default": false,
             "choices": [],
@@ -3096,35 +3096,35 @@
         {
             "key": "include",
             "label": "Include",
-            "description": "More config files to read first, by path or pattern. What this file says wins.",
+            "description": "Reads more config files first, by path or pattern. What this file says wins.",
             "takes": "A path, or a list of paths",
             "defaultText": null
         },
         {
             "key": "default-profile",
             "label": "Default profile",
-            "description": "The profile new tabs open with, by id.",
+            "description": "New tabs open with the profile that has this id.",
             "takes": "A profile id",
             "defaultText": "The first profile in the menu. That's your own first profile, or else the first shell Zinc finds, which is your default WSL distribution when you have one"
         },
         {
             "key": "profile-order",
             "label": "Profile order",
-            "description": "Profile ids in the order the menus list them.",
+            "description": "The menus list profiles in this order, by id.",
             "takes": "A list of profile ids",
             "defaultText": null
         },
         {
             "key": "environment",
             "label": "Environment",
-            "description": "Environment variables for the programs Zinc starts. An empty value removes one.",
+            "description": "Sets environment variables for the programs Zinc starts. An empty value removes that variable.",
             "takes": "A table of names and values",
             "defaultText": null
         },
         {
             "key": "keys",
             "label": "Keys",
-            "description": "Key bindings: a chord or sequence (\"ctrl+shift+t\", \"ctrl+a > c\") and the action it runs, or \"none\".",
+            "description": "Binds a key chord or sequence, like `ctrl+shift+t` or `ctrl+a > c`, to the action it runs. A key bound to `none` goes to the program instead.",
             "takes": "A table of keys and actions",
             "defaultText": null
         }

@@ -138,3 +138,33 @@ export function choiceRows(setting: Setting, customLabel: string): ChoiceRow[] {
     if (setting.kind === "color" && rows.length) rows.push({value: "\"#rrggbb\"", label: customLabel, detail: "", isDefault: false});
     return rows;
 }
+
+export interface TextPart {
+    text: string;
+    isCode: boolean;
+}
+
+/**
+ * A description split into plain text and code spans, by Zinc's own rule: a backtick opens a span
+ * and the next one closes it, and a backtick with no partner, as in "Win+`", stays as text. The
+ * backticks themselves are dropped, and an empty pair (``) leaves nothing.
+ */
+export function codeSpans(text: string): TextPart[] {
+    const parts: TextPart[] = [];
+    let start = 0;
+    while (start < text.length) {
+        const open = text.indexOf("`", start);
+        const close = open < 0 ? -1 : text.indexOf("`", open + 1);
+        if (close < 0) {
+            parts.push({text: text.slice(start), isCode: false});
+            break;
+        }
+        if (open > start) parts.push({text: text.slice(start, open), isCode: false});
+        if (close > open + 1) parts.push({text: text.slice(open + 1, close), isCode: true});
+        start = close + 1;
+    }
+    return parts;
+}
+
+/** A description without its code spans' backticks, for search */
+export const plainText = (text: string) => codeSpans(text).map(part => part.text).join("");

@@ -653,7 +653,7 @@
         {
             "name": "reset-zoom",
             "title": "Reset zoom",
-            "description": "Back to 100%: the configured font size.",
+            "description": "Set the text back to 100%, the configured font size.",
             "argument": null,
             "category": "Zoom",
             "defaultKeys": [
@@ -730,7 +730,7 @@
         {
             "name": "jump-to-prompt",
             "title": "Jump to prompt",
-            "description": "Scroll to the previous or next prompt: \"jump-to-prompt previous\" / \"next\". Without prompt marks, it scrolls a line. Needs shell integration.",
+            "description": "Scroll to the previous prompt with \"jump-to-prompt previous\", or to the next one with \"jump-to-prompt next\". Without prompt marks, the view scrolls a line. Needs shell integration.",
             "argument": "prompt-direction",
             "category": "Find and scroll",
             "defaultKeys": [
@@ -747,7 +747,7 @@
         {
             "name": "select-output",
             "title": "Select command output",
-            "description": "Select the output of the command at the top of the view (or the last command). Needs shell integration.",
+            "description": "Select the output of the command at the top of the view, or of the last command when the view is at the bottom. Needs shell integration.",
             "argument": null,
             "category": "Find and scroll",
             "defaultKeys": []
@@ -755,7 +755,7 @@
         {
             "name": "copy-output",
             "title": "Copy command output",
-            "description": "Copy the output of the command at the top of the view (or the last command). Needs shell integration.",
+            "description": "Copy the output of the command at the top of the view, or of the last command when the view is at the bottom. Needs shell integration.",
             "argument": null,
             "category": "Clipboard",
             "defaultKeys": []
@@ -763,7 +763,7 @@
         {
             "name": "new-tab",
             "title": "New tab",
-            "description": "Open a tab (in the focused pane, with tab groups). With a profile: that profile, by id or menu position.",
+            "description": "Open a tab in the focused pane, or a workspace when \"Tabs inside panes\" is off. With a profile, the tab starts that profile, named by its id or its position in the menu.",
             "argument": "optional-profile",
             "category": "Tabs",
             "defaultKeys": [
@@ -838,7 +838,7 @@
         {
             "name": "reopen-workspace",
             "title": "Reopen closed workspace",
-            "description": "Bring back the workspace closed last: its tabs, splits and folders.",
+            "description": "Bring back the workspace closed last: its tabs, splits, and folders.",
             "argument": null,
             "category": "Workspaces and windows",
             "defaultKeys": []
@@ -846,7 +846,7 @@
         {
             "name": "reopen-window",
             "title": "Reopen closed window",
-            "description": "Bring back the window closed last, where it was: its workspaces, tabs, splits and folders.",
+            "description": "Bring back the window closed last, where it was: its workspaces, tabs, splits, and folders.",
             "argument": null,
             "category": "Workspaces and windows",
             "defaultKeys": []
@@ -867,7 +867,7 @@
         {
             "name": "close-tab",
             "title": "Close tab",
-            "description": "Close the focused tab (its pane goes with its last tab).",
+            "description": "Close the focused tab. Closing a pane's last tab also closes the pane.",
             "argument": null,
             "category": "Tabs",
             "defaultKeys": [
@@ -880,7 +880,7 @@
         {
             "name": "next-tab",
             "title": "Next tab",
-            "description": "The pane's next tab, or the next workspace.",
+            "description": "Go to the focused pane's next tab, or to the next workspace when the pane has one tab.",
             "argument": null,
             "category": "Tabs",
             "defaultKeys": [
@@ -893,7 +893,7 @@
         {
             "name": "previous-tab",
             "title": "Previous tab",
-            "description": "The pane's previous tab, or the previous workspace.",
+            "description": "Go to the focused pane's previous tab, or to the previous workspace when the pane has one tab.",
             "argument": null,
             "category": "Tabs",
             "defaultKeys": [
@@ -906,7 +906,7 @@
         {
             "name": "go-to-workspace",
             "title": "Go to workspace",
-            "description": "Show workspace N (from 1), or \"last\".",
+            "description": "Show workspace N, counting from 1. \"last\" shows the last workspace.",
             "argument": "workspace",
             "category": "Workspaces and windows",
             "defaultKeys": [
@@ -951,7 +951,7 @@
         {
             "name": "split",
             "title": "Split",
-            "description": "Split the focused pane: right, down, left or up.",
+            "description": "Split the focused pane: right, down, left, or up.",
             "argument": "direction",
             "category": "Panes",
             "defaultKeys": [
@@ -981,7 +981,7 @@
         {
             "name": "focus",
             "title": "Focus pane",
-            "description": "Focus the neighboring pane: left, right, up or down.",
+            "description": "Focus the neighboring pane: left, right, up, or down.",
             "argument": "direction",
             "category": "Panes",
             "defaultKeys": [
@@ -1006,7 +1006,7 @@
         {
             "name": "resize",
             "title": "Resize pane",
-            "description": "Move the focused pane's divider: left, right, up or down.",
+            "description": "Move the focused pane's divider: left, right, up, or down.",
             "argument": "direction",
             "category": "Panes",
             "defaultKeys": [
@@ -1047,7 +1047,7 @@
         {
             "name": "profile-menu",
             "title": "Profile menu",
-            "description": "The ▾ menu of profiles.",
+            "description": "Open the ▾ menu of profiles.",
             "argument": null,
             "category": "Tabs",
             "defaultKeys": [
@@ -1073,7 +1073,7 @@
         {
             "name": "tab-switcher",
             "title": "Go to tab…",
-            "description": "Search this window's tabs by title, folder or running command (the palette's \"@\"); tabs with a dot come first.",
+            "description": "Search this window's tabs by title, folder, or running command, as typing \"@\" in the palette does. Tabs with a dot come first.",
             "argument": null,
             "category": "Tabs",
             "defaultKeys": [
@@ -1086,7 +1086,7 @@
         {
             "name": "next-attention",
             "title": "Next tab needing attention",
-            "description": "Go to the next tab with a dot: programs that exited with an error first, then failed commands, the bell, programs' notifications and finished commands.",
+            "description": "Go to the next tab with a dot: programs that exited with an error first, then failed commands, the bell, programs' notifications, and finished commands.",
             "argument": null,
             "category": "Tabs",
             "defaultKeys": []
@@ -1094,7 +1094,7 @@
         {
             "name": "toggle-sidebar",
             "title": "Toggle sidebar",
-            "description": "With workspace-tabs = \"left\": cycle the workspace list through full, rail and auto-hide. \"toggle-sidebar rail\" (or auto-hide) switches between that and full.",
+            "description": "When workspace-tabs = \"left\", cycle the workspace list through full, rail, and auto-hide. \"toggle-sidebar rail\" or \"toggle-sidebar auto-hide\" switches between that mode and full.",
             "argument": "optional-sidebar-mode",
             "category": "Sidebar and title bar",
             "defaultKeys": [
@@ -1107,7 +1107,7 @@
         {
             "name": "toggle-title-bar",
             "title": "Toggle title bar",
-            "description": "With workspace-tabs = \"left\": auto-hide the title bar, or show it again.",
+            "description": "When workspace-tabs = \"left\", auto-hide the title bar, or show the title bar again.",
             "argument": null,
             "category": "Sidebar and title bar",
             "defaultKeys": []
@@ -1115,7 +1115,7 @@
         {
             "name": "focus-mode",
             "title": "Focus mode",
-            "description": "With workspace-tabs = \"left\": auto-hide the title bar and the workspace list; again to bring them back.",
+            "description": "When workspace-tabs = \"left\", auto-hide the title bar and the workspace list. Trigger again to bring them back.",
             "argument": null,
             "category": "Sidebar and title bar",
             "defaultKeys": []
@@ -1152,7 +1152,7 @@
         {
             "name": "quit-fresh",
             "title": "Quit without saving windows",
-            "description": "Close every window and exit without saving them: next time opens a new window.",
+            "description": "Close every window and exit without saving the windows, so Zinc starts with a new window next time.",
             "argument": null,
             "category": "Zinc",
             "defaultKeys": []

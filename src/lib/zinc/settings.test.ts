@@ -1,5 +1,5 @@
 import {describe, expect, test} from "bun:test";
-import {byTable, choiceRows, defaultText, exampleText, kindText, perProfileText, rangeText, sameValuesAs, settingsPath, tableOf} from "./settings";
+import {byTable, choiceRows, codeSpans, defaultText, exampleText, kindText, perProfileText, plainText, rangeText, sameValuesAs, settingsPath, tableOf} from "./settings";
 import type {Setting} from "./types";
 
 
@@ -116,5 +116,26 @@ describe("settingsPath, sameValuesAs and choiceRows", () => {
             {value: null, label: "Standard", detail: "", isDefault: true},
             {value: "\"#rrggbb\"", label: "Custom color", detail: "", isDefault: false},
         ]);
+    });
+});
+
+describe("codeSpans and plainText", () => {
+    const code = (text: string) => ({text, isCode: true});
+    const plain = (text: string) => ({text, isCode: false});
+
+    test.each([
+        ["No code here.", [plain("No code here.")]],
+        ["Like `45s` or `2m`.", [plain("Like "), code("45s"), plain(" or "), code("2m"), plain(".")]],
+        ["`~` first", [code("~"), plain(" first")]],
+        ["Press Win+` to open it.", [plain("Press Win+` to open it.")]],
+        ["Write `none`, or Win+`.", [plain("Write "), code("none"), plain(", or Win+`.")]],
+        ["Empty `` pair", [plain("Empty "), plain(" pair")]],
+        ["", []],
+    ])("splits %j", (text, parts) => {
+        expect(codeSpans(text)).toEqual(parts);
+    });
+
+    test("plainText drops the backticks of code spans only", () => {
+        expect(plainText("Reads `~/.ssh/config`, Win+`")).toBe("Reads ~/.ssh/config, Win+`");
     });
 });

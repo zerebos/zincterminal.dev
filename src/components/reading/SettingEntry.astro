@@ -1,7 +1,7 @@
 ---
 // One setting in the config reference... its key, label and description, what it takes, its default,
 // where it is in Settings, and its values when it's a choice. A top-level key shows only the first four.
-import {choiceRows, defaultText, exampleText, kindText, rangeText, settingsPath, tableOf} from "../../lib/zinc/settings";
+import {choiceRows, codeSpans, defaultText, exampleText, kindText, plainText, rangeText, settingsPath, tableOf} from "../../lib/zinc/settings";
 import type {Setting, SettingsSection, TopLevelKey} from "../../lib/zinc/types";
 
 interface Props {
@@ -37,7 +37,7 @@ const path = isSetting ? settingsPath(setting, sections) : [];
 const isPerProfile = isSetting && setting.profileOverridable;
 
 // What the filter matches against
-const text = [table ? `${table}.${name}` : name, setting.label, setting.description, type].join(" ").toLowerCase();
+const text = [table ? `${table}.${name}` : name, setting.label, plainText(setting.description), type].join(" ").toLowerCase();
 ---
 
 <div class="cfg" id={id} data-text={text}>
@@ -46,7 +46,7 @@ const text = [table ? `${table}.${name}` : name, setting.label, setting.descript
         <span class="cfg-label">{setting.label}</span>
         {isPerProfile && <span class="cfg-tag" title="A profile can set its own">Per profile</span>}
     </div>
-    {setting.description && <p class="cfg-desc">{setting.description}</p>}
+    {setting.description && <p class="cfg-desc">{codeSpans(setting.description).map(part => part.isCode ? <code>{part.text}</code> : part.text)}</p>}
     <slot />
 
     <dl class="cfg-meta">
