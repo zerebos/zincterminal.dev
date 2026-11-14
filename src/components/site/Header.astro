@@ -100,17 +100,24 @@ const {links, hairline = "scroll", mobile = "menu"} = Astro.props;
         gap: 8px;
     }
 
-    @media (max-width: 640px) {
-        .sitenav-row {
-            gap: 12px;
-        }
-
+    /* The landing page's full row needs about 750px, so its links give way to the menu button from 900px down.
+       `MobileMenu` and `CompactCta` switch at the same width. */
+    @media (max-width: 900px) {
         /* The links are gone, so the tools take their place at the right */
         .topnav.mobile-menu + .tools {
             margin-left: auto;
         }
 
-        .topnav.mobile-menu,
+        .topnav.mobile-menu {
+            display: none;
+        }
+    }
+
+    @media (max-width: 640px) {
+        .sitenav-row {
+            gap: 12px;
+        }
+
         .topnav.mobile-collapse a.opt {
             display: none;
         }

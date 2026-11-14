@@ -38,9 +38,9 @@
         transition: opacity 0.16s ease, transform 0.16s ease, visibility 0.16s;
     }
 
-    /* On phones the hidden button leaves the row, so the theme switch stays next to the menu button.
+    /* Once the menu button shows, the hidden button leaves the row, so the theme switch stays next to the menu button.
        `right: 0` keeps it inside the header so it can't widen the page. */
-    @media (max-width: 640px) {
+    @media (max-width: 900px) {
         .off {
             position: absolute;
             right: 0;

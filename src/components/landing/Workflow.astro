@@ -204,4 +204,11 @@ const help: CodeLine[] = [
             text-align: left;
         }
     }
+
+    /* Less padding gives the code block more room, and its lines still scroll sideways rather than wrap */
+    @media (max-width: 640px) {
+        .zncard {
+            padding: 16px;
+        }
+    }
 </style>

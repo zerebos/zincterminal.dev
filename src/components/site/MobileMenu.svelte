@@ -95,7 +95,7 @@
     .mobmenu ul {
         list-style: none;
         margin: 0;
-        padding: 8px 16px 16px;
+        padding: 8px 40px 16px;
         display: flex;
         flex-direction: column;
     }
@@ -116,9 +116,17 @@
         background: var(--accent-subtle);
     }
 
-    @media (max-width: 640px) {
+    /* The same width at which `Header` hides the links */
+    @media (max-width: 900px) {
         .mobile {
             display: block;
+        }
+    }
+
+    /* The list's sides follow the page gutter */
+    @media (max-width: 640px) {
+        .mobmenu ul {
+            padding: 8px 16px 16px;
         }
     }
 </style>
