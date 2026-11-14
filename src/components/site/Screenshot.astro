@@ -3,6 +3,7 @@
 // for the current theme, as `Lockup` does, so swapping needs no js.
 import type {ImageMetadata} from "astro";
 import {Image} from "astro:assets";
+import MarkPulse from "./MarkPulse.svelte";
 
 /** A box in the screenshot's own pixels, the same in the dark and light shots */
 export interface Mark {
@@ -61,6 +62,7 @@ const box = (mark: Mark) =>
     <Image class:list={["shot", light && "shot-dark"]} src={src} alt={alt} widths={widths(src)} sizes={sizes} format="png" />
     {light && <Image class="shot shot-light" src={light} alt={alt} widths={widths(light)} sizes={sizes} format="png" />}
     {marks.map((mark) => <span class="mark-cover" style={box(mark)} aria-hidden="true"></span>)}
+    {marks.length > 0 && <MarkPulse client:load />}
 </div>
 
 <style>
@@ -93,7 +95,8 @@ const box = (mark: Mark) =>
     /*
      * The mark is part of the image, so a patch of the color behind it fades over it instead.
      * At 65% the patch leaves the mark at 35%, the low point of the app's pulse.
-     * With reduced motion the patch stays clear and the mark is steady.
+     * `MarkPulse` adds `pulsing` while the mark is in view, for three cycles.
+     * Without it, or with reduced motion, the patch stays clear and the mark is steady.
      */
     .mark-cover {
         position: absolute;
@@ -103,8 +106,8 @@ const box = (mark: Mark) =>
     }
 
     @media (prefers-reduced-motion: no-preference) {
-        .mark-cover {
-            animation: mark-cover-pulse 1.6s cubic-bezier(0.37, 0, 0.63, 1) infinite;
+        .mark-cover:global(.pulsing) {
+            animation: mark-cover-pulse 1.6s cubic-bezier(0.37, 0, 0.63, 1) 3;
         }
     }
 
