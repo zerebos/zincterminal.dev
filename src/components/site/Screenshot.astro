@@ -13,6 +13,12 @@ export interface Mark {
 
     /** The color around the mark in both shots, as CSS, when it isn't `mica` */
     behind?: string;
+
+    /**
+     * How far into its 1.6 s pulse the mark starts, in ms, so marks that lit up at different times pulse out of step
+     * as they do in the app
+     */
+    phase?: number;
 }
 
 interface Props {
@@ -46,7 +52,9 @@ const percent = (value: number, of: number) => `${(value / of) * 100}%`;
 const box = (mark: Mark) =>
     `left: ${percent(mark.x, src.width)}; top: ${percent(mark.y, src.height)}; ` +
     `width: ${percent(mark.width, src.width)}; height: ${percent(mark.height, src.height)};` +
-    (mark.behind ? ` background: ${mark.behind};` : "");
+    (mark.behind ? ` background: ${mark.behind};` : "") +
+    // A negative delay starts the pulse partway through, so it's already moving on the first frame
+    (mark.phase ? ` animation-delay: -${mark.phase}ms;` : "");
 ---
 
 <div class:list={["screenshot", className]}>

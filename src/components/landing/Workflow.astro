@@ -19,10 +19,11 @@ const points = [
 
 // The api, docs and prod workspaces' marks in the sidebar.
 // The app draws prod, a colored workspace that isn't selected, as its color at half strength over mica.
+// Each mark starts at a different point in the pulse, as if they lit up at different times.
 const marks: Mark[] = [
     {x: 335, y: 153, width: 26, height: 26},
-    {x: 335, y: 220, width: 26, height: 26},
-    {x: 335, y: 286, width: 26, height: 26, behind: "color-mix(in srgb, #D45400 50%, var(--mica))"}
+    {x: 335, y: 220, width: 26, height: 26, phase: 550},
+    {x: 335, y: 286, width: 26, height: 26, phase: 1100, behind: "color-mix(in srgb, #D45400 50%, var(--mica))"}
 ];
 
 // One `zn <thing> <verb>` line, with the verbs split by magenta pipes
