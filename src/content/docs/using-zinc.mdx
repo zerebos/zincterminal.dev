@@ -64,17 +64,10 @@ Change settings in the Settings window or in `config.toml`. They're the same set
 
 Open it with <kbd>Ctrl+,</kbd>, from the command palette, or from the tray icon. Each change is saved as you make it, and each setting shows its key in the file.
 
-- **Find a setting** (<kbd>Ctrl+F</kbd>) searches settings, keys, and profiles, so "font size ubuntu" finds the font size in your Ubuntu profile. Enter goes to the first result, and Esc clears the search.
-- **The reset arrow** beside a changed setting puts it back to its default.
+- **Find a setting** (<kbd>Ctrl+F</kbd>) searches settings, keys, and profiles, so "font size ubuntu" finds the font size in your Ubuntu profile.
+- **The preview** at the top of Appearance and each profile's page shows your font, colors, and padding as you change them.
+- **The reset arrow** beside a changed setting puts it back to its default. On a profile's page, it goes back to what the profile inherits.
 - **Undo changes**, at the bottom, puts the file back as it was when you opened the window.
-
-Appearance and each profile's page keep a small preview terminal at the top, which shows that page's font, colors, and padding as you change them. **Hide preview**, beside the heading, puts it away until you show it again. A setting that only matters while another one is on folds under that one.
-
-**Profiles** lists your profiles in the order the new-tab menu shows them, so drag one to move it. A profile's page shows where each of its settings comes from, like "Inherited from Appearance, where it's 11 pt", until you change it there. The reset arrow makes it inherit again.
-
-**Keyboard** lists every action with its keys. Click a key to remove it, or click **+** and press the keys to add one. If another action already has those keys, **Replace** moves them over. Key sequences like Ctrl+A > C show here too, but you add them in `config.toml`.
-
-While `config.toml` has an error, the window shows it at the top and saves nothing until the error is fixed. **Open config.toml** takes you to the file.
 
 ### The config file {#config-file}
 
@@ -101,12 +94,10 @@ colors.theme = "0x96f"
 ```
 
 <Note title="A mistake doesn't stop the rest">
-Zinc shows a bar with the file and line of anything it can't read, and applies everything else. Single-quoted strings are literal, so Windows paths need no escaping: `'C:\msys64\ucrt64.ico'`.
+Zinc shows a bar with the file and line of anything it can't read, and applies everything else. Until you fix it, the Settings window doesn't save. Single-quoted strings are literal, so Windows paths need no escaping: `'C:\msys64\ucrt64.ico'`. If the file isn't valid TOML at all, Zinc keeps the settings it had.
 </Note>
 
-A save applies to every open window, and running tabs take the new colors, fonts, and padding straight away. A setting that applies later says so in its description, like "Workspaces", which applies to windows opened from now on. Files you `include` and schemes in your `themes` folder reload the same way, as long as they're inside the folder that holds `config.toml`.
-
-A save that isn't valid TOML, such as one halfway through an edit, changes nothing. Zinc keeps the settings it had and shows the error until the file reads again. **Reload config** in the command palette reads the file again whenever you like.
+Files you `include` and your own color schemes reload when you save them too. To read everything again yourself, run **Reload config** from the command palette.
 
 Your editor can complete keys and catch mistakes as you type, from the file's JSON Schema. Make sure the first line of `config.toml` looks like this, and editors that read schema lines (such as VS Code with Even Better TOML) pick it up:
 
@@ -116,9 +107,9 @@ Your editor can complete keys and catch mistakes as you type, from the file's JS
 
 ### Color schemes
 
-[Lit Cell and Lit Cell Light](/lit-cell) come with Zinc, along with about 650 schemes from iTerm2-Color-Schemes. Browse them in `Settings > Appearance > Color scheme`, where each one shows in its own colors. Your own go in `%APPDATA%\Zinc\themes\`, one file per scheme in Ghostty's theme format. One of yours wins over a bundled scheme with the same name.
+[Lit Cell and Lit Cell Light](/lit-cell) come with Zinc, along with about 650 schemes from iTerm2-Color-Schemes. Browse them in `Settings > Appearance > Color scheme`, where each one shows in its own colors and a click tries it in the preview. Your own go in `%APPDATA%\Zinc\themes\`, one file per scheme in Ghostty's theme format.
 
-The schemes page shows the scheme in use at the top and the whole library below it, which you can filter to **Dark**, **Light**, or **Yours**, or by name. Click a scheme to try it in the preview, and click it again to stop. **Use** puts it in place.
+To change a scheme's colors, use the pencil on its card. Editing a bundled scheme changes a copy in your `themes` folder, and **Restore the original** goes back to Zinc's.
 
 To follow Windows' light and dark mode, give a pair:
 
@@ -127,15 +118,11 @@ To follow Windows' light and dark mode, give a pair:
 theme = "light:Lit Cell Light,dark:Lit Cell"
 ```
 
-On the schemes page, **Follow Windows light and dark mode** does the same, and each scheme then offers **Use for dark** or **Use for light**. Programs that ask whether the terminal is light or dark (`CSI ? 996 n`) are told which side is in use. With a single scheme, the answer is whether its background is dark. Programs that subscribe with mode 2031, such as Neovim, hear about each switch, so they can change their own colors too.
-
-The pencil on a scheme opens the editor, for its background, text, cursor, and selection colors and its 16 palette colors. Every pane that uses the scheme changes as you edit. Editing a bundled scheme copies it into your `themes` folder first, and the copy takes its place everywhere. **Restore the original** deletes the copy. **Save as new scheme…** keeps your edits under a new name, and **Delete scheme** removes one of yours. The **+** on the schemes page starts a new scheme from one you pick.
-
-A scheme that leaves out some palette colors or its selection colors gets libghostty's defaults for them, not Lit Cell's.
+Neovim and other programs that support mode 2031 hear about each switch, so they can change their own colors too.
 
 ### Shaders
 
-Shaders are effects drawn over the terminal, such as a curved CRT screen or a trail behind the cursor. They're GLSL files in Shadertoy's form, so shaders written for Ghostty work unchanged. Zinc comes with six, which you use by name:
+Shaders are effects drawn over the terminal. Zinc runs GLSL shaders in Shadertoy's form, such as those written for Ghostty, and comes with six, which you use by name:
 
 ```toml title="config.toml"
 [shaders]
@@ -144,20 +131,16 @@ files = ["crt", "cursor-trail"]    # run in this order
 
 | Shader | What it draws | Animated |
 |---|---|---|
-| `scanlines` | Soft dark lines across the picture, and a light vignette | |
-| `crt` | An old monitor, with curved glass, scanlines, color fringes, and a faint flicker | <Yes /> |
+| `scanlines` | Soft dark lines and a light vignette | |
+| `crt` | An old monitor, with curved glass and a faint flicker | <Yes /> |
 | `glow` | A soft light around bright text | |
 | `phosphor` | A one-color screen in Lit Cell's green | |
-| `cursor-glow` | A halo in the cursor's own color | |
-| `cursor-trail` | A short streak behind the cursor when it jumps | <Yes /> |
+| `cursor-glow` | A halo around the cursor | |
+| `cursor-trail` | A streak behind the cursor when it jumps | <Yes /> |
 
-The shaders that aren't animated redraw only when the terminal changes. Animated shaders pause in a terminal that doesn't have focus, and the text under them still updates. The "Animation" setting changes that.
+**Edit shaders**, in `Settings > Appearance > Shaders`, lists these and your own, and a click tries one in the preview. To change one of Zinc's, save a copy as `shaders\crt.glsl` next to `config.toml`. The copy takes the place of Zinc's, and its settings are at the top of the file.
 
-A name looks in the `shaders` folder next to `config.toml` first, so a copy of `crt.glsl` there takes the place of Zinc's. Each bundled shader has its settings as constants at the top of the file. Other paths are relative to the folder that holds `config.toml`, and `~` is your home folder.
-
-**Edit shaders**, in `Settings > Appearance > Shaders`, opens a page with your list and a library of Zinc's shaders, yours, and any folders you add. Click a shader in the library to try it in the preview, and **Add** puts it in your list. A profile can have a list of its own.
-
-A shader that doesn't compile is left out, and the others still run. A notice gives the file and the line of the error, and saving the fixed file applies it straight away. Shaders also need "Low-latency drawing", which is on unless you've turned it off.
+A shader that doesn't compile is left out, and a notice says which line is wrong.
 
 ## Profiles and shells {#profiles}
 
@@ -165,38 +148,37 @@ A profile is a shell with its own name, folder, font, and colors. Zinc finds the
 
 ### Your own profiles {#own-profiles}
 
-Each `[profile.<id>]` section is a profile:
+Each profile is a `[profile.<id>]` section, with an id you choose:
 
 ```toml title="config.toml"
 [profile.nu]
 name = "Nushell"
 command = "nu"
 working-directory = "~/src"
-
-[profile.nu.font]
-size = 12
+font.size = 12               # anything in [font], [colors], [terminal], or [shaders]
 ```
 
-The id in the brackets is what `default-profile`, `profile-order`, and `[keys]` use, so changing `name` breaks nothing. An id with a colon or a space needs quotes, as in `[profile."ssh:buildbox"]`.
+Menus show the name, and everything else uses the id, so you can rename a profile without breaking anything. Without a `command`, a profile runs PowerShell.
 
-A profile can set its own value for anything in `[font]`, `[colors]`, `[terminal]`, and `[shaders]`, as a table like `[profile.nu.font]` or a dotted key like `font.size = 12`. Whatever it doesn't set comes from those tables. The other tables apply to the whole app, so a profile can't change them.
+New tabs start with `default-profile`, or else the first profile in the menu. `profile-order` sets the menu's order, and dragging profiles in `Settings > Profiles` writes it for you. Both go at the top of the file.
 
-Without a `command`, a profile runs PowerShell 7, or Windows PowerShell if PowerShell 7 isn't installed, or else Command Prompt. Its tabs start in your home folder unless `working-directory` names another, which can start with `~` or use `%VARIABLES%`. Without an `icon`, its tabs show the program's own icon.
+```toml title="config.toml"
+default-profile = "wsl:Ubuntu"
+profile-order = ["wsl:Ubuntu", "pwsh", "nu"]
+```
 
 ### Shells Zinc finds {#found-profiles}
 
-| Found | Profile id | Named |
-|---|---|---|
-| WSL distros, the default one first | `wsl:<distro>` | The distro's name |
-| PowerShell 7, Windows PowerShell, and cmd | `pwsh`, `powershell`, `cmd` | PowerShell, Windows PowerShell, Command Prompt |
-| Git for Windows | `git-bash` | Git Bash |
-| MSYS2's UCRT64, in `C:\msys64` | `msys2:ucrt64` | MSYS2 UCRT64 |
-| Visual Studio developer shells | `vs:<instance>:pwsh`, `vs:<instance>:cmd` | Developer PowerShell for …, Developer Command Prompt for … |
-| Hosts in `~/.ssh/config` | `ssh:<host>` | &lt;host&gt; (SSH) |
+| Found | Profile id |
+|---|---|
+| WSL distros | `wsl:<distro>` |
+| PowerShell 7, Windows PowerShell, cmd | `pwsh`, `powershell`, `cmd` |
+| Git for Windows | `git-bash` |
+| MSYS2 (UCRT64) | `msys2:ucrt64` |
+| Visual Studio developer shells | `vs:<instance>:pwsh`, `vs:<instance>:cmd` |
+| Hosts in `~/.ssh/config` | `ssh:<host>` |
 
-Docker Desktop's own distros are left out. So are SSH hosts with wildcards like `*`, and Zinc follows `Include` lines in your SSH config. A WSL profile's id holds the distro's name, so renaming the distro gives the profile a new id.
-
-A `[profile]` section with a found profile's id changes it, starting from what Zinc found, and the profile keeps its place in the list. `[discover]` turns a search off, and `powershell = false` turns off both PowerShells.
+A `[profile]` section with a found profile's id changes it. `[discover]` turns a source off.
 
 ```toml title="config.toml"
 [discover]
@@ -206,51 +188,31 @@ ssh = false                  # also wsl, powershell, cmd, git-bash, msys2, visua
 colors.theme = "Ubuntu"
 
 [profile."msys2:ucrt64"]
-hidden = true                # out of the menus, but its tabs still reopen
+hidden = true
 ```
 
-If you uninstall a shell you changed, or turn its search off, your section stays in `config.toml` and the profile is hidden. Settings says "This profile can't open" on its page, and offers to delete the profile or turn the search back on.
-
-### Order and the default profile {#profile-order}
-
-The new-tab menu lists your own profiles first, in the order their sections appear in the file, and then the shells Zinc finds. `profile-order` puts the ids it lists first, in its order, and the rest follow in their usual places. Dragging profiles in `Settings > Profiles` writes it for you.
-
-`default-profile` is the profile new tabs, workspaces, and windows start with. Without it, the default is the first profile in the menu that isn't hidden. Both keys go at the top of the file, before any table.
-
-```toml title="config.toml"
-default-profile = "wsl:Ubuntu"
-profile-order = ["wsl:Ubuntu", "pwsh", "nu"]
-```
+If a shell you changed goes away, Settings keeps your changes and marks the profile as one that can't open.
 
 ### Choosing a shell {#choosing-a-shell}
 
-When Zinc starts, the first tab runs the first of these that's set:
+To start Zinc with a particular shell from a shortcut or a launcher, put the shell's command after `zinc.exe`, as in `zinc.exe nu`. Setting `ZINC_SHELL` to a command does the same. Either way, Zinc opens a window running that shell instead of reopening your saved windows.
 
-1. A command after `zinc.exe`, as in `zinc.exe nu`. Put `--` before a command that could be mistaken for one of Zinc's own flags.
-2. The `ZINC_SHELL` environment variable, as a full command line.
-3. The default profile's `command`.
-4. PowerShell 7, then Windows PowerShell, then Command Prompt.
-
-The first two also open a new window instead of reopening your saved windows. Tabs you open later run their own profile's command.
-
-Every program Zinc starts gets `COLORTERM=truecolor` and `TERM_PROGRAM=zinc`, so it can tell where it runs. Zinc also removes the variables other terminals set, such as `WT_SESSION`, so a program started in Zinc doesn't mistake it for another terminal.
+Programs can tell they're in Zinc from `TERM_PROGRAM=zinc`, and `COLORTERM=truecolor` tells them Zinc shows 24-bit color.
 
 ### Environment variables {#environment}
 
-`[environment]` sets variables for every program Zinc starts, and a profile's own `environment` table sets its variables over them. `%NAME%` is that variable's value as the program would otherwise get it, and an empty value removes the variable.
+`[environment]` sets variables for every program Zinc starts, and a profile can add its own. `%NAME%` uses a variable's current value, and an empty value removes a variable.
 
 ```toml title="config.toml"
 [environment]
 PATH = '%PATH%;C:\tools'     # single quotes, so \t stays as typed
-NO_COLOR = ""                # removes NO_COLOR
+NO_COLOR = ""
 
 [profile.pwsh.environment]
 POWERSHELL_TELEMETRY_OPTOUT = "1"
 ```
 
-New tabs read Windows' current variables first, so a `PATH` an installer changed reaches them, and then `[environment]` applies on top. A profile's `PATH` replaces the one in `[environment]` instead of adding to it, so `%PATH%` there is Windows' `PATH`. Settings has these in `Settings > Terminal > Shell` and on each profile's page.
-
-WSL passes Windows variables to Linux only when `WSLENV` names them. To pass yours along, set `WSLENV` in `[environment]`, and Zinc adds its own to it.
+WSL passes on only the variables that `WSLENV` names, so add yours to `WSLENV` to use them in Linux.
 
 ## Shell integration
 
