@@ -138,7 +138,9 @@ files = ["crt", "cursor-trail"]    # run in this order
 | `cursor-glow` | A halo around the cursor | |
 | `cursor-trail` | A streak behind the cursor when it jumps | <Yes /> |
 
-**Edit shaders**, in `Settings > Appearance > Shaders`, lists these and your own, and a click tries one in the preview. To change one of Zinc's, save a copy as `shaders\crt.glsl` next to `config.toml`. The copy takes the place of Zinc's, and its settings are at the top of the file.
+**Edit shaders**, in `Settings > Appearance > Shaders`, lists these and your own, and a click tries one in the preview. From the dropdown, **Add a file…** and **Add a folder…** can bring in shaders from anywhere.
+
+Shaders in a `shaders` folder next to `config.toml` need no adding, and you use them by name, like Zinc's. . To change one of Zinc's, save a copy there under the same name, like `crt.glsl`. The copy takes the place of Zinc's version, and its settings are at the top of the file.
 
 A shader that doesn't compile is left out, and a notice says which line is wrong.
 
@@ -278,7 +280,7 @@ Without a report, a tab reopens in the folder it started in.
 
 ### Mouse and clipboard {#mouse}
 
-Right-click opens a menu with copy, paste, and find, plus whatever you clicked on, like a link or a command's output. When a program uses the mouse, like vim or htop, clicks and the wheel go to it. Hold <kbd>Shift</kbd> to select text anyway, and <kbd>Ctrl+Wheel</kbd> still zooms. Dropped files' paths are written the way the pane's shell expects, like `/mnt/c/Users` in WSL.
+Right-click opens a menu with copy, paste, and find, plus whatever you clicked on, like a link or a command's output. To make it copy and paste instead, set "Right-click" in `Settings > Terminal` to "Copy or paste". When a program uses the mouse, like vim or htop, clicks and the wheel go to it. Hold <kbd>Shift</kbd> to select text anyway, and <kbd>Ctrl+Wheel</kbd> still zooms. Dropped files' paths are written the way the pane's shell expects, like `/mnt/c/Users` in WSL.
 
 | Mouse or keys | What it does |
 |---|---|
@@ -336,7 +338,7 @@ Another app may hold them. Zinc shows a notice when that happens, and tries the 
 
 Only one Zinc runs at a time. Starting it again, from the Start menu or a shortcut, opens a new window in the Zinc that's already running.
 
-When you close the last window, Zinc stays in the tray as long as the quick terminal has keys, so the keys keep working. Click the tray icon to get your windows back. **Quit Zinc**, in the tray icon's menu or the command palette, closes everything.
+When you close the last window, Zinc stays in the tray as long as the quick terminal has keys, so the keys keep working. Click the tray icon to get your windows back. To quit with the last window instead, set "When the last window closes" in `Settings > Layout` to "Quit". **Quit Zinc**, in the tray icon's menu or the command palette, closes everything.
 
 To start Zinc when you sign in, set "When you sign in to Windows" in `Settings > Layout` to "Start in the tray" or "Open my windows".
 
@@ -474,13 +476,15 @@ git diff | zn terminal send --terminal 5 --paste -
 
 ### The debug log {#debug-log}
 
-Turn on **Debug log** in `Settings > About`, make the problem happen, then click **Copy log** and paste it into your bug report. The copy starts with your versions of Zinc and Windows.
+Turn on **Debug log** in `Settings > About`, make the problem happen, then click **Copy log** and paste it into your <a href={links.zincIssues}>bug report</a>. The copy starts with your versions of Zinc and Windows.
 
 The log is in `%APPDATA%\Zinc\logs\zinc.log`. To log from the moment Zinc starts, before it reads your settings, set `ZINC_LOG` to the path of a file.
 
+If Zinc closes on its own, attach `%APPDATA%\Zinc\crash.log` too. Zinc writes it on every crash, even while the debug log is off.
+
 ### Drawing problems {#drawing}
 
-If a terminal draws wrong or stops drawing, turn off **Low-latency drawing** in `Settings > Terminal`. For broken graphics drivers, some virtual machines, and remote desktop glitches, turn on **Software rendering**, which draws with the processor instead of the graphics card. Both apply to terminals you open afterwards.
+If a terminal draws wrong or stops drawing, turn off **Low-latency drawing** in `Settings > Terminal`. For broken graphics drivers, some virtual machines, and remote desktop glitches, turn on **Software rendering**, which draws with the processor instead of the graphics card. Both apply to terminals you open afterwards. If switching tabs flashes, turn off **Free memory of hidden tabs** in the same place.
 
 **Run benchmark**, in `Settings > About`, measures how Zinc draws on your PC. Its results are worth adding to a report about drawing.
 
