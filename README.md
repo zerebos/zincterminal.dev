@@ -41,7 +41,7 @@ A path with nothing behind it answers 404 with the built `404.html`, because `wr
 
 ## Content from Zinc
 
-The changelog, the settings, the actions, the third-party notices, the config schema and the site-wide version come from the Zinc repository. It's private for now, so the build can't read it, and a committed snapshot stands in.
+The changelog, the settings, the actions, the third-party notices, the config schema and the site-wide version come from the Zinc repository. The build doesn't read that repository, so a committed snapshot stands in.
 
 - **`bun run sync:zinc`** reads a Zinc checkout (`../zinc`, or the path in `ZINC_REPO`). The changelog comes from `CHANGELOG.md`. Everything else comes from Zinc's reference export in `dist/reference/`, which `dotnet run scripts/dev/export-reference.cs` writes in the Zinc repo. To read the export from another folder, such as a release's downloaded `zinc-reference.json` and `config.schema.json`, set `ZINC_REFERENCE`. The sync writes JSON to `src/data/generated/`:
   - `zinc-changelog.json` holds every released build from `CHANGELOG.md`, skipping `## Unreleased`.
@@ -101,11 +101,23 @@ The docs are one MDX file, `src/content/docs/using-zinc.mdx`, in the `docs` cont
 - **To update Lit Cell,** run `bun update lit-cell` to move to the repository's latest commit, then `bun test`. The tests check that every derived color still matches its mix recipe and that every role resolves.
 - **To try token changes before they're pushed,** run `bun link` in your lit-cell checkout, then `bun link lit-cell` here, so the site reads your local tokens. Run `bun install` to go back to the pinned commit.
 
+## Moving between pages
+
+Astro's client router swaps one page for the next without a reload, and the change runs as a view transition. The router and its script are in `src/components/site/PageTransitions.astro`, which `Base.astro` puts in every page's head. The animations are plain CSS in `src/styles/global.css`. A browser without view transitions changes pages with no animation, and reduced motion turns the animations off.
+
+- **The page fades out and the next one fades in** where it stands.
+- **A part with a `view-transition-name` animates by itself.** The header, the lockup and the theme switch hold still, and the current page's background in the header and in the docs list slides to the next link.
+- **A part that looks the same on both pages gets the same name,** so it holds still. A part found on one page only fades with the page. The kicker's label is named after its text for this reason, so "Docs" holds still between the docs pages.
+- **A name appears once on a page.** Two elements with the same name cancel the whole transition.
+- **`data-morph`** makes an element grow into the element with the same value on the next page, when both are on screen. The Lit Cell screenshots on the landing page and the samples at the top of `/lit-cell` use it.
+- **A `<script>` in a component runs once,** not on every page, because pages don't reload. Anything interactive is a Svelte island, which Astro removes and mounts again with each page. The theme switch is the exception, and it stays in place across pages.
+- **The theme carries over** because the head script in `Base.astro` copies it onto each new page before the swap.
+
 ## Layout
 
 - `src/pages/` holds the seven pages. `src/layouts/Base.astro` holds the shared document shell and the no-flash theme script, and `src/layouts/ReadingLayout.astro` holds the sidebar layout for docs, changelog and notices.
-- `src/data/site.ts` holds the links (the downloads, the feedback address and the Discord among them), the release info and the shared footer. Zinc's roadmap link is `null` and left out until it has an address.
-- `src/components/site/` holds the shared pieces: header, footer, theme switch, buttons, sections and copy buttons.
+- `src/data/site.ts` holds the links (the downloads, the feedback address and the Discord among them), the release info, the header's links and the shared footer. Every page has the same header. Zinc's roadmap link is `null` and left out until it has an address.
+- `src/components/site/` holds the shared pieces: header, footer, theme switch, page transitions, buttons, sections and copy buttons.
 - `src/components/landing/` and `src/components/lit-cell/` hold each page's sections.
 - `src/components/reading/` holds the reading pages' pieces (the docs list, contents list, section spy, filters, setting entries, and changelog and notice rows), and `src/components/prose/` holds the docs' MDX components. Their styles are `src/styles/reading.css` and `src/styles/prose.css`.
 - `src/assets/screenshots/` holds the screenshots of Zinc. In `src/components/site/`, `Screenshot.astro` shows one in a window frame and swaps in its light twin when the site is light, and `Shot.astro` puts a gallery screenshot on its dotted stage with a caption.

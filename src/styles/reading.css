@@ -75,6 +75,11 @@
     color: var(--accent-text);
 }
 
+/* Holds still between the reading pages while the words beside it change */
+.prose .kicker .zn-cell {
+    view-transition-name: kicker-cell;
+}
+
 .prose h1 {
     margin: 0;
     font: 600 48px/56px var(--font-display);

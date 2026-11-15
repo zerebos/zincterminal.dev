@@ -95,19 +95,101 @@ a {
     border: 0;
 }
 
-/* Picking a theme cross-fades the whole page. ThemeSwitch skips it with reduced motion. */
-.theme-change::view-transition-group(root),
-.theme-change::view-transition-old(root),
-.theme-change::view-transition-new(root) {
+/* Picking a theme cross-fades the whole page, named parts included. ThemeSwitch skips it with reduced motion. */
+.theme-change::view-transition-group(*),
+.theme-change::view-transition-old(*),
+.theme-change::view-transition-new(*) {
     animation-duration: 200ms;
 }
 
-/* No pulsing attention marks, no nav fades and no theme cross-fade. */
+/*
+ * Moving to another page. The router sets `data-astro-transition` on <html> while it runs.
+ * The parts the components name (the header, the current-page pills, the Lit Cell panes) move as their own groups.
+ * Parts that look the same on both pages keep the browser's cross-fade, so they hold steady.
+ */
+[data-astro-transition]::view-transition-group(*) {
+    animation-duration: 320ms;
+    animation-timing-function: cubic-bezier(0.2, 0, 0, 1);
+}
+
+/*
+ * Parts whose content changes fade out, then the new content fades in, so old and new text never overlap.
+ * The page fades in where it stands, so parts in the same place on both pages swap in place.
+ * A part found on only one of the two pages has a single snapshot (`:only-child`), so it fades with the page.
+ * A part on both pages, like the docs list, keeps the cross-fade, so it holds still.
+ */
+[data-astro-transition]::view-transition-old(root),
+[data-astro-transition]::view-transition-old(*):only-child,
+[data-astro-transition]::view-transition-old(scheme-dark),
+[data-astro-transition]::view-transition-old(scheme-light) {
+    animation: 110ms ease-out both page-fade-out;
+}
+
+[data-astro-transition]::view-transition-new(*):only-child,
+[data-astro-transition]::view-transition-new(scheme-dark),
+[data-astro-transition]::view-transition-new(scheme-light) {
+    animation: 220ms ease-out 90ms both page-fade-in;
+}
+
+[data-astro-transition]::view-transition-new(root) {
+    animation: 300ms cubic-bezier(0.2, 0, 0, 1) 90ms both page-fade-in;
+}
+
+@keyframes page-fade-out {
+    to {
+        opacity: 0;
+    }
+}
+
+@keyframes page-fade-in {
+    from {
+        opacity: 0;
+    }
+}
+
+/* The current-page pills are plain fills, so they stretch with the box as it moves to the next link */
+::view-transition-old(nav-current),
+::view-transition-new(nav-current),
+::view-transition-old(docs-current),
+::view-transition-new(docs-current),
+::view-transition-old(docs-current-compact),
+::view-transition-new(docs-current-compact) {
+    height: 100%;
+}
+
+/* A Lit Cell tile and its pane are different shapes, so both fill the box as it grows and its corners clip them */
+[data-astro-transition]::view-transition-group(scheme-dark),
+[data-astro-transition]::view-transition-group(scheme-light) {
+    animation-duration: 450ms;
+}
+
+::view-transition-image-pair(scheme-dark),
+::view-transition-image-pair(scheme-light) {
+    overflow: hidden;
+    border-radius: var(--radius-md);
+}
+
+::view-transition-old(scheme-dark),
+::view-transition-old(scheme-light),
+::view-transition-new(scheme-dark),
+::view-transition-new(scheme-light) {
+    height: 100%;
+    object-fit: cover;
+    object-position: top;
+}
+
+/* No pulsing attention marks, no nav fades, no theme cross-fade and no page transitions. */
 @media (prefers-reduced-motion: reduce) {
     *,
     *::before,
     *::after {
         animation: none !important;
         transition: none !important;
+    }
+
+    ::view-transition-group(*),
+    ::view-transition-old(*),
+    ::view-transition-new(*) {
+        animation: none !important;
     }
 }

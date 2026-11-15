@@ -1,0 +1,39 @@
+---
+// Client-side navigation between the site's pages, animated with view transitions. The animations are in global.css.
+// Browsers without view transitions swap the page without one.
+import {ClientRouter} from "astro:transitions";
+---
+<ClientRouter fallback="swap" />
+
+<script>
+    // An element with `data-morph` grows into the element with the same value on the next page, as one view transition
+    // group. Only elements in view on both pages get the name, so nothing flies in from offscreen.
+    let carried = new Set<string>();
+
+    const inView = (element: Element) => {
+        const rect = element.getBoundingClientRect();
+        return rect.width > 0 && rect.bottom > 0 && rect.top < innerHeight;
+    };
+
+    // Names the elements in view, limited to `only` when given, and clears the rest
+    function nameInView(only?: Set<string>) {
+        const named = new Set<string>();
+        for (const element of document.querySelectorAll<HTMLElement>("[data-morph]")) {
+            const morph = element.dataset.morph ?? "";
+            const wanted = (!only || only.has(morph)) && inView(element);
+            element.style.viewTransitionName = wanted ? morph : "";
+            if (wanted) named.add(morph);
+        }
+        return named;
+    }
+
+    document.addEventListener("astro:before-preparation", () => {
+        carried = nameInView();
+    });
+
+    // The router has restored or reset the scroll position by now, so "in view" is where the new page will show
+    document.addEventListener("astro:after-swap", () => {
+        nameInView(carried);
+        carried = new Set();
+    });
+</script>

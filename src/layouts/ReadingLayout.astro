@@ -34,6 +34,9 @@ interface Props {
 }
 
 const {title, description, current, kicker, heading, toc, tocLabel = "On this page", tocSummary = tocLabel, docs} = Astro.props;
+
+// Pages with the same kicker share a name, so its words hold still between them and different words fade in place
+const kickerName = `kicker-${kicker.toLowerCase().replace(/[^a-z0-9]+/g, "-")}`;
 ---
 
 <Base title={title} description={description}>
@@ -48,7 +51,7 @@ const {title, description, current, kicker, heading, toc, tocLabel = "On this pa
         </div>
         <article class="prose">
             {docs && <div class="docsnav-m"><DocsNav current={docs} variant="compact" /></div>}
-            <p class="kicker"><LitCell pitch={12} />{kicker}</p>
+            <p class="kicker"><LitCell pitch={12} /><span style={`view-transition-name: ${kickerName}`}>{kicker}</span></p>
             <h1>{heading}</h1>
             <div class="intro">
                 <slot name="intro" />

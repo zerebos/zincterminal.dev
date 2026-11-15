@@ -28,6 +28,7 @@ const isCompact = variant === "compact";
         {pages.map(p => (
             <li>
                 <a href={p.href} aria-current={p.page === current ? "page" : undefined}>
+                    {p.page === current && <span class="pill" aria-hidden="true"></span>}
                     {p.icon === "guide" && <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.2" aria-hidden="true"><path d="M2.5 3.5h4a1.5 1.5 0 0 1 1.5 1.5v8a1.5 1.5 0 0 0-1.5-1.5h-4zM13.5 3.5h-4A1.5 1.5 0 0 0 8 5v8a1.5 1.5 0 0 1 1.5-1.5h4z" /></svg>}
                     {p.icon === "config" && <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.2" aria-hidden="true"><path d="M3 4h10M3 8h10M3 12h6" /><path d="M11.5 10.5l1.5 1.5-1.5 1.5" /></svg>}
                     {p.icon === "keys" && <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.2" stroke-linejoin="round" aria-hidden="true"><rect x="1.5" y="4" width="13" height="8" rx="1.5" /><path d="M4 6.5h1M7.5 6.5h1M11 6.5h1M5 9.5h6" /></svg>}
@@ -64,12 +65,39 @@ const isCompact = variant === "compact";
         font: 500 14px/20px var(--font-sans);
         color: var(--ink-muted);
         text-decoration: none;
+        position: relative;
+        isolation: isolate;
     }
 
     a:hover,
     a[aria-current="page"] {
         color: var(--ink);
+    }
+
+    a:hover:not([aria-current="page"]) {
         background: var(--accent-subtle);
+    }
+
+    /* The current page's background, its own element so it can slide to the next page's link.
+       The list itself holds still, so only the pill moves. */
+    .pill {
+        position: absolute;
+        inset: 0;
+        z-index: -1;
+        border-radius: inherit;
+        background: var(--accent-subtle);
+    }
+
+    .side {
+        view-transition-name: docs-nav;
+    }
+
+    .side .pill {
+        view-transition-name: docs-current;
+    }
+
+    .compact .pill {
+        view-transition-name: docs-current-compact;
     }
 
     a:focus-visible {
@@ -88,6 +116,7 @@ const isCompact = variant === "compact";
         border: 1px solid var(--line);
         border-radius: 8px;
         background: var(--surface-raised);
+        view-transition-name: docs-nav-compact;
     }
 
     .compact ul {

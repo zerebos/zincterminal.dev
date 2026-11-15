@@ -13,12 +13,15 @@ interface Props {
 
     /** Describes the sample, which is one image to assistive tech */
     label: string;
+
+    /** Grows into the element with the same `data-morph` on the next page, see `PageTransitions` */
+    morph?: string;
 }
 
-const {variant, name, detail, sample, label} = Astro.props;
+const {variant, name, detail, sample, label, morph} = Astro.props;
 const lines = sample.map(line => (isSampleLine(line) ? line : {spans: line, no: undefined, kind: undefined}));
 ---
-<figure class:list={["lcpane", `lc-${variant}`]}>
+<figure class:list={["lcpane", `lc-${variant}`]} data-morph={morph}>
     <figcaption class="lchd"><span><b>{name}</b></span><code>{detail}</code></figcaption>
     <div class="lcterm" role="img" aria-label={label}>{lines.map(line => (
         <span class:list={["l", line.kind]}>{line.no !== undefined && <span class="no">{line.no}</span>}{line.spans.length === 0 ? " " : line.spans.map(span => (typeof span === "string" ? span : <span class={span[0]}>{span[1]}</span>))}</span>

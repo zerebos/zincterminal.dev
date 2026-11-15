@@ -23,11 +23,11 @@ const nav = siteNav.map(({page, ...link}) => ({...link, current: page !== undefi
         </a>
         <nav class="topnav" aria-label="Main">
             {nav.map(link => (
-                <a href={link.href} aria-current={link.current ? "page" : undefined}>{link.label}</a>
+                <a href={link.href} aria-current={link.current ? "page" : undefined}>{link.current && <span class="pill" aria-hidden="true"></span>}{link.label}</a>
             ))}
         </nav>
         <div class="tools">
-            <ThemeSwitch client:load />
+            <ThemeSwitch client:load transition:persist="theme-switch" />
             <slot name="actions">
                 <div class="navcta">
                     <Button href={links.download} primary>Download</Button>
@@ -49,6 +49,9 @@ const nav = siteNav.map(({page, ...link}) => ({...link, current: page !== undefi
         backdrop-filter: blur(16px) saturate(140%);
         border-bottom: 1px solid transparent;
         transition: border-color 0.2s ease;
+
+        /* Holds still when moving between pages, while the links inside it cross-fade */
+        view-transition-name: site-header;
     }
 
     .sitenav.scrolled {
@@ -67,6 +70,7 @@ const nav = siteNav.map(({page, ...link}) => ({...link, current: page !== undefi
         align-items: center;
         flex: none;
         min-height: 44px;
+        view-transition-name: site-lockup;
     }
 
     .topnav {
@@ -83,6 +87,7 @@ const nav = siteNav.map(({page, ...link}) => ({...link, current: page !== undefi
         padding: 6px 12px;
         border-radius: 4px;
         position: relative;
+        isolation: isolate;
     }
 
     /* Grows the hit area to 44px tall without changing how the link looks */
@@ -95,7 +100,20 @@ const nav = siteNav.map(({page, ...link}) => ({...link, current: page !== undefi
     .topnav a:hover,
     .topnav a[aria-current="page"] {
         color: var(--ink);
+    }
+
+    .topnav a:hover:not([aria-current="page"]) {
         background: var(--accent-subtle);
+    }
+
+    /* The current page's background, its own element so it can slide to the next page's link */
+    .pill {
+        position: absolute;
+        inset: 0;
+        z-index: -1;
+        border-radius: inherit;
+        background: var(--accent-subtle);
+        view-transition-name: nav-current;
     }
 
     .tools {

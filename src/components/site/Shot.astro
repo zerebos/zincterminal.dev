@@ -3,14 +3,17 @@
 interface Props {
     name: string;
     caption: string;
+
+    /** Grows into the element with the same `data-morph` on the next page, see `PageTransitions` */
+    morph?: string;
     class?: string;
 }
 
-const {name, caption, class: className} = Astro.props;
+const {name, caption, morph, class: className} = Astro.props;
 ---
 
 <figure class:list={["zn-shot", className]}>
-    <div class="zn-shot-stage zn-dots">
+    <div class="zn-shot-stage zn-dots" data-morph={morph}>
         <slot />
     </div>
     <figcaption><b>{name}</b> · {caption}</figcaption>

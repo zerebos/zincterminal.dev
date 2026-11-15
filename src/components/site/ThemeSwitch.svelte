@@ -223,9 +223,11 @@
 </div>
 
 <style>
+    /* Slides to its place in the next page's header */
     .theme-wrap {
         position: relative;
         flex: none;
+        view-transition-name: theme-switch;
     }
 
     .theme-btn {

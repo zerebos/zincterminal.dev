@@ -17,6 +17,9 @@ interface Tile {
     caption: string;
     image: ImageMetadata;
     alt: string;
+
+    /** Grows into the Lit Cell page's pane for the same scheme */
+    morph?: string;
 }
 
 // Each tile is one fixed look, so it stays the same whatever theme the page is in
@@ -25,12 +28,14 @@ const litCellTiles: Tile[] = [
         name: "Lit Cell",
         caption: "Cascadia Mono NF 11 pt · the default dark scheme",
         image: litCell,
+        morph: "scheme-dark",
         alt: "Zinc in the Lit Cell scheme, with a tab along the top, a colored git diff and a selected word"
     },
     {
         name: "Lit Cell Light",
         caption: "Cascadia Mono NF 11 pt · the default light scheme",
         image: litCellLight,
+        morph: "scheme-light",
         alt: "Zinc in the Lit Cell Light scheme, with a tab along the top, a colored git diff and a selected word"
     }
 ];
@@ -72,7 +77,7 @@ const widths = (image: ImageMetadata, width: number) => [Math.round(width / 2), 
 
     <div class="gal gal-lit">
         {litCellTiles.map(tile => (
-            <Shot name={tile.name} caption={tile.caption}>
+            <Shot name={tile.name} caption={tile.caption} morph={tile.morph}>
                 <Image
                     src={tile.image}
                     alt={tile.alt}

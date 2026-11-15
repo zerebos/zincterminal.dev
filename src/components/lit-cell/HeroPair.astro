@@ -13,6 +13,7 @@ const variants = [litCell.dark, litCell.light];
             name={v.name}
             detail={v.background}
             sample={heroSample}
+            morph={`scheme-${v.id}`}
             label={`Terminal output in ${v.name}: a directory listing, a build with a warning and an error, and git status`}
         />
     ))}

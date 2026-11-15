@@ -1,6 +1,7 @@
 ---
 // The document shell every page uses... head, theme detection, tokens and base styles
 import LitCellVars from "../components/site/LitCellVars.astro";
+import PageTransitions from "../components/site/PageTransitions.astro";
 import "../styles/tokens.css";
 import "../styles/global.css";
 
@@ -45,6 +46,11 @@ const canonical = new URL(Astro.url.pathname, Astro.site);
                 }
                 const system = matchMedia("(prefers-color-scheme: light)").matches ? "light" : "dark";
                 document.documentElement.dataset.theme = choice === "system" ? system : choice;
+
+                // Moving to another page swaps in that page's <html> attributes, which have no theme, so this one carries over
+                document.addEventListener("astro:before-swap", (event) => {
+                    event.newDocument.documentElement.dataset.theme = document.documentElement.dataset.theme;
+                });
             })();
         </script>
         <title>{title}</title>
@@ -65,6 +71,7 @@ const canonical = new URL(Astro.url.pathname, Astro.site);
         <link rel="icon" type="image/png" sizes="48x48" href="/brand/app-icon-48.png">
         <link rel="apple-touch-icon" href="/brand/app-icon-256.png">
         <LitCellVars />
+        <PageTransitions />
     </head>
     <body>
         <slot />
