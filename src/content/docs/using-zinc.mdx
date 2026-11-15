@@ -377,6 +377,10 @@ Most shells need nothing from you. Your startup files run as usual, and Zinc's s
 Then Zinc leaves them to it, whether that's powerlevel10k's own integration or one you wrote, and adds only what's missing.
 </Note>
 
+cmd can't say when a command starts or how it ended, so Zinc marks the start itself when you press <kbd>Enter</kbd>. Jumping and copying output work, but a failed command gets no red bar. With Clink installed, Zinc adds a script for it that sends exit codes too, and it works alongside prompt themes like oh-my-posh and starship.
+
+A shell you start from another, like fish from zsh or `wsl` from PowerShell, gets marks of its own. The command that started it counts as running until you leave it.
+
 ### Turning it off
 
 To start shells exactly as they'd start anywhere else, turn it off for every profile, or for one:
@@ -386,13 +390,14 @@ To start shells exactly as they'd start anywhere else, turn it off for every pro
 shell-integration = "off"
 ```
 
-If your startup files hand over to something else, such as tmux or `exec` into another shell, the marks don't follow. The scripts in the `ShellIntegration` folder next to `zinc.exe` show what to send from there.
+Zinc also leaves a shell alone when it's started to run a script, like `pwsh -File` or `bash -c`. If your startup files hand over to something else, such as tmux or `exec` into another shell, the marks don't follow. The scripts in the `ShellIntegration` folder next to `zinc.exe` show what to send from there.
 
 ### Not reached yet {#not-yet}
 
 - bash in WSL, when your startup files replace `PROMPT_COMMAND` instead of adding to it. Git Bash is fine.
 - elvish inside WSL, YSH, and xonsh.
 - Exit codes in cmd without Clink.
+- Versions of fish too old to send marks of their own.
 
 ## The zn CLI {#zn}
 
@@ -407,7 +412,7 @@ Remote control is off until you turn it on, in `Settings > Terminal > Command li
 remote-control = true
 ```
 
-Inside Zinc, `zn` is already on your `PATH`. To use it from other terminals too, turn on **Use zn in other terminals**.
+Until then, only `zn version` answers. Inside Zinc, `zn` is already on your `PATH`, and in WSL, Zinc's bash and zsh scripts define it for you. To use it from other terminals too, turn on **Use zn in other terminals**.
 
 ### Examples
 
@@ -434,6 +439,20 @@ Commands are `zn <thing> <verb>`.
 | `terminal` | list, new, send, read, title, focus, move, close |
 
 Run inside Zinc, a command acts on the terminal it runs in, and on that terminal's pane, workspace, and window. `--terminal`, `--pane`, `--workspace`, and `--window` aim elsewhere, using ids from `zn list`. Add `--json` for output scripts can read, and run `zn <thing> --help` for the rest.
+
+### In scripts {#zn-scripts}
+
+Commands that open a terminal print its id, so the next command can aim at it. Ids stay the same until Zinc quits. Run outside Zinc, a command acts on the window you used last, and prints which one on stderr.
+
+`zn terminal send` types text as if you typed it. `\r` is Enter and `\e` is Esc, and `\t`, `\n`, `\xHH`, and `\\` work too. Put `-` in place of the text to read it from stdin as it is. Add `--paste` to send it as a paste, which a shell inserts without running.
+
+```sh title="Any shell"
+git diff | zn terminal send --terminal 5 --paste -
+```
+
+`zn terminal read` prints what's on the screen. `--lines 50` reaches back into the scrollback, and `--ansi` keeps the colors.
+
+`close` asks in Zinc first when a command is still running there, and `--force` closes without asking. With Zinc's debug log on, each command is logged, but never the text it sends.
 
 ### Exit codes
 
