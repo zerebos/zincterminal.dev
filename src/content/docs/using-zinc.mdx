@@ -463,3 +463,27 @@ git diff | zn terminal send --terminal 5 --paste -
 | `2` | Wrong usage |
 | `3` | Zinc isn't running |
 | `4` | Remote control is off |
+
+## Troubleshooting
+
+### The debug log {#debug-log}
+
+Turn on **Debug log** in `Settings > About`, make the problem happen, then click **Copy log** and paste it into your bug report. The copy starts with your versions of Zinc and Windows.
+
+The log is in `%APPDATA%\Zinc\logs\zinc.log`. To log from the moment Zinc starts, before it reads your settings, set `ZINC_LOG` to the path of a file.
+
+### Drawing problems {#drawing}
+
+If a terminal draws wrong or stops drawing, turn off **Low-latency drawing** in `Settings > Terminal`. For broken graphics drivers, some virtual machines, and remote desktop glitches, turn on **Software rendering**, which draws with the processor instead of the graphics card. Both apply to terminals you open afterwards.
+
+**Run benchmark**, in `Settings > About`, measures how Zinc draws on your PC. Its results are worth adding to a report about drawing.
+
+### Backing up your settings {#backup}
+
+**Export settings**, in `Settings > About`, saves your settings, color schemes, shaders, and open windows in one zip file. **Import settings** puts them in place on another PC, and first saves the settings it replaces in a `backups` folder next to `config.toml`.
+
+Files from outside Zinc's folder, such as a file you `include` from somewhere else, aren't in the zip. The export lists them, so you can copy them yourself.
+
+### Trying other settings {#zinc-config}
+
+Set `ZINC_CONFIG` to the path of another config file, and Zinc reads that file instead of yours. A Zinc started this way runs on its own, beside any other Zinc, and doesn't save its windows.
