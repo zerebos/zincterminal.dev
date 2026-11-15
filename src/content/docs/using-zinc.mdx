@@ -253,6 +253,53 @@ printf '\e]7;file://%s%s\e\\' "$HOSTNAME" "$PWD"
 
 Without a report, a tab reopens in the folder it started in.
 
+## In the terminal {#terminal}
+
+### Mouse and clipboard {#mouse}
+
+Drag to select, double-click for a word, and triple-click for a line. <kbd>Ctrl+C</kbd> copies when there's a selection, and otherwise goes to the program as usual. <kbd>Ctrl+V</kbd> pastes. Right-click opens a menu with copy, paste, and find, plus whatever you clicked on, like a link or a command's output.
+
+When a program uses the mouse, like vim or htop, clicks and the wheel go to it. Hold <kbd>Shift</kbd> to select text anyway. <kbd>Ctrl</kbd> and the wheel zoom the pane, even then.
+
+Drop files on a pane to type their paths, written the way its shell expects, like `/mnt/c/Users` in WSL.
+
+| Mouse or keys | What it does |
+|---|---|
+| Drag, double-click, triple-click | Select text, a word, or a line |
+| <kbd>Ctrl+C</kbd> | Copy the selection, or send <kbd>Ctrl+C</kbd> to the program when there's none |
+| <kbd>Ctrl+V</kbd>, <kbd>Shift+Insert</kbd> | Paste |
+| Right-click, <kbd>Shift+F10</kbd> | Open the menu |
+| <kbd>Shift</kbd> with the mouse | Select in a program that uses the mouse |
+| <kbd>Ctrl+Wheel</kbd>, <kbd>Ctrl+Plus</kbd>, <kbd>Ctrl+Minus</kbd> | Zoom this pane, and <kbd>Ctrl+0</kbd> sets it back |
+| <kbd>Shift+PgUp</kbd>, <kbd>Shift+PgDn</kbd> | Scroll back a page, or forward |
+| Drop files | Type their paths |
+
+### Links {#links}
+
+<kbd>Ctrl+Click</kbd> opens a link, whether it's a web address in the text or a link a program made, like `ls --hyperlink`. Holding <kbd>Ctrl</kbd> underlines them. To open them with a plain click instead, set "Open links with" in `Settings > Terminal` to "A click".
+
+Web and mail links open in your browser and mail app. A file link shows the file in Explorer instead of running it. In WSL, Git Bash, and MSYS2, file links use the shell's own paths, so `/home/you` and `/mnt/c` find the right place.
+
+### Find {#find}
+
+<kbd>Ctrl+Shift+F</kbd> opens Find at the top right of the pane. Matches light up as you type, with marks beside the scrollbar. <kbd>Enter</kbd> moves up the scrollback to the previous match and <kbd>Shift+Enter</kbd> moves back down, and <kbd>Esc</kbd> closes the box. **Aa** matches case, and **.\*** takes a regular expression.
+
+### Images {#images}
+
+Programs that draw images with the kitty graphics protocol, such as fastfetch or yazi's previews, show them in Zinc. A program in WSL or over SSH has to send the image itself rather than a file path, because Zinc reads files only on this PC. Sixel images aren't supported.
+
+### The command palette {#palette}
+
+<kbd>Ctrl+Shift+P</kbd> searches every action, profile, and workspace, with what you used recently first. Type `@` to search this window's tabs instead, or press <kbd>Ctrl+Shift+O</kbd>.
+
+A few commands ask one more thing in the same box:
+
+- **Color scheme for this tab…** tries each scheme on the tab as you move through the list. <kbd>Esc</kbd> puts the old one back.
+- **Default color scheme…** picks the scheme every tab uses, and saves it in `config.toml`.
+- **New tab running…** opens a tab with the same shell, in the same folder, and types the command for you, like `htop` or `npm test`.
+- **New tab in folder…** opens a tab in the folder you type, like `~/src`. A relative path starts from where you are.
+- **Workspace icon…** and **Workspace folder…** set those for the workspace you're in.
+
 ## Shell integration
 
 Shells can mark where each prompt, command, and output starts, and how each command ended. Zinc uses the marks to:
