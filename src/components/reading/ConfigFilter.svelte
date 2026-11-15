@@ -76,7 +76,7 @@
 <div class={["cfg-filter", {ready}]}>
     <label for="cfg-q" class="sr-only">Filter settings</label>
     <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.3" aria-hidden="true"><circle cx="6.5" cy="6.5" r="4.5" /><path d="m10 10 4.5 4.5" /></svg>
-    <input id="cfg-q" type="search" placeholder="Filter by key, name or words, like cursor or opacity" autocomplete="off" spellcheck="false" bind:value={query} />
+    <input id="cfg-q" type="search" placeholder="Filter by key, name, or words, like cursor or opacity" autocomplete="off" spellcheck="false" bind:value={query} />
     <span class="cfg-count" aria-live="polite">{term ? `${shown} of ${total}` : `${total} settings`}</span>
 </div>
 {#if term && shown === 0}

@@ -1,7 +1,7 @@
 ---
 title: Using Zinc
-description: How to install Zinc, set it up the way you work and script it.
-lead: How to install Zinc, set it up the way you work and script it. Written for the alpha, so details can change between builds.
+description: How to install Zinc, set it up the way you work, and script it.
+lead: How to install Zinc, set it up the way you work, and script it. Written for the alpha, so details can change between builds.
 ---
 
 import {links} from "../../data/site";
@@ -46,7 +46,7 @@ The first time Zinc starts, a welcome page asks how you like to work and saves y
 
 | Action | Keys |
 |---|---|
-| Command palette: every action, profile and workspace | <kbd>Ctrl+Shift+P</kbd> |
+| Command palette: every action, profile, and workspace | <kbd>Ctrl+Shift+P</kbd> |
 | Settings | <kbd>Ctrl+,</kbd> |
 | Quick terminal, from anywhere in Windows | <kbd>{"Win+`"}</kbd> |
 | New tab / new workspace | <kbd>Ctrl+Shift+T</kbd> / <kbd>Ctrl+Alt+T</kbd> |
@@ -58,19 +58,19 @@ Every action and its keys are in `Settings > Keyboard`, where you can change the
 
 ## Configuration
 
-Change settings in the Settings window or in `config.toml`. They're the same settings: a change in one shows in the other and applies straight away, in every open window.
+Change settings in the Settings window or in `config.toml`. They're the same settings, so a change in one shows in the other and applies straight away, in every open window.
 
 ### The Settings window {#settings-window}
 
-Open it with <kbd>Ctrl+,</kbd>, from the command palette or from the tray icon. Each change is saved as you make it, and each setting shows its key in the file.
+Open it with <kbd>Ctrl+,</kbd>, from the command palette, or from the tray icon. Each change is saved as you make it, and each setting shows its key in the file.
 
-- **Find a setting** (<kbd>Ctrl+F</kbd>) searches settings, keys and profiles, so "font size ubuntu" finds the font size in your Ubuntu profile.
+- **Find a setting** (<kbd>Ctrl+F</kbd>) searches settings, keys, and profiles, so "font size ubuntu" finds the font size in your Ubuntu profile. Enter goes to the first result, and Esc clears the search.
 - **The reset arrow** beside a changed setting puts it back to its default.
 - **Undo changes**, at the bottom, puts the file back as it was when you opened the window.
 
 ### The config file {#config-file}
 
-Your settings live in `%APPDATA%\Zinc\config.toml`. It's [TOML](https://toml.io): settings grouped into sections, with `#` comments. Changes apply when you save.
+Your settings live in `%APPDATA%\Zinc\config.toml`. It's [TOML](https://toml.io), which groups settings into sections and allows `#` comments. Changes apply when you save.
 
 ```toml title="config.toml"
 default-profile = "wsl:Fedora"
@@ -104,7 +104,7 @@ Your editor can complete keys and catch mistakes as you type, from the file's JS
 
 ### Profiles
 
-A profile is a shell with its own name, folder, font and colors. Zinc finds the shells on your PC each time it reads your settings, and lists them after your own.
+A profile is a shell with its own name, folder, font, and colors. Zinc finds the shells on your PC each time it reads your settings, and lists them after your own.
 
 | Found | Profile id |
 |---|---|
@@ -141,12 +141,12 @@ theme = "light:Lit Cell Light,dark:Lit Cell"
 
 ## Shell integration
 
-Shells can mark where each prompt, command and output starts, and how each command ended. Zinc uses the marks to:
+Shells can mark where each prompt, command, and output starts, and how each command ended. Zinc uses the marks to:
 
 - Jump between prompts with <kbd>Ctrl+Shift+↑</kbd> and <kbd>Ctrl+Shift+↓</kbd>.
 - Copy or select a command's output, from the command palette or the right-click menu.
 - Show a red bar beside a failed command, and a mark on the scrollbar at each prompt.
-- Mark a tab when a long command finishes out of view: green when it succeeded, red when it failed.
+- Mark a tab when a long command finishes out of view, in green when it succeeded or red when it failed.
 - Ask before closing a tab while a command is still running in it.
 - Reopen tabs in the folder they were in.
 
@@ -181,12 +181,12 @@ If your startup files hand over to something else, such as tmux or `exec` into a
 ### Not reached yet {#not-yet}
 
 - bash in WSL, when your startup files replace `PROMPT_COMMAND` instead of adding to it. Git Bash is fine.
-- elvish inside WSL, YSH and xonsh.
+- elvish inside WSL, YSH, and xonsh.
 - Exit codes in cmd without Clink.
 
 ## The zn CLI {#zn}
 
-`zn` opens, arranges and closes windows, workspaces, panes and terminals in the running Zinc. It can also type into a terminal and read what it shows, so scripts can set up your work for you.
+`zn` opens, arranges and closes windows, workspaces, panes, and terminals in the running Zinc. It can also type into a terminal and read what it shows, so scripts can set up your work for you.
 
 ### Turn it on {#turn-on}
 
@@ -223,7 +223,7 @@ Commands are `zn <thing> <verb>`.
 | `pane` | list, split, focus, close |
 | `terminal` | list, new, send, read, title, focus, move, close |
 
-Run inside Zinc, a command acts on the terminal it runs in, and on that terminal's pane, workspace and window. `--terminal`, `--pane`, `--workspace` and `--window` aim elsewhere, using ids from `zn list`. Add `--json` for output scripts can read, and run `zn <thing> --help` for the rest.
+Run inside Zinc, a command acts on the terminal it runs in, and on that terminal's pane, workspace, and window. `--terminal`, `--pane`, `--workspace`, and `--window` aim elsewhere, using ids from `zn list`. Add `--json` for output scripts can read, and run `zn <thing> --help` for the rest.
 
 ### Exit codes
 

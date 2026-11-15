@@ -147,7 +147,7 @@
         type="search"
         bind:this={input}
         value={pressed ? pretty(pressed) : query}
-        placeholder={isListening ? "Press a key combination" : "Filter by name, words or keys, like split or ctrl+shift+d"}
+        placeholder={isListening ? "Press a key combination" : "Filter by name, words, or keys, like split or ctrl+shift+d"}
         readonly={isListening}
         aria-describedby={isListening ? "k-hint" : undefined}
         autocomplete="off"
