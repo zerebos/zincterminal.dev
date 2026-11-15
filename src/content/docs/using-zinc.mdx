@@ -114,32 +114,6 @@ Your editor can complete keys and catch mistakes as you type, from the file's JS
 #:schema https://zincterminal.dev/schema/config.json
 ```
 
-### Profiles
-
-A profile is a shell with its own name, folder, font, and colors. Zinc finds the shells on your PC each time it reads your settings, and lists them after your own.
-
-| Found | Profile id |
-|---|---|
-| WSL distros | `wsl:<distro>` |
-| PowerShell 7, Windows PowerShell, cmd | `pwsh`, `powershell`, `cmd` |
-| Git for Windows | `git-bash` |
-| MSYS2 (UCRT64) | `msys2:ucrt64` |
-| Visual Studio developer shells | `vs:<instance>:pwsh`, `vs:<instance>:cmd` |
-| Hosts in `~/.ssh/config` | `ssh:<host>` |
-
-A `[profile]` section with a found profile's id changes it. `[discover]` turns a source off.
-
-```toml title="config.toml"
-[discover]
-ssh = false                  # also wsl, powershell, cmd, git-bash, msys2, visual-studio
-
-[profile."wsl:Ubuntu"]
-colors.theme = "Ubuntu"
-
-[profile."msys2:ucrt64"]
-hidden = true
-```
-
 ### Color schemes
 
 [Lit Cell and Lit Cell Light](/lit-cell) come with Zinc, along with about 650 schemes from iTerm2-Color-Schemes. Browse them in `Settings > Appearance > Color scheme`, where each one shows in its own colors. Your own go in `%APPDATA%\Zinc\themes\`, one file per scheme in Ghostty's theme format. One of yours wins over a bundled scheme with the same name.
@@ -184,6 +158,99 @@ A name looks in the `shaders` folder next to `config.toml` first, so a copy of `
 **Edit shaders**, in `Settings > Appearance > Shaders`, opens a page with your list and a library of Zinc's shaders, yours, and any folders you add. Click a shader in the library to try it in the preview, and **Add** puts it in your list. A profile can have a list of its own.
 
 A shader that doesn't compile is left out, and the others still run. A notice gives the file and the line of the error, and saving the fixed file applies it straight away. Shaders also need "Low-latency drawing", which is on unless you've turned it off.
+
+## Profiles and shells {#profiles}
+
+A profile is a shell with its own name, folder, font, and colors. Zinc finds the shells on your PC each time it reads your settings, and lists them after your own.
+
+### Your own profiles {#own-profiles}
+
+Each `[profile.<id>]` section is a profile:
+
+```toml title="config.toml"
+[profile.nu]
+name = "Nushell"
+command = "nu"
+working-directory = "~/src"
+
+[profile.nu.font]
+size = 12
+```
+
+The id in the brackets is what `default-profile`, `profile-order`, and `[keys]` use, so changing `name` breaks nothing. An id with a colon or a space needs quotes, as in `[profile."ssh:buildbox"]`.
+
+A profile can set its own value for anything in `[font]`, `[colors]`, `[terminal]`, and `[shaders]`, as a table like `[profile.nu.font]` or a dotted key like `font.size = 12`. Whatever it doesn't set comes from those tables. The other tables apply to the whole app, so a profile can't change them.
+
+Without a `command`, a profile runs PowerShell 7, or Windows PowerShell if PowerShell 7 isn't installed, or else Command Prompt. Its tabs start in your home folder unless `working-directory` names another, which can start with `~` or use `%VARIABLES%`. Without an `icon`, its tabs show the program's own icon.
+
+### Shells Zinc finds {#found-profiles}
+
+| Found | Profile id | Named |
+|---|---|---|
+| WSL distros, the default one first | `wsl:<distro>` | The distro's name |
+| PowerShell 7, Windows PowerShell, and cmd | `pwsh`, `powershell`, `cmd` | PowerShell, Windows PowerShell, Command Prompt |
+| Git for Windows | `git-bash` | Git Bash |
+| MSYS2's UCRT64, in `C:\msys64` | `msys2:ucrt64` | MSYS2 UCRT64 |
+| Visual Studio developer shells | `vs:<instance>:pwsh`, `vs:<instance>:cmd` | Developer PowerShell for …, Developer Command Prompt for … |
+| Hosts in `~/.ssh/config` | `ssh:<host>` | &lt;host&gt; (SSH) |
+
+Docker Desktop's own distros are left out. So are SSH hosts with wildcards like `*`, and Zinc follows `Include` lines in your SSH config. A WSL profile's id holds the distro's name, so renaming the distro gives the profile a new id.
+
+A `[profile]` section with a found profile's id changes it, starting from what Zinc found, and the profile keeps its place in the list. `[discover]` turns a search off, and `powershell = false` turns off both PowerShells.
+
+```toml title="config.toml"
+[discover]
+ssh = false                  # also wsl, powershell, cmd, git-bash, msys2, visual-studio
+
+[profile."wsl:Ubuntu"]
+colors.theme = "Ubuntu"
+
+[profile."msys2:ucrt64"]
+hidden = true                # out of the menus, but its tabs still reopen
+```
+
+If you uninstall a shell you changed, or turn its search off, your section stays in `config.toml` and the profile is hidden. Settings says "This profile can't open" on its page, and offers to delete the profile or turn the search back on.
+
+### Order and the default profile {#profile-order}
+
+The new-tab menu lists your own profiles first, in the order their sections appear in the file, and then the shells Zinc finds. `profile-order` puts the ids it lists first, in its order, and the rest follow in their usual places. Dragging profiles in `Settings > Profiles` writes it for you.
+
+`default-profile` is the profile new tabs, workspaces, and windows start with. Without it, the default is the first profile in the menu that isn't hidden. Both keys go at the top of the file, before any table.
+
+```toml title="config.toml"
+default-profile = "wsl:Ubuntu"
+profile-order = ["wsl:Ubuntu", "pwsh", "nu"]
+```
+
+### Choosing a shell {#choosing-a-shell}
+
+When Zinc starts, the first tab runs the first of these that's set:
+
+1. A command after `zinc.exe`, as in `zinc.exe nu`. Put `--` before a command that could be mistaken for one of Zinc's own flags.
+2. The `ZINC_SHELL` environment variable, as a full command line.
+3. The default profile's `command`.
+4. PowerShell 7, then Windows PowerShell, then Command Prompt.
+
+The first two also open a new window instead of reopening your saved windows. Tabs you open later run their own profile's command.
+
+Every program Zinc starts gets `COLORTERM=truecolor` and `TERM_PROGRAM=zinc`, so it can tell where it runs. Zinc also removes the variables other terminals set, such as `WT_SESSION`, so a program started in Zinc doesn't mistake it for another terminal.
+
+### Environment variables {#environment}
+
+`[environment]` sets variables for every program Zinc starts, and a profile's own `environment` table sets its variables over them. `%NAME%` is that variable's value as the program would otherwise get it, and an empty value removes the variable.
+
+```toml title="config.toml"
+[environment]
+PATH = '%PATH%;C:\tools'     # single quotes, so \t stays as typed
+NO_COLOR = ""                # removes NO_COLOR
+
+[profile.pwsh.environment]
+POWERSHELL_TELEMETRY_OPTOUT = "1"
+```
+
+New tabs read Windows' current variables first, so a `PATH` an installer changed reaches them, and then `[environment]` applies on top. A profile's `PATH` replaces the one in `[environment]` instead of adding to it, so `%PATH%` there is Windows' `PATH`. Settings has these in `Settings > Terminal > Shell` and on each profile's page.
+
+WSL passes Windows variables to Linux only when `WSLENV` names them. To pass yours along, set `WSLENV` in `[environment]`, and Zinc adds its own to it.
 
 ## Shell integration
 
@@ -232,7 +299,7 @@ If your startup files hand over to something else, such as tmux or `exec` into a
 
 ## The zn CLI {#zn}
 
-`zn` opens, arranges and closes windows, workspaces, panes, and terminals in the running Zinc. It can also type into a terminal and read what it shows, so scripts can set up your work for you.
+`zn` opens, arranges, and closes windows, workspaces, panes, and terminals in the running Zinc. It can also type into a terminal and read what it shows, so scripts can set up your work for you.
 
 ### Turn it on {#turn-on}
 
