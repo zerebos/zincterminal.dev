@@ -54,7 +54,7 @@ The first time Zinc starts, a welcome page asks how you like to work and saves y
 | Previous / next prompt | <kbd>Ctrl+Shift+↑</kbd> / <kbd>Ctrl+Shift+↓</kbd> |
 | Find in the scrollback | <kbd>Ctrl+Shift+F</kbd> |
 
-Every action and its keys are in `Settings > Keyboard`, where you can change them.
+Every action and its default keys are in <a href={links.keys}>Keys and actions</a>. Change them in `Settings > Keyboard` or in `[keys]`.
 
 ## Configuration
 
@@ -67,6 +67,14 @@ Open it with <kbd>Ctrl+,</kbd>, from the command palette, or from the tray icon.
 - **Find a setting** (<kbd>Ctrl+F</kbd>) searches settings, keys, and profiles, so "font size ubuntu" finds the font size in your Ubuntu profile. Enter goes to the first result, and Esc clears the search.
 - **The reset arrow** beside a changed setting puts it back to its default.
 - **Undo changes**, at the bottom, puts the file back as it was when you opened the window.
+
+Appearance and each profile's page keep a small preview terminal at the top, which shows that page's font, colors, and padding as you change them. **Hide preview**, beside the heading, puts it away until you show it again. A setting that only matters while another one is on folds under that one.
+
+**Profiles** lists your profiles in the order the new-tab menu shows them, so drag one to move it. A profile's page shows where each of its settings comes from, like "Inherited from Appearance, where it's 11 pt", until you change it there. The reset arrow makes it inherit again.
+
+**Keyboard** lists every action with its keys. Click a key to remove it, or click **+** and press the keys to add one. If another action already has those keys, **Replace** moves them over. Key sequences like Ctrl+A > C show here too, but you add them in `config.toml`.
+
+While `config.toml` has an error, the window shows it at the top and saves nothing until the error is fixed. **Open config.toml** takes you to the file.
 
 ### The config file {#config-file}
 
@@ -96,7 +104,11 @@ colors.theme = "0x96f"
 Zinc shows a bar with the file and line of anything it can't read, and applies everything else. Single-quoted strings are literal, so Windows paths need no escaping: `'C:\msys64\ucrt64.ico'`.
 </Note>
 
-Your editor can complete keys and catch mistakes as you type, from the file's JSON Schema. Make sure the first line of `config.toml` looks like this, and editors that read schema lines (e.g. VS Code with Even Better TOML) pick it up:
+A save applies to every open window, and running tabs take the new colors, fonts, and padding straight away. A setting that applies later says so in its description, like "Workspaces", which applies to windows opened from now on. Files you `include` and schemes in your `themes` folder reload the same way, as long as they're inside the folder that holds `config.toml`.
+
+A save that isn't valid TOML, such as one halfway through an edit, changes nothing. Zinc keeps the settings it had and shows the error until the file reads again. **Reload config** in the command palette reads the file again whenever you like.
+
+Your editor can complete keys and catch mistakes as you type, from the file's JSON Schema. Make sure the first line of `config.toml` looks like this, and editors that read schema lines (such as VS Code with Even Better TOML) pick it up:
 
 ```toml title="config.toml"
 #:schema https://zincterminal.dev/schema/config.json
@@ -130,7 +142,9 @@ hidden = true
 
 ### Color schemes
 
-[Lit Cell and Lit Cell Light](/lit-cell) come with Zinc, along with about 650 schemes from iTerm2-Color-Schemes. Browse them in `Settings > Appearance > Color scheme`, where each one shows in its own colors. Your own go in `%APPDATA%\Zinc\themes\`, one file per scheme in Ghostty's theme format.
+[Lit Cell and Lit Cell Light](/lit-cell) come with Zinc, along with about 650 schemes from iTerm2-Color-Schemes. Browse them in `Settings > Appearance > Color scheme`, where each one shows in its own colors. Your own go in `%APPDATA%\Zinc\themes\`, one file per scheme in Ghostty's theme format. One of yours wins over a bundled scheme with the same name.
+
+The schemes page shows the scheme in use at the top and the whole library below it, which you can filter to **Dark**, **Light**, or **Yours**, or by name. Click a scheme to try it in the preview, and click it again to stop. **Use** puts it in place.
 
 To follow Windows' light and dark mode, give a pair:
 
@@ -138,6 +152,38 @@ To follow Windows' light and dark mode, give a pair:
 [colors]
 theme = "light:Lit Cell Light,dark:Lit Cell"
 ```
+
+On the schemes page, **Follow Windows light and dark mode** does the same, and each scheme then offers **Use for dark** or **Use for light**. Programs that ask whether the terminal is light or dark (`CSI ? 996 n`) are told which side is in use. With a single scheme, the answer is whether its background is dark. Programs that subscribe with mode 2031, such as Neovim, hear about each switch, so they can change their own colors too.
+
+The pencil on a scheme opens the editor, for its background, text, cursor, and selection colors and its 16 palette colors. Every pane that uses the scheme changes as you edit. Editing a bundled scheme copies it into your `themes` folder first, and the copy takes its place everywhere. **Restore the original** deletes the copy. **Save as new scheme…** keeps your edits under a new name, and **Delete scheme** removes one of yours. The **+** on the schemes page starts a new scheme from one you pick.
+
+A scheme that leaves out some palette colors or its selection colors gets libghostty's defaults for them, not Lit Cell's.
+
+### Shaders
+
+Shaders are effects drawn over the terminal, such as a curved CRT screen or a trail behind the cursor. They're GLSL files in Shadertoy's form, so shaders written for Ghostty work unchanged. Zinc comes with six, which you use by name:
+
+```toml title="config.toml"
+[shaders]
+files = ["crt", "cursor-trail"]    # run in this order
+```
+
+| Shader | What it draws | Animated |
+|---|---|---|
+| `scanlines` | Soft dark lines across the picture, and a light vignette | |
+| `crt` | An old monitor, with curved glass, scanlines, color fringes, and a faint flicker | <Yes /> |
+| `glow` | A soft light around bright text | |
+| `phosphor` | A one-color screen in Lit Cell's green | |
+| `cursor-glow` | A halo in the cursor's own color | |
+| `cursor-trail` | A short streak behind the cursor when it jumps | <Yes /> |
+
+The shaders that aren't animated redraw only when the terminal changes. Animated shaders pause in a terminal that doesn't have focus, and the text under them still updates. The "Animation" setting changes that.
+
+A name looks in the `shaders` folder next to `config.toml` first, so a copy of `crt.glsl` there takes the place of Zinc's. Each bundled shader has its settings as constants at the top of the file. Other paths are relative to the folder that holds `config.toml`, and `~` is your home folder.
+
+**Edit shaders**, in `Settings > Appearance > Shaders`, opens a page with your list and a library of Zinc's shaders, yours, and any folders you add. Click a shader in the library to try it in the preview, and **Add** puts it in your list. A profile can have a list of its own.
+
+A shader that doesn't compile is left out, and the others still run. A notice gives the file and the line of the error, and saving the fixed file applies it straight away. Shaders also need "Low-latency drawing", which is on unless you've turned it off.
 
 ## Shell integration
 
