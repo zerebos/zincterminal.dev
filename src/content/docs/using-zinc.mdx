@@ -94,7 +94,7 @@ colors.theme = "0x96f"
 ```
 
 <Note title="A mistake doesn't stop the rest">
-Zinc shows a bar with the file and line of anything it can't read, and applies everything else. Until you fix it, the Settings window doesn't save. Single-quoted strings are literal, so Windows paths need no escaping: `'C:\msys64\ucrt64.ico'`. If the file isn't valid TOML at all, Zinc keeps the settings it had.
+Zinc shows a bar with the file and line of anything it can't read, and applies everything else. If the file isn't valid TOML at all, Zinc keeps the settings it had. Until you fix it, the Settings window doesn't save. Single-quoted strings are literal, so Windows paths need no escaping: `'C:\msys64\ucrt64.ico'`.
 </Note>
 
 Files you `include` and your own color schemes reload when you save them too. To read everything again yourself, run **Reload config** from the command palette.
@@ -199,9 +199,24 @@ hidden = true
 
 If a shell you changed goes away, Settings keeps your changes and marks the profile as one that can't open.
 
-### Choosing a shell {#choosing-a-shell}
+### Starting Zinc {#starting-zinc}
 
 To start Zinc with a particular shell from a shortcut or a launcher, put the shell's command after `zinc.exe`, as in `zinc.exe nu`. Setting `ZINC_SHELL` to a command does the same. Either way, Zinc opens a window running that shell instead of reopening your saved windows.
+
+Zinc's own flags open other things. A new workspace opens in the window you used last.
+
+```sh title="Any shell"
+zinc.exe --profile pwsh
+```
+
+| Flag | What it does |
+|---|---|
+| `--profile <id>` | Opens a new workspace with that profile |
+| `--folder <path>` | Opens a new workspace in that folder |
+| `--new-window` | Opens a new window |
+| `--quick-terminal` | Shows or hides the quick terminal |
+| `--settings` | Opens Settings |
+| `--reopen-workspace`, `--reopen-window` | Reopens the workspace or window you closed last |
 
 Programs can tell they're in Zinc from `TERM_PROGRAM=zinc`, and `COLORTERM=truecolor` tells them Zinc shows 24-bit color.
 
@@ -325,20 +340,9 @@ When you close the last window, Zinc stays in the tray as long as the quick term
 
 To start Zinc when you sign in, set "When you sign in to Windows" in `Settings > Layout` to "Start in the tray" or "Open my windows".
 
-### The taskbar and Explorer {#jump-list}
+### The taskbar and Explorer {#taskbar}
 
-Right-click Zinc's taskbar button for the profiles and folders you used recently, each of which opens a new workspace. The same menu has a new window, the quick terminal, and Settings.
-
-Shortcuts and scripts can do the same with Zinc's own flags. A new workspace opens in the window you used last.
-
-| Flag | What it does |
-|---|---|
-| `--profile <id>` | Opens a new workspace with that profile |
-| `--folder <path>` | Opens a new workspace in that folder |
-| `--new-window` | Opens a new window |
-| `--quick-terminal` | Shows or hides the quick terminal |
-| `--settings` | Opens Settings |
-| `--reopen-workspace`, `--reopen-window` | Reopens the workspace or window you closed last |
+Right-click Zinc's taskbar button for the profiles and folders you used recently, each of which opens a new workspace. The same menu has a new window, the quick terminal, and Settings. Shortcuts and scripts can open the same things with the flags in [Starting Zinc](#starting-zinc).
 
 To open folders from File Explorer, turn on **Open in Zinc from File Explorer** in `Settings > Layout`. Folders and drives then have **Open in Zinc** in their right-click menu. On Windows 11, it's under **Show more options**.
 
