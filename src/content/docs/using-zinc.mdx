@@ -214,6 +214,45 @@ POWERSHELL_TELEMETRY_OPTOUT = "1"
 
 WSL passes on only the variables that `WSLENV` names, so add yours to `WSLENV` to use them in Linux.
 
+## Workspaces, panes, and tabs {#workspaces}
+
+A window holds workspaces, along the top or in a sidebar. Each workspace splits into panes, and each pane holds one or more tabs, each a terminal. New tabs open in the focused pane, with the profile of the tab you're in.
+
+If you'd rather have one terminal per pane, turn off "Tabs inside panes" in `Settings > Layout`. New tabs then open as workspaces.
+
+### New workspaces {#new-workspace}
+
+<kbd>Ctrl+Alt+T</kbd> or the **+** opens a page for picking a profile, a folder, and a layout, from one pane up to a grid of four. Enter starts it, and Enter alone starts your default profile in its usual folder. The page also lists the workspaces you closed lately, to reopen with a click.
+
+A workspace started in a folder keeps it, so its new tabs start there too. To skip the page, clear **Show this page for new workspaces** at its bottom.
+
+### Splitting and moving {#panes}
+
+Split with <kbd>Alt+Shift+Plus</kbd> and <kbd>Alt+Shift+Minus</kbd>, move between panes with <kbd>Alt</kbd> and an arrow, and resize with <kbd>Alt+Shift</kbd> and an arrow. Double-click a pane's header to fill the workspace with it, and again to bring the others back.
+
+Tabs, panes, and workspaces move by dragging. Drag a pane by the empty part of its header. Where you drop it decides what happens:
+
+- **On a pane's edge**, it becomes a new pane on that side.
+- **On a pane's middle**, it joins that pane's tabs.
+- **On the workspace tabs**, it becomes a workspace of its own.
+- **Outside every Zinc window**, it opens in a new window.
+
+Right-click a workspace to rename it, give it a color, an icon, or a folder, or move it to a window of its own. With workspaces in a sidebar, <kbd>Ctrl+Shift+B</kbd> narrows the sidebar to a rail of icons, then hides it until you point at the window's left edge.
+
+### Reopening where you left off {#reopening}
+
+Zinc saves your windows as you go, with their workspaces, splits, and tabs, and reopens them the next time it starts. Each tab gets a fresh shell in the folder it was in. What the terminals showed isn't kept.
+
+**Reopen closed workspace** and **Reopen closed window**, in the command palette, bring back what you closed lately. To start with a new window every time instead, set "Reopen windows" in `Settings > Layout` to "Start fresh".
+
+A tab knows its folder when its shell reports it, which shells with [shell integration](#shell-integration) do for you. Other shells can send the report from their prompt:
+
+```sh title="Your prompt"
+printf '\e]7;file://%s%s\e\\' "$HOSTNAME" "$PWD"
+```
+
+Without a report, a tab reopens in the folder it started in.
+
 ## Shell integration
 
 Shells can mark where each prompt, command, and output starts, and how each command ended. Zinc uses the marks to:
