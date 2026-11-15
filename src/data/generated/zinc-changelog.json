@@ -1,5 +1,59 @@
 [
     {
+        "version": "0.1.0-pre.1",
+        "date": "2026-11-14",
+        "notes": [],
+        "groups": [
+            {
+                "name": "New",
+                "items": [
+                    {
+                        "text": "A new `config.toml` starts with a `#:schema` line, so editors that read it, like VS Code with Even Better TOML, complete its keys and point out mistakes with no setup.",
+                        "children": []
+                    }
+                ]
+            },
+            {
+                "name": "Changed",
+                "items": [
+                    {
+                        "text": "Zinc is now licensed under Apache-2.0. `Settings > About > Open-source software` lists Zinc's own license first.",
+                        "children": []
+                    },
+                    {
+                        "text": "The full list of settings and actions is now on [zincterminal.dev](https://zincterminal.dev/docs/config) instead of in the README, and a new `config.toml` points there. `zn`'s message for an unknown action points to `Settings > Keyboard`.",
+                        "children": []
+                    },
+                    {
+                        "text": "Setting descriptions, command palette entries, notifications, config warnings, and `zn`'s messages are worded more clearly. Config warnings quote what you wrote, and a wrong choice lists the values the setting takes.",
+                        "children": []
+                    },
+                    {
+                        "text": "Settings descriptions show what you'd type in `config.toml`, like `45s` or `~/.ssh/config`, in a code font.",
+                        "children": []
+                    },
+                    {
+                        "text": "Discovered SSH hosts are named like \"prod (SSH)\" instead of \"SSH - prod\". Saved workspaces still find them.",
+                        "children": []
+                    }
+                ]
+            },
+            {
+                "name": "Fixed",
+                "items": [
+                    {
+                        "text": "Duplicating a workspace named \"api 2\" names the copy \"api 3\" instead of \"api 2 2\".",
+                        "children": []
+                    },
+                    {
+                        "text": "Terminals could stop updating after a big resize, such as dragging the window to another monitor and snapping it to maximize, when a pane header's title was too long to fit. The window kept resizing, but the terminals kept showing their old picture until you restarted Zinc. With pane tabs on, the same resize could instead leave the header's tab running past the pane's edge, with its × and + out of sight.",
+                        "children": []
+                    }
+                ]
+            }
+        ]
+    },
+    {
         "version": "0.1.0-dev.428",
         "date": "2026-10-22",
         "notes": [],
