@@ -125,10 +125,14 @@ function follows(previous: string, name: string) {
     return Boolean(a && b && a[1] === b[1] && Number(b[2]) === Number(a[2]) + 1);
 }
 
-/** Folds runs of three or more names in a row into one, so the page lists `a`–`z` instead of 26 names */
+/**
+ * Folds runs of three or more names in a row into one, so the page lists `a`–`z` instead of 26 names. Leaves out
+ * single-character aliases like `,`, which would be too small to read as chips, and which the spelled-out name covers.
+ */
 export function keyNameRuns(names: Array<{name: string, aliases: string[];}>): KeyNameRun[] {
     const runs: Array<typeof names> = [];
-    for (const key of names) {
+    for (const named of names) {
+        const key = {...named, aliases: named.aliases.filter(alias => alias.length > 1)};
         const run = runs.at(-1);
         const previous = run?.at(-1);
         if (run && previous && !previous.aliases.length && !key.aliases.length && follows(previous.name, key.name)) run.push(key);

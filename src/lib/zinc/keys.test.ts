@@ -96,6 +96,13 @@ describe("keyNameRuns", () => {
             {first: "tab", last: null, aliases: []},
         ]);
     });
+
+    test("leaves out single-character aliases", () => {
+        expect(keyNameRuns([{name: "comma", aliases: [","]}, {name: "grave", aliases: ["grave_accent", "`"]}])).toEqual([
+            {first: "comma", last: null, aliases: []},
+            {first: "grave", last: null, aliases: ["grave_accent"]},
+        ]);
+    });
 });
 
 describe("actionGroups", () => {

@@ -96,6 +96,11 @@
     all: unset;
 }
 
+/* A hyphenated word in inline code, which the `hyphenatedWords` Markdown plugin marks */
+.prose code .word {
+    white-space: nowrap;
+}
+
 /* A settings path, such as Settings › About */
 .prose-body .ui {
     font-weight: 600;

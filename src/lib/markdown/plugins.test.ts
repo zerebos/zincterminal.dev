@@ -2,13 +2,13 @@ import {describe, expect, test} from "bun:test";
 import {satteriHeadingIdsPlugin} from "@astrojs/markdown-satteri";
 import {markdownToHtml} from "satteri";
 import {fenceOption} from "./code-meta";
-import {headingAnchors, settingsPath, settingsPaths, tableBoxes} from "./plugins";
+import {headingAnchors, hyphenatedWords, settingsPath, settingsPaths, tableBoxes} from "./plugins";
 
 
 // The same order as astro.config.mjs
 const render = async (markdown: string) => (await markdownToHtml(markdown, {
     features: {headingAttributes: true},
-    hastPlugins: [satteriHeadingIdsPlugin(), headingAnchors, settingsPaths, tableBoxes]
+    hastPlugins: [satteriHeadingIdsPlugin(), headingAnchors, settingsPaths, hyphenatedWords, tableBoxes]
 })).html;
 
 describe("settingsPath", () => {
@@ -49,6 +49,20 @@ describe("the plugins", () => {
 
     test("keep an id given with heading attributes", async () => {
         expect(await render("## The zn CLI {#zn}\n")).toContain("<h2 id=\"zn\">The zn CLI<a class=\"anchor\" href=\"#zn\"");
+    });
+
+    test("keep each hyphenated word in inline code together", async () => {
+        expect(await render("Run `ls --hyperlink -a` or `--ansi`.")).toBe(
+            "<p>Run <code>ls <span class=\"word\">--hyperlink</span> <span class=\"word\">-a</span></code> or <code><span class=\"word\">--ansi</span></code>.</p>\n"
+        );
+    });
+
+    test("leave code without hyphens, long words, and code blocks alone", async () => {
+        const html = await render("Open `config.toml` or `a-very-long-hyphenated-word-here`.\n\n```\nls --hyperlink\n```\n");
+        expect(html).toContain("<code>config.toml</code>");
+        expect(html).toContain("<code>a-very-long-hyphenated-word-here</code>");
+        expect(html).toContain("ls --hyperlink\n</code></pre>");
+        expect(html).not.toContain("class=\"word\"");
     });
 
     test("wrap tables in a scroll box", async () => {

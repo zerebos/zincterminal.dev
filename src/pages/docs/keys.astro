@@ -65,7 +65,7 @@ const toc: TocEntry[] = groups.map(group => ({
         <p class="lead">Every action Zinc has, and the keys it starts with. Change any of them in <span class="ui">Settings<span class="sep">›</span>Keyboard</span> or in <code>[keys]</code>, run them from the command palette, or from a script with <code>zn action</code>.</p>
         <p class="meta"><span>For <code>{release.version}</code></span><span>{total} actions, from the same list the Settings window uses</span></p>
         <CodeBlock name="config.toml" lines={exampleLines} copy={exampleText} copyLabel="Copy" />
-        <p class="keys-note">Keys are modifiers ({syntax.modifiers.map((m, i) => <>{i > 0 && ", "}<code>{m}</code></>)}) plus one key. <code>"{syntax.unbind}"</code> takes a default away. An action with an argument takes it after a space: <code>"split down"</code>. A key bound twice, an unknown key, or an unknown action shows in a bar with its line in the file, and the rest still applies.</p>
+        <p class="keys-note">Keys are modifiers ({syntax.modifiers.map((m, i) => <>{i > 0 && ", "}<code>{m}</code></>)}) plus <a href="#key-names">one key</a>. <code>"{syntax.unbind}"</code> takes a default away. An action with an argument takes it after a space: <code>"split down"</code>. A key bound twice, an unknown key, or an unknown action shows in a bar with its line in the file, and the rest still applies.</p>
         <p class="keys-note">Join keys with <code>{syntax.sequenceSeparator}</code> to press them one after another, like a tmux prefix: <code>"{sequence("ctrl+a", "c")}" = "new-tab"</code>. The first key then only starts sequences and doesn't reach the shell. Press it twice to send it to the shell anyway.</p>
         <p class="keys-note">While a sequence waits, a hint at the bottom of the pane lists what can come next. <kbd>Esc</kbd>, or a key that no sequence continues, cancels it without typing anything. If the first key also had an action of its own, it loses that action, and Zinc says so in the bar.</p>
     </Fragment>
@@ -102,7 +102,7 @@ const toc: TocEntry[] = groups.map(group => ({
             </div>
         </section>
     ))}
-    <Note title="Key names">
+    <Note title="Key names" id="key-names">
         A key is one of these, after any modifiers: {nameRuns.map((run, i) => <>{i > 0 && ", "}<code>{run.first}</code>{run.last && <>–<code>{run.last}</code></>}{run.aliases.length > 0 && <> (or {run.aliases.map((alias, j) => <>{j > 0 && " or "}<code>{alias}</code></>)})</>}</>)}.
     </Note>
 </ReadingLayout>
@@ -110,7 +110,8 @@ const toc: TocEntry[] = groups.map(group => ({
 <style>
     /* Element and class together, to outrank prose.css without naming the layout's elements, which this page's scope can't match */
     /* Lands below the header and the sticky filter */
-    h2[id] {
+    h2[id],
+    :global(#key-names) {
         scroll-margin-top: 136px;
     }
 

@@ -312,7 +312,7 @@ Programs that draw images with the kitty graphics protocol, such as fastfetch or
 
 <kbd>Ctrl+Shift+P</kbd> searches every action, profile, and workspace, with what you used recently first. Type `@` to search this window's tabs instead, or press <kbd>Ctrl+Shift+O</kbd>.
 
-A few commands ask one more thing in the same box:
+These commands ask one more thing in the same box:
 
 - **Color scheme for this tab…** tries each scheme on the tab as you move through the list. <kbd>Esc</kbd> puts the old one back.
 - **Default color scheme…** picks the scheme every tab uses, and saves it in `config.toml`.
@@ -367,7 +367,7 @@ Shells can mark where each prompt, command, and output starts, and how each comm
 - Show a red bar beside a failed command, and a mark on the scrollbar at each prompt.
 - Mark a tab when a long command finishes out of view, in green when it succeeded or red when it failed.
 - Ask before closing a tab while a command is still running in it.
-- Reopen tabs in the folder they were in.
+- [Reopen tabs](#reopening) in the folder they were in.
 
 ### Which shells
 
@@ -460,7 +460,7 @@ git diff | zn terminal send --terminal 5 --paste -
 
 `zn terminal read` prints what's on the screen. `--lines 50` reaches back into the scrollback, and `--ansi` keeps the colors.
 
-`close` asks in Zinc first when a command is still running there, and `--force` closes without asking. With Zinc's debug log on, each command is logged, but never the text it sends.
+`close` asks in Zinc first when a command is still running there, and `--force` closes without asking. With [Zinc's debug log](#debug-log) on, each command is logged, but never the text it sends.
 
 ### Exit codes
 

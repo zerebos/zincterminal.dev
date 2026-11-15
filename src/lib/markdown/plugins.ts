@@ -41,6 +41,30 @@ export const settingsPaths = defineHastPlugin({
     }
 });
 
+/** Longer words still break anywhere, so a long one can't push a phone's page wider than the screen */
+const longestUnbrokenWord = 24;
+
+/**
+ * Each hyphenated word in inline code stays on one line, so `--ansi` doesn't break after its first dash.
+ * The code still wraps at its spaces.
+ */
+export const hyphenatedWords = defineHastPlugin({
+    name: "hyphenated-words",
+    element: {
+        filter: ["code"],
+        visit(node, ctx) {
+            const parent = ctx.parent(node);
+            if (parent?.type === "element" && parent.tagName === "pre") return;
+            if (!node.children.every(child => child.type === "text")) return;
+            const isUnbroken = (word: string) => word.includes("-") && !/\s/.test(word) && word.length <= longestUnbrokenWord;
+            const words = ctx.textContent(node).split(/(\s+)/).filter(Boolean);
+            if (!words.some(isUnbroken)) return;
+            const children = words.map(word => (isUnbroken(word) ? element("span", "word", [text(word)]) : text(word)));
+            ctx.replaceNode(node, {...node, children} as Element);
+        }
+    }
+});
+
 /** A `#` link at the end of each H2 and H3. Its `#` comes from CSS, so it stays out of the heading's text. */
 export const headingAnchors = defineHastPlugin({
     name: "heading-anchors",
