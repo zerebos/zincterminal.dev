@@ -142,6 +142,12 @@ files = ["crt", "cursor-trail"]    # run in this order
 
 A shader that doesn't compile is left out, and a notice says which line is wrong.
 
+### Backing up your settings {#backup}
+
+**Export settings**, in `Settings > About`, saves your settings, color schemes, shaders, and open windows in one zip file. **Import settings** puts them in place on another PC, and first saves the settings it replaces in a `backups` folder next to `config.toml`.
+
+Files from outside Zinc's folder, such as a file you `include` from somewhere else, aren't in the zip. The export lists them, so you can copy them yourself.
+
 ## Profiles and shells {#profiles}
 
 A profile is a shell with its own name, folder, font, and colors. Zinc finds the shells on your PC each time it reads your settings, and lists them after your own.
@@ -257,11 +263,7 @@ Without a report, a tab reopens in the folder it started in.
 
 ### Mouse and clipboard {#mouse}
 
-Drag to select, double-click for a word, and triple-click for a line. <kbd>Ctrl+C</kbd> copies when there's a selection, and otherwise goes to the program as usual. <kbd>Ctrl+V</kbd> pastes. Right-click opens a menu with copy, paste, and find, plus whatever you clicked on, like a link or a command's output.
-
-When a program uses the mouse, like vim or htop, clicks and the wheel go to it. Hold <kbd>Shift</kbd> to select text anyway. <kbd>Ctrl</kbd> and the wheel zoom the pane, even then.
-
-Drop files on a pane to type their paths, written the way its shell expects, like `/mnt/c/Users` in WSL.
+Right-click opens a menu with copy, paste, and find, plus whatever you clicked on, like a link or a command's output. When a program uses the mouse, like vim or htop, clicks and the wheel go to it. Hold <kbd>Shift</kbd> to select text anyway, and <kbd>Ctrl+Wheel</kbd> still zooms. Dropped files' paths are written the way the pane's shell expects, like `/mnt/c/Users` in WSL.
 
 | Mouse or keys | What it does |
 |---|---|
@@ -270,7 +272,8 @@ Drop files on a pane to type their paths, written the way its shell expects, lik
 | <kbd>Ctrl+V</kbd>, <kbd>Shift+Insert</kbd> | Paste |
 | Right-click, <kbd>Shift+F10</kbd> | Open the menu |
 | <kbd>Shift</kbd> with the mouse | Select in a program that uses the mouse |
-| <kbd>Ctrl+Wheel</kbd>, <kbd>Ctrl+Plus</kbd>, <kbd>Ctrl+Minus</kbd> | Zoom this pane, and <kbd>Ctrl+0</kbd> sets it back |
+| <kbd>Ctrl+Wheel</kbd>, <kbd>Ctrl+Plus</kbd>, <kbd>Ctrl+Minus</kbd> | Zoom this pane |
+| <kbd>Ctrl+0</kbd> | Set this pane's zoom back |
 | <kbd>Shift+PgUp</kbd>, <kbd>Shift+PgDn</kbd> | Scroll back a page, or forward |
 | Drop files | Type their paths |
 
@@ -396,7 +399,6 @@ Zinc also leaves a shell alone when it's started to run a script, like `pwsh -Fi
 
 - bash in WSL, when your startup files replace `PROMPT_COMMAND` instead of adding to it. Git Bash is fine.
 - elvish inside WSL, YSH, and xonsh.
-- Exit codes in cmd without Clink.
 - Versions of fish too old to send marks of their own.
 
 ## The zn CLI {#zn}
@@ -477,12 +479,6 @@ The log is in `%APPDATA%\Zinc\logs\zinc.log`. To log from the moment Zinc starts
 If a terminal draws wrong or stops drawing, turn off **Low-latency drawing** in `Settings > Terminal`. For broken graphics drivers, some virtual machines, and remote desktop glitches, turn on **Software rendering**, which draws with the processor instead of the graphics card. Both apply to terminals you open afterwards.
 
 **Run benchmark**, in `Settings > About`, measures how Zinc draws on your PC. Its results are worth adding to a report about drawing.
-
-### Backing up your settings {#backup}
-
-**Export settings**, in `Settings > About`, saves your settings, color schemes, shaders, and open windows in one zip file. **Import settings** puts them in place on another PC, and first saves the settings it replaces in a `backups` folder next to `config.toml`.
-
-Files from outside Zinc's folder, such as a file you `include` from somewhere else, aren't in the zip. The export lists them, so you can copy them yourself.
 
 ### Trying other settings {#zinc-config}
 
