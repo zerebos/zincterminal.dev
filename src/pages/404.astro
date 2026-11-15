@@ -1,8 +1,8 @@
 ---
 // Shown for any address with nothing behind it... the missing cell, then ways back in
 import Base from "../layouts/Base.astro";
-import DocsHeader from "../components/site/DocsHeader.astro";
 import Footer from "../components/site/Footer.astro";
+import Header from "../components/site/Header.astro";
 import {footer, links} from "../data/site";
 
 const lead = "Nothing lives at this address. It may have moved, or the link has a typo.";
@@ -18,7 +18,7 @@ const ways = [
 ---
 
 <Base title="Page not found" description={lead} noindex>
-    <DocsHeader hairline="scroll" />
+    <Header />
     <main class="wrap nf">
         <div class="cells" role="img" aria-label="Nine cells in a square, one of them dark">
             {Array.from({length: 9}, (_, i) => <span class:list={["cell", {off: i === 5}]}></span>)}

@@ -9,15 +9,7 @@ import LitCellHero from "../components/lit-cell/LitCellHero.astro";
 import PaletteSection from "../components/lit-cell/PaletteSection.astro";
 import PortIt from "../components/lit-cell/PortIt.astro";
 import ZincNod from "../components/lit-cell/ZincNod.astro";
-import {footerProduct, footerProject, links, type FooterColumn, type NavLink} from "../data/site";
-
-const nav: NavLink[] = [
-    {label: "Zinc", href: "/"},
-    {label: "Lit Cell", href: "/lit-cell", current: true},
-    {label: "Install", href: "#install"},
-    {label: "Spec", href: links.litCellSpec},
-    {label: "GitHub", href: links.litCellRepo}
-];
+import {footerProduct, footerProject, links, type FooterColumn} from "../data/site";
 
 const footer: FooterColumn[] = [
     footerProduct,
@@ -38,7 +30,7 @@ const footer: FooterColumn[] = [
     description="A phosphor screen, not a neon sign. A dark, quiet ground with a faint green cast, a mint phosphor green, warm amber and soft pastels you can read all day."
     image={{src: "/brand/lit-cell-og.png", alt: "Lit Cell. Dark and light color schemes for your terminal, editor and more."}}
 >
-    <Header links={nav} hairline="always" mobile="menu" />
+    <Header current="lit-cell" />
     <main>
         <LitCellHero>
             <HeroPair />

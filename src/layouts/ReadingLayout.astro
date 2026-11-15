@@ -4,7 +4,7 @@
 import Base from "./Base.astro";
 import DocsNav, {type DocsPage} from "../components/reading/DocsNav.astro";
 import Footer from "../components/site/Footer.astro";
-import DocsHeader from "../components/site/DocsHeader.astro";
+import Header from "../components/site/Header.astro";
 import LitCell from "../components/site/LitCell.astro";
 import SectionSpy from "../components/reading/SectionSpy.svelte";
 import Toc from "../components/reading/Toc.astro";
@@ -37,7 +37,7 @@ const {title, description, current, kicker, heading, toc, tocLabel = "On this pa
 ---
 
 <Base title={title} description={description}>
-    <DocsHeader current={current} />
+    <Header current={current} />
     <main class="doc">
         <div class="doc-side">
             {docs && <DocsNav current={docs} variant="side" />}

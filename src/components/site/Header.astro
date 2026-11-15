@@ -1,37 +1,42 @@
 ---
+import Button from "./Button.astro";
 import Lockup from "./Lockup.astro";
 import MobileMenu from "./MobileMenu.svelte";
 import ScrollHairline from "./ScrollHairline.svelte";
 import ThemeSwitch from "./ThemeSwitch.svelte";
-import type {NavLink} from "../../data/site";
+import {links, siteNav, type NavPage} from "../../data/site";
 
 interface Props {
-    links: NavLink[];
-    /** "scroll" shows the hairline once the page scrolls, "always" keeps it on */
-    hairline?: "scroll" | "always";
-    /** On phones, "menu" hides the links for the menu button and "collapse" hides only the optional ones */
-    mobile?: "menu" | "collapse";
+
+    /** The page whose link is marked as current, none when left out */
+    current?: NavPage;
 }
 
-const {links, hairline = "scroll", mobile = "menu"} = Astro.props;
+const {current} = Astro.props;
+
+const nav = siteNav.map(({page, ...link}) => ({...link, current: page !== undefined && page === current}));
 ---
-<header class:list={["sitenav", {lined: hairline === "always"}]}>
+<header class="sitenav">
     <div class="wrap sitenav-row">
         <a class="home" href="/" aria-label="Zinc home">
             <Lockup height={34} />
         </a>
-        <nav class:list={["topnav", `mobile-${mobile}`]} aria-label="Main">
-            {links.map(link => (
-                <a class:list={{opt: link.optional}} href={link.href} aria-current={link.current ? "page" : undefined}>{link.label}</a>
+        <nav class="topnav" aria-label="Main">
+            {nav.map(link => (
+                <a href={link.href} aria-current={link.current ? "page" : undefined}>{link.label}</a>
             ))}
         </nav>
         <div class="tools">
             <ThemeSwitch client:load />
-            <slot name="actions" />
-            {mobile === "menu" && <MobileMenu client:load links={links} />}
+            <slot name="actions">
+                <div class="navcta">
+                    <Button href={links.download} primary>Download</Button>
+                </div>
+            </slot>
+            <MobileMenu client:load links={nav} />
         </div>
     </div>
-    {hairline === "scroll" && <ScrollHairline client:load />}
+    <ScrollHairline client:load />
 </header>
 
 <style>
@@ -46,7 +51,6 @@ const {links, hairline = "scroll", mobile = "menu"} = Astro.props;
         transition: border-color 0.2s ease;
     }
 
-    .sitenav.lined,
     .sitenav.scrolled {
         border-bottom-color: var(--line);
     }
@@ -100,15 +104,15 @@ const {links, hairline = "scroll", mobile = "menu"} = Astro.props;
         gap: 8px;
     }
 
-    /* The landing page's full row needs about 750px, so its links give way to the menu button from 900px down.
+    /* The full row needs about 675px, so the links give way to the menu button from 900px down.
        `MobileMenu` and `CompactCta` switch at the same width. */
     @media (max-width: 900px) {
         /* The links are gone, so the tools take their place at the right */
-        .topnav.mobile-menu + .tools {
+        .topnav + .tools {
             margin-left: auto;
         }
 
-        .topnav.mobile-menu {
+        .topnav {
             display: none;
         }
     }
@@ -118,7 +122,7 @@ const {links, hairline = "scroll", mobile = "menu"} = Astro.props;
             gap: 12px;
         }
 
-        .topnav.mobile-collapse a.opt {
+        .navcta {
             display: none;
         }
     }

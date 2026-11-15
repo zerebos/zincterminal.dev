@@ -10,21 +10,13 @@ import Themes from "../components/landing/Themes.astro";
 import TryAlpha from "../components/landing/TryAlpha.astro";
 import UnderTheHood from "../components/landing/UnderTheHood.astro";
 import Workflow from "../components/landing/Workflow.astro";
-import {footer, links, shown, type NavLink} from "../data/site";
-
-const nav: NavLink[] = shown([
-    {label: "Workflow", href: "#workflow"},
-    {label: "Settings", href: "#settings"},
-    {label: "Themes", href: "#themes"},
-    {label: "Docs", href: links.docs},
-    {label: "GitHub", href: links.zincRepo}
-]);
+import {footer} from "../data/site";
 ---
 <Base
     title="Zinc, a precise, native terminal for Windows"
     description="Workspaces that reopen where you left them, a terminal that tells you when a command finishes or fails, and settings that explain themselves and apply as you change them."
 >
-    <Header links={nav}>
+    <Header>
         <CompactCta slot="actions" client:load />
     </Header>
     <main>

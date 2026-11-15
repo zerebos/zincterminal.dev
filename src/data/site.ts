@@ -50,18 +50,29 @@ export interface NavLink {
     label: string;
     href: string;
     current?: boolean;
-
-    /** Hidden on phones when the header collapses links instead of using a menu */
-    optional?: boolean;
 }
+
+/** A page that has its own link in the header */
+export type NavPage = "docs" | "changelog" | "lit-cell";
+
+export interface SiteNavLink extends NavLink {
+
+    /** The page this link leads to, which the header marks as current while on it */
+    page?: NavPage;
+}
+
+/** The header's links, the same on every page */
+export const siteNav: SiteNavLink[] = [
+    {label: "Docs", href: links.docs, page: "docs"},
+    {label: "Changelog", href: links.changelog, page: "changelog"},
+    {label: "Lit Cell", href: "/lit-cell", page: "lit-cell"},
+    {label: "GitHub", href: links.zincRepo}
+];
 
 export interface FooterColumn {
     title: string;
     links: NavLink[];
 }
-
-/** Leaves out links that are hidden for now */
-export const shown = <T extends {href: string | null;}>(items: T[]) => items.filter((item): item is T & {href: string;} => item.href !== null);
 
 /** The footer's columns, shared by every page. The Lit Cell page swaps the middle one for its own. */
 export const footerProduct: FooterColumn = {
