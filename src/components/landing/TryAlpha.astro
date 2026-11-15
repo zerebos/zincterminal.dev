@@ -7,9 +7,11 @@ import SectionIntro from "../site/SectionIntro.astro";
 import {links, release} from "../../data/site";
 
 const missing = [
+    ["Limited accessibility", "No screen reader support for the terminal yet"],
     ["Sixel images", "Not supported; kitty graphics show their current frame"],
+    ["English only", "No other languages supported"],
     ["Importing settings from other terminals", "No migration yet"],
-    ["Very large colorful output from Git Bash and MSYS2", "Slow in any Windows terminal; native programs and WSL are fine"]
+    // ["Very large colorful output from Git Bash and MSYS2", "Slow in any Windows terminal; native programs and WSL are fine"],
 ];
 ---
 <Section id="install" labelledby="install-title">

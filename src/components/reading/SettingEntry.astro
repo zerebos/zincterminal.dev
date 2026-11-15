@@ -53,7 +53,7 @@ const text = [table ? `${table}.${name}` : name, setting.label, plainText(settin
         <div><dt>Type</dt><dd>{type}{range && <span class="dim">, {range}</span>}</dd></div>
         <div><dt>Default</dt><dd>{"code" in fallback ? <code>{fallback.code}</code> : fallback.words}</dd></div>
         {example && <div><dt>Example</dt><dd><code>{name} = {example}</code></dd></div>}
-        {path.length > 0 && <div><dt>In Settings</dt><dd><span class="ui">{path.map((step, i) => <>{i > 0 && <span class="sep">›</span>}{step}</>)}</span></dd></div>}
+        {path.length > 0 && <div><dt>In Settings</dt><dd><span class="ui">{path.map((step, i) => <>{i > 0 && <><span class="sep">›</span><wbr /></>}{step}</>)}</span></dd></div>}
     </dl>
     {sameAs && <p class="cfg-same">Takes the same values as <a href={`#${sameAs}`}>{sameAs}</a>.</p>}
     {rows.length > 0 && (
