@@ -108,6 +108,37 @@ export function capName(name: string) {
     return capNames[name] ?? name.charAt(0).toUpperCase() + name.slice(1);
 }
 
+/** A key name, or a run of them like `f1` to `f24`, as the keys page lists them */
+export interface KeyNameRun {
+    first: string;
+
+    /** The run's last name, or null for a single name */
+    last: string | null;
+    aliases: string[];
+}
+
+/** Whether `name` comes straight after `previous`, as `b` after `a` or `f2` after `f1` */
+function follows(previous: string, name: string) {
+    if (/^[a-z]$/.test(previous) && /^[a-z]$/.test(name)) return name.charCodeAt(0) === previous.charCodeAt(0) + 1;
+    const a = /^(\D*)(\d+)$/.exec(previous);
+    const b = /^(\D*)(\d+)$/.exec(name);
+    return Boolean(a && b && a[1] === b[1] && Number(b[2]) === Number(a[2]) + 1);
+}
+
+/** Folds runs of three or more names in a row into one, so the page lists `a`–`z` instead of 26 names */
+export function keyNameRuns(names: Array<{name: string, aliases: string[];}>): KeyNameRun[] {
+    const runs: Array<typeof names> = [];
+    for (const key of names) {
+        const run = runs.at(-1);
+        const previous = run?.at(-1);
+        if (run && previous && !previous.aliases.length && !key.aliases.length && follows(previous.name, key.name)) run.push(key);
+        else runs.push([key]);
+    }
+    return runs.flatMap((run): KeyNameRun[] => run.length >= 3
+        ? [{first: run[0]!.name, last: run.at(-1)!.name, aliases: []}]
+        : run.map(key => ({first: key.name, last: null, aliases: key.aliases})));
+}
+
 /** One key cap on the page, with the argument the binding passes ("" for none) */
 export interface KeyCap {
     label: string;

@@ -1,6 +1,6 @@
 import {describe, expect, test} from "bun:test";
 import {fakeReference} from "./fixtures";
-import {actionGroups, capName, codeForVirtualKey, groupId, parseKeys, takesText} from "./keys";
+import {actionGroups, capName, codeForVirtualKey, groupId, keyNameRuns, parseKeys, takesText} from "./keys";
 import type {Action, ActionsFile} from "./types";
 
 
@@ -72,6 +72,29 @@ describe("capName, groupId and takesText", () => {
         expect(takesText({name: "direction", values: ["right", "down"], optional: false, text: null})).toBe("right · down");
         expect(takesText({name: "mode", values: ["rail"], optional: true, text: null})).toBe("rail (optional)");
         expect(takesText({name: "workspace", values: ["last"], optional: false, text: "A workspace number from 1, or last"})).toBe("a workspace number from 1, or last");
+    });
+});
+
+describe("keyNameRuns", () => {
+    const named = (...list: string[]) => list.map(name => ({name, aliases: []}));
+
+    test("folds letters, digits and numbered keys into runs", () => {
+        expect(keyNameRuns(named("a", "b", "c", "0", "1", "2", "f1", "f2", "f3", "numpad0", "numpad1", "numpad2"))).toEqual([
+            {first: "a", last: "c", aliases: []},
+            {first: "0", last: "2", aliases: []},
+            {first: "f1", last: "f3", aliases: []},
+            {first: "numpad0", last: "numpad2", aliases: []},
+        ]);
+    });
+
+    test("keeps short runs, gaps and names with aliases apart", () => {
+        expect(keyNameRuns([...named("a", "b", "d", "e", "f"), {name: "esc", aliases: ["escape"]}, ...named("tab")])).toEqual([
+            {first: "a", last: null, aliases: []},
+            {first: "b", last: null, aliases: []},
+            {first: "d", last: "f", aliases: []},
+            {first: "esc", last: null, aliases: ["escape"]},
+            {first: "tab", last: null, aliases: []},
+        ]);
     });
 });
 

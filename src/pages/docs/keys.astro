@@ -7,13 +7,14 @@ import ReadingLayout from "../../layouts/ReadingLayout.astro";
 import type {TocEntry} from "../../components/reading/toc";
 import actionsFile from "../../data/generated/zinc-actions.json";
 import {release} from "../../data/site";
-import {actionGroups, parseKeys} from "../../lib/zinc/keys";
+import {actionGroups, keyNameRuns, parseKeys} from "../../lib/zinc/keys";
 import type {ActionsFile} from "../../lib/zinc/types";
 
 const file = actionsFile as ActionsFile;
 const {keys: syntax} = file;
 const groups = actionGroups(file);
 const total = file.actions.length;
+const nameRuns = keyNameRuns(syntax.names);
 const sequence = (first: string, then: string) => `${first} ${syntax.sequenceSeparator} ${then}`;
 
 // The `[keys]` example, as keys, actions and comments. The build stops if Zinc stops accepting one of them.
@@ -64,7 +65,9 @@ const toc: TocEntry[] = groups.map(group => ({
         <p class="lead">Every action Zinc has, and the keys it starts with. Change any of them in <span class="ui">Settings<span class="sep">›</span>Keyboard</span> or in <code>[keys]</code>, run them from the command palette, or from a script with <code>zn action</code>.</p>
         <p class="meta"><span>For <code>{release.version}</code></span><span>{total} actions, from the same list the Settings window uses</span></p>
         <CodeBlock name="config.toml" lines={exampleLines} copy={exampleText} copyLabel="Copy" />
-        <p class="keys-note">Keys are modifiers ({syntax.modifiers.map((m, i) => <>{i > 0 && ", "}<code>{m}</code></>)}) plus one key. <code>"{syntax.unbind}"</code> takes a default away. An action with an argument takes it after a space: <code>"split down"</code>.</p>
+        <p class="keys-note">Keys are modifiers ({syntax.modifiers.map((m, i) => <>{i > 0 && ", "}<code>{m}</code></>)}) plus one key. <code>"{syntax.unbind}"</code> takes a default away. An action with an argument takes it after a space: <code>"split down"</code>. A key bound twice, an unknown key, or an unknown action shows in a bar with its line in the file, and the rest still applies.</p>
+        <p class="keys-note">Join keys with <code>{syntax.sequenceSeparator}</code> to press them one after another, like a tmux prefix: <code>"{sequence("ctrl+a", "c")}" = "new-tab"</code>. The first key then only starts sequences and doesn't reach the shell. Press it twice to send it to the shell anyway.</p>
+        <p class="keys-note">While a sequence waits, a hint at the bottom of the pane lists what can come next. <kbd>Esc</kbd>, or a key that no sequence continues, cancels it without typing anything. If the first key also had an action of its own, it loses that action, and Zinc says so in the bar.</p>
     </Fragment>
     <KeysFilter client:load total={total} syntax={syntax} />
     {groups.map(group => (
@@ -99,8 +102,8 @@ const toc: TocEntry[] = groups.map(group => ({
             </div>
         </section>
     ))}
-    <Note title="Key sequences">
-        Join keys with <code>{syntax.sequenceSeparator}</code> to press them one after another, like a tmux prefix: <code>"{sequence("ctrl+a", "c")}" = "new-tab"</code>. The first key then only starts sequences and doesn't reach the shell.
+    <Note title="Key names">
+        A key is one of these, after any modifiers: {nameRuns.map((run, i) => <>{i > 0 && ", "}<code>{run.first}</code>{run.last && <>–<code>{run.last}</code></>}{run.aliases.length > 0 && <> (or {run.aliases.map((alias, j) => <>{j > 0 && " or "}<code>{alias}</code></>)})</>}</>)}.
     </Note>
 </ReadingLayout>
 
