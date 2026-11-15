@@ -300,6 +300,55 @@ A few commands ask one more thing in the same box:
 - **New tab in folder…** opens a tab in the folder you type, like `~/src`. A relative path starts from where you are.
 - **Workspace icon…** and **Workspace folder…** set those for the workspace you're in.
 
+## Zinc in Windows {#windows}
+
+Zinc runs as one app with an icon in the tray, and keeps a quick terminal ready for you anywhere in Windows.
+
+### The quick terminal {#quick-terminal}
+
+<kbd>{"Win+`"}</kbd> brings a terminal in over whatever you're doing, and the same keys send it away. It also hides when you click somewhere else. Its shells keep running while it's hidden, so your work is still there next time.
+
+The quick terminal is a single terminal. You can split it, but it has no tabs or workspaces. Drag its edges to resize it, and double-click an edge to go back to the size in your settings. The keys, the position, and the size are in `Settings > Quick terminal`.
+
+<Note title="Do the keys do nothing?">
+Another app may hold them. Zinc shows a notice when that happens, and tries the keys again each time you come back to Zinc. Close the other app, or pick other keys.
+</Note>
+
+### In the tray {#tray}
+
+Only one Zinc runs at a time. Starting it again, from the Start menu or a shortcut, opens a new window in the Zinc that's already running.
+
+When you close the last window, Zinc stays in the tray as long as the quick terminal has keys, so the keys keep working. Click the tray icon to get your windows back. **Quit Zinc**, in the tray icon's menu or the command palette, closes everything.
+
+To start Zinc when you sign in, set "When you sign in to Windows" in `Settings > Layout` to "Start in the tray" or "Open my windows".
+
+### The taskbar and Explorer {#jump-list}
+
+Right-click Zinc's taskbar button for the profiles and folders you used recently, each of which opens a new workspace. The same menu has a new window, the quick terminal, and Settings.
+
+Shortcuts and scripts can do the same with Zinc's own flags. A new workspace opens in the window you used last.
+
+| Flag | What it does |
+|---|---|
+| `--profile <id>` | Opens a new workspace with that profile |
+| `--folder <path>` | Opens a new workspace in that folder |
+| `--new-window` | Opens a new window |
+| `--quick-terminal` | Shows or hides the quick terminal |
+| `--settings` | Opens Settings |
+| `--reopen-workspace`, `--reopen-window` | Reopens the workspace or window you closed last |
+
+To open folders from File Explorer, turn on **Open in Zinc from File Explorer** in `Settings > Layout`. Folders and drives then have **Open in Zinc** in their right-click menu. On Windows 11, it's under **Show more options**.
+
+### The default terminal app {#default-terminal}
+
+Windows starts some console programs outside any terminal, like a script you double-click, a command from Run, or an installer. Turn on **Default terminal app** in `Settings > Layout`, and those open in a Zinc tab instead.
+
+<Warning title="Windows Terminal comes first">
+Choose Windows Terminal as the default terminal app in Windows Settings first, and Zinc then takes over from it. Until then, Zinc's switch can't be turned on, and a button next to it opens the right page in Windows Settings.
+</Warning>
+
+Tabs that open this way aren't saved with your windows, because Zinc can't start their programs again.
+
 ## Shell integration
 
 Shells can mark where each prompt, command, and output starts, and how each command ended. Zinc uses the marks to:
